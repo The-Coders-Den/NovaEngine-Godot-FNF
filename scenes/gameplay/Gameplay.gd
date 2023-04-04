@@ -119,7 +119,7 @@ func _ready():
 	if ResourceLoader.exists(stage_path):
 		stage = load(stage_path).instantiate()
 	else:
-		stage = Stage.new()
+		stage = load("res://scenes/gameplay/stages/stage.tscn").instantiate()
 		
 	default_cam_zoom = stage.default_cam_zoom
 	camera.zoom = Vector2(default_cam_zoom, default_cam_zoom)
