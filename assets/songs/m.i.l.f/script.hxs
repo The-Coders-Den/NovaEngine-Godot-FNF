@@ -1,0 +1,6 @@
+function onBeatHit(beat:Int) {
+    if(beat >= 168 && beat < 200) {
+        camGame.zoom += 0.015;
+        camHUD.zoom += 0.03;
+    }
+}

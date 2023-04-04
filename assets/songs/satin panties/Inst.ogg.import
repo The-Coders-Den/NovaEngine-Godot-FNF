@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cntsyewt6yg0r"
+path="res://.godot/imported/Inst.ogg-c988d741e86128db2a249a390a61e2d6.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/songs/satin panties/Inst.ogg"
+dest_files=["res://.godot/imported/Inst.ogg-c988d741e86128db2a249a390a61e2d6.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

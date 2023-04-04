@@ -1,0 +1,34 @@
+function onCreate() {
+	inCutscene = true;
+
+	camBumping = false;
+	camZooming = false;
+
+	var blackScreen:FlxSprite = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
+	add(blackScreen);
+	blackScreen.scrollFactor.set();
+	camHUD.visible = false;
+
+	new FlxTimer().start(0.1, (tmr:FlxTimer) -> {
+		remove(blackScreen);
+		FlxG.sound.play(Paths.sound('game/christmas/lightsOn'));
+		camFollow.y = -2050;
+		camFollow.x += 200;
+		FlxG.camera.focusOn(camFollow.getPosition());
+		FlxG.camera.zoom = 1.5;
+
+		new FlxTimer().start(0.8, (tmr:FlxTimer) -> {
+			camHUD.visible = true;
+			remove(blackScreen);
+			FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 2.5, {
+				ease: FlxEase.quadInOut,
+				onComplete: (twn:FlxTween) -> startCountdown()
+			});
+		});
+	});
+}
+
+function onOpponentHit(event:NoteHitEvent) {
+	camBumping = true;
+	camZooming = true;
+}

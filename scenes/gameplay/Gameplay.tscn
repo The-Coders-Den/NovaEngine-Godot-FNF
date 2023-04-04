@@ -1,0 +1,104 @@
+[gd_scene load_steps=13 format=3 uid="uid://cd8qnbjwrowm3"]
+
+[ext_resource type="Script" path="res://scenes/gameplay/Gameplay.gd" id="1_8k5hd"]
+[ext_resource type="Texture2D" uid="uid://bv033kep6qx5t" path="res://assets/images/gameplay/score/default/sick.png" id="2_t1d44"]
+[ext_resource type="Script" path="res://scenes/gameplay/NoteGroup.gd" id="3_kxnu2"]
+[ext_resource type="Script" path="res://classes/VelocitySprite.gd" id="3_rou8q"]
+[ext_resource type="AudioStream" uid="uid://erpperlee1ib" path="res://assets/songs/test/Inst.ogg" id="4_1vrr8"]
+[ext_resource type="Texture2D" uid="uid://l154yr6latgu" path="res://assets/images/gameplay/score/default/num0.png" id="4_5os72"]
+[ext_resource type="StyleBox" uid="uid://c4lt0ydus4t75" path="res://assets/styles/healthbar/opponent.tres" id="4_san04"]
+[ext_resource type="Texture2D" uid="uid://bgk48t11fpyuf" path="res://assets/images/gameplay/icons/icon-face.png" id="5_hiat0"]
+[ext_resource type="AudioStream" uid="uid://nncthceb8qkg" path="res://assets/songs/test/Voices.ogg" id="5_ms7ae"]
+[ext_resource type="FontFile" uid="uid://coqcg7h14duny" path="res://assets/fonts/vcr.ttf" id="7_jpakc"]
+[ext_resource type="StyleBox" uid="uid://ccmycpgoa47g0" path="res://assets/styles/healthbar/player.tres" id="7_xkyo6"]
+[ext_resource type="Script" path="res://scripts/HealthIcon.gd" id="9_42oq6"]
+
+[node name="Gameplay" type="Node2D"]
+script = ExtResource("1_8k5hd")
+
+[node name="Ratings" type="CanvasGroup" parent="."]
+position = Vector2(704, 300)
+
+[node name="RatingTemplate" type="Sprite2D" parent="Ratings"]
+visible = false
+position = Vector2(-40, -60)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_t1d44")
+centered = false
+script = ExtResource("3_rou8q")
+
+[node name="ComboTemplate" type="Sprite2D" parent="Ratings"]
+visible = false
+position = Vector2(-90, 80)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_5os72")
+centered = false
+script = ExtResource("3_rou8q")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(640, 360)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="StrumLines" type="Node2D" parent="HUD"]
+
+[node name="Notes" type="CanvasGroup" parent="HUD"]
+script = ExtResource("3_kxnu2")
+
+[node name="HealthBar" type="ColorRect" parent="HUD"]
+offset_left = 340.0
+offset_top = 636.0
+offset_right = 941.0
+offset_bottom = 655.0
+color = Color(0, 0, 0, 1)
+
+[node name="ProgressBar" type="ProgressBar" parent="HUD/HealthBar"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 4.5
+offset_right = 596.0
+offset_bottom = 14.5
+theme_override_styles/background = ExtResource("4_san04")
+theme_override_styles/fill = ExtResource("7_xkyo6")
+max_value = 2.0
+value = 1.0
+fill_mode = 1
+show_percentage = false
+
+[node name="PlayerIcon" type="Sprite2D" parent="HUD/HealthBar/ProgressBar"]
+position = Vector2(270, -69.5)
+texture = ExtResource("5_hiat0")
+centered = false
+flip_h = true
+hframes = 2
+script = ExtResource("9_42oq6")
+react_to_health = true
+
+[node name="CPUIcon" type="Sprite2D" parent="HUD/HealthBar/ProgressBar"]
+position = Vector2(166, -69.5)
+texture = ExtResource("5_hiat0")
+centered = false
+hframes = 2
+script = ExtResource("9_42oq6")
+react_to_health = true
+
+[node name="ScoreText" type="Label" parent="HUD/HealthBar"]
+layout_mode = 0
+offset_left = -331.0
+offset_top = 47.0
+offset_right = 1070.0
+offset_bottom = 68.0
+scale = Vector2(0.9, 0.9)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("7_jpakc")
+theme_override_font_sizes/font_size = 20
+text = "Score: 0 - Misses: 0 - Accuracy: 0% [N/A]"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Inst" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_1vrr8")
+
+[node name="Voices" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_ms7ae")

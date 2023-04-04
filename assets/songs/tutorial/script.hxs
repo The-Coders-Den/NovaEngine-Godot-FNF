@@ -1,0 +1,12 @@
+function beatHit(beat:Int) {
+    if (beat % 16 == 15 && beat > 16 && beat < 48) {
+        bf.playAnim('hey', true);
+        if(dad.curCharacter == "gf")
+            dad.playAnim('cheer', true);
+        else
+            gf.playAnim('cheer', true);
+
+        dad.specialAnim = bf.specialAnim = true;
+        dad.animTimer = bf.animTimer = 0.6;
+    }
+}

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://b84tafodccsp0"]
+
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/notes/default/NOTE_assets.res" id="1_vqk7m"]
+[ext_resource type="Script" path="res://scenes/gameplay/strumlines/Receptor.gd" id="2_5ug4w"]
+
+[node name="Receptor" type="AnimatedSprite2D"]
+sprite_frames = ExtResource("1_vqk7m")
+animation = &"left static"
+script = ExtResource("2_5ug4w")
