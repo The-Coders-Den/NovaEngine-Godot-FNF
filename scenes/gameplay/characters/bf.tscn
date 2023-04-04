@@ -497,3 +497,6 @@ script = ExtResource("1_inae7")
 libraries = {
 "": SubResource("AnimationLibrary_vgtrv")
 }
+
+[node name="CameraPos" type="Node2D" parent="."]
+position = Vector2(2, 420)

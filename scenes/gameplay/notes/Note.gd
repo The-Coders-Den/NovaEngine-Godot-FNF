@@ -50,6 +50,8 @@ func _process(delta):
 			
 		if must_press and not Input.is_action_pressed(strumline.controls[direction]) and length >= 150:
 			was_good_hit = false
+			game.fake_miss(direction)
+			queue_free()
 		
 	var safe_zone:float = (Conductor.safe_zone_offset * (1.2 * Conductor.rate))
 	if time > Conductor.position - safe_zone and time < Conductor.position + safe_zone:

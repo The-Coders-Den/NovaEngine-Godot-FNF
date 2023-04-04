@@ -338,6 +338,7 @@ func good_note_hit(note:Note):
 		note.queue_free()
 	else:
 		note.anim_sprite.visible = false
+		note.length += note_diff
 	
 	var sing_anim:String = "sing"+player_strums.get_child(note.direction).direction.to_upper()
 	player.play_anim(sing_anim, true)
@@ -381,7 +382,7 @@ func _process(delta):
 			start_song()
 	
 	for note in note_data_array:
-		if note.time > Conductor.position + (1500 / (scroll_speed / Conductor.rate)): break
+		if note.time > Conductor.position + (2500 / (scroll_speed / Conductor.rate)): break
 		
 		var key_count:int = 4
 		var is_player_note:bool = note.player_section
