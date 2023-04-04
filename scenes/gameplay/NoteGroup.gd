@@ -1,8 +1,14 @@
 extends CanvasGroup
 
-@onready var game = $"../../"
+@onready var game:Gameplay = $"../../"
+
+var note_anim_time:float = 0.0
+var note_anim_time_player:float = 0.0
 
 func _process(delta):
+	note_anim_time += delta * 1000.0
+	note_anim_time_player += delta * 1000.0
+	
 	var scroll_speed:float = game.scroll_speed / Conductor.rate
 	
 	for i in get_child_count():
@@ -10,14 +16,38 @@ func _process(delta):
 		var strum_pos:Vector2 = note.strumline.get_child(note.direction).global_position
 		note.position.x = strum_pos.x
 		note.position.y = strum_pos.y - (0.45 * (Conductor.position - note.time) * scroll_speed)
+		
+		if note.was_good_hit:
+			note.position.y = strum_pos.y
+			
+			if note.must_press and note_anim_time_player >= Conductor.step_crochet and Input.is_action_pressed(note.strumline.controls[note.direction]):
+				var receptor:Receptor = note.strumline.get_child(note.direction)
+				receptor.play_anim("confirm")
+				
+				var sing_anim:String = "sing"+note.strumline.get_child(note.direction).direction.to_upper()
+				game.player.play_anim(sing_anim, true)
+				game.player.hold_timer = 0.0
+				
+				note_anim_time_player = 0.0
+			elif not note.must_press and note_anim_time >= Conductor.step_crochet:
+				var sing_anim:String = "sing"+note.strumline.get_child(note.direction).direction.to_upper()
+				game.opponent.play_anim(sing_anim, true)
+				game.opponent.hold_timer = 0.0
+				
+				note_anim_time = 0.0
 
 		if note.must_press:
-			if note.time <= Conductor.position - (500 / scroll_speed):
+			if note.time <= Conductor.position - (500 / scroll_speed) and not note.was_good_hit:
 				game.fake_miss(note.direction)
 				note.queue_free()
 		else:
-			if note.time <= Conductor.position:
+			if note.time <= Conductor.position and not note.was_good_hit:
+				note.was_good_hit = true
+				note.anim_sprite.visible = false
+				
 				var sing_anim:String = "sing"+game.cpu_strums.get_child(note.direction).direction.to_upper()
 				game.opponent.play_anim(sing_anim, true)
 				game.opponent.hold_timer = 0.0
-				note.queue_free()
+				
+				if note.length <= 0:
+					note.queue_free()

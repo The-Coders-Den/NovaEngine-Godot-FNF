@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dsqksouonw5hs"]
+
+[ext_resource type="Script" path="res://scripts/NoteSkin.gd" id="1_rcab3"]
+
+[node name="pixel" type="Node"]
+script = ExtResource("1_rcab3")
+note_textures = "res://assets/images/gameplay/notes/pixel/"
+sustain_textures = "res://assets/images/gameplay/notes/pixel/sustains/"
+note_scale = 6.0

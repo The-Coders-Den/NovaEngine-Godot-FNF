@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b76c7lei77x4d"
-path="res://.godot/imported/NOTE_assets.png-690241d45837f788bc0f7923a565daf0.ctex"
+uid="uid://cvqoumetpnkhb"
+path="res://.godot/imported/right hold end.png-e16cb9247f70a6253d5c91fb0042350e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/gameplay/notes/default/NOTE_assets.png"
-dest_files=["res://.godot/imported/NOTE_assets.png-690241d45837f788bc0f7923a565daf0.ctex"]
+source_file="res://assets/images/gameplay/notes/default/sustains/right hold end.png"
+dest_files=["res://.godot/imported/right hold end.png-e16cb9247f70a6253d5c91fb0042350e.ctex"]
 
 [params]
 

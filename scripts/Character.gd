@@ -27,7 +27,7 @@ func _ready():
 	
 func _process(delta):
 	if last_anim.begins_with("sing"):
-		hold_timer += delta
+		hold_timer += delta * Conductor.rate
 		if hold_timer >= Conductor.step_crochet * sing_duration * 0.0011:
 			hold_timer = 0
 			dance()

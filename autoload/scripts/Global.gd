@@ -4,6 +4,10 @@ var SONG:Chart
 var note_directions:PackedStringArray = [
 	"left", "down", "up", "right"
 ]
+var note_skins:Dictionary = {
+	"default": preload("res://scenes/gameplay/noteskins/default.tscn").instantiate(),
+	"pixel": preload("res://scenes/gameplay/noteskins/pixel.tscn").instantiate()
+}
 
 func _ready():
 	RenderingServer.set_default_clear_color(Color.BLACK)

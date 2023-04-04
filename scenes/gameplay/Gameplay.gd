@@ -1,4 +1,5 @@
 extends MusicBeatScene
+class_name Gameplay
 
 var template_notes:Dictionary = {
 	"default": load("res://scenes/gameplay/notes/Default.tscn").instantiate()
@@ -10,6 +11,8 @@ var SONG:Chart = Global.SONG
 var note_data_array:Array[SectionNote] = []
 
 var starting_song:bool = true
+var ending_song:bool = false
+
 var scroll_speed:float = 2.7
 
 var health:float = 1.0:
@@ -67,12 +70,12 @@ func _ready():
 	super._ready()
 	
 	if Global.SONG == null:
-		Global.SONG = Chart.load_chart("fresh", "hard")
+		Global.SONG = Chart.load_chart("bopeebo", "hard")
 		SONG = Global.SONG
 		
 	inst.stream = load("res://assets/songs/"+SONG.name.to_lower()+"/Inst.ogg")
 	inst.pitch_scale = Conductor.rate
-	inst.connect("finished", end_song)
+	inst.finished.connect(end_song)
 	
 	voices.stream = load("res://assets/songs/"+SONG.name.to_lower()+"/Voices.ogg")
 	voices.pitch_scale = Conductor.rate
@@ -169,7 +172,8 @@ func start_song():
 	voices.play()
 	
 func end_song():
-	pass
+	print("ending the jas dghj")
+	ending_song = true
 	
 func _beat_hit(beat:int):
 	cpu_icon.scale += Vector2(0.2, 0.2)
@@ -195,10 +199,12 @@ func position_hud():
 	hud.offset.y = (hud.scale.y - 1.0) * -360.0
 	
 func _step_hit(step:int):
-	if not Conductor.is_sound_synced(inst) or (not Conductor.is_sound_synced(voices) and voices.get_playback_position() < voices.stream.get_length()):
+	if not ending_song and (not Conductor.is_sound_synced(inst) or (not Conductor.is_sound_synced(voices) and voices.get_playback_position() < voices.stream.get_length())):
 		resync_vocals()
 		
 func resync_vocals():
+	if ending_song: return
+	
 	inst.stop()
 	voices.stop()
 	
@@ -281,6 +287,7 @@ func pop_up_score(judgement:Judgement):
 	accuracy_pressed_notes += 1
 	accuracy_total_hit += judgement.accuracy_gain
 	score += judgement.score
+	combo += 1
 	
 	var rating_spr:VelocitySprite = rating_template.duplicate()
 	rating_spr.texture = load("res://assets/images/gameplay/score/default/"+judgement.name+".png")
@@ -298,29 +305,28 @@ func pop_up_score(judgement:Judgement):
 	)
 	combo_group.add_child(rating_spr)
 	
-	if combo == 0 or combo >= 10:
-		var separated_score:String = Global.add_zeros(str(combo), 3)
-		for i in len(separated_score):
-			var num_score:VelocitySprite = combo_template.duplicate()
-			num_score.texture = load("res://assets/images/gameplay/score/default/num"+separated_score.substr(i, 1)+".png")
-			num_score.position = Vector2((43 * i) - 90, 80)
-			num_score.visible = true
-			
-			num_score.acceleration.y = randi_range(200, 300)
-			num_score.velocity.y = -randi_range(140, 160)
-			num_score.velocity.x = randi_range(-5, 5)
-			
-			var timer2 = get_tree().create_timer(Conductor.crochet * 0.002)
-			timer2.connect("timeout", func():
-				var tween = get_tree().create_tween()
-				tween.tween_property(num_score, "modulate:a", 0.0, 0.2)
-				tween.tween_callback(num_score.queue_free)
-			)
-			combo_group.add_child(num_score)
-	
-	combo += 1
+	var separated_score:String = Global.add_zeros(str(combo), 3)
+	for i in len(separated_score):
+		var num_score:VelocitySprite = combo_template.duplicate()
+		num_score.texture = load("res://assets/images/gameplay/score/default/num"+separated_score.substr(i, 1)+".png")
+		num_score.position = Vector2((43 * i) - 90, 80)
+		num_score.visible = true
+		
+		num_score.acceleration.y = randi_range(200, 300)
+		num_score.velocity.y = -randi_range(140, 160)
+		num_score.velocity.x = randi_range(-5, 5)
+		
+		var timer2 = get_tree().create_timer(Conductor.crochet * 0.002)
+		timer2.connect("timeout", func():
+			var tween = get_tree().create_tween()
+			tween.tween_property(num_score, "modulate:a", 0.0, 0.2)
+			tween.tween_callback(num_score.queue_free)
+		)
+		combo_group.add_child(num_score)
 		
 func good_note_hit(note:Note):
+	if note.was_good_hit: return
+	
 	var note_diff:float = (note.time - Conductor.position) / Conductor.rate
 	var judgement:Judgement = Ranking.judgement_from_time(note_diff)
 	
@@ -328,7 +334,10 @@ func good_note_hit(note:Note):
 	update_score_text()
 	
 	note.was_good_hit = true
-	note.queue_free()
+	if note.length <= 0:
+		note.queue_free()
+	else:
+		note.anim_sprite.visible = false
 	
 	var sing_anim:String = "sing"+player_strums.get_child(note.direction).direction.to_upper()
 	player.play_anim(sing_anim, true)
@@ -361,14 +370,15 @@ func _process(delta):
 	player_icon.scale = lerp(player_icon.scale, Vector2.ONE, icon_speed)
 	position_icons()
 	
-	var camera_speed:float = clampf(delta * 60 * 0.05, 0.0, 1.0)
+	var camera_speed:float = clampf((delta * 60 * 0.05) * Conductor.rate, 0.0, 1.0)
 	camera.zoom = lerp(camera.zoom, Vector2(default_cam_zoom, default_cam_zoom), camera_speed)
 	hud.scale = lerp(hud.scale, Vector2.ONE, camera_speed)
 	position_hud()
 	
-	Conductor.position += (delta * 1000.0) * Conductor.rate
-	if Conductor.position >= 0.0 and starting_song:
-		start_song()
+	if not ending_song:
+		Conductor.position += (delta * 1000.0) * Conductor.rate
+		if Conductor.position >= 0.0 and starting_song:
+			start_song()
 	
 	for note in note_data_array:
 		if note.time > Conductor.position + (1500 / (scroll_speed / Conductor.rate)): break
@@ -380,6 +390,7 @@ func _process(delta):
 			is_player_note = !note.player_section
 			
 		var new_note:Note = template_notes[note.type].duplicate()
+		new_note.position = Vector2(-9999, -9999)
 		new_note.time = note.time
 		new_note.direction = note.direction % key_count
 		new_note.length = note.length
