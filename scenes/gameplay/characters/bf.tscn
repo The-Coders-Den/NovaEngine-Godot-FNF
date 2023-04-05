@@ -481,11 +481,12 @@ _data = {
 
 [node name="bf" type="Node2D"]
 script = ExtResource("1_njqje")
+is_player = true
 health_icon = ExtResource("2_83nrd")
 health_color = Color(0.192157, 0.690196, 0.819608, 1)
+position_offset = Vector2(0, 350)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 350)
 sprite_frames = ExtResource("1_8fsw1")
 animation = &"BF idle dance"
 frame = 13
@@ -499,4 +500,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(2, 420)
+position = Vector2(0, 80)

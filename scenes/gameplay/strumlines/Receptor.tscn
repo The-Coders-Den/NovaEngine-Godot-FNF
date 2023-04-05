@@ -1,9 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://c5dlifad40usc"]
+[gd_scene load_steps=4 format=3 uid="uid://c5dlifad40usc"]
 
 [ext_resource type="SpriteFrames" path="res://assets/images/gameplay/notes/default/assets.res" id="1_yowus"]
 [ext_resource type="Script" path="res://scenes/gameplay/strumlines/Receptor.gd" id="2_5ug4w"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/notes/default/splashes.res" id="3_kdloh"]
 
 [node name="Receptor" type="AnimatedSprite2D"]
 sprite_frames = ExtResource("1_yowus")
 animation = &"left static"
 script = ExtResource("2_5ug4w")
+
+[node name="Splash" type="AnimatedSprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.6)
+z_index = 1
+scale = Vector2(1.429, 1.429)
+sprite_frames = ExtResource("3_kdloh")
+animation = &"note impact 1 left"

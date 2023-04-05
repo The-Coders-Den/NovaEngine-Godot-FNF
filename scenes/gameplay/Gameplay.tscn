@@ -36,7 +36,8 @@ centered = false
 script = ExtResource("3_rou8q")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2(640, 360)
+position_smoothing_enabled = true
+position_smoothing_speed = 3.0
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -91,7 +92,7 @@ offset_bottom = 66.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("7_jpakc")
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 19
 text = "Score: 0 - Misses: 0 - Accuracy: 0% [N/A]"
 horizontal_alignment = 1
 autowrap_mode = 3

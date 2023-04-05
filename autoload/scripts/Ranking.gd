@@ -2,9 +2,9 @@ extends Node
 
 var judgements:Array[Judgement] = [
 	Judgement.create("sick", 350, 45.0, 1.0, true),
-	Judgement.create("good", 200, 75.0, 0.7, true),
-	Judgement.create("bad", 100, 90.0, 0.3, true),
-	Judgement.create("shit", 50, 135.0, 0.0, true)
+	Judgement.create("good", 200, 75.0, 0.7, false),
+	Judgement.create("bad", 100, 90.0, 0.3, false),
+	Judgement.create("shit", 50, 135.0, 0.0, false)
 ]
 
 var ranks:Array[Rank] = [

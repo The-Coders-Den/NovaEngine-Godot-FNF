@@ -9,6 +9,11 @@ var note_skins:Dictionary = {
 	"pixel": preload("res://scenes/gameplay/noteskins/pixel.tscn").instantiate()
 }
 
+var game_size:Vector2 = Vector2(
+	ProjectSettings.get_setting("display/window/size/viewport_width"),
+	ProjectSettings.get_setting("display/window/size/viewport_height"),
+)
+
 func _ready():
 	RenderingServer.set_default_clear_color(Color.BLACK)
 
@@ -26,4 +31,11 @@ func bytes_to_human(size:float):
 		label += 1
 		r_size /= 1024
 	
-	return str(snappedf(r_size / 1048576, 0.01)) + labels[label]
+	return str(snappedf(r_size, 0.01)) + labels[label]
+	
+func format_time(seconds: float):
+	var minutes_int: int = int(seconds / 60.0)
+	var seconds_int: int = int(seconds) % 60
+	
+	return "%s:%s" % [minutes_int,
+		'0' + str(seconds_int) if seconds_int < 10 else seconds_int]

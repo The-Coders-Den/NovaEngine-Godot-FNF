@@ -4,6 +4,10 @@
 
 [node name="pixel" type="Node"]
 script = ExtResource("1_rcab3")
-note_textures = "res://assets/images/gameplay/notes/pixel/"
-sustain_textures = "res://assets/images/gameplay/notes/pixel/sustains/"
+note_texture_path = "res://assets/images/gameplay/notes/pixel/"
+sustain_texture_path = "res://assets/images/gameplay/notes/pixel/sustains/"
+splash_texture_path = "res://assets/images/gameplay/notes/pixel/"
 note_scale = 6.0
+sustain_width_offset = -1.2
+antialiasing = false
+splash_antialiasing = false

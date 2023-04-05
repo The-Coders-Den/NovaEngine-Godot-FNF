@@ -4,8 +4,12 @@ class_name Receptor
 @export_enum("left", "down", "up", "right")
 var direction:String = "left"
 
+@onready var splash:AnimatedSprite2D = $Splash
+
 func _ready():
 	play_anim("static")
+	splash.animation_finished.connect(func(): splash.visible = false)
+	speed_scale = Conductor.rate
 
 func play_anim(name:String):
 	frame = 0

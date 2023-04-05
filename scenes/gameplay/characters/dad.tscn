@@ -289,3 +289,6 @@ script = ExtResource("3_jmwth")
 libraries = {
 "": SubResource("AnimationLibrary_vgtrv")
 }
+
+[node name="CameraPos" type="Node2D" parent="."]
+position = Vector2(468, 284)
