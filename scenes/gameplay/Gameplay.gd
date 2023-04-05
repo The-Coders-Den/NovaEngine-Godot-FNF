@@ -75,6 +75,7 @@ func _ready():
 		Global.SONG = Chart.load_chart("bopeebo", "hard")
 		SONG = Global.SONG
 		
+	SONG.note_skin = "pixel"
 	note_skin = Global.note_skins[SONG.note_skin]
 		
 	inst.stream = load("res://assets/songs/"+SONG.name.to_lower()+"/Inst.ogg")

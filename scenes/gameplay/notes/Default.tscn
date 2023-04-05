@@ -1,14 +1,14 @@
 [gd_scene load_steps=6 format=3 uid="uid://bxyyf7clqhywn"]
 
+[ext_resource type="Script" path="res://scenes/gameplay/notes/Note.gd" id="1_4rxus"]
 [ext_resource type="SpriteFrames" path="res://assets/images/gameplay/notes/default/assets.res" id="1_m8ci2"]
-[ext_resource type="Script" path="res://scenes/gameplay/notes/Note.gd" id="1_snblt"]
 [ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="3_hnrov"]
 [ext_resource type="Texture2D" uid="uid://2iywwtpufmt4" path="res://assets/images/gameplay/notes/default/sustains/left hold piece.png" id="4_60wbw"]
 [ext_resource type="Texture2D" uid="uid://dcu1auf2cj0ob" path="res://assets/images/gameplay/notes/default/sustains/left hold end.png" id="5_sjvx4"]
 
 [node name="Default" type="Node2D"]
 scale = Vector2(0.7, 0.7)
-script = ExtResource("1_snblt")
+script = ExtResource("1_4rxus")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 clip_contents = true
