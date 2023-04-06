@@ -77,9 +77,8 @@ func _ready():
 	if Global.SONG == null:
 		Global.SONG = Chart.load_chart("fresh", "hard")
 		SONG = Global.SONG
-		
-	SONG.ui_skin = "pixel"
-	ui_skin = Global.ui_skins[SONG.ui_skin]
+	
+	note_skin = Global.note_skins[SONG.note_skin]
 		
 	inst.stream = load("res://assets/songs/"+SONG.name.to_lower()+"/Inst.ogg")
 	inst.pitch_scale = Conductor.rate
@@ -380,7 +379,6 @@ func good_note_hit(note:Note):
 		var anim:String = "note impact "+str(randi_range(1, 2))+" "+Global.note_directions[note.direction]
 		receptor.splash.play(anim)
 		receptor.splash.visible = true
-		receptor.splash.speed_scale = randf_range(0.5, 1.2)
 	
 	pop_up_score(judgement)	
 	update_score_text()

@@ -16,7 +16,7 @@ var game_size:Vector2 = Vector2(
 
 func _ready():
 	RenderingServer.set_default_clear_color(Color.BLACK)
-	
+
 func switch_scene(path:String):
 	get_tree().paused = true
 	var ass:AnimationPlayer = Transition.anim_player
@@ -30,6 +30,14 @@ func switch_scene(path:String):
 		var timer2:SceneTreeTimer = get_tree().create_timer(ass.get_animation("out").length)
 		timer2.timeout.connect(func(): get_tree().paused = false)
 	)
+
+func _input(event):
+	if Input.is_action_just_pressed("fullscreen"):
+		var window:Window = get_window()
+		if window.mode == Window.MODE_FULLSCREEN:
+			window.mode = Window.MODE_WINDOWED
+		else:
+			window.mode = Window.MODE_FULLSCREEN
 
 func add_zeros(str:String, num:int):
 	while len(str) < num:
