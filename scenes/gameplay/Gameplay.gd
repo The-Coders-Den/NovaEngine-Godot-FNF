@@ -74,8 +74,7 @@ func _ready():
 	if Global.SONG == null:
 		Global.SONG = Chart.load_chart("bopeebo", "hard")
 		SONG = Global.SONG
-		
-	SONG.note_skin = "pixel"
+	
 	note_skin = Global.note_skins[SONG.note_skin]
 		
 	inst.stream = load("res://assets/songs/"+SONG.name.to_lower()+"/Inst.ogg")
@@ -194,8 +193,8 @@ func end_song():
 	ending_song = true
 	
 func _beat_hit(beat:int):
-	cpu_icon.scale += Vector2(0.3, 0.3)
-	player_icon.scale += Vector2(0.3, 0.3)
+	cpu_icon.scale += Vector2(0.2, 0.2)
+	player_icon.scale += Vector2(0.2, 0.2)
 	position_icons()
 	
 	if beat % 4 == 0:
@@ -373,7 +372,6 @@ func good_note_hit(note:Note):
 		var anim:String = "note impact "+str(randi_range(1, 2))+" "+Global.note_directions[note.direction]
 		receptor.splash.play(anim)
 		receptor.splash.visible = true
-		receptor.splash.speed_scale = randf_range(0.5, 1.2)
 	
 	pop_up_score(judgement)	
 	update_score_text()
