@@ -66,11 +66,19 @@ var ui_skin:UISkin
 @onready var inst:AudioStreamPlayer = $Inst
 @onready var voices:AudioStreamPlayer = $Voices
 
-const ICON_DELTA_MULTIPLIER:float = 60 * 0.15
+@onready var countdown_sprite:Sprite2D = $HUD/CountdownSprite
+
+@onready var countdown_prepare_sound:AudioStreamPlayer = $CountdownSounds/Prepare
+@onready var countdown_ready_sound:AudioStreamPlayer = $CountdownSounds/Ready
+@onready var countdown_set_sound:AudioStreamPlayer = $CountdownSounds/Set
+@onready var countdown_go_sound:AudioStreamPlayer = $CountdownSounds/Go
+
+const ICON_DELTA_MULTIPLIER:float = 60 * 0.25
 const ZOOM_DELTA_MULTIPLIER:float = 60 * 0.05
 
 func _ready() -> void:
 	super._ready()
+	get_tree().paused = false
 	
 	Ranking.judgements = Ranking.default_judgements.duplicate(true)
 	Ranking.ranks = Ranking.default_ranks.duplicate(true)
@@ -122,7 +130,7 @@ func _ready() -> void:
 	player_strums.note_skin = ui_skin
 	strumlines.add_child(player_strums)
 	
-	var strum_y:float = Global.game_size.y - 100 if SettingsAPI.get_setting("downscroll") else 100
+	var strum_y:float = Global.game_size.y - 100.0 if SettingsAPI.get_setting("downscroll") else 100.0
 	cpu_strums.position = Vector2((Global.game_size.x * 0.5) - 320, strum_y)
 	player_strums.position = Vector2((Global.game_size.x * 0.5) + 320, strum_y)
 	
@@ -155,6 +163,12 @@ func _ready() -> void:
 	opponent.position = stage.character_positions["opponent"].position + opponent.position_offset
 	add_child(opponent)
 	
+	if SONG.opponent == SONG.spectator:
+		opponent.position = spectator.position
+		
+		spectator.queue_free()
+		spectator = null
+	
 	var player_path:String = "res://scenes/gameplay/characters/"+SONG.player+".tscn"
 	if ResourceLoader.exists(player_path):
 		player = load(player_path).instantiate()
@@ -184,7 +198,14 @@ func _ready() -> void:
 		pressed.append(false)
 		
 	SettingsAPI.setup_binds()
-			
+	
+	position_icons()
+	start_countdown()
+	
+# i'll write this later when i am not tired
+func start_countdown():
+	pass
+		
 func start_song():
 	starting_song = false
 	Conductor.position = 0.0
@@ -193,8 +214,8 @@ func start_song():
 	voices.play()
 	
 func end_song():
-	print("ending the jas dghj")
 	ending_song = true
+	Global.switch_scene("res://scenes/FreeplayMenu.tscn")
 	
 func beat_hit(beat:int):
 	cpu_icon.scale += Vector2(0.2, 0.2)
@@ -206,6 +227,10 @@ func beat_hit(beat:int):
 		hud.scale += Vector2(0.03, 0.03)
 		position_hud()
 		
+	character_bop()
+	update_camera(Conductor.cur_section)
+	
+func character_bop():
 	if opponent != null and not opponent.last_anim.begins_with("sing"):
 		opponent.dance()
 		
@@ -214,8 +239,6 @@ func beat_hit(beat:int):
 		
 	if player != null and not player.last_anim.begins_with("sing"):
 		player.dance()
-		
-	update_camera(Conductor.cur_section)
 	
 func update_camera(sec:int = 0):
 	if not range(SONG.sections.size()).has(sec): return
@@ -231,7 +254,7 @@ func position_hud():
 	hud.offset.y = (hud.scale.y - 1.0) * -(Global.game_size.y * 0.5)
 	
 func step_hit(step:int):
-	if not ending_song and (not Conductor.is_sound_synced(inst) or (not Conductor.is_sound_synced(voices) and voices.get_playback_position() < voices.stream.get_length())):
+	if not ending_song and (not Conductor.is_sound_synced(inst) or (voices.stream != null and not Conductor.is_sound_synced(voices) and voices.get_playback_position() < voices.stream.get_length())):
 		resync_vocals()
 		
 func resync_vocals():

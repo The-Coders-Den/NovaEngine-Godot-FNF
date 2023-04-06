@@ -43,7 +43,7 @@ func map_bpm_changes(song:Chart):
 
 func change_bpm(new:float):
 	bpm = new
-	crochet = ((60.0 / bpm) * 1000.0)
+	crochet = ((60.0 / new) * 1000.0)
 	step_crochet = crochet / 4.0
 
 func _process(delta):

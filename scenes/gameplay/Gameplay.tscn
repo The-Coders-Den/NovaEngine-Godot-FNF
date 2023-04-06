@@ -36,6 +36,7 @@ centered = false
 script = ExtResource("3_rou8q")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
 position_smoothing_enabled = true
 position_smoothing_speed = 3.0
 
@@ -97,8 +98,21 @@ text = "Score: 0 - Misses: 0 - Accuracy: 0% [N/A]"
 horizontal_alignment = 1
 autowrap_mode = 3
 
+[node name="CountdownSprite" type="Sprite2D" parent="HUD"]
+position = Vector2(640, 360)
+
 [node name="Inst" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_1vrr8")
 
 [node name="Voices" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_ms7ae")
+
+[node name="CountdownSounds" type="Node" parent="."]
+
+[node name="Prepare" type="AudioStreamPlayer" parent="CountdownSounds"]
+
+[node name="Ready" type="AudioStreamPlayer" parent="CountdownSounds"]
+
+[node name="Set" type="AudioStreamPlayer" parent="CountdownSounds"]
+
+[node name="Go" type="AudioStreamPlayer" parent="CountdownSounds"]

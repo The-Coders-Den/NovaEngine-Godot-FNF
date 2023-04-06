@@ -82,8 +82,8 @@ func play_anim(anim:String, force:bool = false):
 		
 		anim_player.play(anim)
 
-func dance(force:bool = true):
-	play_anim(dance_steps[cur_dance_step])
+func dance(force:bool = false):
+	play_anim(dance_steps[cur_dance_step], force)
 	
 	cur_dance_step += 1
 	if cur_dance_step > dance_steps.size() - 1:

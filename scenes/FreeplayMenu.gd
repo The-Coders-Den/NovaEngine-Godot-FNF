@@ -37,6 +37,8 @@ func change_selection(change:int = 0):
 		var song:FreeplayAlphabet = songs.get_child(i)
 		song.target_y = i - cur_selected
 		song.modulate.a = 1.0 if cur_selected == i else 0.6
+		
+	Audio.play_sound("scrollMenu")
 
 func _process(delta):
 	bg.modulate = lerp(bg.modulate, song_list.songs[cur_selected].bg_color, delta * 60 * 0.045)
