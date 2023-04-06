@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="FreeplaySongList" load_steps=9 format=3 uid="uid://dw5bby1xny12p"]
+
+[ext_resource type="Script" path="res://resources/FreeplaySongList.gd" id="1_sxs7f"]
+[ext_resource type="Script" path="res://resources/FreeplaySong.gd" id="2_7bcx6"]
+[ext_resource type="Texture2D" uid="uid://bggn4j2x81mod" path="res://assets/images/gameplay/icons/icon-gf.png" id="2_e0r34"]
+[ext_resource type="Texture2D" uid="uid://cb4g78s0nksa0" path="res://assets/images/gameplay/icons/icon-dad.png" id="4_u64um"]
+
+[sub_resource type="Resource" id="Resource_ykqdk"]
+script = ExtResource("2_7bcx6")
+song = "tutorial"
+display_name = "tutorial"
+character_icon = ExtResource("2_e0r34")
+icon_frames = 2
+difficulties = Array[String](["easy", "normal", "hard"])
+bg_color = Color(0.572549, 0.443137, 0.992157, 1)
+
+[sub_resource type="Resource" id="Resource_es7uv"]
+script = ExtResource("2_7bcx6")
+song = "bopeebo"
+display_name = "bopeebo"
+character_icon = ExtResource("4_u64um")
+icon_frames = 2
+difficulties = Array[String](["easy", "normal", "hard"])
+bg_color = Color(0.572549, 0.443137, 0.992157, 1)
+
+[sub_resource type="Resource" id="Resource_oie4e"]
+script = ExtResource("2_7bcx6")
+song = "fresh"
+display_name = "fresh"
+character_icon = ExtResource("4_u64um")
+icon_frames = 2
+difficulties = Array[String](["easy", "normal", "hard"])
+bg_color = Color(0.572549, 0.443137, 0.992157, 1)
+
+[sub_resource type="Resource" id="Resource_s18hq"]
+script = ExtResource("2_7bcx6")
+song = "dad battle"
+display_name = "dadbattle"
+character_icon = ExtResource("4_u64um")
+icon_frames = 2
+difficulties = Array[String](["easy", "normal", "hard"])
+bg_color = Color(0.572549, 0.443137, 0.992157, 1)
+
+[resource]
+script = ExtResource("1_sxs7f")
+songs = Array[ExtResource("2_7bcx6")]([SubResource("Resource_ykqdk"), SubResource("Resource_es7uv"), SubResource("Resource_oie4e"), SubResource("Resource_s18hq")])

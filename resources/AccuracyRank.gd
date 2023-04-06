@@ -1,5 +1,5 @@
 extends Resource
-class_name Rank
+class_name AccuracyRank
 
 var name:String = "S+"
 var accuracy_needed:float = 100.0

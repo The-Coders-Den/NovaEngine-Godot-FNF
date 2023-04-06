@@ -56,7 +56,7 @@ func _process(delta):
 	if is_menu_item:
 		var scaled_y = remap(target_y, 0, 1, 0, 1.3);
 
-		var lerp_val:float = clamp(delta * 60 * 0.16, 0, 1);
+		var lerp_val:float = clamp(delta * 60 * 0.1, 0, 1)
 		position.y = lerp(position.y, (scaled_y * y_mult) + (720 * 0.48) + y_add, lerp_val)
 		if force_x:
 			position.x = force_x

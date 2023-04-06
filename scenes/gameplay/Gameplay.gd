@@ -78,7 +78,7 @@ func _ready():
 		Global.SONG = Chart.load_chart("fresh", "hard")
 		SONG = Global.SONG
 	
-	note_skin = Global.note_skins[SONG.note_skin]
+	ui_skin = Global.ui_skins[SONG.ui_skin]
 		
 	inst.stream = load("res://assets/songs/"+SONG.name.to_lower()+"/Inst.ogg")
 	inst.pitch_scale = Conductor.rate

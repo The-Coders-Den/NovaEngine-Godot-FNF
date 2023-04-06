@@ -6,20 +6,20 @@ var default_judgements:Array[Judgement] = [
 	Judgement.create("bad", 100, 90.0, 0.3, false),
 	Judgement.create("shit", 50, 135.0, 0.0, false)
 ]
-var default_ranks:Array[Rank] = [
-	Rank.create("S+", 100.0),
-	Rank.create("S", 90.0),
-	Rank.create("A", 80.0),
-	Rank.create("B", 70.0),
-	Rank.create("C", 55.0),
-	Rank.create("D", 45.0),
-	Rank.create("E", 40),
-	Rank.create("F", 0.000001)
+var default_ranks:Array[AccuracyRank] = [
+	AccuracyRank.create("S+", 100.0),
+	AccuracyRank.create("S", 90.0),
+	AccuracyRank.create("A", 80.0),
+	AccuracyRank.create("B", 70.0),
+	AccuracyRank.create("C", 55.0),
+	AccuracyRank.create("D", 45.0),
+	AccuracyRank.create("E", 40),
+	AccuracyRank.create("F", 0.000001)
 ]
-var null_rank:Rank = Rank.create("N/A", 0.0)
+var null_rank:AccuracyRank = AccuracyRank.create("N/A", 0.0)
 
 var judgements:Array[Judgement] = []
-var ranks:Array[Rank] = []
+var ranks:Array[AccuracyRank] = []
 
 func judgement_from_time(time:float):
 	for j in judgements:

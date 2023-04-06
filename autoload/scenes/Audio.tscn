@@ -19,12 +19,15 @@ script = ExtResource("3_y5npm")
 
 [node name="scrollMenu" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("3_gg0mh")
+max_polyphony = 10
 script = ExtResource("3_y5npm")
 
 [node name="confirmMenu" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("4_wafmr")
+max_polyphony = 10
 script = ExtResource("3_y5npm")
 
 [node name="cancelMenu" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("5_cw7gy")
+max_polyphony = 10
 script = ExtResource("3_y5npm")
