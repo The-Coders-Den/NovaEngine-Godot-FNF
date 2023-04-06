@@ -30,11 +30,11 @@ text = "FPS: 0"
 [node name="MEMLabel" type="Label" parent="."]
 offset_left = 10.0
 offset_top = 26.0
-offset_right = 332.0
+offset_right = 652.0
 offset_bottom = 332.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
-theme_override_constants/line_spacing = -6
+theme_override_constants/line_spacing = -4
 theme_override_fonts/font = SubResource("SystemFont_ch7px")
 theme_override_font_sizes/font_size = 14
 text = "MEM: 0mb / 0mb
