@@ -29,59 +29,57 @@ var note_skin:UISkin = Global.ui_skins["default"]
 var strumline:StrumLine
 
 ## override these functions if you need to
-func _cpu_hit():
+func _cpu_hit() -> void:
 	pass
 	
-func _player_hit():
+func _player_hit() -> void:
 	pass
 	
-func _note_hit(is_player:bool):
+func _note_hit(is_player:bool) -> void:
 	pass
 	
-func _cpu_miss():
+func _cpu_miss() -> void:
 	pass
 	
-func _player_miss():
+func _player_miss() -> void:
 	pass
 
 ## internal functions
-func _ready():
+func _ready() -> void:
 	if length < 50: length = 0
 	
 	step_crochet = Conductor.step_crochet
 	og_length = length
 	
 	if "Default" in name:
-		anim_sprite.sprite_frames = load(note_skin.note_texture_path+"assets.res")
-		sustain.texture = load(note_skin.sustain_texture_path+Global.note_directions[direction]+" hold piece.png")
-		sustain_end.texture = load(note_skin.sustain_texture_path+Global.note_directions[direction]+" hold end.png")
+		anim_sprite.sprite_frames = load(note_skin.note_texture_path + "assets.res")
+		
+		sustain.texture = load(note_skin.sustain_texture_path + Global.note_directions[direction] + " hold piece.png")
+		sustain_end.texture = load(note_skin.sustain_texture_path + Global.note_directions[direction] + " hold end.png")
+		
 		scale = Vector2(note_skin.note_scale, note_skin.note_scale)
 		sustain.width /= ((note_skin.note_scale + 0.3) - note_skin.sustain_width_offset)
+		
 		texture_filter = TEXTURE_FILTER_LINEAR if note_skin.antialiasing else TEXTURE_FILTER_NEAREST
 		
 	clip_rect.size.y = Global.game_size.y / scale.y
-
 	anim_sprite.play(Global.note_directions[direction])
 
-func _process(delta):
+func _process(delta: float) -> void:
 	if was_good_hit:
 		length -= (delta * 1000.0) * Conductor.rate
 		if length <= -(Conductor.step_crochet):
 			queue_free()
 			
-		if must_press and not Input.is_action_pressed(strumline.controls[direction]) and length >= 150:
+		if must_press and length >= 150.0 and not Input.is_action_pressed(strumline.controls[direction]):
 			was_good_hit = false
 			game.fake_miss(direction)
 			queue_free()
 		
 	var safe_zone:float = (Conductor.safe_zone_offset * (1.2 * Conductor.rate))
-	if time > Conductor.position - safe_zone and time < Conductor.position + safe_zone:
-		can_be_hit = true
-	else:
-		can_be_hit = false
+	can_be_hit = time > Conductor.position - safe_zone and time < Conductor.position + safe_zone
 
-	if time < Conductor.position - safe_zone and not was_good_hit and not too_late:
-		too_late = true
+	too_late = time < Conductor.position - safe_zone and not was_good_hit
 
 	if too_late: modulate.a = 0.3
 	

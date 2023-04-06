@@ -1,11 +1,11 @@
-extends CanvasGroup
+extends Node2D
 
 @onready var game:Gameplay = $"../../"
 
 var note_anim_time:float = 0.0
 var note_anim_time_player:float = 0.0
 
-func _process(delta):
+func _process(delta:float) -> void:
 	note_anim_time += (delta * 1000.0) * Conductor.rate
 	note_anim_time_player += (delta * 1000.0) * Conductor.rate
 	
@@ -25,14 +25,14 @@ func _process(delta):
 				var receptor:Receptor = note.strumline.get_child(note.direction)
 				receptor.play_anim("confirm")
 				
-				var sing_anim:String = "sing"+note.strumline.get_child(note.direction).direction.to_upper()
+				var sing_anim:String = "sing%s" % note.strumline.get_child(note.direction).direction.to_upper()
 				game.player.play_anim(sing_anim, true)
 				game.player.hold_timer = 0.0
 				game.voices.volume_db = 0
 				
 				note_anim_time_player = 0.0
 			elif not note.must_press and note_anim_time >= Conductor.step_crochet:
-				var sing_anim:String = "sing"+note.strumline.get_child(note.direction).direction.to_upper()
+				var sing_anim:String = "sing%s" % note.strumline.get_child(note.direction).direction.to_upper()
 				game.opponent.play_anim(sing_anim, true)
 				game.opponent.hold_timer = 0.0
 				game.voices.volume_db = 0
@@ -54,7 +54,7 @@ func _process(delta):
 				note._cpu_hit()
 				note._note_hit(false)
 				
-				var sing_anim:String = "sing"+game.cpu_strums.get_child(note.direction).direction.to_upper()
+				var sing_anim:String = "sing%s" % game.cpu_strums.get_child(note.direction).direction.to_upper()
 				game.opponent.play_anim(sing_anim, true)
 				game.opponent.hold_timer = 0.0
 				

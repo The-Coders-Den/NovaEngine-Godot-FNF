@@ -46,6 +46,11 @@ func _process(delta):
 		
 	if Input.is_action_just_pressed("ui_down"):
 		change_selection(1)
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		Audio.stop_music()
+		Global.SONG = Chart.load_chart(song_list.songs[cur_selected].song, "hard")
+		Global.switch_scene("res://scenes/gameplay/Gameplay.tscn")
 		
 	if Input.is_action_just_pressed("ui_cancel"):
 		Audio.play_sound("cancelMenu")

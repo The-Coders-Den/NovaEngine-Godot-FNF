@@ -16,7 +16,7 @@
 [node name="Gameplay" type="Node2D"]
 script = ExtResource("1_8k5hd")
 
-[node name="Ratings" type="CanvasGroup" parent="."]
+[node name="Ratings" type="Node2D" parent="."]
 position = Vector2(704, 300)
 
 [node name="RatingTemplate" type="Sprite2D" parent="Ratings"]
@@ -43,7 +43,7 @@ position_smoothing_speed = 3.0
 
 [node name="StrumLines" type="Node2D" parent="HUD"]
 
-[node name="Notes" type="CanvasGroup" parent="HUD"]
+[node name="Notes" type="Node2D" parent="HUD"]
 script = ExtResource("3_kxnu2")
 
 [node name="HealthBar" type="ColorRect" parent="HUD"]

@@ -40,10 +40,8 @@ var default_cam_zoom:float = 1.05
 	
 var accuracy:float:
 	get:
-		if accuracy_total_hit != 0.0 and accuracy_pressed_notes != 0.0:
-			return accuracy_total_hit / accuracy_pressed_notes
-
-		return 0.0
+		return accuracy_total_hit / accuracy_pressed_notes if \
+				accuracy_total_hit != 0.0 and accuracy_pressed_notes != 0.0 else 0.0
 		
 var ui_skin:UISkin
 
@@ -52,8 +50,8 @@ var ui_skin:UISkin
 
 @onready var strumlines:Node2D = $HUD/StrumLines
 
-@onready var note_group:CanvasGroup = $HUD/Notes
-@onready var combo_group:CanvasGroup = $Ratings
+@onready var note_group:Node2D = $HUD/Notes
+@onready var combo_group:Node2D = $Ratings
 
 @onready var rating_template:VelocitySprite = $Ratings/RatingTemplate
 @onready var combo_template:VelocitySprite = $Ratings/ComboTemplate
@@ -68,7 +66,10 @@ var ui_skin:UISkin
 @onready var inst:AudioStreamPlayer = $Inst
 @onready var voices:AudioStreamPlayer = $Voices
 
-func _ready():
+const ICON_DELTA_MULTIPLIER:float = 60 * 0.15
+const ZOOM_DELTA_MULTIPLIER:float = 60 * 0.05
+
+func _ready() -> void:
 	super._ready()
 	
 	Ranking.judgements = Ranking.default_judgements.duplicate(true)
@@ -319,8 +320,10 @@ func sort_hit_notes(a:Note, b:Note):
 	elif a.should_hit and not b.should_hit: return -1
 	
 	return a.time < b.time
+
+func pop_up_score(judgement:Judgement) -> void:
+	var pop_up_score_tweener:Tween = create_tween().set_parallel()
 	
-func pop_up_score(judgement:Judgement):
 	accuracy_pressed_notes += 1
 	accuracy_total_hit += judgement.accuracy_gain
 	score += judgement.score
@@ -335,14 +338,10 @@ func pop_up_score(judgement:Judgement):
 	rating_spr.acceleration.y = 550
 	rating_spr.velocity.y = -randi_range(140, 175)
 	rating_spr.velocity.x = -randi_range(0, 10)
-	
-	var timer = get_tree().create_timer(Conductor.crochet * 0.001)
-	timer.connect("timeout", func():
-		var tween = get_tree().create_tween()
-		tween.tween_property(rating_spr, "modulate:a", 0.0, 0.2)
-		tween.tween_callback(rating_spr.queue_free)
-	)
 	combo_group.add_child(rating_spr)
+	
+	pop_up_score_tweener.tween_property(rating_spr, "modulate:a", 0.0, 0.2) \
+			.set_delay(Conductor.crochet * 0.001).finished.connect(func(): rating_spr.queue_free())
 	
 	var separated_score:String = Global.add_zeros(str(combo), 3)
 	for i in len(separated_score):
@@ -356,14 +355,10 @@ func pop_up_score(judgement:Judgement):
 		num_score.acceleration.y = randi_range(200, 300)
 		num_score.velocity.y = -randi_range(140, 160)
 		num_score.velocity.x = randi_range(-5, 5)
-		
-		var timer2 = get_tree().create_timer(Conductor.crochet * 0.002)
-		timer2.connect("timeout", func():
-			var tween = get_tree().create_tween()
-			tween.tween_property(num_score, "modulate:a", 0.0, 0.2)
-			tween.tween_callback(num_score.queue_free)
-		)
 		combo_group.add_child(num_score)
+		
+		pop_up_score_tweener.tween_property(num_score, "modulate:a", 0.0, 0.2) \
+			.set_delay(Conductor.crochet * 0.002).finished.connect(func(): num_score.queue_free())
 		
 func good_note_hit(note:Note):
 	if note.was_good_hit: return
@@ -412,7 +407,7 @@ func position_icons():
 func update_score_text():
 	score_text.text = "Score: "+str(score)+" - Misses: "+str(misses)+" - Accuracy: "+str(snapped(accuracy * 100.0, 0.01))+"% ["+Ranking.rank_from_accuracy(accuracy * 100.0).name+"]"
 
-func _process(delta):
+func _process(delta:float) -> void:
 	if not pressed.has(true) and player.last_anim.begins_with("sing") and player.hold_timer >= Conductor.step_crochet * player.sing_duration * 0.0011:
 		player.hold_timer = 0.0
 		player.dance()
@@ -424,12 +419,12 @@ func _process(delta):
 	cpu_icon.health = 100.0 - percent
 	player_icon.health = percent
 	
-	var icon_speed:float = clampf((delta * 60 * 0.15) * Conductor.rate, 0.0, 1.0)
+	var icon_speed:float = clampf((delta * ICON_DELTA_MULTIPLIER) * Conductor.rate, 0.0, 1.0)
 	cpu_icon.scale = lerp(cpu_icon.scale, Vector2.ONE, icon_speed)
 	player_icon.scale = lerp(player_icon.scale, Vector2.ONE, icon_speed)
 	position_icons()
 	
-	var camera_speed:float = clampf((delta * 60 * 0.05) * Conductor.rate, 0.0, 1.0)
+	var camera_speed:float = clampf((delta * ZOOM_DELTA_MULTIPLIER) * Conductor.rate, 0.0, 1.0)
 	camera.zoom = lerp(camera.zoom, Vector2(default_cam_zoom, default_cam_zoom), camera_speed)
 	hud.scale = lerp(hud.scale, Vector2.ONE, camera_speed)
 	position_hud()
@@ -459,3 +454,6 @@ func _process(delta):
 		note_group.add_child(new_note)
 		
 		note_data_array.erase(note)
+	
+	for sprite in combo_group.get_children():
+		VelocitySprite._process_sprite(sprite, delta)

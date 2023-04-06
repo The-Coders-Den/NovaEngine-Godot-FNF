@@ -17,7 +17,7 @@ var transitioning:bool = false
 
 @onready var flash:ColorRect = $Flash
 
-func _ready():
+func _ready() -> void:
 	super._ready()
 	Audio.play_music("freakyMenu")
 	Conductor.change_bpm(Audio.music.stream.bpm)
@@ -25,6 +25,7 @@ func _ready():
 	gf.play("danceLeft")
 	logo.play("logo bumpin")
 	title_enter.play("Press Enter to Begin")
+	cur_wacky = _get_wacky()
 
 func _process(delta):
 	Conductor.position = Audio.music.time
@@ -54,7 +55,7 @@ func beat_hit(beat:int):
 	
 	match beat:
 		1:
-			create_cool_text(['swordcube', 'voiddev'])
+			create_cool_text(['swordcube', 'voiddev', 'leather128'])
 		3:
 			add_more_text('present')
 		4:
@@ -118,3 +119,10 @@ func delete_cool_text():
 		var piss:Alphabet = text_group.get_child(0)
 		piss.queue_free()
 		text_group.remove_child(piss)
+
+func _get_wacky() -> PackedStringArray:
+	var wackies_file:FileAccess = FileAccess.open("res://assets/introTexts.txt", FileAccess.READ)
+	var wacky_text:String = wackies_file.get_as_text()
+	var wacky_lines:PackedStringArray = wacky_text.split("\n", false)
+	
+	return wacky_lines[randi_range(0, wacky_lines.size())].split("--")
