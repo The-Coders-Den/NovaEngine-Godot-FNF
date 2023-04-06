@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwdjro3nv3hme"]
+
+[ext_resource type="FontFile" uid="uid://coqcg7h14duny" path="res://assets/fonts/vcr.ttf" id="1_8ohit"]
+[ext_resource type="Script" path="res://scenes/options/TempOptions.gd" id="1_p61oo"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_y5req"]
+width = 32
+height = 32
+
+[node name="TempOptions" type="Node2D"]
+script = ExtResource("1_p61oo")
+
+[node name="debug text" type="Label" parent="."]
+offset_left = 667.0
+offset_top = 658.0
+offset_right = 1265.0
+offset_bottom = 697.0
+theme_override_fonts/font = ExtResource("1_8ohit")
+theme_override_font_sizes/font_size = 40
+text = "this is da options. no way"
+
+[node name="TabContainer" type="TabContainer" parent="."]
+offset_right = 671.0
+offset_bottom = 719.0
+
+[node name="gamenplay" type="TabBar" parent="TabContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/gamenplay"]
+layout_mode = 0
+offset_right = 672.0
+offset_bottom = 691.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/gamenplay/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/separation = 35
+
+[node name="Button" type="Button" parent="TabContainer/gamenplay/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "option"
+icon = SubResource("NoiseTexture2D_y5req")
