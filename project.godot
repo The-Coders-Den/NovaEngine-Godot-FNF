@@ -19,7 +19,6 @@ config/icon="res://icon.svg"
 
 Global="*res://autoload/scripts/Global.gd"
 Conductor="*res://autoload/scripts/Conductor.gd"
-SortUtil="*res://autoload/scripts/SortUtil.gd"
 Ranking="*res://autoload/scripts/Ranking.gd"
 Audio="*res://autoload/scenes/Audio.tscn"
 SettingsAPI="*res://autoload/scripts/SettingsAPI.gd"
