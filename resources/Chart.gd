@@ -11,7 +11,7 @@ var spectator:String = "gf"
 var player:String = "bf"
 
 var stage:String = "stage"
-var note_skin:String = "default"
+var ui_skin:String = "default"
 
 static func load_chart(song:String, difficulty:String = "normal"):
 	var json = JSON.parse_string(FileAccess.open("res://assets/songs/"+song+"/"+difficulty+".json", FileAccess.READ).get_as_text()).song
@@ -58,8 +58,8 @@ static func load_chart(song:String, difficulty:String = "normal"):
 	if "spectator" in json:
 		chart.spectator = json.spectator
 		
-	if "noteSkin" in json:
-		chart.note_skin = json.noteSkin
+	if "uiSkin" in json:
+		chart.ui_skin = json.uiSkin
 	
 	# oh god wish me luck converting these
 	# damn base game sections to cool ones!

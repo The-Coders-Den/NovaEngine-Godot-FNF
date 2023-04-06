@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuj2mrbefda35"]
+
+[ext_resource type="Script" path="res://scripts/UISkin.gd" id="1_1fpm8"]
+
+[node name="pixel" type="Node"]
+script = ExtResource("1_1fpm8")
+note_texture_path = "res://assets/images/gameplay/notes/pixel/"
+sustain_texture_path = "res://assets/images/gameplay/notes/pixel/sustains/"
+splash_texture_path = "res://assets/images/gameplay/notes/pixel/"
+rating_texture_path = "res://assets/images/gameplay/score/pixel/"
+combo_texture_path = "res://assets/images/gameplay/score/pixel/"
+rating_scale = 5.1
+combo_scale = 6.0
+note_scale = 6.0
+sustain_width_offset = -1.0
+antialiasing = false
+splash_antialiasing = false
+rating_antialiasing = false
+combo_antialiasing = false

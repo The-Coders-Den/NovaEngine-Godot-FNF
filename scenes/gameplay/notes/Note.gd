@@ -16,7 +16,7 @@ var too_late:bool = false
 
 var step_crochet:float = 0.0
 
-var note_skin:NoteSkin = Global.note_skins["default"]
+var note_skin:UISkin = Global.ui_skins["default"]
 
 @onready var game:Gameplay = $"../../../"
 
@@ -28,6 +28,23 @@ var note_skin:NoteSkin = Global.note_skins["default"]
 
 var strumline:StrumLine
 
+## override these functions if you need to
+func _cpu_hit():
+	pass
+	
+func _player_hit():
+	pass
+	
+func _note_hit(is_player:bool):
+	pass
+	
+func _cpu_miss():
+	pass
+	
+func _player_miss():
+	pass
+
+## internal functions
 func _ready():
 	if length < 50: length = 0
 	

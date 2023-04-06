@@ -1,13 +1,12 @@
 extends Node
 
-var judgements:Array[Judgement] = [
+var default_judgements:Array[Judgement] = [
 	Judgement.create("sick", 350, 45.0, 1.0, true),
 	Judgement.create("good", 200, 75.0, 0.7, false),
 	Judgement.create("bad", 100, 90.0, 0.3, false),
 	Judgement.create("shit", 50, 135.0, 0.0, false)
 ]
-
-var ranks:Array[Rank] = [
+var default_ranks:Array[Rank] = [
 	Rank.create("S+", 100.0),
 	Rank.create("S", 90.0),
 	Rank.create("A", 80.0),
@@ -18,6 +17,9 @@ var ranks:Array[Rank] = [
 	Rank.create("F", 0.000001)
 ]
 var null_rank:Rank = Rank.create("N/A", 0.0)
+
+var judgements:Array[Judgement] = []
+var ranks:Array[Rank] = []
 
 func judgement_from_time(time:float):
 	for j in judgements:

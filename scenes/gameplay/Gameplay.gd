@@ -45,7 +45,7 @@ var accuracy:float:
 
 		return 0.0
 		
-var note_skin:NoteSkin
+var ui_skin:UISkin
 
 @onready var camera:Camera2D = $Camera2D
 @onready var hud:CanvasLayer = $HUD
@@ -71,12 +71,15 @@ var note_skin:NoteSkin
 func _ready():
 	super._ready()
 	
+	Ranking.judgements = Ranking.default_judgements.duplicate(true)
+	Ranking.ranks = Ranking.default_ranks.duplicate(true)
+	
 	if Global.SONG == null:
-		Global.SONG = Chart.load_chart("bopeebo", "hard")
+		Global.SONG = Chart.load_chart("fresh", "hard")
 		SONG = Global.SONG
 		
-	SONG.note_skin = "pixel"
-	note_skin = Global.note_skins[SONG.note_skin]
+	SONG.ui_skin = "pixel"
+	ui_skin = Global.ui_skins[SONG.ui_skin]
 		
 	inst.stream = load("res://assets/songs/"+SONG.name.to_lower()+"/Inst.ogg")
 	inst.pitch_scale = Conductor.rate
@@ -112,11 +115,11 @@ func _ready():
 	update_score_text()
 	
 	cpu_strums = load("res://scenes/gameplay/strumlines/"+str(SONG.key_count)+"K.tscn").instantiate()
-	cpu_strums.note_skin = note_skin
+	cpu_strums.note_skin = ui_skin
 	strumlines.add_child(cpu_strums)
 	
 	player_strums = load("res://scenes/gameplay/strumlines/"+str(SONG.key_count)+"K.tscn").instantiate()
-	player_strums.note_skin = note_skin
+	player_strums.note_skin = ui_skin
 	strumlines.add_child(player_strums)
 	
 	var strum_y:float = Global.game_size.y - 100 if SettingsAPI.get_setting("downscroll") else 100
@@ -193,9 +196,9 @@ func end_song():
 	print("ending the jas dghj")
 	ending_song = true
 	
-func _beat_hit(beat:int):
-	cpu_icon.scale += Vector2(0.3, 0.3)
-	player_icon.scale += Vector2(0.3, 0.3)
+func beat_hit(beat:int):
+	cpu_icon.scale += Vector2(0.2, 0.2)
+	player_icon.scale += Vector2(0.2, 0.2)
 	position_icons()
 	
 	if beat % 4 == 0:
@@ -227,7 +230,7 @@ func position_hud():
 	hud.offset.x = (hud.scale.x - 1.0) * -(Global.game_size.x * 0.5)
 	hud.offset.y = (hud.scale.y - 1.0) * -(Global.game_size.y * 0.5)
 	
-func _step_hit(step:int):
+func step_hit(step:int):
 	if not ending_song and (not Conductor.is_sound_synced(inst) or (not Conductor.is_sound_synced(voices) and voices.get_playback_position() < voices.stream.get_length())):
 		resync_vocals()
 		
@@ -325,8 +328,10 @@ func pop_up_score(judgement:Judgement):
 	combo += 1
 	
 	var rating_spr:VelocitySprite = rating_template.duplicate()
-	rating_spr.texture = load("res://assets/images/gameplay/score/default/"+judgement.name+".png")
+	rating_spr.texture = load(ui_skin.rating_texture_path+judgement.name+".png")
 	rating_spr.visible = true
+	rating_spr.scale = Vector2(ui_skin.rating_scale, ui_skin.rating_scale)
+	rating_spr.texture_filter = TEXTURE_FILTER_LINEAR if ui_skin.rating_antialiasing else TEXTURE_FILTER_NEAREST
 	
 	rating_spr.acceleration.y = 550
 	rating_spr.velocity.y = -randi_range(140, 175)
@@ -343,9 +348,11 @@ func pop_up_score(judgement:Judgement):
 	var separated_score:String = Global.add_zeros(str(combo), 3)
 	for i in len(separated_score):
 		var num_score:VelocitySprite = combo_template.duplicate()
-		num_score.texture = load("res://assets/images/gameplay/score/default/num"+separated_score.substr(i, 1)+".png")
+		num_score.texture = load(ui_skin.combo_texture_path+"num"+separated_score.substr(i, 1)+".png")
 		num_score.position = Vector2((43 * i) - 90, 80)
 		num_score.visible = true
+		num_score.scale = Vector2(ui_skin.combo_scale, ui_skin.combo_scale)
+		num_score.texture_filter = TEXTURE_FILTER_LINEAR if ui_skin.combo_antialiasing else TEXTURE_FILTER_NEAREST
 		
 		num_score.acceleration.y = randi_range(200, 300)
 		num_score.velocity.y = -randi_range(140, 160)
@@ -380,10 +387,14 @@ func good_note_hit(note:Note):
 	
 	note.was_good_hit = true
 	if note.length <= 0:
+		note._player_hit()
+		note._note_hit(true)
 		note.queue_free()
 	else:
 		note.anim_sprite.visible = false
 		note.length += note_diff
+		note._player_hit()
+		note._note_hit(true)
 	
 	var sing_anim:String = "sing"+player_strums.get_child(note.direction).direction.to_upper()
 	player.play_anim(sing_anim, true)
@@ -446,7 +457,7 @@ func _process(delta):
 		new_note.length = note.length * 0.85
 		new_note.strumline = player_strums if is_player_note else cpu_strums
 		new_note.must_press = is_player_note
-		new_note.note_skin = note_skin
+		new_note.note_skin = ui_skin
 		note_group.add_child(new_note)
 		
 		note_data_array.erase(note)

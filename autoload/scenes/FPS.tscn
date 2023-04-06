@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://autoload/scenes/FPS.gd" id="1_ui6lb"]
 
 [node name="FPS" type="CanvasLayer"]
+process_mode = 3
 layer = 128
 script = ExtResource("1_ui6lb")
 

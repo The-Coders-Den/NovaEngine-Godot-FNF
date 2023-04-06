@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://duhqsh5l5bbtm"]
+[gd_scene load_steps=11 format=3 uid="uid://duhqsh5l5bbtm"]
 
 [ext_resource type="Script" path="res://scenes/TitleScreen.gd" id="1_eg0nr"]
 [ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="2_rhavx"]
 [ext_resource type="SpriteFrames" path="res://assets/images/titlescreen/gfDanceTitle.res" id="2_u0gnt"]
 [ext_resource type="SpriteFrames" path="res://assets/images/titlescreen/logoBumpin.res" id="4_dmwg3"]
+[ext_resource type="SpriteFrames" uid="uid://6vecp03qpxmj" path="res://assets/images/titlescreen/titleEnter.res" id="5_0ol1a"]
+[ext_resource type="PackedScene" path="res://scenes/fonts/Alphabet.tscn" id="6_8oxyx"]
+[ext_resource type="Texture2D" uid="uid://db74xyr3ob48e" path="res://assets/images/titlescreen/newgrounds_logo.png" id="7_6kcht"]
 
 [sub_resource type="Animation" id="Animation_ldyfc"]
 resource_name = "danceLeft"
@@ -120,7 +123,10 @@ _data = {
 [node name="TitleScreen" type="Node2D"]
 script = ExtResource("1_eg0nr")
 
-[node name="gf" type="AnimatedSprite2D" parent="."]
+[node name="TitleGroup" type="Node2D" parent="."]
+visible = false
+
+[node name="gf" type="AnimatedSprite2D" parent="TitleGroup"]
 position = Vector2(512, 50.4)
 sprite_frames = ExtResource("2_u0gnt")
 animation = &"gfDance"
@@ -129,14 +135,39 @@ frame_progress = 1.0
 centered = false
 script = ExtResource("2_rhavx")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="gf"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TitleGroup/gf"]
 libraries = {
 "": SubResource("AnimationLibrary_j2p0c")
 }
 
-[node name="logo" type="AnimatedSprite2D" parent="."]
+[node name="logo" type="AnimatedSprite2D" parent="TitleGroup"]
 position = Vector2(-150, -100)
 sprite_frames = ExtResource("4_dmwg3")
 animation = &"logo bumpin"
 centered = false
 script = ExtResource("2_rhavx")
+
+[node name="titleEnter" type="AnimatedSprite2D" parent="TitleGroup"]
+position = Vector2(100, 576)
+sprite_frames = ExtResource("5_0ol1a")
+animation = &"Press Enter to Begin"
+centered = false
+script = ExtResource("2_rhavx")
+
+[node name="TextTemplate" parent="." instance=ExtResource("6_8oxyx")]
+visible = false
+offset_top = 200.0
+offset_bottom = 270.0
+
+[node name="TextGroup" type="Node2D" parent="."]
+
+[node name="NgSpr" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(640, 526.4)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("7_6kcht")
+
+[node name="Flash" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_right = 1280.0
+offset_bottom = 720.0

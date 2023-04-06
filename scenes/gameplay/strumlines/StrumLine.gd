@@ -2,7 +2,7 @@ extends Node2D
 class_name StrumLine
 
 var is_ready:bool = false
-var note_skin:NoteSkin = Global.note_skins["default"]:
+var note_skin:UISkin = Global.ui_skins["default"]:
 	set(v):
 		note_skin = v
 		

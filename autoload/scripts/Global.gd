@@ -4,9 +4,9 @@ var SONG:Chart
 var note_directions:PackedStringArray = [
 	"left", "down", "up", "right"
 ]
-var note_skins:Dictionary = {
-	"default": preload("res://scenes/gameplay/noteskins/default.tscn").instantiate(),
-	"pixel": preload("res://scenes/gameplay/noteskins/pixel.tscn").instantiate()
+var ui_skins:Dictionary = {
+	"default": preload("res://scenes/gameplay/ui_skins/default.tscn").instantiate(),
+	"pixel": preload("res://scenes/gameplay/ui_skins/pixel.tscn").instantiate()
 }
 
 var game_size:Vector2 = Vector2(
@@ -16,6 +16,20 @@ var game_size:Vector2 = Vector2(
 
 func _ready():
 	RenderingServer.set_default_clear_color(Color.BLACK)
+	
+func switch_scene(path:String):
+	get_tree().paused = true
+	var ass:AnimationPlayer = Transition.anim_player
+	ass.play("in")
+	
+	var timer:SceneTreeTimer = get_tree().create_timer(ass.get_animation("in").length)
+	timer.timeout.connect(func():
+		get_tree().change_scene_to_file(path)
+		
+		ass.play("out")
+		var timer2:SceneTreeTimer = get_tree().create_timer(ass.get_animation("out").length)
+		timer2.timeout.connect(func(): get_tree().paused = false)
+	)
 
 func add_zeros(str:String, num:int):
 	while len(str) < num:

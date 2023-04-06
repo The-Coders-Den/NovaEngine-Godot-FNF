@@ -39,16 +39,20 @@ func _process(delta):
 				
 				note_anim_time = 0.0
 
+		var note_kill_range:float = (500 / scroll_speed)
 		if note.must_press:
-			if note.time <= Conductor.position - (500 / scroll_speed) and not note.was_good_hit:
+			if note.time <= Conductor.position - note_kill_range and not note.was_good_hit:
+				note._player_miss()
 				game.fake_miss(note.direction)
 				note.queue_free()
 		else:
-			if note.time <= Conductor.position and not note.was_good_hit:
+			if note.time <= Conductor.position and note.should_hit and not note.was_good_hit:
 				game.voices.volume_db = 0
 				
 				note.was_good_hit = true
 				note.anim_sprite.visible = false
+				note._cpu_hit()
+				note._note_hit(false)
 				
 				var sing_anim:String = "sing"+game.cpu_strums.get_child(note.direction).direction.to_upper()
 				game.opponent.play_anim(sing_anim, true)
@@ -56,3 +60,7 @@ func _process(delta):
 				
 				if note.length <= 0:
 					note.queue_free()
+					
+			if note.time <= Conductor.position - note_kill_range and not note.should_hit and not note.was_good_hit:
+				note._cpu_miss()
+				note.queue_free()
