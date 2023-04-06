@@ -1,12 +1,20 @@
 extends MusicBeatScene
 
 var cur_selected:int = 0
+var cur_difficulty:int = 1
+
+var intended_score:int = 0
+var lerp_score:float = 0.0
 
 @export var song_list:FreeplaySongList = FreeplaySongList.new()
 
 @onready var bg:Sprite2D = $bg
 @onready var songs:CanvasGroup = $Songs
 @onready var song_template:FreeplayAlphabet = $__TemplateSong__
+
+@onready var score_bg:ColorRect = $ScoreBG
+@onready var score_text:Label = $ScoreText
+@onready var diff_text:Label = $DiffText
 
 func _ready():
 	super._ready()
@@ -18,10 +26,10 @@ func _ready():
 		
 		var song:FreeplayAlphabet = song_template.duplicate()
 		var icon:HealthIcon = song.get_node("HealthIcon")
-		song.text = meta.display_name
+		song.text = meta.display_name if meta.display_name != null and len(meta.display_name) > 0 else meta.song
 		icon.texture = meta.character_icon
 		icon.hframes = meta.icon_frames
-		icon.position.x = song.size.x + 70
+		icon.position.x = song.size.x + 80
 		song.position = Vector2(0, (70 * i) + 30)
 		song.visible = true
 		song.is_menu_item = true
@@ -39,19 +47,46 @@ func change_selection(change:int = 0):
 		song.modulate.a = 1.0 if cur_selected == i else 0.6
 		
 	Audio.play_sound("scrollMenu")
+	position_highscore()
+	change_difficulty()
+		
+func change_difficulty(change:int = 0):
+	var diff_amount:int = song_list.songs[cur_selected].difficulties.size()
+	cur_difficulty = wrapi(cur_difficulty + change, 0, diff_amount)
+	var diff_name:String = song_list.songs[cur_selected].difficulties[cur_difficulty].to_upper()
+	
+	intended_score = -1 # unimplemented
+	diff_text.text = "< "+diff_name+" >" if diff_amount > 0 else diff_name
+	
+func position_highscore():
+	score_text.position.x = Global.game_size.x - score_text.size.x - 6
+	score_bg.scale.x = Global.game_size.x - score_text.position.x + 6
+	score_bg.position.x = Global.game_size.x - score_bg.scale.x
+	diff_text.position.x = score_bg.position.x + score_bg.scale.x / 2
+	diff_text.position.x -= diff_text.size.x / 2
 
 func _process(delta):
 	bg.modulate = lerp(bg.modulate, song_list.songs[cur_selected].bg_color, delta * 60 * 0.045)
+	
+	lerp_score = lerpf(lerp_score, intended_score, clampf(delta * 60 * 0.4, 0.0, 1.0))
+	score_text.text = "PERSONAL BEST:"+str(floor(lerp_score))
+	position_highscore()
 	
 	if Input.is_action_just_pressed("ui_up"):
 		change_selection(-1)
 		
 	if Input.is_action_just_pressed("ui_down"):
 		change_selection(1)
+		
+	if Input.is_action_just_pressed("ui_left"):
+		change_difficulty(-1)
+		
+	if Input.is_action_just_pressed("ui_right"):
+		change_difficulty(1)
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		Audio.stop_music()
-		Global.SONG = Chart.load_chart(song_list.songs[cur_selected].song, "hard")
+		Global.SONG = Chart.load_chart(song_list.songs[cur_selected].song, song_list.songs[cur_selected].difficulties[cur_difficulty])
 		Global.switch_scene("res://scenes/gameplay/Gameplay.tscn")
 		
 	if Input.is_action_just_pressed("ui_cancel"):

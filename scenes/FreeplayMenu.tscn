@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://duo1h603vpbjc"]
+[gd_scene load_steps=9 format=3 uid="uid://duo1h603vpbjc"]
 
 [ext_resource type="Script" path="res://scenes/FreeplayMenu.gd" id="1_fmw2k"]
 [ext_resource type="Resource" uid="uid://dw5bby1xny12p" path="res://assets/freeplaySongList.tres" id="2_c5rpj"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bvafd1dvo4ke4" path="res://assets/images/gameplay/icons/icon-bf.png" id="4_7vmig"]
 [ext_resource type="Script" path="res://scripts/FreeplayAlphabet.gd" id="5_x5jdf"]
 [ext_resource type="Script" path="res://scripts/HealthIcon.gd" id="5_y3j5c"]
+[ext_resource type="FontFile" uid="uid://coqcg7h14duny" path="res://assets/fonts/vcr.ttf" id="8_rgyml"]
 
 [node name="FreeplayMenu" type="Node2D"]
 script = ExtResource("1_fmw2k")
@@ -30,3 +31,24 @@ hframes = 2
 script = ExtResource("5_y3j5c")
 
 [node name="Songs" type="CanvasGroup" parent="."]
+
+[node name="ScoreBG" type="ColorRect" parent="."]
+offset_right = 1.0
+offset_bottom = 66.0
+color = Color(0, 0, 0, 0.6)
+
+[node name="ScoreText" type="Label" parent="."]
+offset_top = 5.0
+offset_right = 1.0
+offset_bottom = 34.0
+theme_override_fonts/font = ExtResource("8_rgyml")
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+
+[node name="DiffText" type="Label" parent="."]
+offset_top = 41.0
+offset_right = 1.0
+offset_bottom = 63.0
+theme_override_fonts/font = ExtResource("8_rgyml")
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
