@@ -12,6 +12,8 @@ var note_skin:UISkin = Global.ui_skins["default"]:
 @export var handle_input:bool = true
 @export var controls:Array[String] = []
 
+@onready var current_scene:Node = get_tree().current_scene
+
 func _ready() -> void:
 	is_ready = true
 	update_skin()
@@ -34,6 +36,10 @@ func _input(event:InputEvent) -> void:
 		
 func key_shit() -> void:
 	for i in get_child_count():
+		if not current_scene is Gameplay and Input.is_action_just_pressed(controls[i]):
+			var receptor:Receptor = get_child(i)
+			receptor.play_anim("pressed")
+			
 		if Input.is_action_just_released(controls[i]):
 			var receptor:Receptor = get_child(i)
 			receptor.play_anim("static")

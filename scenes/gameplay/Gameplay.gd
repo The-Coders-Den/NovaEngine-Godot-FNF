@@ -2,7 +2,8 @@ extends MusicBeatScene
 class_name Gameplay
 
 var template_notes:Dictionary = {
-	"default": preload("res://scenes/gameplay/notes/Default.tscn").instantiate()
+	"default": preload("res://scenes/gameplay/notes/Default.tscn").instantiate(),
+	"Alt Animation": preload("res://scenes/gameplay/notes/Default.tscn").instantiate()
 }
 var OPPONENT_HEALTH_COLOR:StyleBoxFlat = preload("res://assets/styles/healthbar/opponent.tres")
 var PLAYER_HEALTH_COLOR:StyleBoxFlat = preload("res://assets/styles/healthbar/player.tres")
@@ -320,7 +321,7 @@ func _input(event):
 							bad_note.queue_free()
 					
 				break
-		else:
+		elif not SettingsAPI.get_setting("ghost tapping"):
 			fake_miss(data)
 			
 func fake_miss(direction:int = -1):
@@ -391,7 +392,7 @@ func good_note_hit(note:Note):
 	var note_diff:float = (note.time - Conductor.position) / Conductor.rate
 	var judgement:Judgement = Ranking.judgement_from_time(note_diff)
 	
-	if judgement.do_splash:
+	if judgement.do_splash and SettingsAPI.get_setting("note splashes"):
 		var receptor:Receptor = player_strums.get_child(note.direction)
 		receptor.splash.frame = 0
 		var anim:String = "note impact "+str(randi_range(1, 2))+" "+Global.note_directions[note.direction]

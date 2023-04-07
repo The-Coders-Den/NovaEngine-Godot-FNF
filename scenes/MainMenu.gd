@@ -54,6 +54,9 @@ func _process(delta):
 					"Freeplay":
 						Global.switch_scene("res://scenes/FreeplayMenu.tscn")
 						
+					"Options":
+						Global.switch_scene("res://scenes/OptionsMenu.tscn")
+						
 					_: print("bro how the fuck did you select "+button+"???")
 			)
 		)

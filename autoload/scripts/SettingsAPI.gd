@@ -5,6 +5,26 @@ var _settings:Dictionary = {
 	# gameplay
 	"downscroll": false,
 	"centered notefield": false,
+	"ghost tapping": true,
+	"miss sounds": true,
+	"disable reset": false,
+	
+	"note offset": 0.0,
+	"scroll speed": 0.0,
+	"scroll speed type": "Multiplier",
+	
+	# appearance
+	"fps counter": true,
+	"note splashes": true,
+	"opaque sustains": false,
+	"subtitles": true,
+	"judgement camera": "World",
+	
+	# misc
+	"auto pause": true,
+	"volume beep pitching": false,
+	"vsync": false,
+	"multi threaded rendering": false,
 	
 	# controls (gameplay)
 	"note_left": ["D", "LEFT"],
@@ -67,11 +87,27 @@ func _ready():
 	f.store_string(JSON.stringify(json))
 	
 	setup_binds()
+	update_settings()
 		
 	print("Initialized settings!")
+	
+func update_settings():
+	for key in _settings.keys():
+		match key:
+			"VSync":
+				Global.set_vsync(true)
+			"Multi Threaded Rendering":
+				ProjectSettings.set_setting("rendering/driver/threads/thread_model", "Multi-Threaded" if _settings[key] else "Single-Safe")
 
 func get_setting(name:String):
 	if name in _settings:
 		return _settings[name]
 		
 	return null
+	
+func set_setting(name:String, value:Variant):
+	_settings[name] = value
+	
+func flush():
+	var f = FileAccess.open(_json_path, FileAccess.WRITE)
+	f.store_string(JSON.stringify(_settings))

@@ -4,9 +4,15 @@ class_name Note
 @export var health_gain_mult:float = 1.0
 @export var should_hit:bool = true
 
-var time:float = 0.0
-var direction:int = 0
-var length:float = 0.0
+@export var time:float = 0.0:
+	get:
+		return time + SettingsAPI.get_setting("note offset")
+		
+@export var direction:int = 0
+@export var length:float = 0.0
+
+@export var in_editor:bool = false
+
 var og_length:float = 0.0
 
 var must_press:bool = false
@@ -18,7 +24,7 @@ var step_crochet:float = 0.0
 
 var note_skin:UISkin = Global.ui_skins["default"]
 
-@onready var game:Gameplay = $"../../../"
+@onready var game:Gameplay
 
 @onready var anim_sprite:AnimatedSprite = $AnimatedSprite
 @onready var sustain:Line2D = $ColorRect/Sustain
@@ -46,6 +52,9 @@ func _player_miss() -> void:
 
 ## internal functions
 func _ready() -> void:
+	if not in_editor:
+		game = $"../../../"
+		
 	if length < 50: length = 0
 	
 	step_crochet = Conductor.step_crochet
@@ -62,6 +71,9 @@ func _ready() -> void:
 		
 		texture_filter = TEXTURE_FILTER_LINEAR if note_skin.antialiasing else TEXTURE_FILTER_NEAREST
 		
+	if SettingsAPI.get_setting("opaque sustains"):
+		sustain.modulate.a = 1.0
+		
 	clip_rect.size.y = Global.game_size.y / scale.y
 	anim_sprite.play(Global.note_directions[direction])
 
@@ -73,13 +85,15 @@ func _process(delta: float) -> void:
 			
 		if must_press and length >= 150.0 and not Input.is_action_pressed(strumline.controls[direction]):
 			was_good_hit = false
-			game.fake_miss(direction)
+			if not in_editor:
+				game.fake_miss(direction)
+				
 			queue_free()
 		
 	var safe_zone:float = (Conductor.safe_zone_offset * (1.2 * Conductor.rate))
 	can_be_hit = time > Conductor.position - safe_zone and time < Conductor.position + safe_zone
 
-	too_late = time < Conductor.position - safe_zone and not was_good_hit
+	too_late = time < Conductor.position - safe_zone and not was_good_hit and not in_editor
 
 	if too_late: modulate.a = 0.3
 	
@@ -91,6 +105,7 @@ func _process(delta: float) -> void:
 		clip_rect.position.y = 0
 		sustain.position.y = 0
 		
-	sustain.points[1].y = (((length / 2.5) * (game.scroll_speed / Conductor.rate)) / scale.y) * downscroll_mult
+	var scroll_speed:float = game.scroll_speed if not in_editor else SettingsAPI.get_setting("scroll speed")
+	sustain.points[1].y = (((length / 2.5) * (scroll_speed / Conductor.rate)) / scale.y) * downscroll_mult
 	sustain_end.position.y = sustain.points[1].y + (((sustain_end.texture.get_height() * sustain_end.scale.y) * 0.5) * downscroll_mult)
 	sustain_end.flip_v = downscroll_mult < 0

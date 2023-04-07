@@ -37,5 +37,3 @@ theme_override_constants/outline_size = 10
 theme_override_constants/line_spacing = -4
 theme_override_fonts/font = SubResource("SystemFont_ch7px")
 theme_override_font_sizes/font_size = 14
-text = "MEM: 0mb / 0mb
-VRAM: 0mb / 0mb"

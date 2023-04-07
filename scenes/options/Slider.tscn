@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxb0g70qegy3v"]
+
+[ext_resource type="Script" path="res://scenes/options/Slider.gd" id="1_jfbl1"]
+
+[node name="Slider" type="HSlider"]
+script = ExtResource("1_jfbl1")
+
+[connection signal="drag_ended" from="." to="." method="_on_drag_ended"]
+[connection signal="value_changed" from="." to="." method="_on_value_changed"]

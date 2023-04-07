@@ -1,0 +1,616 @@
+[gd_scene load_steps=13 format=3 uid="uid://2ud3viu0v6pw"]
+
+[ext_resource type="Script" path="res://scenes/OptionsMenu.gd" id="1_wsch7"]
+[ext_resource type="Texture2D" uid="uid://y8c4a1bk8wkl" path="res://assets/images/menus/menuBGDesat.png" id="2_di4mo"]
+[ext_resource type="Theme" uid="uid://c7bhikvxte264" path="res://assets/styles/nova_purple.tres" id="3_cmtlj"]
+[ext_resource type="Script" path="res://scenes/options/Checkbox.gd" id="4_gjk4b"]
+[ext_resource type="Script" path="res://scenes/options/Display Slider.gd" id="6_rfpqd"]
+[ext_resource type="Script" path="res://scenes/options/Dropdown.gd" id="6_wrrnp"]
+[ext_resource type="Theme" uid="uid://blt3c0a5po0yj" path="res://assets/styles/nova_purple_button.tres" id="7_xa45n"]
+[ext_resource type="PackedScene" uid="uid://w5olx2s2jovt" path="res://scenes/gameplay/strumlines/4K.tscn" id="8_8v6jg"]
+[ext_resource type="Texture2D" uid="uid://cuef5iw2rb0l7" path="res://assets/images/menus/options/defaultNotes.png" id="8_lykm7"]
+[ext_resource type="Shader" path="res://assets/shaders/BasicColorShader.gdshader" id="9_l1tk6"]
+[ext_resource type="PackedScene" uid="uid://bxyyf7clqhywn" path="res://scenes/gameplay/notes/Default.tscn" id="9_rjold"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ynbn"]
+shader = ExtResource("9_l1tk6")
+shader_parameter/swag_color = Color(0.223529, 0.176471, 0.254902, 1)
+
+[node name="OptionsMenu" type="Node2D"]
+script = ExtResource("1_wsch7")
+
+[node name="bg" type="Sprite2D" parent="."]
+modulate = Color(0.133333, 0.101961, 0.152941, 1)
+position = Vector2(640, 360)
+texture = ExtResource("2_di4mo")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+offset_left = 198.0
+offset_top = 52.0
+offset_right = 600.0
+offset_bottom = 656.0
+theme = ExtResource("3_cmtlj")
+theme_override_constants/side_margin = 0
+
+[node name="Gameplay" type="TabBar" parent="TabContainer"]
+layout_mode = 2
+
+[node name="Downscroll" type="CheckBox" parent="TabContainer/Gameplay"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 123.0
+offset_bottom = 39.0
+tooltip_text = "Makes the notes scroll downwards instead of upwards during gameplay."
+text = "Downscroll"
+script = ExtResource("4_gjk4b")
+option = "downscroll"
+
+[node name="Centered Notefield" type="CheckBox" parent="TabContainer/Gameplay"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 123.0
+offset_bottom = 63.0
+tooltip_text = "Centers your notes and hides the opponent's notes."
+text = "Centered Notefield"
+script = ExtResource("4_gjk4b")
+option = "centered notefield"
+
+[node name="Ghost Tapping" type="CheckBox" parent="TabContainer/Gameplay"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 56.0
+offset_right = 184.0
+offset_bottom = 87.0
+tooltip_text = "Allows you to hit notes that aren't on screen yet without getting punished."
+text = "Ghost Tapping"
+script = ExtResource("4_gjk4b")
+option = "ghost tapping"
+
+[node name="Miss Sounds" type="CheckBox" parent="TabContainer/Gameplay"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 80.0
+offset_right = 184.0
+offset_bottom = 111.0
+tooltip_text = "do i need to explain this?"
+text = "Miss Sounds"
+script = ExtResource("4_gjk4b")
+option = "miss sounds"
+
+[node name="Disable Reset" type="CheckBox" parent="TabContainer/Gameplay"]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 8.0
+offset_right = 360.0
+offset_bottom = 39.0
+tooltip_text = "Prevents the RESET bind from insta-killing you during gameplay."
+text = "Disable Reset"
+script = ExtResource("4_gjk4b")
+option = "disable reset"
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Gameplay"]
+modulate = Color(0.486275, 0.368627, 0.560784, 1)
+layout_mode = 0
+offset_left = 14.0
+offset_top = 112.0
+offset_right = 391.0
+offset_bottom = 116.0
+scale = Vector2(1, 2)
+
+[node name="Note Offset" type="HSlider" parent="TabContainer/Gameplay"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 146.0
+offset_right = 390.0
+offset_bottom = 162.0
+tooltip_text = "Adjusts how early/late notes spawn during gameplay.
+Useful for bluetooth headphones or something."
+min_value = -1000.0
+max_value = 1000.0
+step = 5.0
+script = ExtResource("6_rfpqd")
+suffix = "ms"
+option = "note offset"
+decimals = 0
+
+[node name="Title" type="Label" parent="TabContainer/Gameplay/Note Offset"]
+layout_mode = 0
+offset_top = -20.0
+offset_right = 90.0
+offset_bottom = 6.0
+mouse_filter = 1
+theme_override_font_sizes/font_size = 16
+text = "Note Offset"
+
+[node name="Display" type="Label" parent="TabContainer/Gameplay/Note Offset"]
+layout_mode = 0
+offset_left = 308.0
+offset_top = -20.0
+offset_right = 373.0
+offset_bottom = 6.0
+text = "0ms"
+horizontal_alignment = 2
+
+[node name="Scroll Speed" type="HSlider" parent="TabContainer/Gameplay"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 194.0
+offset_right = 390.0
+offset_bottom = 210.0
+tooltip_text = "How fast your notes scroll."
+max_value = 10.0
+step = 0.1
+value = 2.7
+script = ExtResource("6_rfpqd")
+option = "scroll speed"
+decimals = 1
+
+[node name="Title" type="Label" parent="TabContainer/Gameplay/Scroll Speed"]
+layout_mode = 0
+offset_top = -20.0
+offset_right = 94.0
+offset_bottom = 6.0
+mouse_filter = 1
+theme_override_font_sizes/font_size = 16
+text = "Scroll Speed"
+
+[node name="Display" type="Label" parent="TabContainer/Gameplay/Scroll Speed"]
+layout_mode = 0
+offset_left = 312.0
+offset_top = -20.0
+offset_right = 373.0
+offset_bottom = 6.0
+text = "2.7"
+horizontal_alignment = 2
+
+[node name="Scroll Speed Type" type="OptionButton" parent="TabContainer/Gameplay"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 248.0
+offset_right = 388.0
+offset_bottom = 271.0
+tooltip_text = "Changes how your speed is applied.
+Multiplier multiplies the song's scroll speed by the one set here, Constant directly sets the song's scroll speed."
+item_count = 2
+selected = 0
+popup/item_0/text = "Multiplier"
+popup/item_0/id = 0
+popup/item_1/text = "Constant"
+popup/item_1/id = 1
+script = ExtResource("6_wrrnp")
+option = "scroll speed type"
+
+[node name="Title" type="Label" parent="TabContainer/Gameplay/Scroll Speed Type"]
+layout_mode = 0
+offset_top = -26.0
+offset_right = 135.0
+mouse_filter = 1
+theme_override_font_sizes/font_size = 16
+text = "Scroll Speed Type"
+
+[node name="Appearance" type="TabBar" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="FPS Counter" type="CheckBox" parent="TabContainer/Appearance"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 123.0
+offset_bottom = 39.0
+tooltip_text = "Toggle whether or not the FPS counter is hidden."
+text = "FPS Counter"
+script = ExtResource("4_gjk4b")
+option = "fps counter"
+
+[node name="Note Splashes" type="CheckBox" parent="TabContainer/Appearance"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 130.0
+offset_bottom = 63.0
+tooltip_text = "funny note go firework boom when get sick"
+text = "Note Splashes"
+script = ExtResource("4_gjk4b")
+option = "note splashes"
+
+[node name="Opaque Sustains" type="CheckBox" parent="TabContainer/Appearance"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 56.0
+offset_right = 146.0
+offset_bottom = 87.0
+tooltip_text = "i am not explaining this"
+text = "Opaque Sustains"
+script = ExtResource("4_gjk4b")
+option = "opaque sustains"
+
+[node name="Subtitles" type="CheckBox" parent="TabContainer/Appearance"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 80.0
+offset_right = 146.0
+offset_bottom = 111.0
+tooltip_text = "Displays subtitles for songs like Monster or Winter Horrorland."
+text = "Subtitles (TO BE IMPLEMENTED)"
+script = ExtResource("4_gjk4b")
+option = "note splashes"
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Appearance"]
+modulate = Color(0.486275, 0.368627, 0.560784, 1)
+layout_mode = 0
+offset_left = 14.0
+offset_top = 112.0
+offset_right = 391.0
+offset_bottom = 116.0
+scale = Vector2(1, 2)
+
+[node name="Miscellaneous" type="TabBar" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Auto Pause" type="CheckBox" parent="TabContainer/Miscellaneous"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 123.0
+offset_bottom = 39.0
+tooltip_text = "Allows the game to pause when the window is unfocused."
+text = "Auto Pause"
+script = ExtResource("4_gjk4b")
+option = "fps counter"
+
+[node name="Volume Beep Pitching" type="CheckBox" parent="TabContainer/Miscellaneous"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 130.0
+offset_bottom = 63.0
+tooltip_text = "funny beep go yeah :3"
+text = "Volume Beep Pitching"
+script = ExtResource("4_gjk4b")
+option = "volume beep pitching"
+
+[node name="VSync" type="CheckBox" parent="TabContainer/Miscellaneous"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 56.0
+offset_right = 146.0
+offset_bottom = 87.0
+tooltip_text = "Syncs the framerate with your refresh rate."
+text = "VSync"
+script = ExtResource("4_gjk4b")
+option = "vsync"
+
+[node name="Multi Threaded Rendering" type="CheckBox" parent="TabContainer/Miscellaneous"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 80.0
+offset_right = 146.0
+offset_bottom = 111.0
+tooltip_text = "This might cause crashes when enabled!"
+text = "Multi Threaded Rendering"
+script = ExtResource("4_gjk4b")
+option = "multi threaded rendering"
+
+[node name="Tools" type="TabBar" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="XML Converter" type="Button" parent="TabContainer/Tools"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 20.0
+offset_right = 379.0
+offset_bottom = 51.0
+theme = ExtResource("7_xa45n")
+text = "XML Converter"
+
+[node name="Controls" type="TabBar" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Note Binds" type="Label" parent="TabContainer/Controls"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 101.0
+offset_bottom = 38.0
+mouse_filter = 1
+theme_override_font_sizes/font_size = 16
+text = "Note Binds"
+
+[node name="Left Bind" type="Button" parent="TabContainer/Controls/Note Binds"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 33.0
+offset_right = 202.0
+offset_bottom = 64.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+theme = ExtResource("7_xa45n")
+text = "A"
+
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/Note Binds/Left Bind"]
+layout_mode = 0
+offset_left = 170.0
+offset_right = 330.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "LEFT"
+
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/Note Binds/Left Bind"]
+position = Vector2(-28, 16)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("8_lykm7")
+hframes = 4
+
+[node name="Down Bind" type="Button" parent="TabContainer/Controls/Note Binds"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 73.0
+offset_right = 202.0
+offset_bottom = 104.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+theme = ExtResource("7_xa45n")
+text = "S"
+
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/Note Binds/Down Bind"]
+layout_mode = 0
+offset_left = 170.0
+offset_right = 330.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "DOWN"
+
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/Note Binds/Down Bind"]
+position = Vector2(-28, 16)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("8_lykm7")
+hframes = 4
+frame = 1
+
+[node name="Up Bind" type="Button" parent="TabContainer/Controls/Note Binds"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 113.0
+offset_right = 202.0
+offset_bottom = 144.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+theme = ExtResource("7_xa45n")
+text = "W"
+
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/Note Binds/Up Bind"]
+layout_mode = 0
+offset_left = 170.0
+offset_right = 330.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "UP"
+
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/Note Binds/Up Bind"]
+position = Vector2(-28, 16)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("8_lykm7")
+hframes = 4
+frame = 2
+
+[node name="Right Bind" type="Button" parent="TabContainer/Controls/Note Binds"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 153.0
+offset_right = 202.0
+offset_bottom = 184.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+theme = ExtResource("7_xa45n")
+text = "D"
+
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/Note Binds/Right Bind"]
+layout_mode = 0
+offset_left = 170.0
+offset_right = 330.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "RIGHT"
+
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/Note Binds/Right Bind"]
+position = Vector2(-28, 16)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("8_lykm7")
+hframes = 4
+frame = 3
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Controls"]
+modulate = Color(0.486275, 0.368627, 0.560784, 1)
+layout_mode = 0
+offset_left = 14.0
+offset_top = 208.0
+offset_right = 391.0
+offset_bottom = 212.0
+scale = Vector2(1, 2)
+
+[node name="UI Binds" type="Label" parent="TabContainer/Controls"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 228.0
+offset_right = 101.0
+offset_bottom = 254.0
+mouse_filter = 1
+theme_override_font_sizes/font_size = 16
+text = "UI Binds"
+
+[node name="Left Bind" type="Button" parent="TabContainer/Controls/UI Binds"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 33.0
+offset_right = 202.0
+offset_bottom = 64.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+theme = ExtResource("7_xa45n")
+text = "A"
+
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/UI Binds/Left Bind"]
+layout_mode = 0
+offset_left = 170.0
+offset_right = 330.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "LEFT"
+
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/UI Binds/Left Bind"]
+material = SubResource("ShaderMaterial_1ynbn")
+position = Vector2(-28, 16)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("8_lykm7")
+hframes = 4
+
+[node name="Down Bind" type="Button" parent="TabContainer/Controls/UI Binds"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 73.0
+offset_right = 202.0
+offset_bottom = 104.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+theme = ExtResource("7_xa45n")
+text = "S"
+
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/UI Binds/Down Bind"]
+layout_mode = 0
+offset_left = 170.0
+offset_right = 330.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "DOWN"
+
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/UI Binds/Down Bind"]
+material = SubResource("ShaderMaterial_1ynbn")
+position = Vector2(-28, 16)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("8_lykm7")
+hframes = 4
+frame = 1
+
+[node name="Up Bind" type="Button" parent="TabContainer/Controls/UI Binds"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 113.0
+offset_right = 202.0
+offset_bottom = 144.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+theme = ExtResource("7_xa45n")
+text = "W"
+
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/UI Binds/Up Bind"]
+layout_mode = 0
+offset_left = 170.0
+offset_right = 330.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "UP"
+
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/UI Binds/Up Bind"]
+material = SubResource("ShaderMaterial_1ynbn")
+position = Vector2(-28, 16)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("8_lykm7")
+hframes = 4
+frame = 2
+
+[node name="Right Bind" type="Button" parent="TabContainer/Controls/UI Binds"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 153.0
+offset_right = 202.0
+offset_bottom = 184.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+theme = ExtResource("7_xa45n")
+text = "D"
+
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/UI Binds/Right Bind"]
+layout_mode = 0
+offset_left = 170.0
+offset_right = 330.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "RIGHT"
+
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/UI Binds/Right Bind"]
+material = SubResource("ShaderMaterial_1ynbn")
+position = Vector2(-28, 16)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("8_lykm7")
+hframes = 4
+frame = 3
+
+[node name="dumb warning" type="Label" parent="."]
+offset_left = 213.0
+offset_top = 608.0
+offset_right = 481.0
+offset_bottom = 648.0
+theme_override_constants/line_spacing = -4
+theme_override_font_sizes/font_size = 14
+text = "Hover over items to get a description of
+what they do!"
+
+[node name="StrumLine" parent="." instance=ExtResource("8_8v6jg")]
+position = Vector2(884, 787)
+
+[node name="NoteTemplate" parent="." instance=ExtResource("9_rjold")]
+visible = false
+in_editor = true
+
+[node name="Notes" type="Node2D" parent="."]
+
+[connection signal="pressed" from="TabContainer/Gameplay/Downscroll" to="TabContainer/Gameplay/Downscroll" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Gameplay/Downscroll" to="." method="_on_gameplay_checkbox_pressed" binds= ["Downscroll"]]
+[connection signal="pressed" from="TabContainer/Gameplay/Centered Notefield" to="TabContainer/Gameplay/Centered Notefield" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Gameplay/Ghost Tapping" to="TabContainer/Gameplay/Ghost Tapping" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Gameplay/Miss Sounds" to="TabContainer/Gameplay/Miss Sounds" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Gameplay/Disable Reset" to="TabContainer/Gameplay/Disable Reset" method="_on_pressed"]
+[connection signal="drag_ended" from="TabContainer/Gameplay/Note Offset" to="TabContainer/Gameplay/Note Offset" method="_on_drag_ended"]
+[connection signal="value_changed" from="TabContainer/Gameplay/Note Offset" to="TabContainer/Gameplay/Note Offset" method="_on_value_changed"]
+[connection signal="drag_ended" from="TabContainer/Gameplay/Scroll Speed" to="TabContainer/Gameplay/Scroll Speed" method="_on_drag_ended"]
+[connection signal="value_changed" from="TabContainer/Gameplay/Scroll Speed" to="TabContainer/Gameplay/Scroll Speed" method="_on_value_changed"]
+[connection signal="item_selected" from="TabContainer/Gameplay/Scroll Speed Type" to="TabContainer/Gameplay/Scroll Speed Type" method="_on_item_selected"]
+[connection signal="pressed" from="TabContainer/Appearance/FPS Counter" to="TabContainer/Appearance/FPS Counter" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Appearance/Note Splashes" to="TabContainer/Appearance/Note Splashes" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Appearance/Opaque Sustains" to="TabContainer/Appearance/Opaque Sustains" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Appearance/Subtitles" to="TabContainer/Appearance/Subtitles" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Miscellaneous/Auto Pause" to="TabContainer/Miscellaneous/Auto Pause" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Miscellaneous/Volume Beep Pitching" to="TabContainer/Miscellaneous/Volume Beep Pitching" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Miscellaneous/VSync" to="TabContainer/Miscellaneous/VSync" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Miscellaneous/Multi Threaded Rendering" to="TabContainer/Miscellaneous/Multi Threaded Rendering" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Tools/XML Converter" to="." method="_on_tool_button_pressed" binds= ["XML Converter"]]

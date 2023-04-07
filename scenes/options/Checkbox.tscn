@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://4yenot2b8bn5"]
+
+[ext_resource type="Script" path="res://scenes/options/Checkbox.gd" id="1_kcifj"]
+
+[node name="Checkbox" type="CheckBox"]
+text = "bullshit"
+script = ExtResource("1_kcifj")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

@@ -37,6 +37,7 @@ func _ready():
 		songs.add_child(song)
 		
 	change_selection()
+	position_highscore()
 		
 func change_selection(change:int = 0):
 	cur_selected = wrapi(cur_selected + change, 0, song_list.songs.size())
@@ -47,7 +48,6 @@ func change_selection(change:int = 0):
 		song.modulate.a = 1.0 if cur_selected == i else 0.6
 		
 	Audio.play_sound("scrollMenu")
-	position_highscore()
 	change_difficulty()
 		
 func change_difficulty(change:int = 0):
@@ -58,7 +58,11 @@ func change_difficulty(change:int = 0):
 	intended_score = -1 # unimplemented
 	diff_text.text = "< "+diff_name+" >" if diff_amount > 0 else diff_name
 	
+	position_highscore()
+	
 func position_highscore():
+	score_text.text = "PERSONAL BEST:"+str(floor(lerp_score))
+	
 	score_text.position.x = Global.game_size.x - score_text.size.x - 6
 	score_bg.scale.x = Global.game_size.x - score_text.position.x + 6
 	score_bg.position.x = Global.game_size.x - score_bg.scale.x
@@ -69,7 +73,6 @@ func _process(delta):
 	bg.modulate = lerp(bg.modulate, song_list.songs[cur_selected].bg_color, delta * 60 * 0.045)
 	
 	lerp_score = lerpf(lerp_score, intended_score, clampf(delta * 60 * 0.4, 0.0, 1.0))
-	score_text.text = "PERSONAL BEST:"+str(floor(lerp_score))
 	position_highscore()
 	
 	if Input.is_action_just_pressed("ui_up"):
