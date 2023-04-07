@@ -43,9 +43,9 @@ var _settings:Dictionary = {
 	"ui_cancel": ["BACKSPACE", "ESCAPE"],
 	"ui_pause": ["ENTER", "UNKNOWN"],
 	
-	"volume_up": ["PLUS", "KP ADD"],
+	"volume_up": ["EQUAL", "KP ADD"],
 	"volume_down": ["MINUS", "KP SUBTRACT"],
-	"volume_mute": ["0", "KP 0"],
+	"volume_mute": ["0", "INSERT"],
 	
 	# engine
 	"volume": 0.5,
