@@ -50,7 +50,6 @@ func get_camera_pos():
 		p.x += 850
 		
 	p.x += anim_sprite.position.x
-	p.y += anim_sprite.position.y
 		
 	return p
 	

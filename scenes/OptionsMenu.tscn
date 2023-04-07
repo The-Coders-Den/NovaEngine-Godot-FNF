@@ -46,7 +46,6 @@ theme = ExtResource("3_cmtlj")
 theme_override_constants/side_margin = 0
 
 [node name="Gameplay" type="TabBar" parent="TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="Downscroll" type="CheckBox" parent="TabContainer/Gameplay"]
@@ -218,6 +217,7 @@ theme_override_font_sizes/font_size = 16
 text = "Scroll Speed Type"
 
 [node name="Appearance" type="TabBar" parent="TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="FPS Counter" type="CheckBox" parent="TabContainer/Appearance"]
@@ -274,6 +274,7 @@ offset_bottom = 116.0
 scale = Vector2(1, 2)
 
 [node name="Judgement Camera" type="OptionButton" parent="TabContainer/Appearance"]
+layout_mode = 0
 offset_left = 13.0
 offset_top = 152.0
 offset_right = 388.0
