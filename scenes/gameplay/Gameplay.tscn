@@ -1,12 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://cd8qnbjwrowm3"]
+[gd_scene load_steps=15 format=3 uid="uid://cd8qnbjwrowm3"]
 
 [ext_resource type="Script" path="res://scenes/gameplay/Gameplay.gd" id="1_8k5hd"]
+[ext_resource type="Script" path="res://classes/ScriptGroup.gd" id="2_5pmok"]
 [ext_resource type="Texture2D" uid="uid://bv033kep6qx5t" path="res://assets/images/gameplay/score/default/sick.png" id="2_t1d44"]
 [ext_resource type="Script" path="res://scenes/gameplay/NoteGroup.gd" id="3_kxnu2"]
 [ext_resource type="Script" path="res://classes/VelocitySprite.gd" id="3_rou8q"]
 [ext_resource type="AudioStream" uid="uid://erpperlee1ib" path="res://assets/songs/test/Inst.ogg" id="4_1vrr8"]
 [ext_resource type="Texture2D" uid="uid://l154yr6latgu" path="res://assets/images/gameplay/score/default/num0.png" id="4_5os72"]
 [ext_resource type="StyleBox" uid="uid://c4lt0ydus4t75" path="res://assets/styles/healthbar/opponent.tres" id="4_san04"]
+[ext_resource type="FontFile" uid="uid://cf2wd6a4pa5kb" path="res://assets/fonts/funkin.ttf" id="5_64arv"]
 [ext_resource type="Texture2D" uid="uid://bgk48t11fpyuf" path="res://assets/images/gameplay/icons/icon-face.png" id="5_hiat0"]
 [ext_resource type="AudioStream" uid="uid://nncthceb8qkg" path="res://assets/songs/test/Voices.ogg" id="5_ms7ae"]
 [ext_resource type="FontFile" uid="uid://coqcg7h14duny" path="res://assets/fonts/vcr.ttf" id="7_jpakc"]
@@ -15,6 +17,9 @@
 
 [node name="Gameplay" type="Node2D"]
 script = ExtResource("1_8k5hd")
+
+[node name="ScriptGroup" type="Node" parent="."]
+script = ExtResource("2_5pmok")
 
 [node name="Ratings" type="Node2D" parent="."]
 position = Vector2(704, 300)
@@ -46,6 +51,19 @@ position_smoothing_speed = 3.0
 
 [node name="Notes" type="Node2D" parent="HUD"]
 script = ExtResource("3_kxnu2")
+
+[node name="MSDisplay" type="Label" parent="HUD"]
+visible = false
+offset_left = 795.0
+offset_top = 475.0
+offset_right = 1093.0
+offset_bottom = 515.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("5_64arv")
+theme_override_font_sizes/font_size = 48
+text = "160ms"
+horizontal_alignment = 1
 
 [node name="HealthBar" type="ColorRect" parent="HUD"]
 offset_left = 340.0

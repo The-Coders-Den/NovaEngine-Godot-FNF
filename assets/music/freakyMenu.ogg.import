@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/freakyMenu.ogg-1aa45f71429bf2043a9e5813263821
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0.0
 bpm=102.0
 beat_count=0

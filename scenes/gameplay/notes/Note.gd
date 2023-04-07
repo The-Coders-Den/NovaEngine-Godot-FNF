@@ -15,6 +15,9 @@ class_name Note
 
 var og_length:float = 0.0
 
+# so you can do note.is_sustain_note in note hit script functions
+var is_sustain_note:bool = false
+
 var must_press:bool = false
 var can_be_hit:bool = false
 var was_good_hit:bool = false
@@ -83,7 +86,7 @@ func _process(delta: float) -> void:
 		if length <= -(Conductor.step_crochet):
 			queue_free()
 			
-		if must_press and length >= 150.0 and not Input.is_action_pressed(strumline.controls[direction]):
+		if must_press and length >= 80.0 and not Input.is_action_pressed(strumline.controls[direction]):
 			was_good_hit = false
 			if not in_editor:
 				game.fake_miss(direction)

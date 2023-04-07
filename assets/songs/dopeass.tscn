@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://lbelyo4emyyw"]
+
+[ext_resource type="Script" path="res://assets/songs/dopeass.gd" id="1_uqugd"]
+
+[node name="dopeass" type="Node"]
+script = ExtResource("1_uqugd")

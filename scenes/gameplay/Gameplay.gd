@@ -74,6 +74,9 @@ var ui_skin:UISkin
 @onready var countdown_set_sound:AudioStreamPlayer = $CountdownSounds/Set
 @onready var countdown_go_sound:AudioStreamPlayer = $CountdownSounds/Go
 
+@onready var ms_display:Label = $HUD/MSDisplay
+@onready var script_group:ScriptGroup = $ScriptGroup
+
 const ICON_DELTA_MULTIPLIER:float = 60 * 0.25
 const ZOOM_DELTA_MULTIPLIER:float = 60 * 0.05
 
@@ -85,7 +88,7 @@ func _ready() -> void:
 	Ranking.ranks = Ranking.default_ranks.duplicate(true)
 	
 	if Global.SONG == null:
-		Global.SONG = Chart.load_chart("fresh", "hard")
+		Global.SONG = Chart.load_chart("tutorial", "hard")
 		SONG = Global.SONG
 	
 	ui_skin = Global.ui_skins[SONG.ui_skin]
@@ -131,6 +134,20 @@ func _ready() -> void:
 	player_strums.note_skin = ui_skin
 	strumlines.add_child(player_strums)
 	
+	# load song scripts (put in assets/songs/SONGNAME)
+	var script_path:String = "res://assets/songs/"+SONG.name.to_lower()+"/script.tscn"
+	if ResourceLoader.exists(script_path):
+		var script:FunkinScript = FunkinScript.create(script_path, self)
+		script_group.add_script(script)
+	
+	# load global scripts (put in assets/songs)
+	var init_path:String = "res://assets/songs/"
+	var file_list:PackedStringArray = Global.list_files_in_dir(init_path)
+	for item in file_list:
+		if item.ends_with(".tscn"):
+			var script:FunkinScript = FunkinScript.create(init_path+item, self)
+			script_group.add_script(script)
+	
 	var strum_y:float = Global.game_size.y - 100.0 if SettingsAPI.get_setting("downscroll") else 100.0
 	cpu_strums.position = Vector2((Global.game_size.x * 0.5) - 320, strum_y)
 	player_strums.position = Vector2((Global.game_size.x * 0.5) + 320, strum_y)
@@ -152,7 +169,7 @@ func _ready() -> void:
 	else:
 		spectator = load("res://scenes/gameplay/characters/bf.tscn").instantiate()
 		
-	spectator.position = stage.character_positions["spectator"].position + spectator.position_offset
+	spectator.position = stage.character_positions["spectator"].position
 	add_child(spectator)
 	
 	var opponent_path:String = "res://scenes/gameplay/characters/"+SONG.opponent+".tscn"
@@ -161,7 +178,7 @@ func _ready() -> void:
 	else:
 		opponent = load("res://scenes/gameplay/characters/bf.tscn").instantiate()
 		
-	opponent.position = stage.character_positions["opponent"].position + opponent.position_offset
+	opponent.position = stage.character_positions["opponent"].position
 	add_child(opponent)
 	
 	if SONG.opponent == SONG.spectator:
@@ -177,7 +194,7 @@ func _ready() -> void:
 		player = load("res://scenes/gameplay/characters/bf.tscn").instantiate()
 		
 	player._is_true_player = true
-	player.position = stage.character_positions["player"].position + player.position_offset
+	player.position = stage.character_positions["player"].position
 	add_child(player)
 	
 	cpu_icon.texture = opponent.health_icon
@@ -192,6 +209,10 @@ func _ready() -> void:
 	if SettingsAPI.get_setting("downscroll"):
 		health_bar_bg.position.y = 60
 	
+	if SettingsAPI.get_setting("judgement camera").to_lower() == "hud":
+		remove_child(combo_group)
+		hud.add_child(combo_group)
+		
 	combo_group.move_to_front()
 	update_camera()
 	
@@ -203,9 +224,12 @@ func _ready() -> void:
 	position_icons()
 	start_countdown()
 	
+	stage.callv("_ready_post", [])
+	script_group.call_func("_ready_post", [])
+	
 # i'll write this later when i am not tired
 func start_countdown():
-	pass
+	script_group.call_func("on_start_countdown", [])
 		
 func start_song():
 	starting_song = false
@@ -214,11 +238,19 @@ func start_song():
 	inst.play()
 	voices.play()
 	
+	script_group.call_func("on_start_song", [])
+	
 func end_song():
 	ending_song = true
+	
+	var ret:Variant = script_group.call_func("on_end_song", [])
+	if ret == false: return
+	
 	Global.switch_scene("res://scenes/FreeplayMenu.tscn")
 	
 func beat_hit(beat:int):
+	script_group.call_func("on_beat_hit", [beat])
+	
 	cpu_icon.scale += Vector2(0.2, 0.2)
 	player_icon.scale += Vector2(0.2, 0.2)
 	position_icons()
@@ -231,6 +263,16 @@ func beat_hit(beat:int):
 	character_bop()
 	update_camera(Conductor.cur_section)
 	
+	script_group.call_func("on_beat_hit", [beat])
+	
+func step_hit(step:int):
+	script_group.call_func("on_step_hit", [step])
+	
+	if not ending_song and (not Conductor.is_sound_synced(inst) or (voices.stream != null and not Conductor.is_sound_synced(voices) and voices.get_playback_position() < voices.stream.get_length())):
+		resync_vocals()
+		
+	script_group.call_func("on_step_hit_post", [step])
+	
 func character_bop():
 	if opponent != null and not opponent.last_anim.begins_with("sing"):
 		opponent.dance()
@@ -240,6 +282,8 @@ func character_bop():
 		
 	if player != null and not player.last_anim.begins_with("sing"):
 		player.dance()
+		
+	script_group.call_func("on_character_bop", [])
 	
 func update_camera(sec:int = 0):
 	if not range(SONG.sections.size()).has(sec): return
@@ -249,14 +293,12 @@ func update_camera(sec:int = 0):
 		camera.position = player.get_camera_pos()
 	else:
 		camera.position = opponent.get_camera_pos()
+		
+	script_group.call_func("on_update_camera", [])
 	
 func position_hud():
 	hud.offset.x = (hud.scale.x - 1.0) * -(Global.game_size.x * 0.5)
 	hud.offset.y = (hud.scale.y - 1.0) * -(Global.game_size.y * 0.5)
-	
-func step_hit(step:int):
-	if not ending_song and (not Conductor.is_sound_synced(inst) or (voices.stream != null and not Conductor.is_sound_synced(voices) and voices.get_playback_position() < voices.stream.get_length())):
-		resync_vocals()
 		
 func resync_vocals():
 	if ending_song: return
@@ -266,6 +308,8 @@ func resync_vocals():
 	
 	inst.play(Conductor.position / 1000.0)
 	voices.play(Conductor.position / 1000.0)
+	
+	script_group.call_func("on_resync_vocals", [])
 
 func key_from_event(event:InputEventKey):
 	var data:int = -1
@@ -321,8 +365,10 @@ func _input(event):
 							bad_note.queue_free()
 					
 				break
-		elif not SettingsAPI.get_setting("ghost tapping"):
-			fake_miss(data)
+		else:
+			if not SettingsAPI.get_setting("ghost tapping"):
+				fake_miss(data)
+			script_group.call_func("on_ghost_tap", [data])
 			
 func fake_miss(direction:int = -1):
 	health -= 0.0475
@@ -384,6 +430,10 @@ func pop_up_score(judgement:Judgement) -> void:
 		pop_up_score_tweener.tween_property(num_score, "modulate:a", 0.0, 0.2) \
 			.set_delay(Conductor.crochet * 0.002).finished.connect(func(): num_score.queue_free())
 		
+	script_group.call_func("on_pop_up_score", [combo])
+		
+var ms_tween:Tween
+		
 func good_note_hit(note:Note):
 	if note.was_good_hit: return
 	
@@ -392,32 +442,53 @@ func good_note_hit(note:Note):
 	var note_diff:float = (note.time - Conductor.position) / Conductor.rate
 	var judgement:Judgement = Ranking.judgement_from_time(note_diff)
 	
+	if SettingsAPI.get_setting("show ms on note hit"):
+		ms_display.modulate = judgement.color
+		ms_display.text = str(note_diff).pad_decimals(2)+"ms"
+		ms_display.position.x = player_strums.position.x - (ms_display.size.x * 0.5)
+		ms_display.position.y = player_strums.position.y - (ms_display.size.y * 0.5) - 110.0
+		ms_display.visible = true
+		
+		if ms_tween != null:
+			ms_tween.stop()
+		
+		ms_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+		ms_tween.tween_property(ms_display, "position:y", ms_display.position.y + 10.0, 0.3)
+		ms_tween.tween_property(ms_display, "modulate:a", 0.0, 0.3).set_delay(0.5)
+		script_group.call_func("on_show_ms", [])
+		
 	if judgement.do_splash and SettingsAPI.get_setting("note splashes"):
 		var receptor:Receptor = player_strums.get_child(note.direction)
 		receptor.splash.frame = 0
 		var anim:String = "note impact "+str(randi_range(1, 2))+" "+Global.note_directions[note.direction]
 		receptor.splash.play(anim)
 		receptor.splash.visible = true
+		script_group.call_func("on_spawn_note_splash", [receptor.splash])
 	
 	pop_up_score(judgement)	
 	update_score_text()
 	
 	note.was_good_hit = true
-	if note.length <= 0:
-		note._player_hit()
-		note._note_hit(true)
-		note.queue_free()
-	else:
-		note.anim_sprite.visible = false
-		note.length += note_diff
-		note._player_hit()
-		note._note_hit(true)
 	
 	var sing_anim:String = "sing"+player_strums.get_child(note.direction).direction.to_upper()
 	player.play_anim(sing_anim, true)
 	player.hold_timer = 0.0
 	
 	health += 0.023
+	
+	if note.length <= 0:
+		note._player_hit()
+		note._note_hit(true)
+		script_group.call_func("on_note_hit", [note])
+		script_group.call_func("on_player_hit", [note])
+		note.queue_free()
+	else:
+		note.anim_sprite.visible = false
+		note.length += note_diff
+		note._player_hit()
+		note._note_hit(true)
+		script_group.call_func("on_note_hit", [note])
+		script_group.call_func("on_player_hit", [note])
 
 func position_icons():
 	var icon_offset:int = 26
@@ -427,9 +498,11 @@ func position_icons():
 
 	player_icon.position.x = (health_bar.size.x * ((100 - percent) * 0.01)) - icon_offset
 	cpu_icon.position.x = (health_bar.size.x * ((100 - percent) * 0.01)) - (cpu_icon_width - icon_offset)
+	script_group.call_func("on_position_icons", [])
 
 func update_score_text():
 	score_text.text = "Score: "+str(score)+" - Misses: "+str(misses)+" - Accuracy: "+str(snapped(accuracy * 100.0, 0.01))+"% ["+Ranking.rank_from_accuracy(accuracy * 100.0).name+"]"
+	script_group.call_func("on_update_score_text", [])
 
 func _process(delta:float) -> void:
 	if not pressed.has(true) and player.last_anim.begins_with("sing") and player.hold_timer >= Conductor.step_crochet * player.sing_duration * 0.0011:
@@ -476,8 +549,17 @@ func _process(delta:float) -> void:
 		new_note.must_press = is_player_note
 		new_note.note_skin = ui_skin
 		note_group.add_child(new_note)
+		script_group.call_func("on_note_spawn", [new_note])
 		
 		note_data_array.erase(note)
 	
 	for sprite in combo_group.get_children():
 		VelocitySprite._process_sprite(sprite, delta)
+		
+	stage.callv("_process_post", [delta])
+	script_group.call_func("_process_post", [delta])
+
+func _exit_tree():
+	script_group.call_func("on_destroy", [])
+	script_group.call_func("on_exit_tree", [])
+	script_group.queue_free()

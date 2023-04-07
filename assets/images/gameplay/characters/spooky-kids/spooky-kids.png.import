@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dh8oohqqqklha"
-path="res://.godot/imported/parents-christmas.png-e69c51502235a3edea499f5c9bb77673.ctex"
+uid="uid://b6qe0c4rmotyi"
+path="res://.godot/imported/spooky-kids.png-307638de8d882e54b6ca12ebd31478c2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/gameplay/characters/parents-christmas.png"
-dest_files=["res://.godot/imported/parents-christmas.png-e69c51502235a3edea499f5c9bb77673.ctex"]
+source_file="res://assets/images/gameplay/characters/spooky-kids/spooky-kids.png"
+dest_files=["res://.godot/imported/spooky-kids.png-307638de8d882e54b6ca12ebd31478c2.ctex"]
 
 [params]
 

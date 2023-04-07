@@ -8,6 +8,7 @@ var _settings:Dictionary = {
 	"ghost tapping": true,
 	"miss sounds": true,
 	"disable reset": false,
+	"show ms on note hit": false,
 	
 	"note offset": 0.0,
 	"scroll speed": 0.0,
@@ -33,15 +34,32 @@ var _settings:Dictionary = {
 	"note_right": ["K", "RIGHT"],
 	
 	# controls (ui)
+	"ui_left": ["A", "LEFT"],
+	"ui_down": ["S", "DOWN"],
+	"ui_up": ["W", "UP"],
+	"ui_right": ["D", "RIGHT"],
+	
 	"ui_accept": ["ENTER", "SPACE"],
 	"ui_cancel": ["BACKSPACE", "ESCAPE"],
-	"ui_pause": ["ENTER", "NONE"]
+	"ui_pause": ["ENTER", "UNKNOWN"],
+	
+	"volume_up": ["PLUS", "KP ADD"],
+	"volume_down": ["MINUS", "KP SUBTRACT"],
+	"volume_mute": ["0", "KP 0"],
+	
+	# engine
+	"volume": 0.5,
+	"muted": false,
 }
 
 func setup_binds():
 	Input.set_use_accumulated_input(false)
 	
-	var binds:PackedStringArray = ["note_left", "note_down", "note_up", "note_right"] 
+	var binds:PackedStringArray = [
+		"note_left", "note_down", "note_up", "note_right",
+		"ui_pause",
+		"volume_down", "volume_up", "volume_mute"
+	] 
 	for bind in binds:
 		var keys = InputMap.action_get_events(bind)
 		
@@ -94,9 +112,9 @@ func _ready():
 func update_settings():
 	for key in _settings.keys():
 		match key:
-			"VSync":
+			"vsync":
 				Global.set_vsync(true)
-			"Multi Threaded Rendering":
+			"multi threaded rendering":
 				ProjectSettings.set_setting("rendering/driver/threads/thread_model", "Multi-Threaded" if _settings[key] else "Single-Safe")
 
 func get_setting(name:String):

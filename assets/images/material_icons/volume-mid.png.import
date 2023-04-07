@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6qe0c4rmotyi"
-path="res://.godot/imported/spooky-kids.png-104e396a95d1cd30149bf3d3d19ee328.ctex"
+uid="uid://3hermjx3kxw2"
+path="res://.godot/imported/volume-mid.png-9161c34c76842352d955a44fc7c637a8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/gameplay/characters/spooky-kids.png"
-dest_files=["res://.godot/imported/spooky-kids.png-104e396a95d1cd30149bf3d3d19ee328.ctex"]
+source_file="res://assets/images/material_icons/volume-mid.png"
+dest_files=["res://.godot/imported/volume-mid.png-9161c34c76842352d955a44fc7c637a8.ctex"]
 
 [params]
 

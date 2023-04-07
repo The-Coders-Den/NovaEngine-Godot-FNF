@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=18 format=3 uid="uid://c7bhikvxte264"]
+[gd_resource type="Theme" load_steps=27 format=3 uid="uid://c7bhikvxte264"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_maoy0"]
 
@@ -96,8 +96,24 @@ corner_radius_bottom_left = 5
 color = Color(0.301961, 0.239216, 0.345098, 1)
 thickness = 2
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_unjsi"]
+bg_color = Color(0.270588, 0.215686, 0.313726, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f2yiw"]
+bg_color = Color(0.364706, 0.294118, 0.419608, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mss52"]
 bg_color = Color(0.164706, 0.12549, 0.192157, 1)
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nbcpl"]
 content_margin_left = 10.0
@@ -117,6 +133,38 @@ content_margin_left = 10.0
 content_margin_right = 10.0
 bg_color = Color(0.133333, 0.0980392, 0.156863, 1)
 
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_u4hag"]
+color = Color(0.223529, 0.176471, 0.254902, 1)
+thickness = 8
+vertical = true
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_yy6gd"]
+color = Color(0.223529, 0.176471, 0.254902, 1)
+thickness = 8
+vertical = true
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_pwc4c"]
+color = Color(0.223529, 0.176471, 0.254902, 1)
+thickness = 8
+vertical = true
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_nwkxo"]
+color = Color(0.133333, 0.0980392, 0.156863, 1)
+thickness = 8
+vertical = true
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_rqenc"]
+color = Color(0.223529, 0.176471, 0.254902, 1)
+thickness = 5
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_h8obm"]
+color = Color(0.223529, 0.176471, 0.254902, 1)
+thickness = 5
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_c7f7q"]
+color = Color(0.133333, 0.0980392, 0.156863, 1)
+thickness = 5
+
 [resource]
 CheckBox/styles/focus = SubResource("StyleBoxEmpty_maoy0")
 HSlider/styles/grabber_area = SubResource("StyleBoxLine_31hdj")
@@ -131,7 +179,16 @@ PopupMenu/styles/hover = SubResource("StyleBoxFlat_dl66s")
 PopupMenu/styles/panel = SubResource("StyleBoxFlat_oojo6")
 PopupMenu/styles/panel_disabled = SubResource("StyleBoxFlat_sba3r")
 PopupMenu/styles/separator = SubResource("StyleBoxLine_1xr4f")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_unjsi")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_f2yiw")
 TabContainer/styles/panel = SubResource("StyleBoxFlat_mss52")
 TabContainer/styles/tab_disabled = SubResource("StyleBoxFlat_nbcpl")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_oy2kg")
 TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_py02u")
+VScrollBar/styles/grabber = SubResource("StyleBoxLine_u4hag")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxLine_yy6gd")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxLine_pwc4c")
+VScrollBar/styles/scroll = SubResource("StyleBoxLine_nwkxo")
+VSlider/styles/grabber_area = SubResource("StyleBoxLine_rqenc")
+VSlider/styles/grabber_area_highlight = SubResource("StyleBoxLine_h8obm")
+VSlider/styles/slider = SubResource("StyleBoxLine_c7f7q")

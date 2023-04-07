@@ -9,3 +9,9 @@ class_name Stage
 	"spectator": $"Character Positions/Spectator",
 	"player": $"Character Positions/Player"
 }
+
+func _ready_post():
+	pass
+	
+func _process_post(delta:float):
+	pass

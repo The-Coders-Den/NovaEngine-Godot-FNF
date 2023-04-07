@@ -10,8 +10,6 @@ class_name Character
 @export var health_icon_frames:int = 2
 @export var health_color:Color = Color("#A1A1A1")
 
-@export var position_offset:Vector2 = Vector2.ZERO
-
 @onready var anim_sprite:AnimatedSprite = $AnimatedSprite
 @onready var anim_player:AnimationPlayer = $AnimatedSprite/AnimationPlayer
 
@@ -44,12 +42,15 @@ func _ready():
 		anim_sprite.position.x -= initial_size.x * absf(anim_sprite.scale.x)
 	
 func get_midpoint():
-	return Vector2(position.x + initial_size.x * 0.5, position.y + initial_size.y * 0.5)
+	return Vector2(position.x + anim_sprite.position.x + initial_size.x * 0.5, position.y + anim_sprite.position.y + initial_size.y * 0.5)
 	
 func get_camera_pos():
 	var p:Vector2 = position + camera_pos.position
 	if is_player != _is_true_player:
-		p.x += 450
+		p.x += 850
+		
+	p.x += anim_sprite.position.x
+	p.y += anim_sprite.position.y
 		
 	return p
 	

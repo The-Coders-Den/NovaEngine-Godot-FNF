@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ch8tgkdv0uq3w"
-path="res://.godot/imported/spirit.png-ac3bae15caac790af5e7c4d82c27108c.ctex"
+uid="uid://dh8oohqqqklha"
+path="res://.godot/imported/parents-christmas.png-a66d8ce0ae790af8ebdfe77494498219.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/gameplay/characters/spirit.png"
-dest_files=["res://.godot/imported/spirit.png-ac3bae15caac790af5e7c4d82c27108c.ctex"]
+source_file="res://assets/images/gameplay/characters/parents-christmas/parents-christmas.png"
+dest_files=["res://.godot/imported/parents-christmas.png-a66d8ce0ae790af8ebdfe77494498219.ctex"]
 
 [params]
 

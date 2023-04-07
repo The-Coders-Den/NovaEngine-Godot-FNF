@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://2ud3viu0v6pw"]
+[gd_scene load_steps=22 format=3 uid="uid://2ud3viu0v6pw"]
 
 [ext_resource type="Script" path="res://scenes/OptionsMenu.gd" id="1_wsch7"]
 [ext_resource type="Texture2D" uid="uid://y8c4a1bk8wkl" path="res://assets/images/menus/menuBGDesat.png" id="2_di4mo"]
@@ -8,13 +8,26 @@
 [ext_resource type="Script" path="res://scenes/options/Dropdown.gd" id="6_wrrnp"]
 [ext_resource type="Theme" uid="uid://blt3c0a5po0yj" path="res://assets/styles/nova_purple_button.tres" id="7_xa45n"]
 [ext_resource type="PackedScene" uid="uid://w5olx2s2jovt" path="res://scenes/gameplay/strumlines/4K.tscn" id="8_8v6jg"]
+[ext_resource type="Script" path="res://scenes/options/BindButton.gd" id="8_715hi"]
 [ext_resource type="Texture2D" uid="uid://cuef5iw2rb0l7" path="res://assets/images/menus/options/defaultNotes.png" id="8_lykm7"]
 [ext_resource type="Shader" path="res://assets/shaders/BasicColorShader.gdshader" id="9_l1tk6"]
 [ext_resource type="PackedScene" uid="uid://bxyyf7clqhywn" path="res://scenes/gameplay/notes/Default.tscn" id="9_rjold"]
+[ext_resource type="Texture2D" uid="uid://88aw03tlr1oh" path="res://assets/images/menus/options/acceptBind.png" id="11_81vb3"]
+[ext_resource type="Texture2D" uid="uid://dfs5s3i6cl6am" path="res://assets/images/menus/options/backBind.png" id="12_0w4bb"]
+[ext_resource type="Texture2D" uid="uid://bnah4iv83h5ec" path="res://assets/images/menus/options/pauseBind.png" id="13_u4boq"]
+[ext_resource type="Texture2D" uid="uid://3hermjx3kxw2" path="res://assets/images/material_icons/volume-mid.png" id="14_nb18d"]
+[ext_resource type="Texture2D" uid="uid://d0r5affbxqsi5" path="res://assets/images/material_icons/volume-full.png" id="15_qhl7p"]
+[ext_resource type="Texture2D" uid="uid://dw8bh3jsxd3kl" path="res://assets/images/material_icons/volume-mute.png" id="16_ofedk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2rif3"]
+bg_color = Color(1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ul4f4"]
+bg_color = Color(1, 1, 1, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1ynbn"]
 shader = ExtResource("9_l1tk6")
-shader_parameter/swag_color = Color(0.223529, 0.176471, 0.254902, 1)
+shader_parameter/swag_color = Color(0.352941, 0.282353, 0.4, 1)
 
 [node name="OptionsMenu" type="Node2D"]
 script = ExtResource("1_wsch7")
@@ -33,6 +46,7 @@ theme = ExtResource("3_cmtlj")
 theme_override_constants/side_margin = 0
 
 [node name="Gameplay" type="TabBar" parent="TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Downscroll" type="CheckBox" parent="TabContainer/Gameplay"]
@@ -90,6 +104,18 @@ text = "Disable Reset"
 script = ExtResource("4_gjk4b")
 option = "disable reset"
 
+[node name="Show MS on Note Hit" type="CheckBox" parent="TabContainer/Gameplay"]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 32.0
+offset_right = 375.0
+offset_bottom = 63.0
+tooltip_text = "Shows how early/late you hit a note in milliseconds."
+text = "Show MS on Note Hit
+"
+script = ExtResource("4_gjk4b")
+option = "show ms on note hit"
+
 [node name="HSeparator" type="HSeparator" parent="TabContainer/Gameplay"]
 modulate = Color(0.486275, 0.368627, 0.560784, 1)
 layout_mode = 0
@@ -106,6 +132,7 @@ offset_top = 146.0
 offset_right = 390.0
 offset_bottom = 162.0
 tooltip_text = "Adjusts how early/late notes spawn during gameplay.
+Negative means early and positive means late.
 Useful for bluetooth headphones or something."
 min_value = -1000.0
 max_value = 1000.0
@@ -191,7 +218,6 @@ theme_override_font_sizes/font_size = 16
 text = "Scroll Speed Type"
 
 [node name="Appearance" type="TabBar" parent="TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="FPS Counter" type="CheckBox" parent="TabContainer/Appearance"]
@@ -247,6 +273,30 @@ offset_right = 391.0
 offset_bottom = 116.0
 scale = Vector2(1, 2)
 
+[node name="Judgement Camera" type="OptionButton" parent="TabContainer/Appearance"]
+offset_left = 13.0
+offset_top = 152.0
+offset_right = 388.0
+offset_bottom = 175.0
+tooltip_text = "Changes how your speed is applied.
+Multiplier multiplies the song's scroll speed by the one set here, Constant directly sets the song's scroll speed."
+item_count = 2
+selected = 0
+popup/item_0/text = "World"
+popup/item_0/id = 0
+popup/item_1/text = "HUD"
+popup/item_1/id = 1
+script = ExtResource("6_wrrnp")
+option = "judgement camera"
+
+[node name="Title" type="Label" parent="TabContainer/Appearance/Judgement Camera"]
+layout_mode = 0
+offset_top = -26.0
+offset_right = 135.0
+mouse_filter = 1
+theme_override_font_sizes/font_size = 16
+text = "Judgement Camera"
+
 [node name="Miscellaneous" type="TabBar" parent="TabContainer"]
 visible = false
 layout_mode = 2
@@ -260,7 +310,7 @@ offset_bottom = 39.0
 tooltip_text = "Allows the game to pause when the window is unfocused."
 text = "Auto Pause"
 script = ExtResource("4_gjk4b")
-option = "fps counter"
+option = "auto pause"
 
 [node name="Volume Beep Pitching" type="CheckBox" parent="TabContainer/Miscellaneous"]
 layout_mode = 0
@@ -312,202 +362,250 @@ text = "XML Converter"
 visible = false
 layout_mode = 2
 
-[node name="Note Binds" type="Label" parent="TabContainer/Controls"]
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Controls"]
 layout_mode = 0
-offset_left = 16.0
-offset_top = 12.0
-offset_right = 101.0
-offset_bottom = 38.0
+offset_left = 8.0
+offset_top = 7.0
+offset_right = 395.0
+offset_bottom = 521.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/ScrollContainer"]
+custom_minimum_size = Vector2(387, 510)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="TabContainer/Controls/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 212)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2rif3")
+
+[node name="Note Binds" type="Label" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel"]
+layout_mode = 2
+offset_left = 8.0
+offset_top = 5.0
+offset_right = 395.0
+offset_bottom = 31.0
 mouse_filter = 1
 theme_override_font_sizes/font_size = 16
 text = "Note Binds"
 
-[node name="Left Bind" type="Button" parent="TabContainer/Controls/Note Binds"]
+[node name="Left Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds"]
 layout_mode = 0
 offset_left = 42.0
 offset_top = 33.0
-offset_right = 202.0
+offset_right = 197.0
 offset_bottom = 64.0
 tooltip_text = "Click on this button to change this bind.
 
 Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
 theme = ExtResource("7_xa45n")
 text = "A"
+script = ExtResource("8_715hi")
 
-[node name="Alt Bind" type="Button" parent="TabContainer/Controls/Note Binds/Left Bind"]
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind"]
 layout_mode = 0
-offset_left = 170.0
-offset_right = 330.0
+offset_left = 164.0
+offset_right = 319.0
 offset_bottom = 31.0
 tooltip_text = "Click on this button to change this bind.
 
 Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
 text = "LEFT"
+script = ExtResource("8_715hi")
+bind_type = 1
 
-[node name="Note" type="Sprite2D" parent="TabContainer/Controls/Note Binds/Left Bind"]
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind"]
 position = Vector2(-28, 16)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("8_lykm7")
 hframes = 4
 
-[node name="Down Bind" type="Button" parent="TabContainer/Controls/Note Binds"]
+[node name="Down Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds"]
 layout_mode = 0
 offset_left = 42.0
 offset_top = 73.0
-offset_right = 202.0
+offset_right = 197.0
 offset_bottom = 104.0
 tooltip_text = "Click on this button to change this bind.
 
 Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
 theme = ExtResource("7_xa45n")
 text = "S"
+script = ExtResource("8_715hi")
+bind = "note_down"
 
-[node name="Alt Bind" type="Button" parent="TabContainer/Controls/Note Binds/Down Bind"]
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind"]
 layout_mode = 0
-offset_left = 170.0
-offset_right = 330.0
+offset_left = 164.0
+offset_right = 319.0
 offset_bottom = 31.0
 tooltip_text = "Click on this button to change this bind.
 
 Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
 text = "DOWN"
+script = ExtResource("8_715hi")
+bind = "note_down"
+bind_type = 1
 
-[node name="Note" type="Sprite2D" parent="TabContainer/Controls/Note Binds/Down Bind"]
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind"]
 position = Vector2(-28, 16)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("8_lykm7")
 hframes = 4
 frame = 1
 
-[node name="Up Bind" type="Button" parent="TabContainer/Controls/Note Binds"]
+[node name="Up Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds"]
 layout_mode = 0
 offset_left = 42.0
 offset_top = 113.0
-offset_right = 202.0
+offset_right = 197.0
 offset_bottom = 144.0
 tooltip_text = "Click on this button to change this bind.
 
 Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
 theme = ExtResource("7_xa45n")
 text = "W"
+script = ExtResource("8_715hi")
+bind = "note_up"
 
-[node name="Alt Bind" type="Button" parent="TabContainer/Controls/Note Binds/Up Bind"]
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Up Bind"]
 layout_mode = 0
-offset_left = 170.0
-offset_right = 330.0
+offset_left = 164.0
+offset_right = 319.0
 offset_bottom = 31.0
 tooltip_text = "Click on this button to change this bind.
 
 Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
 text = "UP"
+script = ExtResource("8_715hi")
+bind = "note_up"
+bind_type = 1
 
-[node name="Note" type="Sprite2D" parent="TabContainer/Controls/Note Binds/Up Bind"]
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Up Bind"]
 position = Vector2(-28, 16)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("8_lykm7")
 hframes = 4
 frame = 2
 
-[node name="Right Bind" type="Button" parent="TabContainer/Controls/Note Binds"]
+[node name="Right Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds"]
 layout_mode = 0
 offset_left = 42.0
 offset_top = 153.0
-offset_right = 202.0
+offset_right = 197.0
 offset_bottom = 184.0
 tooltip_text = "Click on this button to change this bind.
 
 Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
 theme = ExtResource("7_xa45n")
 text = "D"
+script = ExtResource("8_715hi")
+bind = "note_right"
 
-[node name="Alt Bind" type="Button" parent="TabContainer/Controls/Note Binds/Right Bind"]
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Right Bind"]
 layout_mode = 0
-offset_left = 170.0
-offset_right = 330.0
+offset_left = 164.0
+offset_right = 319.0
 offset_bottom = 31.0
 tooltip_text = "Click on this button to change this bind.
 
 Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
 text = "RIGHT"
+script = ExtResource("8_715hi")
+bind = "note_right"
+bind_type = 1
 
-[node name="Note" type="Sprite2D" parent="TabContainer/Controls/Note Binds/Right Bind"]
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Right Bind"]
 position = Vector2(-28, 16)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("8_lykm7")
 hframes = 4
 frame = 3
 
-[node name="HSeparator" type="HSeparator" parent="TabContainer/Controls"]
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel"]
 modulate = Color(0.486275, 0.368627, 0.560784, 1)
-layout_mode = 0
-offset_left = 14.0
-offset_top = 208.0
-offset_right = 391.0
-offset_bottom = 212.0
-scale = Vector2(1, 2)
+layout_mode = 2
+offset_left = 6.0
+offset_top = 205.0
+offset_right = 366.0
+offset_bottom = 209.0
 
-[node name="UI Binds" type="Label" parent="TabContainer/Controls"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 228.0
-offset_right = 101.0
-offset_bottom = 254.0
+[node name="Panel2" type="Panel" parent="TabContainer/Controls/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 430)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ul4f4")
+
+[node name="UI Binds" type="Label" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2"]
+layout_mode = 2
+offset_left = 8.0
+offset_top = 5.0
+offset_right = 395.0
+offset_bottom = 31.0
 mouse_filter = 1
 theme_override_font_sizes/font_size = 16
 text = "UI Binds"
 
-[node name="Left Bind" type="Button" parent="TabContainer/Controls/UI Binds"]
+[node name="Left Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds"]
 layout_mode = 0
 offset_left = 42.0
 offset_top = 33.0
-offset_right = 202.0
+offset_right = 197.0
 offset_bottom = 64.0
 tooltip_text = "Click on this button to change this bind.
 
 Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
 theme = ExtResource("7_xa45n")
 text = "A"
+script = ExtResource("8_715hi")
+bind = "ui_left"
 
-[node name="Alt Bind" type="Button" parent="TabContainer/Controls/UI Binds/Left Bind"]
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Left Bind"]
 layout_mode = 0
-offset_left = 170.0
-offset_right = 330.0
+offset_left = 164.0
+offset_right = 319.0
 offset_bottom = 31.0
 tooltip_text = "Click on this button to change this bind.
 
 Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
 text = "LEFT"
+script = ExtResource("8_715hi")
+bind = "ui_left"
+bind_type = 1
 
-[node name="Note" type="Sprite2D" parent="TabContainer/Controls/UI Binds/Left Bind"]
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Left Bind"]
 material = SubResource("ShaderMaterial_1ynbn")
 position = Vector2(-28, 16)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("8_lykm7")
 hframes = 4
 
-[node name="Down Bind" type="Button" parent="TabContainer/Controls/UI Binds"]
+[node name="Down Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds"]
 layout_mode = 0
 offset_left = 42.0
 offset_top = 73.0
-offset_right = 202.0
+offset_right = 197.0
 offset_bottom = 104.0
 tooltip_text = "Click on this button to change this bind.
 
 Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
 theme = ExtResource("7_xa45n")
 text = "S"
+script = ExtResource("8_715hi")
+bind = "ui_down"
 
-[node name="Alt Bind" type="Button" parent="TabContainer/Controls/UI Binds/Down Bind"]
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Down Bind"]
 layout_mode = 0
-offset_left = 170.0
-offset_right = 330.0
+offset_left = 164.0
+offset_right = 319.0
 offset_bottom = 31.0
 tooltip_text = "Click on this button to change this bind.
 
 Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
 text = "DOWN"
+script = ExtResource("8_715hi")
+bind = "ui_down"
+bind_type = 1
 
-[node name="Note" type="Sprite2D" parent="TabContainer/Controls/UI Binds/Down Bind"]
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Down Bind"]
 material = SubResource("ShaderMaterial_1ynbn")
 position = Vector2(-28, 16)
 scale = Vector2(0.22, 0.22)
@@ -515,29 +613,34 @@ texture = ExtResource("8_lykm7")
 hframes = 4
 frame = 1
 
-[node name="Up Bind" type="Button" parent="TabContainer/Controls/UI Binds"]
+[node name="Up Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds"]
 layout_mode = 0
 offset_left = 42.0
 offset_top = 113.0
-offset_right = 202.0
+offset_right = 197.0
 offset_bottom = 144.0
 tooltip_text = "Click on this button to change this bind.
 
 Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
 theme = ExtResource("7_xa45n")
 text = "W"
+script = ExtResource("8_715hi")
+bind = "ui_up"
 
-[node name="Alt Bind" type="Button" parent="TabContainer/Controls/UI Binds/Up Bind"]
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Up Bind"]
 layout_mode = 0
-offset_left = 170.0
-offset_right = 330.0
+offset_left = 164.0
+offset_right = 319.0
 offset_bottom = 31.0
 tooltip_text = "Click on this button to change this bind.
 
 Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
 text = "UP"
+script = ExtResource("8_715hi")
+bind = "ui_up"
+bind_type = 1
 
-[node name="Note" type="Sprite2D" parent="TabContainer/Controls/UI Binds/Up Bind"]
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Up Bind"]
 material = SubResource("ShaderMaterial_1ynbn")
 position = Vector2(-28, 16)
 scale = Vector2(0.22, 0.22)
@@ -545,35 +648,238 @@ texture = ExtResource("8_lykm7")
 hframes = 4
 frame = 2
 
-[node name="Right Bind" type="Button" parent="TabContainer/Controls/UI Binds"]
+[node name="Right Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds"]
 layout_mode = 0
 offset_left = 42.0
 offset_top = 153.0
-offset_right = 202.0
+offset_right = 197.0
 offset_bottom = 184.0
 tooltip_text = "Click on this button to change this bind.
 
 Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
 theme = ExtResource("7_xa45n")
 text = "D"
+script = ExtResource("8_715hi")
+bind = "ui_right"
 
-[node name="Alt Bind" type="Button" parent="TabContainer/Controls/UI Binds/Right Bind"]
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Right Bind"]
 layout_mode = 0
-offset_left = 170.0
-offset_right = 330.0
+offset_left = 164.0
+offset_right = 319.0
 offset_bottom = 31.0
 tooltip_text = "Click on this button to change this bind.
 
 Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
 text = "RIGHT"
+script = ExtResource("8_715hi")
+bind = "ui_right"
+bind_type = 1
 
-[node name="Note" type="Sprite2D" parent="TabContainer/Controls/UI Binds/Right Bind"]
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Right Bind"]
 material = SubResource("ShaderMaterial_1ynbn")
 position = Vector2(-28, 16)
 scale = Vector2(0.22, 0.22)
 texture = ExtResource("8_lykm7")
 hframes = 4
 frame = 3
+
+[node name="Accept Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 193.0
+offset_right = 197.0
+offset_bottom = 224.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+theme = ExtResource("7_xa45n")
+text = "ENTER"
+script = ExtResource("8_715hi")
+bind = "ui_accept"
+
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Accept Bind"]
+layout_mode = 0
+offset_left = 164.0
+offset_right = 319.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "SPACE"
+script = ExtResource("8_715hi")
+bind = "ui_accept"
+bind_type = 1
+
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Accept Bind"]
+modulate = Color(0.352941, 0.282353, 0.4, 1)
+position = Vector2(-28, 16)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("11_81vb3")
+
+[node name="Back Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 233.0
+offset_right = 197.0
+offset_bottom = 264.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+theme = ExtResource("7_xa45n")
+text = "BACKSPACE"
+script = ExtResource("8_715hi")
+bind = "ui_cancel"
+
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Back Bind"]
+layout_mode = 0
+offset_left = 164.0
+offset_right = 319.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "ESCAPE"
+script = ExtResource("8_715hi")
+bind = "ui_cancel"
+bind_type = 1
+
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Back Bind"]
+modulate = Color(0.352941, 0.282353, 0.4, 1)
+position = Vector2(-28, 16)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("12_0w4bb")
+
+[node name="Pause Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 273.0
+offset_right = 197.0
+offset_bottom = 304.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+theme = ExtResource("7_xa45n")
+text = "ENTER"
+script = ExtResource("8_715hi")
+bind = "ui_pause"
+
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Pause Bind"]
+layout_mode = 0
+offset_left = 164.0
+offset_right = 319.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "NONE"
+script = ExtResource("8_715hi")
+bind = "ui_pause"
+bind_type = 1
+
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Pause Bind"]
+modulate = Color(0.352941, 0.282353, 0.4, 1)
+position = Vector2(-28, 16)
+scale = Vector2(0.22, 0.22)
+texture = ExtResource("13_u4boq")
+
+[node name="Volume Down Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 313.0
+offset_right = 197.0
+offset_bottom = 344.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+theme = ExtResource("7_xa45n")
+text = "MINUS"
+script = ExtResource("8_715hi")
+bind = "volume_down"
+
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Down Bind"]
+layout_mode = 0
+offset_left = 164.0
+offset_right = 319.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "KP_SUBTRACT"
+script = ExtResource("8_715hi")
+bind = "volume_down"
+bind_type = 1
+
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Down Bind"]
+modulate = Color(0.352941, 0.282353, 0.4, 1)
+position = Vector2(-28, 16)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("14_nb18d")
+
+[node name="Volume Up Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 353.0
+offset_right = 197.0
+offset_bottom = 384.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+theme = ExtResource("7_xa45n")
+text = "PLUS"
+script = ExtResource("8_715hi")
+bind = "volume_up"
+
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Up Bind"]
+layout_mode = 0
+offset_left = 164.0
+offset_right = 319.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "KP_ADD"
+script = ExtResource("8_715hi")
+bind = "volume_up"
+bind_type = 1
+
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Up Bind"]
+modulate = Color(0.352941, 0.282353, 0.4, 1)
+position = Vector2(-28, 16)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("15_qhl7p")
+
+[node name="Volume Mute Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 393.0
+offset_right = 197.0
+offset_bottom = 424.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+theme = ExtResource("7_xa45n")
+text = "0"
+script = ExtResource("8_715hi")
+bind = "volume_mute"
+
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Mute Bind"]
+layout_mode = 0
+offset_left = 164.0
+offset_right = 319.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "KP_0"
+script = ExtResource("8_715hi")
+bind = "volume_mute"
+bind_type = 1
+
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Mute Bind"]
+modulate = Color(0.352941, 0.282353, 0.4, 1)
+position = Vector2(-28, 16)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("16_ofedk")
 
 [node name="dumb warning" type="Label" parent="."]
 offset_left = 213.0
@@ -590,6 +896,7 @@ position = Vector2(884, 787)
 
 [node name="NoteTemplate" parent="." instance=ExtResource("9_rjold")]
 visible = false
+position = Vector2(-83.9998, 212)
 in_editor = true
 
 [node name="Notes" type="Node2D" parent="."]
@@ -600,6 +907,7 @@ in_editor = true
 [connection signal="pressed" from="TabContainer/Gameplay/Ghost Tapping" to="TabContainer/Gameplay/Ghost Tapping" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Gameplay/Miss Sounds" to="TabContainer/Gameplay/Miss Sounds" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Gameplay/Disable Reset" to="TabContainer/Gameplay/Disable Reset" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Gameplay/Show MS on Note Hit" to="TabContainer/Gameplay/Show MS on Note Hit" method="_on_pressed"]
 [connection signal="drag_ended" from="TabContainer/Gameplay/Note Offset" to="TabContainer/Gameplay/Note Offset" method="_on_drag_ended"]
 [connection signal="value_changed" from="TabContainer/Gameplay/Note Offset" to="TabContainer/Gameplay/Note Offset" method="_on_value_changed"]
 [connection signal="drag_ended" from="TabContainer/Gameplay/Scroll Speed" to="TabContainer/Gameplay/Scroll Speed" method="_on_drag_ended"]
@@ -609,8 +917,37 @@ in_editor = true
 [connection signal="pressed" from="TabContainer/Appearance/Note Splashes" to="TabContainer/Appearance/Note Splashes" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Appearance/Opaque Sustains" to="TabContainer/Appearance/Opaque Sustains" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Appearance/Subtitles" to="TabContainer/Appearance/Subtitles" method="_on_pressed"]
+[connection signal="item_selected" from="TabContainer/Appearance/Judgement Camera" to="TabContainer/Appearance/Judgement Camera" method="_on_item_selected"]
 [connection signal="pressed" from="TabContainer/Miscellaneous/Auto Pause" to="TabContainer/Miscellaneous/Auto Pause" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Miscellaneous/Volume Beep Pitching" to="TabContainer/Miscellaneous/Volume Beep Pitching" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Miscellaneous/VSync" to="TabContainer/Miscellaneous/VSync" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Miscellaneous/Multi Threaded Rendering" to="TabContainer/Miscellaneous/Multi Threaded Rendering" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Tools/XML Converter" to="." method="_on_tool_button_pressed" binds= ["XML Converter"]]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Up Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Up Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Up Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Up Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Right Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Right Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Right Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Right Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Left Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Left Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Left Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Left Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Down Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Down Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Down Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Down Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Up Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Up Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Up Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Up Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Right Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Right Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Right Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Right Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Accept Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Accept Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Accept Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Accept Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Back Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Back Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Back Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Back Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Pause Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Pause Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Pause Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Pause Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Down Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Down Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Down Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Down Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Up Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Up Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Up Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Up Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Mute Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Mute Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Mute Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Mute Bind/Alt Bind" method="_on_pressed"]

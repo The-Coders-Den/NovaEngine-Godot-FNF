@@ -1,7 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://cjex3eg8wqg7s"]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/Character.gd" id="1_j06qm"]
-[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/characters/dad.res" id="2_8b7lu"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/characters/dad/dad.res" id="2_8b7lu"]
 [ext_resource type="Texture2D" uid="uid://cb4g78s0nksa0" path="res://assets/images/gameplay/icons/icon-dad.png" id="2_r8kkf"]
 [ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="3_jmwth"]
 

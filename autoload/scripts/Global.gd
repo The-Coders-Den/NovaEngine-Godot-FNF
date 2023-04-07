@@ -30,7 +30,7 @@ func set_vsync(value:bool):
 func _notification(what):
 	match what:
 		NOTIFICATION_APPLICATION_FOCUS_OUT:
-			if not SettingsAPI.get_setting("auto pause"):
+			if SettingsAPI.get_setting("auto pause"):
 				set_vsync(false)
 				Engine.max_fps = 10
 				
@@ -40,7 +40,7 @@ func _notification(what):
 				get_tree().paused = true
 			
 		NOTIFICATION_APPLICATION_FOCUS_IN:
-			if not SettingsAPI.get_setting("auto pause"):
+			if SettingsAPI.get_setting("auto pause"):
 				set_vsync(true)
 				Engine.max_fps = 0
 				
@@ -70,6 +70,22 @@ func _input(event:InputEvent) -> void:
 			window.mode = Window.MODE_WINDOWED
 		else:
 			window.mode = Window.MODE_FULLSCREEN
+			
+func list_files_in_dir(path:String):
+	var files:PackedStringArray = []
+	var dir = DirAccess.open(path)
+	if dir:
+		dir.list_dir_begin()
+
+		while true:
+			var file = dir.get_next()
+			if file == "": break
+			elif not file.begins_with("."):
+				files.append(file)
+
+		dir.list_dir_end()
+		
+	return files
 
 func add_zeros(str:String, num:int) -> String:
 	return str.pad_zeros(num)

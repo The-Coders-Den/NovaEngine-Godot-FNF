@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://duwe4xdm2yqc3"]
+
+[ext_resource type="Script" path="res://autoload/scenes/VolumeSlider.gd" id="1_yba7m"]
+[ext_resource type="Theme" uid="uid://c7bhikvxte264" path="res://assets/styles/nova_purple.tres" id="2_b2shr"]
+[ext_resource type="Theme" uid="uid://br6hapg0jupnv" path="res://assets/styles/nova_purple_panel.tres" id="2_j2bc3"]
+[ext_resource type="SpriteFrames" uid="uid://c1ewu5e3bvsr4" path="res://assets/images/material_icons/volume.tres" id="3_3x2vh"]
+[ext_resource type="AudioStream" uid="uid://n42ha0ifsni4" path="res://assets/sounds/menus/scrollMenu.ogg" id="5_8dvvg"]
+
+[node name="VolumeSlider" type="CanvasLayer"]
+layer = 128
+script = ExtResource("1_yba7m")
+
+[node name="VolumePanel" type="Panel" parent="."]
+offset_left = 497.0
+offset_top = 10.0
+offset_right = 783.0
+offset_bottom = 66.0
+theme = ExtResource("2_j2bc3")
+
+[node name="VolumeIcon" type="AnimatedSprite2D" parent="VolumePanel"]
+modulate = Color(0.366203, 0.292252, 0.417969, 1)
+position = Vector2(31, 27)
+scale = Vector2(0.3, 0.3)
+sprite_frames = ExtResource("3_3x2vh")
+animation = &"mid"
+
+[node name="ProgressBar" type="ProgressBar" parent="VolumePanel"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 19.0
+offset_right = 271.0
+offset_bottom = 35.0
+theme = ExtResource("2_b2shr")
+max_value = 1.0
+step = 0.1
+value = 0.5
+show_percentage = false
+
+[node name="BeepSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_8dvvg")
+max_polyphony = 10

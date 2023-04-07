@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8hgbht12lbb4"
-path="res://.godot/imported/dad.png-30ddf3729e11b2460f947a47791bc286.ctex"
+uid="uid://dl3rhbj01xjr1"
+path="res://.godot/imported/tankman.png-81255216073c1860de079ef6c11baf5c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/gameplay/characters/dad.png"
-dest_files=["res://.godot/imported/dad.png-30ddf3729e11b2460f947a47791bc286.ctex"]
+source_file="res://assets/images/gameplay/characters/tankman/tankman.png"
+dest_files=["res://.godot/imported/tankman.png-81255216073c1860de079ef6c11baf5c.ctex"]
 
 [params]
 

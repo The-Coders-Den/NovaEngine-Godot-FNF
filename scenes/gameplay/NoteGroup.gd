@@ -30,6 +30,12 @@ func _process(delta:float) -> void:
 				game.player.hold_timer = 0.0
 				game.voices.volume_db = 0
 				
+				note.is_sustain_note = true
+				note._player_hit()
+				note._note_hit(true)
+				game.script_group.call_func("on_note_hit", [note])
+				game.script_group.call_func("on_player_hit", [note])
+				
 				note_anim_time_player = 0.0
 			elif not note.must_press and note_anim_time >= Conductor.step_crochet:
 				var sing_anim:String = "sing%s" % note.strumline.get_child(note.direction).direction.to_upper()
@@ -37,13 +43,22 @@ func _process(delta:float) -> void:
 				game.opponent.hold_timer = 0.0
 				game.voices.volume_db = 0
 				
+				note.is_sustain_note = true
+				note._cpu_hit()
+				note._note_hit(false)
+				game.script_group.call_func("on_note_hit", [note])
+				game.script_group.call_func("on_cpu_hit", [note])
+				
 				note_anim_time = 0.0
 
 		var note_kill_range:float = (500 / scroll_speed)
 		if note.must_press:
 			if note.time <= Conductor.position - note_kill_range and not note.was_good_hit:
+				note.is_sustain_note = false
 				note._player_miss()
 				game.fake_miss(note.direction)
+				game.script_group.call_func("on_note_miss", [note])
+				game.script_group.call_func("on_player_miss", [note])
 				note.queue_free()
 		else:
 			if note.time <= Conductor.position and note.should_hit and not note.was_good_hit:
@@ -53,6 +68,8 @@ func _process(delta:float) -> void:
 				note.anim_sprite.visible = false
 				note._cpu_hit()
 				note._note_hit(false)
+				game.script_group.call_func("on_note_hit", [note])
+				game.script_group.call_func("on_cpu_hit", [note])
 				
 				var sing_anim:String = "sing%s" % game.cpu_strums.get_child(note.direction).direction.to_upper()
 				game.opponent.play_anim(sing_anim, true)
@@ -62,5 +79,8 @@ func _process(delta:float) -> void:
 					note.queue_free()
 					
 			if note.time <= Conductor.position - note_kill_range and not note.should_hit and not note.was_good_hit:
+				note.is_sustain_note = false
 				note._cpu_miss()
+				game.script_group.call_func("on_note_miss", [note])
+				game.script_group.call_func("on_cpu_miss", [note])
 				note.queue_free()
