@@ -135,14 +135,16 @@ func _ready() -> void:
 	strumlines.add_child(player_strums)
 	
 	# load song scripts (put in assets/songs/SONGNAME)
-	var script_path:String = "res://assets/songs/"+SONG.name.to_lower()+"/script.tscn"
-	if ResourceLoader.exists(script_path):
-		var script:FunkinScript = FunkinScript.create(script_path, self)
-		script_group.add_script(script)
+	var script_path:String = "res://assets/songs/"+SONG.name.to_lower()+"/"
+	var file_list:PackedStringArray = Global.list_files_in_dir(script_path)
+	for item in file_list:
+		if item.ends_with(".tscn"):
+			var script:FunkinScript = FunkinScript.create(script_path+item, self)
+			script_group.add_script(script)
 	
 	# load global scripts (put in assets/songs)
 	var init_path:String = "res://assets/songs/"
-	var file_list:PackedStringArray = Global.list_files_in_dir(init_path)
+	file_list = Global.list_files_in_dir(init_path)
 	for item in file_list:
 		if item.ends_with(".tscn"):
 			var script:FunkinScript = FunkinScript.create(init_path+item, self)
