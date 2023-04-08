@@ -151,8 +151,8 @@ func _ready() -> void:
 			script_group.add_script(script)
 	
 	var strum_y:float = Global.game_size.y - 100.0 if SettingsAPI.get_setting("downscroll") else 100.0
-	cpu_strums.position = Vector2((Global.game_size.x * 0.5) - 320, strum_y)
-	player_strums.position = Vector2((Global.game_size.x * 0.5) + 320, strum_y)
+	cpu_strums.position = Vector2((Global.game_size.x * 0.5) - (320.0 if not SettingsAPI.get_setting("centered notefield") else 10000.0), strum_y)
+	player_strums.position = Vector2((Global.game_size.x * 0.5) + (320.0 if not SettingsAPI.get_setting("centered notefield") else 0.0), strum_y)
 	
 	var stage_path:String = "res://scenes/gameplay/stages/"+SONG.stage+".tscn"
 	if ResourceLoader.exists(stage_path):
@@ -445,10 +445,11 @@ func good_note_hit(note:Note):
 	var judgement:Judgement = Ranking.judgement_from_time(note_diff)
 	
 	if SettingsAPI.get_setting("show ms on note hit"):
+		var downscroll_mult:int = 1 if SettingsAPI.get_setting("downscroll") else -1
 		ms_display.modulate = judgement.color
 		ms_display.text = str(note_diff).pad_decimals(2)+"ms"
 		ms_display.position.x = player_strums.position.x - (ms_display.size.x * 0.5)
-		ms_display.position.y = player_strums.position.y - (ms_display.size.y * 0.5) - 110.0
+		ms_display.position.y = player_strums.position.y - (ms_display.size.y * 0.5) - (110.0 * downscroll_mult)
 		ms_display.visible = true
 		
 		if ms_tween != null:
@@ -510,6 +511,9 @@ func _process(delta:float) -> void:
 	if not pressed.has(true) and player.last_anim.begins_with("sing") and player.hold_timer >= Conductor.step_crochet * player.sing_duration * 0.0011:
 		player.hold_timer = 0.0
 		player.dance()
+		
+	if Input.is_action_just_pressed("ui_pause"):
+		add_child(load("res://scenes/gameplay/PauseMenu.tscn").instantiate())
 			
 	var percent:float = (health / max_health) * 100.0
 	health_bar.max_value = max_health
