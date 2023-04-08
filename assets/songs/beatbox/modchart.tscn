@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bot8ufylkak73"]
-
-[ext_resource type="Script" path="res://assets/songs/beatbox/modchart.gd" id="1_35o6s"]
-
-[node name="modchart" type="Node"]
-script = ExtResource("1_35o6s")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
