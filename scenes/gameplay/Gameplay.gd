@@ -77,6 +77,8 @@ var ui_skin:UISkin
 @onready var ms_display:Label = $HUD/MSDisplay
 @onready var script_group:ScriptGroup = $ScriptGroup
 
+var countdown_ticks:int = 3;
+
 const ICON_DELTA_MULTIPLIER:float = 60 * 0.25
 const ZOOM_DELTA_MULTIPLIER:float = 60 * 0.05
 
@@ -230,10 +232,55 @@ func _ready() -> void:
 	script_group.call_func("_ready_post", [])
 	
 # i'll write this later when i am not tired
+# nah you get someone else to do it through a pr even though you didnt ask lol -Srt
 func start_countdown():
+	countdown_prepare_sound.stream = ui_skin.prepare_sound
+	countdown_ready_sound.stream = ui_skin.ready_sound
+	countdown_set_sound.stream = ui_skin.set_sound
+	countdown_go_sound.stream = ui_skin.go_sound
+	countdown_tick()
+	
 	script_group.call_func("on_start_countdown", [])
-		
+
+func countdown_tick():
+	await get_tree().create_timer(Conductor.crochet / 1000).timeout
+	
+	character_bop()
+	
+	var fade_tween = create_tween()
+	match countdown_ticks:
+		3:
+			countdown_prepare_sound.play()
+		2:
+			countdown_ready_sound.play()
+	
+			countdown_sprite.texture = ui_skin.ready_texture
+			fade_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000)
+			fade_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+		1:
+			countdown_set_sound.play()
+			
+			countdown_sprite.modulate.a = 1.0
+			countdown_sprite.texture = ui_skin.set_texture
+			fade_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000)
+			fade_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+		0:
+			countdown_go_sound.play()
+			
+			countdown_sprite.modulate.a = 1.0
+			countdown_sprite.texture = ui_skin.go_texture
+			fade_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000)
+			fade_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+			
+	script_group.call_func("on_countdown_tick", [countdown_ticks, fade_tween])
+	
+	countdown_ticks -= 1
+	if countdown_ticks >= 0:
+		countdown_tick()
+
 func start_song():
+	character_bop()
+	
 	starting_song = false
 	Conductor.position = 0.0
 	
