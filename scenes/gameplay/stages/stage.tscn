@@ -40,7 +40,7 @@ centered = false
 position = Vector2(100, 100)
 
 [node name="Spectator" type="Node2D" parent="Character Positions"]
-position = Vector2(440, 130)
+position = Vector2(400, 130)
 
 [node name="Player" type="Node2D" parent="Character Positions"]
 position = Vector2(770, 100)
