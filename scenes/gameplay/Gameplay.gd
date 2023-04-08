@@ -244,10 +244,16 @@ func start_countdown():
 	
 	script_group.call_func("on_start_countdown", [])
 
+var countdown_tween:Tween = create_tween()
+
 func countdown_tick():
 	character_bop()
 	
-	var fade_tween:Tween = create_tween()
+	if countdown_tween != null:
+		countdown_tween.stop()
+		
+	countdown_tween = create_tween()
+	
 	match countdown_ticks:
 		3:
 			countdown_prepare_sound.play()
@@ -255,24 +261,24 @@ func countdown_tick():
 			countdown_ready_sound.play()
 	
 			countdown_sprite.texture = ui_skin.ready_texture
-			fade_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000.0)
-			fade_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+			countdown_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000.0)
+			countdown_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		1:
 			countdown_set_sound.play()
 			
 			countdown_sprite.modulate.a = 1.0
 			countdown_sprite.texture = ui_skin.set_texture
-			fade_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000.0)
-			fade_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+			countdown_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000.0)
+			countdown_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		0:
 			countdown_go_sound.play()
 			
 			countdown_sprite.modulate.a = 1.0
 			countdown_sprite.texture = ui_skin.go_texture
-			fade_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000.0)
-			fade_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+			countdown_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000.0)
+			countdown_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 			
-	script_group.call_func("on_countdown_tick", [countdown_ticks, fade_tween])
+	script_group.call_func("on_countdown_tick", [countdown_ticks, countdown_tween])
 	
 	countdown_ticks -= 1
 	if countdown_ticks >= 0:
