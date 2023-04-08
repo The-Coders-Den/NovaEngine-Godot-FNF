@@ -1,14 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://56o6e6wcsohk"]
+[gd_scene load_steps=3 format=3 uid="uid://56o6e6wcsohk"]
 
 [ext_resource type="Script" path="res://autoload/scenes/FPS.gd" id="1_ui6lb"]
-
-[sub_resource type="SystemFont" id="SystemFont_ys7cv"]
-font_names = PackedStringArray("Sans-Serif")
-font_weight = 550
-
-[sub_resource type="SystemFont" id="SystemFont_ch7px"]
-font_names = PackedStringArray("Sans-Serif")
-font_weight = 450
+[ext_resource type="FontFile" uid="uid://coqcg7h14duny" path="res://assets/fonts/vcr.ttf" id="2_5hvya"]
 
 [node name="FPS" type="CanvasLayer"]
 process_mode = 3
@@ -23,17 +16,16 @@ offset_bottom = 19.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_constants/line_spacing = 0
-theme_override_fonts/font = SubResource("SystemFont_ys7cv")
+theme_override_fonts/font = ExtResource("2_5hvya")
 theme_override_font_sizes/font_size = 20
 text = "FPS: 0"
 
 [node name="MEMLabel" type="Label" parent="."]
 offset_left = 10.0
-offset_top = 26.0
-offset_right = 652.0
-offset_bottom = 332.0
+offset_top = 23.0
+offset_right = 11.0
+offset_bottom = 36.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
-theme_override_constants/line_spacing = -4
-theme_override_fonts/font = SubResource("SystemFont_ch7px")
+theme_override_fonts/font = ExtResource("2_5hvya")
 theme_override_font_sizes/font_size = 14
