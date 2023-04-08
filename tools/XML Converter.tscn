@@ -1,14 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://b8pnkaxh8qdwe"]
+[gd_scene load_steps=6 format=3 uid="uid://b8pnkaxh8qdwe"]
 
+[ext_resource type="Texture2D" uid="uid://y8c4a1bk8wkl" path="res://assets/images/menus/menuBGDesat.png" id="1_8otpr"]
 [ext_resource type="Script" path="res://tools/XML Converter.gd" id="1_72kxm"]
+[ext_resource type="Theme" uid="uid://br6hapg0jupnv" path="res://assets/styles/nova_purple_panel.tres" id="2_dppe3"]
 [ext_resource type="Script" path="res://tools/Choose Sprites.gd" id="2_kmxvy"]
+[ext_resource type="Theme" uid="uid://blt3c0a5po0yj" path="res://assets/styles/nova_purple_button.tres" id="4_cqp41"]
 
 [node name="XML Converter" type="Node2D"]
 
 [node name="BG" type="Sprite2D" parent="."]
-modulate = Color(0.364706, 0.360784, 0.411765, 1)
+modulate = Color(0.105882, 0.0784314, 0.12549, 1)
 position = Vector2(-116, -58)
 scale = Vector2(1.095, 1.095)
+texture = ExtResource("1_8otpr")
 centered = false
 
 [node name="Converted Panel" type="Panel" parent="."]
@@ -16,6 +20,7 @@ offset_left = 558.0
 offset_top = 20.0
 offset_right = 1258.0
 offset_bottom = 700.0
+theme = ExtResource("2_dppe3")
 
 [node name="ConvertedSprites" type="Label" parent="Converted Panel"]
 layout_mode = 0
@@ -33,6 +38,7 @@ offset_left = 20.0
 offset_top = 20.0
 offset_right = 540.0
 offset_bottom = 260.0
+theme = ExtResource("2_dppe3")
 script = ExtResource("1_72kxm")
 
 [node name="Title" type="Label" parent="Main Panel"]
@@ -45,10 +51,12 @@ vertical_alignment = 1
 
 [node name="Choose Sprites" type="Button" parent="Main Panel"]
 layout_mode = 0
+offset_left = 15.0
 offset_top = 75.0
-offset_right = 123.0
+offset_right = 138.0
 offset_bottom = 106.0
 focus_mode = 0
+theme = ExtResource("4_cqp41")
 text = "Choose Sprites"
 script = ExtResource("2_kmxvy")
 
@@ -58,6 +66,7 @@ offset_left = 191.0
 offset_top = 74.0
 offset_right = 258.062
 offset_bottom = 105.0
+theme = ExtResource("2_dppe3")
 text = "24"
 placeholder_text = "24"
 
@@ -71,26 +80,31 @@ text = "Anim FPS"
 
 [node name="Looped Checkbox" type="CheckBox" parent="Main Panel"]
 layout_mode = 0
+offset_left = 16.0
 offset_top = 129.0
-offset_right = 93.0
+offset_right = 109.0
 offset_bottom = 160.0
 focus_mode = 0
+theme = ExtResource("4_cqp41")
 text = "Looped?"
 
 [node name="Optimized Checkbox" type="CheckBox" parent="Main Panel"]
 layout_mode = 0
+offset_left = 16.0
 offset_top = 166.0
-offset_right = 116.0
+offset_right = 132.0
 offset_bottom = 197.0
+theme = ExtResource("4_cqp41")
 text = "Optimized?"
 
 [node name="Convert Button" type="Button" parent="Main Panel"]
 layout_mode = 0
-offset_left = 193.0
+offset_left = 191.0
 offset_top = 145.0
-offset_right = 263.0
+offset_right = 261.0
 offset_bottom = 176.0
 focus_mode = 0
+theme = ExtResource("4_cqp41")
 text = "Convert"
 
 [node name="FileDialog" type="FileDialog" parent="."]

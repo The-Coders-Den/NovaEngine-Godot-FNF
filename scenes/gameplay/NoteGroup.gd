@@ -25,8 +25,8 @@ func _process(delta:float) -> void:
 				var receptor:Receptor = note.strumline.get_child(note.direction)
 				receptor.play_anim("confirm")
 				
-				var sing_anim:String = "sing%s" % note.strumline.get_child(note.direction).direction.to_upper()
 				if not game.player.special_anim:
+					var sing_anim:String = "sing%s" % note.strumline.get_child(note.direction).direction.to_upper()
 					game.player.play_anim(sing_anim, true)
 					game.player.hold_timer = 0.0
 					game.voices.volume_db = 0
@@ -39,8 +39,8 @@ func _process(delta:float) -> void:
 				
 				note_anim_time_player = 0.0
 			elif not note.must_press and note_anim_time >= Conductor.step_crochet:
-				var sing_anim:String = "sing%s" % note.strumline.get_child(note.direction).direction.to_upper()
-				if !game.opponent.special_anim:
+				if not game.opponent.special_anim:
+					var sing_anim:String = "sing%s" % note.strumline.get_child(note.direction).direction.to_upper()
 					game.opponent.play_anim(sing_anim, true)
 					game.opponent.hold_timer = 0.0
 					game.voices.volume_db = 0
@@ -79,7 +79,9 @@ func _process(delta:float) -> void:
 				
 				if note.length <= 0:
 					note.queue_free()
-					
+					game.opponent.play_anim(sing_anim, true)
+				game.opponent.hold_timer = 0.0
+				game.voices.volume_db = 0
 			if note.time <= Conductor.position - note_kill_range and not note.should_hit and not note.was_good_hit:
 				note.is_sustain_note = false
 				note._cpu_miss()
