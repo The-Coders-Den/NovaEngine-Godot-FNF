@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dpef18mo6fqko"]
+[gd_scene load_steps=11 format=3 uid="uid://bv2bmp1oon3uw"]
 
 [ext_resource type="Script" path="res://scripts/Character.gd" id="1_j06qm"]
 [ext_resource type="SpriteFrames" path="res://assets/images/gameplay/characters/dad/dad.res" id="2_8b7lu"]

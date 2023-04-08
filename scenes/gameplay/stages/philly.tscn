@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3 uid="uid://xhgrsi3557um"]
+
+[ext_resource type="Script" path="res://scenes/gameplay/stages/philly.gd" id="1_b2gre"]
+[ext_resource type="Texture2D" uid="uid://yjq6nrkpqrel" path="res://assets/images/gameplay/stages/philly/sky.png" id="2_uhmo2"]
+[ext_resource type="Texture2D" uid="uid://bn53uthve2xc3" path="res://assets/images/gameplay/stages/philly/city.png" id="3_u4djf"]
+[ext_resource type="Texture2D" uid="uid://bh2degw65gdgq" path="res://assets/images/gameplay/stages/philly/behindTrain.png" id="4_utm42"]
+[ext_resource type="Texture2D" uid="uid://0othmirc3s10" path="res://assets/images/gameplay/stages/philly/train.png" id="5_0x7jk"]
+[ext_resource type="Texture2D" uid="uid://btsig1s76acs5" path="res://assets/images/gameplay/stages/philly/street.png" id="5_2sb7x"]
+
+[node name="philly" type="Node2D"]
+script = ExtResource("1_b2gre")
+
+[node name="PB" type="ParallaxBackground" parent="."]
+
+[node name="PL1" type="ParallaxLayer" parent="PB"]
+motion_scale = Vector2(0.1, 0.1)
+
+[node name="Sky" type="Sprite2D" parent="PB/PL1"]
+position = Vector2(-100, 0)
+texture = ExtResource("2_uhmo2")
+centered = false
+
+[node name="PL2" type="ParallaxLayer" parent="PB"]
+position = Vector2(-10, 0)
+motion_scale = Vector2(0.3, 0.3)
+
+[node name="City" type="Sprite2D" parent="PB/PL2"]
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("3_u4djf")
+centered = false
+
+[node name="PL3" type="ParallaxLayer" parent="PB"]
+position = Vector2(-10, 0)
+
+[node name="BehindTrain" type="Sprite2D" parent="PB/PL3"]
+position = Vector2(-30, 50)
+texture = ExtResource("4_utm42")
+centered = false
+
+[node name="Street" type="Sprite2D" parent="PB/PL3/BehindTrain"]
+texture = ExtResource("5_2sb7x")
+centered = false
+
+[node name="Train" type="Sprite2D" parent="PB/PL3"]
+position = Vector2(2010, 360)
+texture = ExtResource("5_0x7jk")
+centered = false
+
+[node name="Character Positions" type="Node2D" parent="."]
+
+[node name="Opponent" type="Node2D" parent="Character Positions"]
+position = Vector2(100, 100)
+
+[node name="Spectator" type="Node2D" parent="Character Positions"]
+position = Vector2(440, 130)
+
+[node name="Player" type="Node2D" parent="Character Positions"]
+position = Vector2(770, 100)

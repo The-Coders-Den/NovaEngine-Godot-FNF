@@ -1,8 +1,13 @@
 extends Stage
 @onready var bg = $PB/AnimatedSprite
+@onready var icon = $Icon
 
 func _ready():
 	Conductor.beat_hit.connect(beat_hit)
+	if randf_range(0,100) < 0.1:
+		icon.visible = true
+	else:
+		icon.visible = false
 	
 var lightningStrikeBeat:int = 0
 var lightningOffset:int = randi_range(8,24)
