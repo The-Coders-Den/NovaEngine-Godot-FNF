@@ -15,6 +15,9 @@ class_name Character
 
 @onready var camera_pos:Node2D = $CameraPos
 
+var special_anim:bool = false
+var anim_timer:float = 0.0
+
 var last_anim:String = "_"
 var cur_dance_step:int = 0
 
@@ -22,6 +25,7 @@ var hold_timer:float = 0.0
 var anim_finished:bool = false
 
 var _is_true_player:bool = false
+var dance_on_beat:bool = true
 
 var initial_size:Vector2
 
@@ -54,13 +58,27 @@ func get_camera_pos():
 	return p
 	
 func _process(delta):
+	if anim_timer > 0.0:
+		anim_timer -= delta
+		if anim_timer <= 0.0:
+			if special_anim and last_anim == 'hey' or last_anim == 'cheer':
+				special_anim = false
+				dance()
+			
+			anim_timer = 0.0
+	elif special_anim and anim_finished:
+		special_anim = false
+		dance()
+	
 	if last_anim.begins_with("sing"):
 		hold_timer += delta * Conductor.rate
 		if not _is_true_player and hold_timer >= Conductor.step_crochet * sing_duration * 0.0011:
 			hold_timer = 0.0
 			dance()
 
-func play_anim(anim:String, force:bool = false):		
+func play_anim(anim:String, force:bool = false):
+	special_anim = false
+	
 	# swap left and right anims
 	if is_player != _is_true_player:
 		if anim == "singLEFT":
@@ -83,6 +101,9 @@ func play_anim(anim:String, force:bool = false):
 		anim_player.play(anim)
 
 func dance(force:bool = false):
+	if special_anim and not force:
+		return
+		
 	play_anim(dance_steps[cur_dance_step], force)
 	
 	cur_dance_step += 1
