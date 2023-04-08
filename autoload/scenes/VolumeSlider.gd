@@ -12,6 +12,7 @@ func _ready():
 	update_volume()
 
 func _input(event):
+	var timer = get_tree().create_timer(1.0,false)
 	if event is InputEventKey and event.is_pressed():
 		var key_event:InputEventKey = event
 		
