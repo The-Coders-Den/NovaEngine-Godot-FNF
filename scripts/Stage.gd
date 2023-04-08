@@ -15,3 +15,15 @@ func _ready_post():
 	
 func _process_post(delta:float):
 	pass
+	
+func on_start_countdown():
+	pass
+
+func on_countdown_tick(tick:int, tween:Tween):
+	pass
+
+func on_start_song():
+	pass
+	
+func on_end_song():
+	pass

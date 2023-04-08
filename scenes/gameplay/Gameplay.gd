@@ -242,6 +242,7 @@ func start_countdown():
 	countdown_go_sound.stream = ui_skin.go_sound
 	get_tree().create_timer(Conductor.crochet / 1000, false).timeout.connect(countdown_tick)
 	
+	stage.callv("on_start_countdown", [])
 	script_group.call_func("on_start_countdown", [])
 
 var countdown_tween:Tween = create_tween()
@@ -278,6 +279,7 @@ func countdown_tick():
 			countdown_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000.0)
 			countdown_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 			
+	stage.callv("on_countdown_tick", [countdown_ticks, countdown_tween])
 	script_group.call_func("on_countdown_tick", [countdown_ticks, countdown_tween])
 	
 	countdown_ticks -= 1
@@ -293,11 +295,13 @@ func start_song():
 	inst.play()
 	voices.play()
 	
+	stage.callv("on_start_song", [])
 	script_group.call_func("on_start_song", [])
 	
 func end_song():
 	ending_song = true
 	
+	stage.callv("on_end_song", [])
 	var ret:Variant = script_group.call_func("on_end_song", [])
 	if ret == false: return
 	
