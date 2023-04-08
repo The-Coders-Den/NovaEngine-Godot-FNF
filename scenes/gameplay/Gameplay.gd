@@ -238,13 +238,11 @@ func start_countdown():
 	countdown_ready_sound.stream = ui_skin.ready_sound
 	countdown_set_sound.stream = ui_skin.set_sound
 	countdown_go_sound.stream = ui_skin.go_sound
-	countdown_tick()
+	get_tree().create_timer(Conductor.crochet / 1000, false).timeout.connect(countdown_tick)
 	
 	script_group.call_func("on_start_countdown", [])
 
 func countdown_tick():
-	await get_tree().create_timer(Conductor.crochet / 1000).timeout
-	
 	character_bop()
 	
 	var fade_tween = create_tween()
@@ -276,7 +274,7 @@ func countdown_tick():
 	
 	countdown_ticks -= 1
 	if countdown_ticks >= 0:
-		countdown_tick()
+		get_tree().create_timer(Conductor.crochet / 1000, false).timeout.connect(countdown_tick)
 
 func start_song():
 	character_bop()
