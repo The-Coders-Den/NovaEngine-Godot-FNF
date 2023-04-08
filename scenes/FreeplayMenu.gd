@@ -88,8 +88,8 @@ func _process(delta):
 		change_difficulty(1)
 	
 	if Input.is_action_just_pressed("ui_accept"):
-		Audio.stop_music()
-		Global.SONG = Chart.load_chart(song_list.songs[cur_selected].song, song_list.songs[cur_selected].difficulties[cur_difficulty])
+		Global.current_difficulty = song_list.songs[cur_selected].difficulties[cur_difficulty]
+		Global.SONG = Chart.load_chart(song_list.songs[cur_selected].song, Global.current_difficulty)
 		Global.switch_scene("res://scenes/gameplay/Gameplay.tscn")
 		
 	if Input.is_action_just_pressed("ui_cancel"):

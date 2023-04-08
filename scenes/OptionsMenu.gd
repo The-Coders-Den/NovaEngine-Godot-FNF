@@ -1,4 +1,5 @@
 extends Node2D
+class_name OptionsMenu
 
 @onready var strum_line:StrumLine = $StrumLine
 @onready var note_group:Node2D = $Notes
@@ -57,7 +58,15 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("ui_cancel"):
 		Audio.play_sound("cancelMenu")
-		Global.switch_scene("res://scenes/MainMenu.tscn")
+		
+		var exit_scene_path:String = Global.scene_arguments["options_menu"].exit_scene_path
+		
+		if len(exit_scene_path) > 0:
+			Global.switch_scene(exit_scene_path)
+		else:
+			Global.switch_scene("res://scenes/MainMenu.tscn")
+			
+		Global.scene_arguments["options_menu"].exit_scene_path = ""
 
 func _on_tool_button_pressed(name:String):
 	match name:

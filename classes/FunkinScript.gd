@@ -91,6 +91,9 @@ func on_end_song():
 func on_start_countdown():
 	pass
 	
+func on_countdown_tick(tick:int, tween:Tween):
+	pass
+	
 func on_destroy():
 	pass
 

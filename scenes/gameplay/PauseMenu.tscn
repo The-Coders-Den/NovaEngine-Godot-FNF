@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://cjpo7po4bckhr"]
+[gd_scene load_steps=6 format=3 uid="uid://cjpo7po4bckhr"]
 
 [ext_resource type="Script" path="res://scenes/gameplay/PauseMenu.gd" id="1_g8qxe"]
+[ext_resource type="PackedScene" uid="uid://bgilym2qsrs4y" path="res://scenes/fonts/Alphabet.tscn" id="2_kylok"]
+[ext_resource type="Script" path="res://scripts/FreeplayAlphabet.gd" id="3_3aljb"]
+[ext_resource type="AudioStream" uid="uid://c3pxiarfaanaa" path="res://assets/music/breakfast.ogg" id="4_6ao0p"]
+[ext_resource type="FontFile" uid="uid://coqcg7h14duny" path="res://assets/fonts/vcr.ttf" id="5_6nkco"]
 
 [node name="PauseMenu" type="CanvasLayer"]
 process_mode = 3
@@ -8,8 +12,32 @@ layer = 5
 script = ExtResource("1_g8qxe")
 
 [node name="BG" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0)
 offset_right = 1280.0
 offset_bottom = 720.0
-color = Color(0, 0, 0, 0.6)
+color = Color(0, 0, 0, 1)
+
+[node name="__TemplateSong__" parent="." instance=ExtResource("2_kylok")]
+visible = false
+script = ExtResource("3_3aljb")
 
 [node name="MenuItems" type="Node2D" parent="."]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_6ao0p")
+
+[node name="SongName" type="Label" parent="."]
+offset_left = 20.0
+offset_top = 15.0
+offset_right = 21.0
+offset_bottom = 44.0
+theme_override_fonts/font = ExtResource("5_6nkco")
+theme_override_font_sizes/font_size = 32
+
+[node name="Difficulty" type="Label" parent="."]
+offset_left = 20.0
+offset_top = 47.0
+offset_right = 21.0
+offset_bottom = 76.0
+theme_override_fonts/font = ExtResource("5_6nkco")
+theme_override_font_sizes/font_size = 32

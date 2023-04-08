@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://b7d2pynkqf65o"]
-
-[ext_resource type="Script" path="res://assets/songs/stress/script.gd" id="1_tf2nw"]
-
-[node name="script" type="Node"]
-script = ExtResource("1_tf2nw")

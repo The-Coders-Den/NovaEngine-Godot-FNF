@@ -86,6 +86,8 @@ func _ready() -> void:
 	super._ready()
 	get_tree().paused = false
 	
+	Audio.stop_music()
+	
 	Ranking.judgements = Ranking.default_judgements.duplicate(true)
 	Ranking.ranks = Ranking.default_ranks.duplicate(true)
 	
@@ -230,9 +232,9 @@ func _ready() -> void:
 	
 	stage.callv("_ready_post", [])
 	script_group.call_func("_ready_post", [])
-	
-# i'll write this later when i am not tired
-# nah you get someone else to do it through a pr even though you didnt ask lol -Srt
+
+# yo thanks srt for doing it for me i think i was boutta
+# forgor anyway :skoil: ~swordcube
 func start_countdown():
 	countdown_prepare_sound.stream = ui_skin.prepare_sound
 	countdown_ready_sound.stream = ui_skin.ready_sound
@@ -245,7 +247,7 @@ func start_countdown():
 func countdown_tick():
 	character_bop()
 	
-	var fade_tween = create_tween()
+	var fade_tween:Tween = create_tween()
 	match countdown_ticks:
 		3:
 			countdown_prepare_sound.play()
@@ -253,21 +255,21 @@ func countdown_tick():
 			countdown_ready_sound.play()
 	
 			countdown_sprite.texture = ui_skin.ready_texture
-			fade_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000)
+			fade_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000.0)
 			fade_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		1:
 			countdown_set_sound.play()
 			
 			countdown_sprite.modulate.a = 1.0
 			countdown_sprite.texture = ui_skin.set_texture
-			fade_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000)
+			fade_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000.0)
 			fade_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		0:
 			countdown_go_sound.play()
 			
 			countdown_sprite.modulate.a = 1.0
 			countdown_sprite.texture = ui_skin.go_texture
-			fade_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000)
+			fade_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000.0)
 			fade_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 			
 	script_group.call_func("on_countdown_tick", [countdown_ticks, fade_tween])
@@ -557,7 +559,7 @@ func _process(delta:float) -> void:
 		player.hold_timer = 0.0
 		player.dance()
 		
-	if Input.is_action_just_pressed("ui_pause"):
+	if Input.is_action_just_pressed("ui_pause") and not Global.transitioning:
 		add_child(load("res://scenes/gameplay/PauseMenu.tscn").instantiate())
 			
 	var percent:float = (health / max_health) * 100.0

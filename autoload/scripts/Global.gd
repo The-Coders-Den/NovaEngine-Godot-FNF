@@ -2,9 +2,6 @@ extends Node
 
 var SONG:Chart
 
-#if this eneable then beat box by ass is eneambe :3
-var ass = false
-
 const note_directions:Array[String] = [
 	"left", "down", "up", "right",
 ]
@@ -14,10 +11,18 @@ var ui_skins:Dictionary = {
 	"pixel": preload("res://scenes/gameplay/ui_skins/pixel.tscn").instantiate(),
 }
 
+var scene_arguments:Dictionary = {
+	"options_menu": {
+		"exit_scene_path": ""
+	}
+}
+
 var game_size:Vector2 = Vector2(
 	ProjectSettings.get_setting("display/window/size/viewport_width"),
 	ProjectSettings.get_setting("display/window/size/viewport_height"),
 )
+
+var current_difficulty:String = "hard"
 
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color.BLACK)
@@ -50,8 +55,11 @@ func _notification(what):
 				Audio.process_mode = Node.PROCESS_MODE_ALWAYS
 				Transition.process_mode = Node.PROCESS_MODE_ALWAYS
 				get_tree().paused = tree_paused
+				
+var transitioning:bool = false
 
 func switch_scene(path:String) -> void:
+	transitioning = true
 	get_tree().paused = true
 	
 	var anim_player:AnimationPlayer = Transition.anim_player
@@ -60,10 +68,34 @@ func switch_scene(path:String) -> void:
 	await get_tree().create_timer(anim_player.get_animation("in").length).timeout
 	
 	get_tree().change_scene_to_file(path)
+	
+	await get_tree().create_timer(0.05).timeout
+	
 	anim_player.play("out")
 	
 	await get_tree().create_timer(anim_player.get_animation("out").length).timeout
 	
+	transitioning = false
+	get_tree().paused = false
+	
+func reset_scene() -> void:
+	transitioning = true
+	get_tree().paused = true
+	
+	var anim_player:AnimationPlayer = Transition.anim_player
+	anim_player.play("in")
+	
+	await get_tree().create_timer(anim_player.get_animation("in").length).timeout
+	
+	get_tree().reload_current_scene()
+	
+	await get_tree().create_timer(0.05).timeout
+	
+	anim_player.play("out")
+	
+	await get_tree().create_timer(anim_player.get_animation("out").length).timeout
+	
+	transitioning = false
 	get_tree().paused = false
 
 func _input(event:InputEvent) -> void:
