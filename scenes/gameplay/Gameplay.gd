@@ -29,6 +29,15 @@ var combo:int = 0
 var accuracy_pressed_notes:int = 0.0
 var accuracy_total_hit:float = 0.0
 
+var cam_bumping:bool = true
+var cam_bumping_interval:int = 4
+
+var cam_zooming:bool = true
+
+var icon_bumping:bool = true
+var icon_bumping_interval:int = 1
+var icon_zooming:bool = true
+
 var stage:Stage
 var opponent:Character
 var spectator:Character
@@ -310,11 +319,12 @@ func end_song():
 func beat_hit(beat:int):
 	script_group.call_func("on_beat_hit", [beat])
 	
-	cpu_icon.scale += Vector2(0.2, 0.2)
-	player_icon.scale += Vector2(0.2, 0.2)
-	position_icons()
+	if icon_bumping and icon_bumping_interval > 0 and beat % icon_bumping_interval == 0:
+		cpu_icon.scale += Vector2(0.2, 0.2)
+		player_icon.scale += Vector2(0.2, 0.2)
+		position_icons()
 	
-	if beat % 4 == 0:
+	if cam_bumping and cam_bumping_interval > 0 and beat % 4 == 0:
 		camera.zoom += Vector2(0.015, 0.015)
 		hud.scale += Vector2(0.03, 0.03)
 		position_hud()
@@ -579,15 +589,17 @@ func _process(delta:float) -> void:
 	cpu_icon.health = 100.0 - percent
 	player_icon.health = percent
 	
-	var icon_speed:float = clampf((delta * ICON_DELTA_MULTIPLIER) * Conductor.rate, 0.0, 1.0)
-	cpu_icon.scale = lerp(cpu_icon.scale, Vector2.ONE, icon_speed)
-	player_icon.scale = lerp(player_icon.scale, Vector2.ONE, icon_speed)
-	position_icons()
+	if icon_zooming:
+		var icon_speed:float = clampf((delta * ICON_DELTA_MULTIPLIER) * Conductor.rate, 0.0, 1.0)
+		cpu_icon.scale = lerp(cpu_icon.scale, Vector2.ONE, icon_speed)
+		player_icon.scale = lerp(player_icon.scale, Vector2.ONE, icon_speed)
+		position_icons()
 	
-	var camera_speed:float = clampf((delta * ZOOM_DELTA_MULTIPLIER) * Conductor.rate, 0.0, 1.0)
-	camera.zoom = lerp(camera.zoom, Vector2(default_cam_zoom, default_cam_zoom), camera_speed)
-	hud.scale = lerp(hud.scale, Vector2.ONE, camera_speed)
-	position_hud()
+	if cam_zooming:
+		var camera_speed:float = clampf((delta * ZOOM_DELTA_MULTIPLIER) * Conductor.rate, 0.0, 1.0)
+		camera.zoom = lerp(camera.zoom, Vector2(default_cam_zoom, default_cam_zoom), camera_speed)
+		hud.scale = lerp(hud.scale, Vector2.ONE, camera_speed)
+		position_hud()
 	
 	if not ending_song:
 		Conductor.position += (delta * 1000.0) * Conductor.rate
