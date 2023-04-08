@@ -2,6 +2,7 @@ extends Panel
 
 # VARIABLES #
 @onready var sprite_data = $"../SpriteData"
+@onready var fps_box = $FPS
 
 var path: String = "res://Assets/Images/Characters/bf/assets"
 var fps: int = 24
@@ -114,7 +115,7 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
 func _process(delta):
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("ui_cancel") and not fps_box.has_focus():
 		Global.switch_scene("res://scenes/MainMenu.tscn")
 
 # funny signal shits

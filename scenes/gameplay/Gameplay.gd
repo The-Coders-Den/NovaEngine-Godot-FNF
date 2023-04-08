@@ -276,13 +276,13 @@ func step_hit(step:int):
 	script_group.call_func("on_step_hit_post", [step])
 	
 func character_bop():
-	if opponent != null and not opponent.last_anim.begins_with("sing"):
+	if opponent != null and opponent.dance_on_beat and not opponent.last_anim.begins_with("sing"):
 		opponent.dance()
 		
-	if spectator != null and not spectator.last_anim.begins_with("sing"):
+	if spectator != null and spectator.dance_on_beat and not spectator.last_anim.begins_with("sing"):
 		spectator.dance()
 		
-	if player != null and not player.last_anim.begins_with("sing"):
+	if player != null and player.dance_on_beat and not player.last_anim.begins_with("sing"):
 		player.dance()
 		
 	script_group.call_func("on_character_bop", [])
