@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://bv81gapin4vog"]
+
+[ext_resource type="Script" path="res://scenes/gameplay/stages/halloween.gd" id="1_pmnw3"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/stages/spooky/halloween_bg.res" id="2_c5lkq"]
+[ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="3_j3ley"]
+[ext_resource type="Texture2D" uid="uid://m5strgod1naq" path="res://icon.svg" id="5_8cg4i"]
+
+[node name="stage" type="Node2D"]
+script = ExtResource("1_pmnw3")
+
+[node name="PB" type="ParallaxBackground" parent="."]
+follow_viewport_enabled = true
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="PB"]
+position = Vector2(-464, -62)
+sprite_frames = ExtResource("2_c5lkq")
+animation = &"halloweem bg"
+centered = false
+script = ExtResource("3_j3ley")
+
+[node name="Character Positions" type="Node2D" parent="."]
+
+[node name="Opponent" type="Node2D" parent="Character Positions"]
+position = Vector2(108, 100)
+
+[node name="Spectator" type="Node2D" parent="Character Positions"]
+position = Vector2(440, 130)
+
+[node name="Player" type="Node2D" parent="Character Positions"]
+position = Vector2(770, 100)
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(554, 501)
+texture = ExtResource("5_8cg4i")

@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=3 uid="uid://bnouajfyohhf4"]
 
-[ext_resource type="Script" path="res://scripts/Character.gd" id="1_dd3i7"]
-[ext_resource type="Texture2D" uid="uid://cb4g78s0nksa0" path="res://assets/images/gameplay/icons/icon-dad.png" id="2_7chq8"]
-[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/characters/spooky-kids/spooky-kids.res" id="3_r8i4o"]
-[ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="4_3psdp"]
+[ext_resource type="Script" path="res://scripts/Character.gd" id="1_1vwn2"]
+[ext_resource type="Texture2D" uid="uid://8x72hfd6b7g6" path="res://assets/images/gameplay/icons/icon-spooky.png" id="2_7rgst"]
+[ext_resource type="SpriteFrames" uid="uid://dtvgkkeapbng1" path="res://assets/images/gameplay/characters/spooky-kids/spooky-kids.res" id="3_pqwo2"]
+[ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="4_66bng"]
 
 [sub_resource type="Animation" id="Animation_mqbs4"]
 resource_name = "danceLeft"
@@ -19,7 +19,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"idle"]
+"values": [&"spooky dance idle"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -72,7 +72,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"idle"]
+"values": [&"spooky dance idle"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -123,7 +123,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"singDOWN"]
+"values": [&"spooky DOWN note"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -147,7 +147,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 30)]
+"values": [Vector2(40, 140)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -174,7 +174,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"singLEFT"]
+"values": [&"note sing left"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -198,7 +198,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(9, -10)]
+"values": [Vector2(-120, 15)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -225,7 +225,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"singRIGHT"]
+"values": [&"spooky sing right"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -249,7 +249,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -27)]
+"values": [Vector2(90, 15)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -276,7 +276,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"singUP"]
+"values": [&"spooky UP NOTE"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -300,7 +300,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(6, -50)]
+"values": [Vector2(6, -25)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -325,20 +325,20 @@ _data = {
 "singUP": SubResource("Animation_55yur")
 }
 
-[node name="spooky-kids" type="Node2D"]
+[node name="spooky" type="Node2D"]
 position = Vector2(0, 5)
-script = ExtResource("1_dd3i7")
+script = ExtResource("1_1vwn2")
 sing_duration = 6.1
 dance_steps = Array[String](["danceLeft", "danceRight"])
-health_icon = ExtResource("2_7chq8")
-health_color = Color(0.686275, 0.4, 0.807843, 1)
+health_icon = ExtResource("2_7rgst")
+health_color = Color(0.835294, 0.494118, 0, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 168)
-sprite_frames = ExtResource("3_r8i4o")
-animation = &"idle"
+sprite_frames = ExtResource("3_pqwo2")
+animation = &"spooky dance idle"
 centered = false
-script = ExtResource("4_3psdp")
+script = ExtResource("4_66bng")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite"]
 libraries = {
