@@ -38,8 +38,9 @@ var height:float = 0.0
 
 var changing:bool = false
 
-var is_menu_item:bool = false
-var target_y:int = 0
+@export var is_menu_item:bool = false
+@export var target_y:int = 0
+
 var y_mult:float = 120
 var x_add:float = 0
 var y_add:float = 0
@@ -53,7 +54,7 @@ func _ready():
 	update_text()
 
 func _process(delta):
-	if is_menu_item:
+	if is_menu_item and not Engine.is_editor_hint():
 		var scaled_y = remap(target_y, 0, 1, 0, 1.3);
 
 		var lerp_val:float = clamp(delta * 60 * 0.1, 0, 1)
