@@ -2,6 +2,9 @@ extends Node
 
 var SONG:Chart
 
+#if the variarifible true then die
+var ass = false
+
 const note_directions:Array[String] = [
 	"left", "down", "up", "right",
 ]

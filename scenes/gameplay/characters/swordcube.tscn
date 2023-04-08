@@ -1,8 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://dpef18mo6fqko"]
+[gd_scene load_steps=11 format=3 uid="uid://bicmaghk11itn"]
 
 [ext_resource type="Script" path="res://scripts/Character.gd" id="1_j06qm"]
-[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/characters/dad/dad.res" id="2_8b7lu"]
-[ext_resource type="Texture2D" uid="uid://cb4g78s0nksa0" path="res://assets/images/gameplay/icons/icon-dad.png" id="2_r8kkf"]
+[ext_resource type="Texture2D" uid="uid://cduqjcj41ghsh" path="res://assets/images/gameplay/icons/icon-swordcube.png" id="2_osrn6"]
+[ext_resource type="SpriteFrames" uid="uid://cxoysg3i7tern" path="res://assets/images/gameplay/characters/swordcube/spritesheet.res" id="3_e28s7"]
 [ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="3_jmwth"]
 
 [sub_resource type="Animation" id="Animation_epq6v"]
@@ -19,7 +19,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"Dad idle dance"]
+"values": [&"idle"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -70,7 +70,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"Dad Sing Note DOWN"]
+"values": [&"down"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -94,7 +94,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 30)]
+"values": [Vector2(0, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -121,7 +121,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"Dad Sing Note LEFT"]
+"values": [&"left"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -145,7 +145,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(9, -10)]
+"values": [Vector2(0, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -172,7 +172,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"Dad Sing Note RIGHT"]
+"values": [&"right"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -196,7 +196,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -27)]
+"values": [Vector2(0, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -223,7 +223,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"Dad Sing Note UP"]
+"values": [&"up"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -274,15 +274,19 @@ _data = {
 [node name="dad" type="Node2D"]
 script = ExtResource("1_j06qm")
 sing_duration = 6.1
-health_icon = ExtResource("2_r8kkf")
-health_color = Color(0.686275, 0.4, 0.807843, 1)
+health_icon = ExtResource("2_osrn6")
+health_icon_frames = 3
+health_color = Color(0.431373, 0.741176, 0.945098, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-sprite_frames = ExtResource("2_8b7lu")
-animation = &"Dad idle dance"
-frame = 12
+position = Vector2(-402, 295)
+scale = Vector2(0.786111, 0.786111)
+sprite_frames = ExtResource("3_e28s7")
+animation = &"up"
+frame = 3
 frame_progress = 1.0
 centered = false
+offset = Vector2(6, -50)
 script = ExtResource("3_jmwth")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite"]
@@ -291,4 +295,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(468, 284)
+position = Vector2(757, 388)
