@@ -25,10 +25,11 @@ func _process(delta:float) -> void:
 				var receptor:Receptor = note.strumline.get_child(note.direction)
 				receptor.play_anim("confirm")
 				
-				var sing_anim:String = "sing%s" % note.strumline.get_child(note.direction).direction.to_upper()
-				game.player.play_anim(sing_anim, true)
-				game.player.hold_timer = 0.0
-				game.voices.volume_db = 0
+				if not game.player.special_anim:
+					var sing_anim:String = "sing%s" % note.strumline.get_child(note.direction).direction.to_upper()
+					game.player.play_anim(sing_anim, true)
+					game.player.hold_timer = 0.0
+					game.voices.volume_db = 0
 				
 				note.is_sustain_note = true
 				note._player_hit()
@@ -38,10 +39,11 @@ func _process(delta:float) -> void:
 				
 				note_anim_time_player = 0.0
 			elif not note.must_press and note_anim_time >= Conductor.step_crochet:
-				var sing_anim:String = "sing%s" % note.strumline.get_child(note.direction).direction.to_upper()
-				game.opponent.play_anim(sing_anim, true)
-				game.opponent.hold_timer = 0.0
-				game.voices.volume_db = 0
+				if not game.opponent.special_anim:
+					var sing_anim:String = "sing%s" % note.strumline.get_child(note.direction).direction.to_upper()
+					game.opponent.play_anim(sing_anim, true)
+					game.opponent.hold_timer = 0.0
+					game.voices.volume_db = 0
 				
 				note.is_sustain_note = true
 				note._cpu_hit()
