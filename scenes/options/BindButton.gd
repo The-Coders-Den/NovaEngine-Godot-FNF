@@ -22,12 +22,13 @@ func _on_pressed():
 	
 func _input(event):
 	if event is InputEventKey and selecting_bind:
-		selecting_bind = false
 		var key_event:InputEventKey = event
 		var key_str:String = OS.get_keycode_string(event.keycode)
-		print("yo bind is now "+key_str)
+		print("yo bind is now "+key_str+"\nnow we wait a sec until you can set another bind")
 		
 		text = key_str.to_upper()
 		SettingsAPI._settings[bind][bind_type] = key_str.to_upper()
 		SettingsAPI.flush()
 		SettingsAPI.setup_binds()
+		
+		get_tree().create_timer(0.5).timeout.connect(func(): selecting_bind = false)

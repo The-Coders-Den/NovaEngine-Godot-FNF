@@ -5,7 +5,7 @@
 [ext_resource type="SpriteFrames" path="res://assets/images/titlescreen/gfDanceTitle.res" id="2_u0gnt"]
 [ext_resource type="SpriteFrames" path="res://assets/images/titlescreen/logoBumpin.res" id="4_dmwg3"]
 [ext_resource type="SpriteFrames" uid="uid://6vecp03qpxmj" path="res://assets/images/titlescreen/titleEnter.res" id="5_0ol1a"]
-[ext_resource type="PackedScene" path="res://scenes/fonts/Alphabet.tscn" id="6_8oxyx"]
+[ext_resource type="PackedScene" uid="uid://bgilym2qsrs4y" path="res://scenes/fonts/Alphabet.tscn" id="6_8oxyx"]
 [ext_resource type="Texture2D" uid="uid://db74xyr3ob48e" path="res://assets/images/titlescreen/newgrounds_logo.png" id="7_6kcht"]
 
 [sub_resource type="Animation" id="Animation_ldyfc"]
