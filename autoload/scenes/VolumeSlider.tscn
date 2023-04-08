@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://n42ha0ifsni4" path="res://assets/sounds/menus/scrollMenu.ogg" id="5_8dvvg"]
 
 [node name="VolumeSlider" type="CanvasLayer"]
+process_mode = 3
 layer = 128
 script = ExtResource("1_yba7m")
 
