@@ -41,6 +41,11 @@ centered = false
 [node name="PL3" type="ParallaxLayer" parent="PB"]
 position = Vector2(-10, 0)
 
+[node name="Train" type="Sprite2D" parent="PB/PL3"]
+position = Vector2(2010, 360)
+texture = ExtResource("5_0x7jk")
+centered = false
+
 [node name="BehindTrain" type="Sprite2D" parent="PB/PL3"]
 position = Vector2(-30, 50)
 texture = ExtResource("4_utm42")
@@ -48,11 +53,6 @@ centered = false
 
 [node name="Street" type="Sprite2D" parent="PB/PL3/BehindTrain"]
 texture = ExtResource("5_2sb7x")
-centered = false
-
-[node name="Train" type="Sprite2D" parent="PB/PL3"]
-position = Vector2(2010, 360)
-texture = ExtResource("5_0x7jk")
 centered = false
 
 [node name="Character Positions" type="Node2D" parent="."]
