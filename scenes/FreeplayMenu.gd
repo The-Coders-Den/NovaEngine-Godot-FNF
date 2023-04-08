@@ -20,7 +20,7 @@ func _ready():
 	super._ready()
 	Audio.play_music("freakyMenu")
 	Conductor.change_bpm(Audio.music.stream.bpm)
-	
+
 	for i in song_list.songs.size():
 		var meta:FreeplaySong = song_list.songs[i]
 		

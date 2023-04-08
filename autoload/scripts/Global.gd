@@ -2,7 +2,7 @@ extends Node
 
 var SONG:Chart
 
-#if the variarifible true then die
+#if this eneable then beat box by ass is eneambe :3
 var ass = false
 
 const note_directions:Array[String] = [
