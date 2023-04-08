@@ -1,13 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://cygc1u17plsxp"]
+[gd_scene load_steps=12 format=3 uid="uid://bnouajfyohhf4"]
 
-[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/characters/bf/normal.res" id="1_8fsw1"]
-[ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="1_inae7"]
-[ext_resource type="Script" path="res://scripts/Character.gd" id="1_njqje"]
-[ext_resource type="Texture2D" uid="uid://bvafd1dvo4ke4" path="res://assets/images/gameplay/icons/icon-bf.png" id="2_83nrd"]
+[ext_resource type="Script" path="res://scripts/Character.gd" id="1_dd3i7"]
+[ext_resource type="Texture2D" uid="uid://cb4g78s0nksa0" path="res://assets/images/gameplay/icons/icon-dad.png" id="2_7chq8"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/characters/spooky-kids/spooky-kids.res" id="3_r8i4o"]
+[ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="4_3psdp"]
 
-[sub_resource type="Animation" id="Animation_epq6v"]
-resource_name = "idle"
-length = 0.625004
+[sub_resource type="Animation" id="Animation_mqbs4"]
+resource_name = "danceLeft"
+length = 0.291671
 step = 0.0416667
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -19,7 +19,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"BF idle dance"]
+"values": [&"idle"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -32,6 +32,59 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.0833333, 0.291667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_epq6v"]
+resource_name = "danceRight"
+length = 0.625004
+step = 0.0416667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -70,7 +123,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"BF NOTE DOWN"]
+"values": [&"singDOWN"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -94,58 +147,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(20, 51)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".:playing")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_qv7xy"]
-resource_name = "singDOWNmiss"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"BF NOTE DOWN MISS"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:offset")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(20, 19)]
+"values": [Vector2(0, 30)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -172,7 +174,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"BF NOTE LEFT"]
+"values": [&"singLEFT"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -196,58 +198,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-5, 6)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".:playing")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_vhk6i"]
-resource_name = "singLEFTmiss"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"BF NOTE LEFT MISS"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:offset")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-5, -19)]
+"values": [Vector2(9, -10)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -274,7 +225,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"BF NOTE RIGHT"]
+"values": [&"singRIGHT"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -298,58 +249,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(48, 7)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".:playing")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_smaak"]
-resource_name = "singRIGHTmiss"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"BF NOTE RIGHT MISS"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:offset")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(44, -22)]
+"values": [Vector2(0, -27)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -376,7 +276,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"BF NOTE UP"]
+"values": [&"singUP"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -400,111 +300,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(46, -27)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".:playing")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_53fqm"]
-resource_name = "singUPmiss"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"BF NOTE UP MISS"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:offset")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(42, -27)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".:playing")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_wucwq"]
-resource_name = "hey"
-length = 0.625004
-step = 0.0416667
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"BF HEY!!"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:offset")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-2, -5)]
+"values": [Vector2(6, -50)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -521,33 +317,28 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vgtrv"]
 _data = {
-"hey": SubResource("Animation_wucwq"),
-"idle": SubResource("Animation_epq6v"),
+"danceLeft": SubResource("Animation_mqbs4"),
+"danceRight": SubResource("Animation_epq6v"),
 "singDOWN": SubResource("Animation_8yhx3"),
-"singDOWNmiss": SubResource("Animation_qv7xy"),
 "singLEFT": SubResource("Animation_4fmcm"),
-"singLEFTmiss": SubResource("Animation_vhk6i"),
 "singRIGHT": SubResource("Animation_yk1cf"),
-"singRIGHTmiss": SubResource("Animation_smaak"),
-"singUP": SubResource("Animation_55yur"),
-"singUPmiss": SubResource("Animation_53fqm")
+"singUP": SubResource("Animation_55yur")
 }
 
-[node name="bf" type="Node2D"]
-script = ExtResource("1_njqje")
-is_player = true
-health_icon = ExtResource("2_83nrd")
-health_color = Color(0.192157, 0.690196, 0.819608, 1)
+[node name="spooky-kids" type="Node2D"]
+position = Vector2(0, 5)
+script = ExtResource("1_dd3i7")
+sing_duration = 6.1
+dance_steps = Array[String](["danceLeft", "danceRight"])
+health_icon = ExtResource("2_7chq8")
+health_color = Color(0.686275, 0.4, 0.807843, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 350)
-sprite_frames = ExtResource("1_8fsw1")
-animation = &"BF HEY!!"
-frame = 25
-frame_progress = 1.0
+position = Vector2(0, 168)
+sprite_frames = ExtResource("3_r8i4o")
+animation = &"idle"
 centered = false
-offset = Vector2(-2, -5)
-script = ExtResource("1_inae7")
+script = ExtResource("4_3psdp")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite"]
 libraries = {
@@ -555,4 +346,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(0, 430)
+position = Vector2(468, 284)
