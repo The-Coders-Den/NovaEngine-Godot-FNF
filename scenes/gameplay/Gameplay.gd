@@ -506,6 +506,7 @@ var ms_tween:Tween
 func good_note_hit(note:Note):
 	if note.was_good_hit: return
 	
+	
 	voices.volume_db = 0
 	
 	var note_diff:float = (note.time - Conductor.position) / Conductor.rate
@@ -541,6 +542,8 @@ func good_note_hit(note:Note):
 	note.was_good_hit = true
 	
 	var sing_anim:String = "sing"+player_strums.get_child(note.direction).direction.to_upper()
+	if note.alt_anim:
+		sing_anim += "-alt"
 	player.play_anim(sing_anim, true)
 	player.hold_timer = 0.0
 	
@@ -623,6 +626,7 @@ func _process(delta:float) -> void:
 		new_note.strumline = player_strums if is_player_note else cpu_strums
 		new_note.must_press = is_player_note
 		new_note.note_skin = ui_skin
+		new_note.alt_anim = note.type == "Alt Animation"
 		note_group.add_child(new_note)
 		script_group.call_func("on_note_spawn", [new_note])
 		

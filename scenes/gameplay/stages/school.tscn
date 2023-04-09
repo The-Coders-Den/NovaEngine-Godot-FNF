@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3 uid="uid://c52ag5d72hnej"]
+
+[ext_resource type="Script" path="res://scripts/Stage.gd" id="1_xvllc"]
+[ext_resource type="Texture2D" uid="uid://cejnp7ebusdue" path="res://assets/images/gameplay/stages/school/weebSky.png" id="2_qbyx2"]
+[ext_resource type="Texture2D" uid="uid://crjmqc1w1kuxj" path="res://assets/images/gameplay/stages/school/weebSchool.png" id="3_34qhi"]
+[ext_resource type="Texture2D" uid="uid://crl3m0gqutifu" path="res://assets/images/gameplay/stages/school/weebStreet.png" id="4_dpw4v"]
+[ext_resource type="Texture2D" uid="uid://bg5qnfqudvoc8" path="res://assets/images/gameplay/stages/school/weebTreesBack.png" id="5_oyuep"]
+[ext_resource type="SpriteFrames" uid="uid://dpnyw7ma3urq0" path="res://assets/images/gameplay/stages/school/weebTrees.res" id="6_vmvyx"]
+
+[node name="stage" type="Node2D"]
+script = ExtResource("1_xvllc")
+
+[node name="PB" type="ParallaxBackground" parent="."]
+
+[node name="PL1" type="ParallaxLayer" parent="PB"]
+motion_scale = Vector2(0.1, 0.1)
+
+[node name="WeebSky" type="TextureRect" parent="PB/PL1"]
+texture_filter = 1
+offset_right = 1866.0
+offset_bottom = 966.0
+texture = ExtResource("2_qbyx2")
+
+[node name="PL2" type="ParallaxLayer" parent="PB"]
+motion_scale = Vector2(0.6, 0.9)
+
+[node name="WeebSchool" type="TextureRect" parent="PB/PL2"]
+texture_filter = 1
+offset_left = -200.0
+offset_right = -200.0
+scale = Vector2(6, 6)
+texture = ExtResource("3_34qhi")
+
+[node name="PL3" type="ParallaxLayer" parent="PB"]
+motion_scale = Vector2(0.95, 0.95)
+
+[node name="WeebStreet" type="TextureRect" parent="PB/PL3"]
+texture_filter = 1
+offset_left = -200.0
+offset_right = -200.0
+scale = Vector2(6, 6)
+texture = ExtResource("4_dpw4v")
+
+[node name="PL4" type="ParallaxLayer" parent="PB"]
+motion_scale = Vector2(0.9, 0.9)
+
+[node name="trees back" type="Sprite2D" parent="PB/PL4"]
+texture_filter = 1
+position = Vector2(-30, 130)
+scale = Vector2(6, 6)
+texture = ExtResource("5_oyuep")
+centered = false
+
+[node name="PL5" type="ParallaxLayer" parent="PB"]
+motion_scale = Vector2(0.85, 0.85)
+
+[node name="trees" type="AnimatedSprite2D" parent="PB/PL5"]
+texture_filter = 1
+position = Vector2(-644, -832)
+scale = Vector2(6, 6)
+sprite_frames = ExtResource("6_vmvyx")
+animation = &"trees"
+frame_progress = 0.106231
+centered = false
+
+[node name="Character Positions" type="Node2D" parent="."]
+
+[node name="Opponent" type="Node2D" parent="Character Positions"]
+position = Vector2(100, 100)
+
+[node name="Spectator" type="Node2D" parent="Character Positions"]
+position = Vector2(580, 430)
+
+[node name="Player" type="Node2D" parent="Character Positions"]
+position = Vector2(970, 320)
