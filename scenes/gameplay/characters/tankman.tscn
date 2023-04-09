@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://cy0kj25p1pfub"]
 
 [ext_resource type="Script" path="res://scripts/Character.gd" id="1_cermu"]
-[ext_resource type="Texture2D" uid="uid://cb4g78s0nksa0" path="res://assets/images/gameplay/icons/icon-dad.png" id="2_1weot"]
+[ext_resource type="Texture2D" uid="uid://cxcsjc5lvkj08" path="res://assets/images/gameplay/icons/icon-tankman.png" id="2_ml8k3"]
 [ext_resource type="SpriteFrames" uid="uid://bbyglg10c3kfn" path="res://assets/images/gameplay/characters/tankman/tankman.res" id="3_1uiba"]
 [ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="4_33p5v"]
 
@@ -263,7 +263,7 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_ww71m"]
-resource_name = "ugh"
+resource_name = "singUP-alt"
 length = 0.625004
 step = 0.0416667
 tracks/0/type = "value"
@@ -316,7 +316,7 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_cs7af"]
-resource_name = "pretty good"
+resource_name = "singDOWN-alt"
 length = 0.625004
 step = 0.0416667
 tracks/0/type = "value"
@@ -371,27 +371,28 @@ tracks/3/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vgtrv"]
 _data = {
 "idle": SubResource("Animation_epq6v"),
-"pretty good": SubResource("Animation_cs7af"),
 "singDOWN": SubResource("Animation_8yhx3"),
+"singDOWN-alt": SubResource("Animation_cs7af"),
 "singLEFT": SubResource("Animation_4fmcm"),
 "singRIGHT": SubResource("Animation_yk1cf"),
 "singUP": SubResource("Animation_55yur"),
-"ugh": SubResource("Animation_ww71m")
+"singUP-alt": SubResource("Animation_ww71m")
 }
 
-[node name="dad" type="Node2D"]
+[node name="tankman" type="Node2D"]
 script = ExtResource("1_cermu")
 sing_duration = 6.1
-health_icon = ExtResource("2_1weot")
-health_color = Color(0.686275, 0.4, 0.807843, 1)
+health_icon = ExtResource("2_ml8k3")
+health_color = Color(0, 0, 0, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 147)
 sprite_frames = ExtResource("3_1uiba")
-animation = &"Tankman Idle Dance"
-frame = 13
+animation = &"PRETTY GOOD tankman"
+frame = 66
 frame_progress = 1.0
 centered = false
+offset = Vector2(0, -15)
 flip_h = true
 script = ExtResource("4_33p5v")
 

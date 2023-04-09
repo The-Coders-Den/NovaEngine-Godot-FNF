@@ -22,6 +22,7 @@ var must_press:bool = false
 var can_be_hit:bool = false
 var was_good_hit:bool = false
 var too_late:bool = false
+var alt_anim:bool = false
 
 var step_crochet:float = 0.0
 

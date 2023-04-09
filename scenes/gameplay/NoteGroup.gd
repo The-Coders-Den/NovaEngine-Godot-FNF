@@ -27,6 +27,8 @@ func _process(delta:float) -> void:
 				
 				if not game.player.special_anim:
 					var sing_anim:String = "sing%s" % note.strumline.get_child(note.direction).direction.to_upper()
+					if note.alt_anim:
+						sing_anim += "-alt"
 					game.player.play_anim(sing_anim, true)
 					game.player.hold_timer = 0.0
 					
@@ -42,6 +44,9 @@ func _process(delta:float) -> void:
 			elif not note.must_press and note_anim_time >= Conductor.step_crochet:
 				if not game.opponent.special_anim:
 					var sing_anim:String = "sing%s" % note.strumline.get_child(note.direction).direction.to_upper()
+					if note.alt_anim:
+						sing_anim += "-alt"
+						
 					game.opponent.play_anim(sing_anim, true)
 					game.opponent.hold_timer = 0.0
 					
@@ -76,6 +81,8 @@ func _process(delta:float) -> void:
 				game.script_group.call_func("on_cpu_hit", [note])
 				
 				var sing_anim:String = "sing%s" % game.cpu_strums.get_child(note.direction).direction.to_upper()
+				if note.alt_anim:
+					sing_anim += "-alt"
 				game.opponent.play_anim(sing_anim, true)
 				game.opponent.hold_timer = 0.0
 				
