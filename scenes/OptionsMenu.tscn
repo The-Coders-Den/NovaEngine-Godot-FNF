@@ -360,6 +360,7 @@ theme = ExtResource("7_xa45n")
 text = "XML Converter"
 
 [node name="TXT Converter" type="Button" parent="TabContainer/Tools"]
+layout_mode = 0
 offset_left = 27.0
 offset_top = 60.0
 offset_right = 379.0
