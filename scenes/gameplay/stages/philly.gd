@@ -13,7 +13,7 @@ func beat_hit(beat:int):
 	if beat%4 == 0:
 		win.visible = true
 		win.modulate = colors[randi_range(0,4)]
-		create_tween().tween_property(win,"modulate:a",0.0,Conductor.crochet/500).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+		create_tween().tween_property(win,"modulate:a",0.0,Conductor.crochet/255).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
 		# lightshit
 	if beat%8 == 4 and randf_range(0,100) < 30.0 and !trainMoveing and trainCooldown > 8:
 		trainCooldown = randi_range(-4,0)

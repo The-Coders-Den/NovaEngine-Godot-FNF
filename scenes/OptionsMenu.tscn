@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://2ud3viu0v6pw"]
+[gd_scene load_steps=23 format=3 uid="uid://2ud3viu0v6pw"]
 
 [ext_resource type="Script" path="res://scenes/OptionsMenu.gd" id="1_wsch7"]
 [ext_resource type="Texture2D" uid="uid://y8c4a1bk8wkl" path="res://assets/images/menus/menuBGDesat.png" id="2_di4mo"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://3hermjx3kxw2" path="res://assets/images/material_icons/volume-mid.png" id="14_nb18d"]
 [ext_resource type="Texture2D" uid="uid://d0r5affbxqsi5" path="res://assets/images/material_icons/volume-full.png" id="15_qhl7p"]
 [ext_resource type="Texture2D" uid="uid://dw8bh3jsxd3kl" path="res://assets/images/material_icons/volume-mute.png" id="16_ofedk"]
+[ext_resource type="Script" path="res://scenes/gameplay/notes/Note.gd" id="19_6kdjf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2rif3"]
 bg_color = Color(1, 1, 1, 0)
@@ -907,6 +908,7 @@ position = Vector2(884, 787)
 [node name="NoteTemplate" parent="." instance=ExtResource("9_rjold")]
 visible = false
 position = Vector2(-83.9998, 212)
+script = ExtResource("19_6kdjf")
 in_editor = true
 
 [node name="Notes" type="Node2D" parent="."]

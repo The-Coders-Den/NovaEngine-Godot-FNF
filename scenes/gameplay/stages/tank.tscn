@@ -1,0 +1,85 @@
+[gd_scene load_steps=9 format=3 uid="uid://bnr3j8crxh2mj"]
+
+[ext_resource type="Script" path="res://scenes/gameplay/stages/tank.gd" id="1_hx0hu"]
+[ext_resource type="Texture2D" uid="uid://bir1mgfolyi7f" path="res://assets/images/gameplay/stages/tank/tankSky.png" id="2_gdow6"]
+[ext_resource type="Texture2D" uid="uid://bu6g73vpywar" path="res://assets/images/gameplay/stages/tank/tankClouds.png" id="3_e8qdn"]
+[ext_resource type="Texture2D" uid="uid://rl2fei4d3qhu" path="res://assets/images/gameplay/stages/tank/tankMountains.png" id="3_hvagv"]
+[ext_resource type="Texture2D" uid="uid://yqt4keefhn8e" path="res://assets/images/gameplay/stages/tank/tankBuildings.png" id="5_o7ex2"]
+[ext_resource type="Texture2D" uid="uid://jie6ar1487wt" path="res://assets/images/gameplay/stages/tank/tankRuins.png" id="6_8tmk2"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/stages/tank/smokeLeft.res" id="7_7j4re"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/stages/tank/smokeRight.res" id="8_l8yld"]
+
+[node name="tank" type="Node2D"]
+script = ExtResource("1_hx0hu")
+default_cam_zoom = 0.9
+
+[node name="PB" type="ParallaxBackground" parent="."]
+
+[node name="TankSky" type="Sprite2D" parent="PB"]
+position = Vector2(-400, -400)
+texture = ExtResource("2_gdow6")
+centered = false
+
+[node name="PL1" type="ParallaxLayer" parent="PB"]
+
+[node name="TankClouds" type="Sprite2D" parent="PB/PL1"]
+position = Vector2(-700, 0)
+texture = ExtResource("3_e8qdn")
+centered = false
+
+[node name="PL2" type="ParallaxLayer" parent="PB"]
+motion_scale = Vector2(0.2, 0.2)
+
+[node name="TankMountains" type="Sprite2D" parent="PB/PL2"]
+position = Vector2(-300, -20)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("3_hvagv")
+centered = false
+
+[node name="PL3" type="ParallaxLayer" parent="PB"]
+motion_scale = Vector2(0.3, 0.3)
+
+[node name="TankBuildings" type="Sprite2D" parent="PB/PL3"]
+position = Vector2(-200, 0)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("5_o7ex2")
+centered = false
+
+[node name="PL4" type="ParallaxLayer" parent="PB"]
+motion_scale = Vector2(0.35, 0.35)
+
+[node name="TankRuins" type="Sprite2D" parent="PB/PL4"]
+position = Vector2(-200, 0)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("6_8tmk2")
+centered = false
+
+[node name="PL5" type="ParallaxLayer" parent="PB"]
+motion_scale = Vector2(0.4, 0.4)
+
+[node name="smoke_left" type="AnimatedSprite2D" parent="PB/PL5"]
+position = Vector2(-200, -100)
+sprite_frames = ExtResource("7_7j4re")
+animation = &"SmokeBlurLeft instance 1"
+frame_progress = 0.639917
+centered = false
+
+[node name="smoke_right" type="AnimatedSprite2D" parent="PB/PL5"]
+position = Vector2(1100, -100)
+sprite_frames = ExtResource("8_l8yld")
+animation = &"SmokeRight instance 1"
+frame_progress = 0.614706
+centered = false
+
+[node name="PL6" type="ParallaxLayer" parent="PB"]
+
+[node name="Character Positions" type="Node2D" parent="."]
+
+[node name="Opponent" type="Node2D" parent="Character Positions"]
+position = Vector2(100, 100)
+
+[node name="Spectator" type="Node2D" parent="Character Positions"]
+position = Vector2(400, 130)
+
+[node name="Player" type="Node2D" parent="Character Positions"]
+position = Vector2(770, 100)
