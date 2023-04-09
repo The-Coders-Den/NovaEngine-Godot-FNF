@@ -359,6 +359,14 @@ offset_bottom = 51.0
 theme = ExtResource("7_xa45n")
 text = "XML Converter"
 
+[node name="TXT Converter" type="Button" parent="TabContainer/Tools"]
+offset_left = 27.0
+offset_top = 60.0
+offset_right = 379.0
+offset_bottom = 91.0
+theme = ExtResource("7_xa45n")
+text = "TXT Converter"
+
 [node name="Controls" type="TabBar" parent="TabContainer"]
 visible = false
 layout_mode = 2
@@ -924,6 +932,7 @@ in_editor = true
 [connection signal="pressed" from="TabContainer/Miscellaneous/VSync" to="TabContainer/Miscellaneous/VSync" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Miscellaneous/Multi Threaded Rendering" to="TabContainer/Miscellaneous/Multi Threaded Rendering" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Tools/XML Converter" to="." method="_on_tool_button_pressed" binds= ["XML Converter"]]
+[connection signal="pressed" from="TabContainer/Tools/TXT Converter" to="." method="_on_tool_button_pressed" binds= ["TXT Converter"]]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind/Alt Bind" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind" method="_on_pressed"]

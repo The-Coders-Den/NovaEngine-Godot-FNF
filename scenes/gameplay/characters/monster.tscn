@@ -1,8 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://l0m4euad6ugi"]
+[gd_scene load_steps=11 format=3 uid="uid://jsyj8ha2357m"]
 
 [ext_resource type="Script" path="res://scripts/Character.gd" id="1_qra5c"]
 [ext_resource type="Texture2D" uid="uid://dybbcb7jsxcqk" path="res://assets/images/gameplay/icons/icon-monster.png" id="2_eg3il"]
-[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/characters/monster/normal.res" id="3_ui5nj"]
+[ext_resource type="SpriteFrames" uid="uid://cdk6pw8e2w0ns" path="res://assets/images/gameplay/characters/monster/normal.res" id="3_ui5nj"]
 [ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="4_3dnx0"]
 
 [sub_resource type="Animation" id="Animation_epq6v"]

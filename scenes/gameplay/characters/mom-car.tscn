@@ -145,7 +145,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-120, 5)]
+"values": [Vector2(-180, 5)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -292,4 +292,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(468, 284)
+position = Vector2(468, 172)
