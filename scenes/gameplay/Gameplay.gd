@@ -151,16 +151,16 @@ func _ready() -> void:
 	var script_path:String = "res://assets/songs/"+SONG.name.to_lower()+"/"
 	var file_list:PackedStringArray = Global.list_files_in_dir(script_path)
 	for item in file_list:
-		if item.ends_with(".tscn"):
-			var script:FunkinScript = FunkinScript.create(script_path+item, self)
+		if item.ends_with(".tscn") or item.ends_with(".tscn.remap"):
+			var script:FunkinScript = FunkinScript.create(script_path+item.replace(".remap", ""), self)
 			script_group.add_script(script)
 	
 	# load global scripts (put in assets/songs)
 	var init_path:String = "res://assets/songs/"
 	file_list = Global.list_files_in_dir(init_path)
 	for item in file_list:
-		if item.ends_with(".tscn"):
-			var script:FunkinScript = FunkinScript.create(init_path+item, self)
+		if item.ends_with(".tscn") or item.ends_with(".tscn.remap"):
+			var script:FunkinScript = FunkinScript.create(init_path+item.replace(".remap", ""), self)
 			script_group.add_script(script)
 	
 	var strum_y:float = Global.game_size.y - 100.0 if SettingsAPI.get_setting("downscroll") else 100.0
