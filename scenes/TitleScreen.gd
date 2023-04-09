@@ -125,4 +125,4 @@ func _get_wacky() -> PackedStringArray:
 	var wacky_text:String = wackies_file.get_as_text()
 	var wacky_lines:PackedStringArray = wacky_text.split("\n", false)
 	
-	return wacky_lines[randi_range(0, wacky_lines.size())].split("--")
+	return wacky_lines[randi_range(0, wacky_lines.size()-1)].split("--")

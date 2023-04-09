@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bnr3j8crxh2mj"]
+[gd_scene load_steps=17 format=3 uid="uid://bnr3j8crxh2mj"]
 
 [ext_resource type="Script" path="res://scenes/gameplay/stages/tank.gd" id="1_hx0hu"]
 [ext_resource type="Texture2D" uid="uid://bir1mgfolyi7f" path="res://assets/images/gameplay/stages/tank/tankSky.png" id="2_gdow6"]
@@ -8,6 +8,14 @@
 [ext_resource type="Texture2D" uid="uid://jie6ar1487wt" path="res://assets/images/gameplay/stages/tank/tankRuins.png" id="6_8tmk2"]
 [ext_resource type="SpriteFrames" path="res://assets/images/gameplay/stages/tank/smokeLeft.res" id="7_7j4re"]
 [ext_resource type="SpriteFrames" path="res://assets/images/gameplay/stages/tank/smokeRight.res" id="8_l8yld"]
+[ext_resource type="SpriteFrames" uid="uid://xje8h5ihbsr5" path="res://assets/images/gameplay/stages/tank/tankWatchtower.res" id="9_ou32a"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/stages/tank/tankRolling.res" id="10_2w2me"]
+[ext_resource type="Texture2D" uid="uid://bvfcvftj0ncfp" path="res://assets/images/gameplay/stages/tank/tankGround.png" id="11_h5owd"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/stages/tank/tank0.res" id="12_txs23"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/stages/tank/tank1.res" id="13_exjqr"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/stages/tank/tank2.res" id="14_4mmo3"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/stages/tank/tank4.res" id="15_busal"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/stages/tank/tank3.res" id="16_rwd11"]
 
 [node name="tank" type="Node2D"]
 script = ExtResource("1_hx0hu")
@@ -61,25 +69,95 @@ motion_scale = Vector2(0.4, 0.4)
 position = Vector2(-200, -100)
 sprite_frames = ExtResource("7_7j4re")
 animation = &"SmokeBlurLeft instance 1"
-frame_progress = 0.639917
+frame_progress = 0.414051
 centered = false
 
 [node name="smoke_right" type="AnimatedSprite2D" parent="PB/PL5"]
 position = Vector2(1100, -100)
 sprite_frames = ExtResource("8_l8yld")
 animation = &"SmokeRight instance 1"
-frame_progress = 0.614706
+frame_progress = 0.564037
 centered = false
 
 [node name="PL6" type="ParallaxLayer" parent="PB"]
+motion_scale = Vector2(0.5, 0.5)
+
+[node name="tank_watch_tower" type="AnimatedSprite2D" parent="PB/PL6"]
+position = Vector2(100, 50)
+sprite_frames = ExtResource("9_ou32a")
+animation = &"watchtower gradient color instance 1"
+centered = false
+
+[node name="tank_ground" type="AnimatedSprite2D" parent="PB/PL6"]
+sprite_frames = ExtResource("10_2w2me")
+animation = &"BG tank w lighting instance 1"
+
+[node name="PL7" type="ParallaxLayer" parent="PB"]
+
+[node name="TankGround" type="Sprite2D" parent="PB/PL7"]
+position = Vector2(-420, -150)
+scale = Vector2(1.15, 1.15)
+texture = ExtResource("11_h5owd")
+centered = false
+
+[node name="PB2" type="ParallaxBackground" parent="."]
+layer = 1
+
+[node name="PL9" type="ParallaxLayer" parent="PB2"]
+motion_scale = Vector2(2, 0.2)
+
+[node name="bopper2" type="AnimatedSprite2D" parent="PB2/PL9"]
+position = Vector2(-300, 750)
+sprite_frames = ExtResource("13_exjqr")
+animation = &"fg tankhead 5 instance 1"
+centered = false
+
+[node name="PL10" type="ParallaxLayer" parent="PB2"]
+motion_scale = Vector2(1.5, 1.5)
+
+[node name="bopper3" type="AnimatedSprite2D" parent="PB2/PL10"]
+position = Vector2(450, 940)
+sprite_frames = ExtResource("14_4mmo3")
+animation = &"foreground man 3 instance 1"
+centered = false
+
+[node name="bopper4" type="AnimatedSprite2D" parent="PB2/PL10"]
+position = Vector2(1300, 900)
+sprite_frames = ExtResource("15_busal")
+animation = &"fg tankman bobbin 3 instance 1"
+centered = false
+
+[node name="bopper5" type="AnimatedSprite2D" parent="PB2/PL10"]
+position = Vector2(450, 940)
+sprite_frames = ExtResource("14_4mmo3")
+animation = &"foreground man 3 instance 1"
+centered = false
+
+[node name="PL8" type="ParallaxLayer" parent="PB2"]
+motion_scale = Vector2(1.7, 1.5)
+
+[node name="bopper1" type="AnimatedSprite2D" parent="PB2/PL8"]
+position = Vector2(-500, 650)
+sprite_frames = ExtResource("12_txs23")
+animation = &"fg tankhead far right instance 1"
+centered = false
+
+[node name="PL11" type="ParallaxLayer" parent="PB2"]
+motion_scale = Vector2(3.5, 2.5)
+
+[node name="boppeer6" type="AnimatedSprite2D" parent="PB2/PL11"]
+position = Vector2(1300, 1200)
+sprite_frames = ExtResource("16_rwd11")
+animation = &"fg tankhead 4 instance 1"
+centered = false
 
 [node name="Character Positions" type="Node2D" parent="."]
 
 [node name="Opponent" type="Node2D" parent="Character Positions"]
-position = Vector2(100, 100)
+position = Vector2(20, 110)
 
 [node name="Spectator" type="Node2D" parent="Character Positions"]
-position = Vector2(400, 130)
+position = Vector2(200, 65)
 
 [node name="Player" type="Node2D" parent="Character Positions"]
-position = Vector2(770, 100)
+position = Vector2(810, 100)
