@@ -3,3 +3,4 @@ miss sounds
 death screen
 WEEK 6 MAKEABLTY
 story mode
+chart editor
