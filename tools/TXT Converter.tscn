@@ -1,0 +1,123 @@
+[gd_scene load_steps=6 format=3 uid="uid://btdl3bi5drnnx"]
+
+[ext_resource type="Texture2D" uid="uid://y8c4a1bk8wkl" path="res://assets/images/menus/menuBGDesat.png" id="1_41jli"]
+[ext_resource type="Theme" uid="uid://br6hapg0jupnv" path="res://assets/styles/nova_purple_panel.tres" id="2_aqime"]
+[ext_resource type="Script" path="res://tools/TXT Converter.gd" id="3_8e38u"]
+[ext_resource type="Theme" uid="uid://blt3c0a5po0yj" path="res://assets/styles/nova_purple_button.tres" id="4_xbktm"]
+[ext_resource type="Script" path="res://tools/Choose Sprites.gd" id="5_jnfp1"]
+
+[node name="TXT Converter" type="Node2D"]
+
+[node name="BG" type="Sprite2D" parent="."]
+modulate = Color(0.105882, 0.0784314, 0.12549, 1)
+position = Vector2(-116, -58)
+scale = Vector2(1.095, 1.095)
+texture = ExtResource("1_41jli")
+centered = false
+
+[node name="Converted Panel" type="Panel" parent="."]
+offset_left = 558.0
+offset_top = 20.0
+offset_right = 1258.0
+offset_bottom = 700.0
+theme = ExtResource("2_aqime")
+
+[node name="ConvertedSprites" type="Label" parent="Converted Panel"]
+layout_mode = 0
+offset_right = 701.0
+offset_bottom = 60.0
+text = "Converted Sprites:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpriteData" type="AnimatedSprite2D" parent="."]
+position = Vector2(954, 403)
+
+[node name="Main Panel" type="Panel" parent="."]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 540.0
+offset_bottom = 260.0
+theme = ExtResource("2_aqime")
+script = ExtResource("3_8e38u")
+
+[node name="Title" type="Label" parent="Main Panel"]
+layout_mode = 0
+offset_right = 522.0
+offset_bottom = 45.0
+text = "TXT -> SpriteFrames"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Choose Sprites" type="Button" parent="Main Panel"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 75.0
+offset_right = 138.0
+offset_bottom = 106.0
+focus_mode = 0
+theme = ExtResource("4_xbktm")
+text = "Choose Sprites"
+script = ExtResource("5_jnfp1")
+
+[node name="FPS" type="LineEdit" parent="Main Panel"]
+layout_mode = 0
+offset_left = 191.0
+offset_top = 74.0
+offset_right = 258.062
+offset_bottom = 105.0
+theme = ExtResource("2_aqime")
+text = "24"
+placeholder_text = "24"
+
+[node name="FPS Text" type="Label" parent="Main Panel"]
+layout_mode = 0
+offset_left = 268.0
+offset_top = 75.0
+offset_right = 340.0
+offset_bottom = 101.0
+text = "Anim FPS"
+
+[node name="Looped Checkbox" type="CheckBox" parent="Main Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 129.0
+offset_right = 109.0
+offset_bottom = 160.0
+focus_mode = 0
+theme = ExtResource("4_xbktm")
+text = "Looped?"
+
+[node name="Optimized Checkbox" type="CheckBox" parent="Main Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 166.0
+offset_right = 132.0
+offset_bottom = 197.0
+theme = ExtResource("4_xbktm")
+text = "Optimized?"
+
+[node name="Convert Button" type="Button" parent="Main Panel"]
+layout_mode = 0
+offset_left = 191.0
+offset_top = 145.0
+offset_right = 261.0
+offset_bottom = 176.0
+focus_mode = 0
+theme = ExtResource("4_xbktm")
+text = "Convert"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+size = Vector2i(500, 500)
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.png ; Spritesheets", "*.jpg ; Spritesheets", "*.jpeg ; Spritesheets", "*.txt ; TXT Spritesheet Data")
+show_hidden_files = true
+
+[connection signal="pressed" from="Main Panel/Choose Sprites" to="Main Panel/Choose Sprites" method="popup_shit"]
+[connection signal="text_changed" from="Main Panel/FPS" to="Main Panel" method="set_fps"]
+[connection signal="toggled" from="Main Panel/Looped Checkbox" to="Main Panel" method="set_looped"]
+[connection signal="toggled" from="Main Panel/Optimized Checkbox" to="Main Panel" method="set_optimized"]
+[connection signal="pressed" from="Main Panel/Convert Button" to="Main Panel" method="convert_xml"]
+[connection signal="file_selected" from="FileDialog" to="Main Panel" method="set_path"]
