@@ -36,8 +36,9 @@ motion_scale = Vector2(0.95, 0.95)
 
 [node name="WeebStreet" type="TextureRect" parent="PB/PL3"]
 texture_filter = 1
-offset_left = -200.0
-offset_right = -200.0
+offset_left = -180.0
+offset_right = 131.0
+offset_bottom = 161.0
 scale = Vector2(6, 6)
 texture = ExtResource("4_dpw4v")
 
@@ -56,7 +57,7 @@ motion_scale = Vector2(0.85, 0.85)
 
 [node name="trees" type="AnimatedSprite2D" parent="PB/PL5"]
 texture_filter = 1
-position = Vector2(-644, -832)
+position = Vector2(-613, -967)
 scale = Vector2(6, 6)
 sprite_frames = ExtResource("6_vmvyx")
 animation = &"trees"
