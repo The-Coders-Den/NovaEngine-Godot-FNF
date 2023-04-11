@@ -595,7 +595,7 @@ health_color = Color(0.407843, 0.643137, 0.92549, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(0, 150)
+position = Vector2(0, -437)
 scale = Vector2(6, 6)
 sprite_frames = ExtResource("3_q8mh6")
 animation = &"BF IDLE instance 1"
@@ -610,4 +610,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(0, 230)
+position = Vector2(0, -373)

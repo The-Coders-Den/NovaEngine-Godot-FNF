@@ -1,9 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://bv2bmp1oon3uw"]
+[gd_scene load_steps=11 format=3 uid="uid://bjadqo1a0m8oh"]
 
-[ext_resource type="Script" path="res://scripts/Character.gd" id="1_j06qm"]
-[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/characters/dad/dad.res" id="2_8b7lu"]
-[ext_resource type="Texture2D" uid="uid://cb4g78s0nksa0" path="res://assets/images/gameplay/icons/icon-dad.png" id="2_r8kkf"]
-[ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="3_jmwth"]
+[ext_resource type="Script" path="res://scripts/Character.gd" id="1_ub1fd"]
+[ext_resource type="Texture2D" uid="uid://cb4g78s0nksa0" path="res://assets/images/gameplay/icons/icon-dad.png" id="2_81l08"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/characters/spirit/spirit.res" id="3_b6qp7"]
+[ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="4_cqb0l"]
 
 [sub_resource type="Animation" id="Animation_epq6v"]
 resource_name = "idle"
@@ -19,7 +19,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"Dad idle dance"]
+"values": [&"idle spirit"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -70,7 +70,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"Dad Sing Note DOWN"]
+"values": [&"spirit down"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -94,7 +94,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 30)]
+"values": [Vector2(-70, -70)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -121,7 +121,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"Dad Sing Note LEFT"]
+"values": [&"left"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -145,7 +145,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(9, -10)]
+"values": [Vector2(0, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -172,7 +172,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"Dad Sing Note RIGHT"]
+"values": [&"right"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -196,7 +196,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -27)]
+"values": [Vector2(0, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -223,7 +223,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"Dad Sing Note UP"]
+"values": [&"up"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -247,7 +247,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(6, -50)]
+"values": [Vector2(0, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -272,19 +272,21 @@ _data = {
 }
 
 [node name="dad" type="Node2D"]
-script = ExtResource("1_j06qm")
+script = ExtResource("1_ub1fd")
 sing_duration = 6.1
-health_icon = ExtResource("2_r8kkf")
+health_icon = ExtResource("2_81l08")
 health_color = Color(0.686275, 0.4, 0.807843, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -767)
-sprite_frames = ExtResource("2_8b7lu")
-animation = &"Dad idle dance"
-frame = 12
-frame_progress = 1.0
+texture_filter = 1
+position = Vector2(0, -714)
+scale = Vector2(6, 6)
+sprite_frames = ExtResource("3_b6qp7")
+animation = &"spirit down"
+frame_progress = 0.926601
 centered = false
-script = ExtResource("3_jmwth")
+offset = Vector2(-70, -70)
+script = ExtResource("4_cqb0l")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite"]
 libraries = {
@@ -292,4 +294,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(468, -483)
+position = Vector2(556, -355)

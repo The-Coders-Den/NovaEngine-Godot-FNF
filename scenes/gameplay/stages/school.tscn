@@ -81,10 +81,10 @@ centered = false
 [node name="Character Positions" type="Node2D" parent="."]
 
 [node name="Opponent" type="Node2D" parent="Character Positions"]
-position = Vector2(100, 200)
+position = Vector2(12, 936)
 
 [node name="Spectator" type="Node2D" parent="Character Positions"]
 position = Vector2(580, 430)
 
 [node name="Player" type="Node2D" parent="Character Positions"]
-position = Vector2(970, 320)
+position = Vector2(690, 880)
