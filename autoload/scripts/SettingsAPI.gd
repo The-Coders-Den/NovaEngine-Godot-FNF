@@ -19,6 +19,7 @@ var _settings:Dictionary = {
 	"note splashes": true,
 	"opaque sustains": false,
 	"subtitles": true,
+	"story always yellow": false,
 	"judgement camera": "World",
 	
 	# misc

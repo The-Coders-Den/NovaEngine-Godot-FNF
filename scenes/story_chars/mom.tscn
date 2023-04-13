@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://dbd42oxohoq2h"]
+
+[ext_resource type="SpriteFrames" path="res://assets/images/menus/storymenu/characters/mom.res" id="1_ca18s"]
+[ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="2_tew3w"]
+
+[sub_resource type="Animation" id="Animation_buryq"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Mom Idle BLACK LINES"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 30)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pmb0v"]
+_data = {
+"idle": SubResource("Animation_buryq")
+}
+
+[node name="mom" type="Node2D"]
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("1_ca18s")
+animation = &"Mom Idle BLACK LINES"
+frame_progress = 0.564962
+centered = false
+script = ExtResource("2_tew3w")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite"]
+libraries = {
+"": SubResource("AnimationLibrary_pmb0v")
+}

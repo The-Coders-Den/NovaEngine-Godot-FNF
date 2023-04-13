@@ -314,7 +314,12 @@ func end_song():
 	var ret:Variant = script_group.call_func("on_end_song", [])
 	if ret == false: return
 	
-	Global.switch_scene("res://scenes/FreeplayMenu.tscn")
+	if Global.queued_songs.size() > 0:
+		Global.SONG = Chart.load_chart(Global.queued_songs[0], Global.current_difficulty)
+		Global.queued_songs.remove_at(0)
+		Global.switch_scene("res://scenes/gameplay/Gameplay.tscn")
+	else:
+		Global.switch_scene("res://scenes/FreeplayMenu.tscn" if !Global.is_story_mode else "res://scenes/StoryMenu.tscn")
 	
 func beat_hit(beat:int):
 	script_group.call_func("on_beat_hit", [beat])
