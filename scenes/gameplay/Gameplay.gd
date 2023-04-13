@@ -369,6 +369,7 @@ func position_hud():
 	hud.offset.x = (hud.scale.x - 1.0) * -(Global.game_size.x * 0.5)
 	hud.offset.y = (hud.scale.y - 1.0) * -(Global.game_size.y * 0.5)
 		
+var timessynced:int = 0
 func resync_vocals():
 	if ending_song: return
 	
@@ -379,6 +380,7 @@ func resync_vocals():
 	voices.play(Conductor.position / 1000.0)
 	
 	script_group.call_func("on_resync_vocals", [])
+	timessynced += 1
 
 func key_from_event(event:InputEventKey):
 	var data:int = -1

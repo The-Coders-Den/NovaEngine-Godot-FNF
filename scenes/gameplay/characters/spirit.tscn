@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://bjadqo1a0m8oh"]
 
 [ext_resource type="Script" path="res://scripts/Character.gd" id="1_ub1fd"]
-[ext_resource type="Texture2D" uid="uid://cb4g78s0nksa0" path="res://assets/images/gameplay/icons/icon-dad.png" id="2_81l08"]
+[ext_resource type="Texture2D" uid="uid://d3jxxi3dppb74" path="res://assets/images/gameplay/icons/icon-spirit.png" id="2_kre1c"]
 [ext_resource type="SpriteFrames" path="res://assets/images/gameplay/characters/spirit/spirit.res" id="3_b6qp7"]
 [ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="4_cqb0l"]
 
@@ -274,8 +274,8 @@ _data = {
 [node name="dad" type="Node2D"]
 script = ExtResource("1_ub1fd")
 sing_duration = 6.1
-health_icon = ExtResource("2_81l08")
-health_color = Color(0.686275, 0.4, 0.807843, 1)
+health_icon = ExtResource("2_kre1c")
+health_color = Color(1, 0.235294, 0.431373, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -283,7 +283,8 @@ position = Vector2(0, -714)
 scale = Vector2(6, 6)
 sprite_frames = ExtResource("3_b6qp7")
 animation = &"spirit down"
-frame_progress = 0.926601
+frame = 19
+frame_progress = 1.0
 centered = false
 offset = Vector2(-70, -70)
 script = ExtResource("4_cqb0l")
