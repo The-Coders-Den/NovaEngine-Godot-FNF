@@ -64,6 +64,11 @@ position = Vector2(640, 360)
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("2_25v5u")
 
+[node name="MenuBG2" type="Sprite2D" parent="PB/BGLayer"]
+position = Vector2(640, 360)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_25v5u")
+
 [node name="Magenta" type="Sprite2D" parent="PB/BGLayer"]
 visible = false
 modulate = Color(0.992157, 0.443137, 0.607843, 1)
@@ -118,7 +123,8 @@ theme_override_font_sizes/font_size = 16
 text = "Nova Engine Godot v0.1.0
 
 if you piss in reverse, you actually shit yourself! - voiddev
-pissing in slow motion would be weird as fuck - swordcube"
+pissing in slow motion would be weird as fuck - swordcube
+pissing fast is just a x2 multiplier irl - alexg1247"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, 359)
