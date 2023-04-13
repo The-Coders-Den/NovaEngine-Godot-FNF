@@ -7,6 +7,7 @@
         "player2": "spirit",
         "gf": "gf-pixel",
         "stage": "schoolEvil",
+        "uiSkin": "pixel",
         "speed": 1.5,
         "notes": [
             {

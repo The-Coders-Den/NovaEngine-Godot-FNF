@@ -123,6 +123,7 @@ health_color = Color(0.647059, 0, 0.301961, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+position = Vector2(-200, -400)
 scale = Vector2(6, 6)
 sprite_frames = ExtResource("3_ig2bv")
 animation = &"GF IDLE"

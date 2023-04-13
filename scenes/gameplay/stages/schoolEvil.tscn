@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4njerl6jit4y"]
+
+[ext_resource type="Script" path="res://scenes/gameplay/stages/schoolEvil.gd" id="1_rw3jb"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/stages/school/animatedEvilSchool.res" id="2_at60x"]
+
+[node name="stage" type="Node2D"]
+script = ExtResource("1_rw3jb")
+default_cam_zoom = 0.9
+
+[node name="PB" type="ParallaxBackground" parent="."]
+
+[node name="PL1" type="ParallaxLayer" parent="PB"]
+motion_scale = Vector2(0.9, 0.9)
+
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="PB/PL1"]
+texture_filter = 1
+position = Vector2(569, 347)
+scale = Vector2(6, 6)
+sprite_frames = ExtResource("2_at60x")
+animation = &"background 2 instance 1"
+
+[node name="Character Positions" type="Node2D" parent="."]
+
+[node name="Opponent" type="Node2D" parent="Character Positions"]
+position = Vector2(-179, 779)
+
+[node name="Spectator" type="Node2D" parent="Character Positions"]
+position = Vector2(450, 522)
+
+[node name="Player" type="Node2D" parent="Character Positions"]
+position = Vector2(795, 790)
