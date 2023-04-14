@@ -51,6 +51,9 @@ func _process(delta):
 			timer.timeout.connect(func():
 				var button:StringName = buttons.get_child(cur_selected).name
 				match str(button):
+					"StoryMode":
+						Global.switch_scene("res://scenes/StoryMenu.tscn")
+					
 					"Freeplay":
 						Global.switch_scene("res://scenes/FreeplayMenu.tscn")
 						

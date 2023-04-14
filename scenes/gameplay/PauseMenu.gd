@@ -98,7 +98,7 @@ func _process(delta):
 				# no stororey mode  yet!
 				Audio.play_music("freakyMenu")
 				
-				Global.switch_scene("res://scenes/FreeplayMenu.tscn")
+				Global.switch_scene("res://scenes/FreeplayMenu.tscn" if !Global.is_story_mode else "res://scenes/StoryMenu.tscn")
 				queue_free()
 	
 	if Input.is_action_just_pressed("ui_up"):

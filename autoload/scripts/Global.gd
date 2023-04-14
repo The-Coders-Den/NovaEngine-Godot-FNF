@@ -24,6 +24,9 @@ var game_size:Vector2 = Vector2(
 
 var current_difficulty:String = "hard"
 
+var is_story_mode:bool = false
+var queued_songs:PackedStringArray = [];
+
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	

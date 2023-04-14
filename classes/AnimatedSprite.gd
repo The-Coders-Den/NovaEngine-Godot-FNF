@@ -10,3 +10,8 @@ class_name AnimatedSprite
 			pause()
 	get:
 		return playing
+
+ # This makes animation handling for things that aren't chars a bit better.
+var anim_player:AnimationPlayer:
+	get:
+		return get_child(0)
