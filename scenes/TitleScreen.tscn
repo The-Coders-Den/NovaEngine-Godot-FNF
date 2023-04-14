@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/TitleScreen.gd" id="1_eg0nr"]
 [ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="2_rhavx"]
-[ext_resource type="SpriteFrames" path="res://assets/images/titlescreen/gfDanceTitle.res" id="2_u0gnt"]
+[ext_resource type="SpriteFrames" uid="uid://xmmicsrmtycf" path="res://assets/images/titlescreen/gfDanceTitle.res" id="2_u0gnt"]
 [ext_resource type="SpriteFrames" path="res://assets/images/titlescreen/logoBumpin.res" id="4_dmwg3"]
 [ext_resource type="SpriteFrames" uid="uid://6vecp03qpxmj" path="res://assets/images/titlescreen/titleEnter.res" id="5_0ol1a"]
 [ext_resource type="PackedScene" uid="uid://bgilym2qsrs4y" path="res://scenes/fonts/Alphabet.tscn" id="6_8oxyx"]

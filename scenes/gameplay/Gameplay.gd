@@ -321,7 +321,12 @@ func end_song():
 	var ret:Variant = script_group.call_func("on_end_song", [])
 	if ret == false: return
 	
-	Global.switch_scene("res://scenes/FreeplayMenu.tscn")
+	if Global.queued_songs.size() > 0:
+		Global.SONG = Chart.load_chart(Global.queued_songs[0], Global.current_difficulty)
+		Global.queued_songs.remove_at(0)
+		Global.switch_scene("res://scenes/gameplay/Gameplay.tscn")
+	else:
+		Global.switch_scene("res://scenes/FreeplayMenu.tscn" if !Global.is_story_mode else "res://scenes/StoryMenu.tscn")
 	
 func beat_hit(beat:int):
 	script_group.call_func("on_beat_hit", [beat])
@@ -376,6 +381,7 @@ func position_hud():
 	hud.offset.x = (hud.scale.x - 1.0) * -(Global.game_size.x * 0.5)
 	hud.offset.y = (hud.scale.y - 1.0) * -(Global.game_size.y * 0.5)
 		
+var timessynced:int = 0
 func resync_vocals():
 	if ending_song: return
 	
@@ -386,6 +392,7 @@ func resync_vocals():
 	voices.play(Conductor.position / 1000.0)
 	
 	script_group.call_func("on_resync_vocals", [])
+	timessynced += 1
 
 func key_from_event(event:InputEventKey):
 	var data:int = -1

@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://cuidn10wv3jev"]
 
 [ext_resource type="Script" path="res://scripts/Character.gd" id="1_6lys8"]
-[ext_resource type="Texture2D" uid="uid://cb4g78s0nksa0" path="res://assets/images/gameplay/icons/icon-dad.png" id="2_8hj6a"]
+[ext_resource type="Texture2D" uid="uid://br4sq5exy3kcm" path="res://assets/images/gameplay/icons/icon-senpai.png" id="2_43nnn"]
 [ext_resource type="SpriteFrames" uid="uid://wd8ng1wegwsn" path="res://assets/images/gameplay/characters/senpai/normal.res" id="3_hl76g"]
 [ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="4_yww20"]
 
@@ -271,20 +271,19 @@ _data = {
 "singUP": SubResource("Animation_55yur")
 }
 
-[node name="dad" type="Node2D"]
+[node name="senpai" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_6lys8")
 sing_duration = 6.1
-health_icon = ExtResource("2_8hj6a")
-health_color = Color(0.521569, 0.572549, 0.305882, 1)
+health_icon = ExtResource("2_43nnn")
+health_color = Color(1, 0.666667, 0.435294, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -114)
+position = Vector2(4, -882)
 scale = Vector2(6, 6)
 sprite_frames = ExtResource("3_hl76g")
 animation = &"Senpai Idle"
-frame = 27
-frame_progress = 1.0
+frame_progress = 0.784273
 centered = false
 script = ExtResource("4_yww20")
 
@@ -294,4 +293,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(468, 284)
+position = Vector2(332, -410)

@@ -264,21 +264,32 @@ text = "Subtitles (TO BE IMPLEMENTED)"
 script = ExtResource("4_gjk4b")
 option = "note splashes"
 
+[node name="Story Always Yellow" type="CheckBox" parent="TabContainer/Appearance"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 104.0
+offset_right = 264.0
+offset_bottom = 135.0
+tooltip_text = "Disables the color tween of the BG in the story mode menu."
+text = "Story Menu BG Always Yellow"
+script = ExtResource("4_gjk4b")
+option = "story always yellow"
+
 [node name="HSeparator" type="HSeparator" parent="TabContainer/Appearance"]
 modulate = Color(0.486275, 0.368627, 0.560784, 1)
 layout_mode = 0
 offset_left = 14.0
-offset_top = 112.0
+offset_top = 136.0
 offset_right = 391.0
-offset_bottom = 116.0
+offset_bottom = 140.0
 scale = Vector2(1, 2)
 
 [node name="Judgement Camera" type="OptionButton" parent="TabContainer/Appearance"]
 layout_mode = 0
 offset_left = 13.0
-offset_top = 152.0
+offset_top = 176.0
 offset_right = 388.0
-offset_bottom = 175.0
+offset_bottom = 199.0
 tooltip_text = "Changes how your speed is applied.
 Multiplier multiplies the song's scroll speed by the one set here, Constant directly sets the song's scroll speed."
 item_count = 2
@@ -927,6 +938,7 @@ in_editor = true
 [connection signal="pressed" from="TabContainer/Appearance/Note Splashes" to="TabContainer/Appearance/Note Splashes" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Appearance/Opaque Sustains" to="TabContainer/Appearance/Opaque Sustains" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Appearance/Subtitles" to="TabContainer/Appearance/Subtitles" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Appearance/Story Always Yellow" to="TabContainer/Appearance/Story Always Yellow" method="_on_pressed"]
 [connection signal="item_selected" from="TabContainer/Appearance/Judgement Camera" to="TabContainer/Appearance/Judgement Camera" method="_on_item_selected"]
 [connection signal="pressed" from="TabContainer/Miscellaneous/Auto Pause" to="TabContainer/Miscellaneous/Auto Pause" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Miscellaneous/Volume Beep Pitching" to="TabContainer/Miscellaneous/Volume Beep Pitching" method="_on_pressed"]
