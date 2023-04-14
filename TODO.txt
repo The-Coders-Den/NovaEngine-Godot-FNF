@@ -1,6 +1,9 @@
 make all of the weeks more accurate to base game
 miss sounds
 death screen
-WEEK 6 MAKEABLTY
-story mode
+finish week 6
+finish week 7
+- story mode
 chart editor
+dialogue
+highscore system

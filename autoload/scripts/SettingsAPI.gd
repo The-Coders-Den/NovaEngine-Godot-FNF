@@ -1,6 +1,6 @@
 extends Node
 
-var _json_path:String = "user://funkin_settings.json"
+const _json_path:String = "user://funkin_settings.json"
 var _settings:Dictionary = {
 	# gameplay
 	"downscroll": false,
@@ -49,6 +49,7 @@ var _settings:Dictionary = {
 	"volume_mute": ["0", "INSERT"],
 	
 	# engine
+	"current_mod": "Friday Night Funkin'",
 	"volume": 0.5,
 	"muted": false,
 }

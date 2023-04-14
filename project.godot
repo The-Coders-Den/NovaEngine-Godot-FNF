@@ -26,6 +26,7 @@ SettingsAPI="*res://autoload/scripts/SettingsAPI.gd"
 Transition="*res://autoload/scenes/Transition.tscn"
 VolumeSlider="*res://autoload/scenes/VolumeSlider.tscn"
 FPS="*res://autoload/scenes/FPS.tscn"
+ModManager="*res://autoload/scripts/ModManager.gd"
 
 [display]
 
