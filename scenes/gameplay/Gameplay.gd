@@ -3,7 +3,6 @@ class_name Gameplay
 
 var template_notes:Dictionary = {
 	"default": preload("res://scenes/gameplay/notes/Default.tscn").instantiate(),
-	"Alt Animation": preload("res://scenes/gameplay/notes/Default.tscn").instantiate()
 }
 var OPPONENT_HEALTH_COLOR:StyleBoxFlat = preload("res://assets/styles/healthbar/opponent.tres")
 var PLAYER_HEALTH_COLOR:StyleBoxFlat = preload("res://assets/styles/healthbar/player.tres")
@@ -637,7 +636,11 @@ func _process(delta:float) -> void:
 		if note.direction > key_count - 1:
 			is_player_note = !note.player_section
 			
-		var new_note:Note = template_notes[note.type].duplicate()
+		var instance_type:String = note.type
+		if not note.type in template_notes:
+			instance_type = "default"
+			
+		var new_note:Note = template_notes[instance_type].duplicate()
 		new_note.position = Vector2(-9999, -9999)
 		new_note.time = note.time
 		new_note.direction = note.direction % key_count
