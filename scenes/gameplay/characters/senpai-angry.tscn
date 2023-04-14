@@ -1,9 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://bjadqo1a0m8oh"]
+[gd_scene load_steps=11 format=3 uid="uid://7y3pj5mrw2xy"]
 
-[ext_resource type="Script" path="res://scripts/Character.gd" id="1_ub1fd"]
-[ext_resource type="Texture2D" uid="uid://d3jxxi3dppb74" path="res://assets/images/gameplay/icons/icon-spirit.png" id="2_kre1c"]
-[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/characters/spirit/spirit.res" id="3_b6qp7"]
-[ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="4_cqb0l"]
+[ext_resource type="Script" path="res://scripts/Character.gd" id="1_ydu0a"]
+[ext_resource type="Texture2D" uid="uid://br4sq5exy3kcm" path="res://assets/images/gameplay/icons/icon-senpai.png" id="2_4xoi6"]
+[ext_resource type="SpriteFrames" uid="uid://wd8ng1wegwsn" path="res://assets/images/gameplay/characters/senpai/normal.res" id="3_v36ws"]
+[ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="4_w4r2h"]
 
 [sub_resource type="Animation" id="Animation_epq6v"]
 resource_name = "idle"
@@ -19,7 +19,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"idle spirit"]
+"values": [&"Angry Senpai Idle"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -70,7 +70,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"spirit down"]
+"values": [&"Angry Senpai DOWN NOTE"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -94,7 +94,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-70, -70)]
+"values": [Vector2(-1, -1)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -121,7 +121,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"left"]
+"values": [&"Angry Senpai LEFT NOTE"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -145,7 +145,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(-4, -1)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -172,7 +172,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"right"]
+"values": [&"Angry Senpai RIGHT NOTE"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -223,7 +223,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"up"]
+"values": [&"Angry Senpai UP NOTE"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -247,7 +247,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(-2, -6)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -271,23 +271,22 @@ _data = {
 "singUP": SubResource("Animation_55yur")
 }
 
-[node name="dad" type="Node2D"]
-script = ExtResource("1_ub1fd")
+[node name="senpai-angry" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_ydu0a")
 sing_duration = 6.1
-health_icon = ExtResource("2_kre1c")
-health_color = Color(1, 0.235294, 0.431373, 1)
+health_icon = ExtResource("2_4xoi6")
+health_color = Color(1, 0.666667, 0.435294, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-texture_filter = 1
-position = Vector2(0, -714)
+position = Vector2(4, -882)
 scale = Vector2(6, 6)
-sprite_frames = ExtResource("3_b6qp7")
-animation = &"spirit down"
-frame = 19
+sprite_frames = ExtResource("3_v36ws")
+animation = &"Angry Senpai Idle"
+frame = 13
 frame_progress = 1.0
 centered = false
-offset = Vector2(-70, -70)
-script = ExtResource("4_cqb0l")
+script = ExtResource("4_w4r2h")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite"]
 libraries = {
@@ -295,4 +294,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(556, -355)
+position = Vector2(332, -410)

@@ -5,7 +5,6 @@
 
 [node name="stage" type="Node2D"]
 script = ExtResource("1_rw3jb")
-default_cam_zoom = 0.9
 
 [node name="PB" type="ParallaxBackground" parent="."]
 
@@ -25,7 +24,7 @@ animation = &"background 2 instance 1"
 position = Vector2(-179, 779)
 
 [node name="Spectator" type="Node2D" parent="Character Positions"]
-position = Vector2(450, 522)
+position = Vector2(692, 714)
 
 [node name="Player" type="Node2D" parent="Character Positions"]
 position = Vector2(795, 790)
