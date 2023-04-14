@@ -5,6 +5,7 @@ var name:String = "Test"
 var bpm:float = 150.0
 var sections:Array[Section] = []
 var key_count:int = 4
+var scroll_speed:float = 1.0
 
 var opponent:String = "bf"
 var spectator:String = "gf"
@@ -20,6 +21,7 @@ static func load_chart(song:String, difficulty:String = "normal"):
 	chart.name = json.song
 	chart.bpm = json.bpm
 	chart.key_count = 4
+	chart.scroll_speed = json.speed
 	
 	if "keyCount" in json:
 		chart.key_count = json.keyCount

@@ -103,6 +103,13 @@ func _ready() -> void:
 	if Global.SONG == null:
 		Global.SONG = Chart.load_chart("tutorial", "hard")
 		SONG = Global.SONG
+		
+	scroll_speed = SONG.scroll_speed
+	match SettingsAPI.get_setting("scroll speed type").to_lower():
+		"multiplier":
+			scroll_speed *= SettingsAPI.get_setting("scroll speed")
+		"constant":
+			scroll_speed = SettingsAPI.get_setting("scroll speed")
 	
 	ui_skin = Global.ui_skins[SONG.ui_skin]
 		
@@ -468,6 +475,12 @@ func pop_up_score(judgement:Judgement) -> void:
 	score += judgement.score
 	combo += 1
 	
+	display_judgement(judgement, pop_up_score_tweener)
+	display_combo(pop_up_score_tweener)
+	
+	script_group.call_func("on_pop_up_score", [combo])
+	
+func display_judgement(judgement:Judgement, tween:Tween):	
 	var rating_spr:VelocitySprite = rating_template.duplicate()
 	rating_spr.texture = load(ui_skin.rating_texture_path+judgement.name+".png")
 	rating_spr.visible = true
@@ -479,9 +492,10 @@ func pop_up_score(judgement:Judgement) -> void:
 	rating_spr.velocity.x = -randi_range(0, 10)
 	combo_group.add_child(rating_spr)
 	
-	pop_up_score_tweener.tween_property(rating_spr, "modulate:a", 0.0, 0.2) \
+	tween.tween_property(rating_spr, "modulate:a", 0.0, 0.2) \
 			.set_delay(Conductor.crochet * 0.001).finished.connect(func(): rating_spr.queue_free())
 	
+func display_combo(tween:Tween):
 	var separated_score:String = Global.add_zeros(str(combo), 3)
 	for i in len(separated_score):
 		var num_score:VelocitySprite = combo_template.duplicate()
@@ -496,10 +510,8 @@ func pop_up_score(judgement:Judgement) -> void:
 		num_score.velocity.x = randi_range(-5, 5)
 		combo_group.add_child(num_score)
 		
-		pop_up_score_tweener.tween_property(num_score, "modulate:a", 0.0, 0.2) \
+		tween.tween_property(num_score, "modulate:a", 0.0, 0.2) \
 			.set_delay(Conductor.crochet * 0.002).finished.connect(func(): num_score.queue_free())
-		
-	script_group.call_func("on_pop_up_score", [combo])
 		
 var ms_tween:Tween
 		
