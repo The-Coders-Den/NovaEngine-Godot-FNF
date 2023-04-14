@@ -27,13 +27,14 @@ Transition="*res://autoload/scenes/Transition.tscn"
 VolumeSlider="*res://autoload/scenes/VolumeSlider.tscn"
 FPS="*res://autoload/scenes/FPS.tscn"
 ModManager="*res://autoload/scripts/ModManager.gd"
+HighScore="*res://autoload/scripts/HighScore.gd"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
+window/stretch/mode="canvas_items"
 
 [input]
 

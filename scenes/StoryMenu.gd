@@ -28,6 +28,8 @@ var right_x:float = 1191
 @onready var left_arrow:AnimatedSprite = $LeftArrow
 @onready var right_arrow:AnimatedSprite = $RightArrow
 @onready var diff_sprite:Sprite2D = $Difficulty
+var score:int = 0
+var lerp_score:int = 0
 
 func _ready():
 	Audio.play_music("freakyMenu")
@@ -50,7 +52,8 @@ func _process(delta):
 	diff_sprite.offset.y = lerp(diff_sprite.offset.y, 0.0, lerp_val)
 	diff_sprite.modulate.a = 1 + diff_sprite.offset.y / 20
 	right_arrow.position.x = lerp(right_arrow.position.x, right_x, lerp_val)
-	
+	lerp_score = lerpf(lerp_score,score,clampf(delta * 60 * 0.4, 0.0, 1.0))
+	score_count.text = "WEEK SCORE: " + str(lerp_score)
 	if selected_week:
 		return
 	
@@ -86,7 +89,7 @@ func _process(delta):
 
 func change_week(inc):
 	Audio.play_sound("scrollMenu")
-	
+
 	cur_week = wrap(cur_week + inc, 0, week_list.size())
 	
 	var char_pos = [dad_pos, bf_pos, gf_pos]
@@ -120,7 +123,7 @@ func change_week(inc):
 	
 func change_diff(inc:int):
 	cur_diff = wrap(cur_diff + inc, 0, week_list[cur_week].difficulties.size())
-	
+	score = get_week_score()
 	var diff_tex = load("res://assets/images/menus/storymenu/difficulties/" + week_list[cur_week].difficulties[cur_diff] + ".png")
 	diff_sprite.texture = diff_tex
 	diff_sprite.position.y = left_arrow.position.y + left_arrow.sprite_frames.get_frame_texture(left_arrow.animation.replace(" push", ""), 0).get_height() / 2 - diff_tex.get_height() / 2
@@ -128,6 +131,11 @@ func change_diff(inc:int):
 	
 	reposition_diff()
 	
+func get_week_score():
+	var _score = 0
+	for song in week_list[cur_week].songs:
+		_score += HighScore.get_score(song.song_path,week_list[cur_week].difficulties[cur_diff])
+	return _score
 func make_char(name:String, pos_node:Node2D, scale:float, index:int):
 	var char_path:String = "res://scenes/story_chars/" + name + ".tscn"
 	var char:Node2D

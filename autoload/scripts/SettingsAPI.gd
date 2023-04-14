@@ -49,7 +49,7 @@ var _settings:Dictionary = {
 	"volume_mute": ["0", "INSERT"],
 	
 	# engine
-	"current_mod": "Friday Night Funkin'",
+	"current mod": "Friday Night Funkin'",
 	"volume": 0.5,
 	"muted": false,
 }
