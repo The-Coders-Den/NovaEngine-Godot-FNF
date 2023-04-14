@@ -13,7 +13,6 @@ config_version=5
 config/name="Nova Engine"
 run/main_scene="res://Init.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
-run/max_fps=240
 config/icon="res://icon.svg"
 
 [autoload]
@@ -33,8 +32,8 @@ HighScore="*res://autoload/scripts/HighScore.gd"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/vsync/vsync_mode=0
 window/stretch/mode="canvas_items"
+window/vsync/vsync_mode=0
 
 [input]
 

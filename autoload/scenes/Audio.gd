@@ -12,6 +12,7 @@ func play_music(path:String):
 	cur_music_path = path
 	
 	music.stream = load(path)
+	music.stream.loop = true
 	music.play(0.0)
 	
 func stop_music():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://2ud3viu0v6pw"]
+[gd_scene load_steps=23 format=3 uid="uid://2ud3viu0v6pw"]
 
 [ext_resource type="Script" path="res://scenes/OptionsMenu.gd" id="1_wsch7"]
 [ext_resource type="Texture2D" uid="uid://y8c4a1bk8wkl" path="res://assets/images/menus/menuBGDesat.png" id="2_di4mo"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://3hermjx3kxw2" path="res://assets/images/material_icons/volume-mid.png" id="14_nb18d"]
 [ext_resource type="Texture2D" uid="uid://d0r5affbxqsi5" path="res://assets/images/material_icons/volume-full.png" id="15_qhl7p"]
 [ext_resource type="Texture2D" uid="uid://dw8bh3jsxd3kl" path="res://assets/images/material_icons/volume-mute.png" id="16_ofedk"]
+[ext_resource type="FontFile" uid="uid://cf2wd6a4pa5kb" path="res://assets/fonts/funkin.ttf" id="17_u2vjg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2rif3"]
 bg_color = Color(1, 1, 1, 0)
@@ -911,6 +912,19 @@ theme_override_constants/line_spacing = -4
 theme_override_font_sizes/font_size = 14
 text = "Hover over items to get a description of
 what they do!"
+
+[node name="MSDisplay" type="Label" parent="."]
+visible = false
+offset_left = 795.0
+offset_top = 475.0
+offset_right = 1093.0
+offset_bottom = 515.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("17_u2vjg")
+theme_override_font_sizes/font_size = 48
+text = "160ms"
+horizontal_alignment = 1
 
 [node name="StrumLine" parent="." instance=ExtResource("8_8v6jg")]
 position = Vector2(884, 787)
