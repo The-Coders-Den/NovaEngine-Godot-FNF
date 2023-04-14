@@ -591,7 +591,7 @@ _data = {
 script = ExtResource("1_adf3r")
 is_player = true
 health_icon = ExtResource("2_3auwy")
-health_color = Color(0.407843, 0.643137, 0.92549, 1)
+health_color = Color(0.482353, 0.839216, 0.964706, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

@@ -15,7 +15,7 @@
 
 [sub_resource type="Resource" id="Resource_ykqdk"]
 script = ExtResource("2_7bcx6")
-song = "tutorial"
+song = "test"
 display_name = ""
 character_icon = ExtResource("2_e0r34")
 icon_frames = 2

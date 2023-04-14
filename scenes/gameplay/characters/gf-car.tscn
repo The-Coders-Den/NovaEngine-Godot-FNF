@@ -115,7 +115,7 @@ _data = {
 "danceRight": SubResource("Animation_7jg6a")
 }
 
-[node name="gf" type="Node2D"]
+[node name="gf-car" type="Node2D"]
 script = ExtResource("1_lv1fs")
 dance_steps = Array[String](["danceLeft", "danceRight"])
 health_icon = ExtResource("2_1rsyn")

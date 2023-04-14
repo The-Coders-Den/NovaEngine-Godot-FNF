@@ -587,7 +587,7 @@ _data = {
 "singUPmiss": SubResource("Animation_53fqm")
 }
 
-[node name="bf" type="Node2D"]
+[node name="bf-christmas" type="Node2D"]
 script = ExtResource("1_4rdo1")
 is_player = true
 health_icon = ExtResource("2_cbrk2")

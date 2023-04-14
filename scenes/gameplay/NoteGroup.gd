@@ -21,10 +21,7 @@ func _process(delta:float) -> void:
 		if note.was_good_hit:
 			note.position.y = strum_pos.y
 			
-			if note.must_press and note_anim_time_player >= Conductor.step_crochet and Input.is_action_pressed(note.strumline.controls[note.direction]):
-				var receptor:Receptor = note.strumline.get_child(note.direction)
-				receptor.play_anim("confirm")
-				
+			if note.must_press and note_anim_time_player >= Conductor.step_crochet and Input.is_action_pressed(note.strumline.controls[note.direction]):				
 				if not game.player.special_anim:
 					var sing_anim:String = "sing%s" % note.strumline.get_child(note.direction).direction.to_upper()
 					if note.alt_anim:
@@ -39,8 +36,6 @@ func _process(delta:float) -> void:
 				note._note_hit(true)
 				game.script_group.call_func("on_note_hit", [note])
 				game.script_group.call_func("on_player_hit", [note])
-				
-				note_anim_time_player = 0.0
 			elif not note.must_press and note_anim_time >= Conductor.step_crochet:
 				if not game.opponent.special_anim:
 					var sing_anim:String = "sing%s" % note.strumline.get_child(note.direction).direction.to_upper()
@@ -58,7 +53,10 @@ func _process(delta:float) -> void:
 				game.script_group.call_func("on_note_hit", [note])
 				game.script_group.call_func("on_cpu_hit", [note])
 				
-				note_anim_time = 0.0
+		# don't ask >:(
+		if note.was_good_hit and note_anim_time_player >= Conductor.step_crochet and Input.is_action_pressed(note.strumline.controls[note.direction]):
+			var receptor:Receptor = note.strumline.get_child(note.direction)
+			receptor.play_anim("confirm")
 
 		var note_kill_range:float = (500 / scroll_speed)
 		if note.must_press:
@@ -97,3 +95,10 @@ func _process(delta:float) -> void:
 				game.script_group.call_func("on_note_miss", [note])
 				game.script_group.call_func("on_cpu_miss", [note])
 				note.queue_free()
+				
+	# don't ask #2 >:(
+	if note_anim_time >= Conductor.step_crochet:
+		note_anim_time = 0.0
+			
+	if note_anim_time_player >= Conductor.step_crochet:
+		note_anim_time_player = 0.0

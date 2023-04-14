@@ -9,7 +9,6 @@ class_name StoryWeek
 @export var opponent:String = "dad"
 @export var specator:String = "gf"
 
-
 @export_group("Internal Data")
 @export var name_in_save:String = "weekIDK"
 @export var songs:Array[StorySong] = []
