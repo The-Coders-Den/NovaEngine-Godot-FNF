@@ -104,11 +104,12 @@ func _ready() -> void:
 		SONG = Global.SONG
 		
 	scroll_speed = SONG.scroll_speed
-	match SettingsAPI.get_setting("scroll speed type").to_lower():
-		"multiplier":
-			scroll_speed *= SettingsAPI.get_setting("scroll speed")
-		"constant":
-			scroll_speed = SettingsAPI.get_setting("scroll speed")
+	if SettingsAPI.get_setting("scroll speed") > 0:
+		match SettingsAPI.get_setting("scroll speed type").to_lower():
+			"multiplier":
+				scroll_speed *= SettingsAPI.get_setting("scroll speed")
+			"constant":
+				scroll_speed = SettingsAPI.get_setting("scroll speed")
 	
 	ui_skin = Global.ui_skins[SONG.ui_skin]
 		
