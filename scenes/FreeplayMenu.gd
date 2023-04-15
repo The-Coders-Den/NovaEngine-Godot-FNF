@@ -56,7 +56,7 @@ func change_difficulty(change:int = 0):
 	cur_difficulty = wrapi(cur_difficulty + change, 0, diff_amount)
 	var diff_name:String = song_list.songs[cur_selected].difficulties[cur_difficulty].to_upper()
 	
-	intended_score = HighScore.get_score(song_list.songs[cur_selected].song,diff_name) # unimplemented
+	intended_score = HighScore.get_score(song_list.songs[cur_selected].song,diff_name)
 	diff_text.text = "< "+diff_name+" >" if diff_amount > 0 else diff_name
 	
 	position_highscore()
