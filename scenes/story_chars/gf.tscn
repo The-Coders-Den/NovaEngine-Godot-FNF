@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bg08f7hj335ld"]
 
-[ext_resource type="SpriteFrames" uid="uid://dbgxx53yt6062" path="res://assets/images/menus/storymenu/characters/girlfriend.res" id="1_grdtn"]
+[ext_resource type="SpriteFrames" path="res://assets/images/menus/storymenu/characters/girlfriend.res" id="1_grdtn"]
 [ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="2_208hb"]
 
 [sub_resource type="Animation" id="Animation_tmjrl"]
@@ -52,7 +52,6 @@ _data = {
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_grdtn")
 animation = &"GF Dancing Beat WHITE"
-frame_progress = 0.318283
 centered = false
 script = ExtResource("2_208hb")
 

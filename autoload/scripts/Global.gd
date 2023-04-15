@@ -31,6 +31,7 @@ func _ready() -> void:
 	last_scene_path = get_tree().current_scene.scene_file_path
 	ModManager.switch_mod(SettingsAPI.get_setting("current mod"))
 	RenderingServer.set_default_clear_color(Color.BLACK)
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	
 var tree_paused:bool = false
 

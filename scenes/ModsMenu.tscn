@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c7ob71i2ta1iq"]
+[gd_scene load_steps=4 format=3 uid="uid://c7ob71i2ta1iq"]
 
 [ext_resource type="Script" path="res://scenes/ModsMenu.gd" id="1_i7gh0"]
 [ext_resource type="PackedScene" uid="uid://bgilym2qsrs4y" path="res://scenes/fonts/Alphabet.tscn" id="2_1okte"]
 [ext_resource type="Script" path="res://scripts/FreeplayAlphabet.gd" id="3_4o3d3"]
-[ext_resource type="Texture2D" uid="uid://huyi62eosn14" path="res://mod_data/icon.png" id="4_x56u1"]
 
 [node name="ModsMenu" type="CanvasLayer"]
 process_mode = 3
@@ -26,6 +25,5 @@ text = "template"
 [node name="Icon" type="Sprite2D" parent="__TemplateItem__"]
 position = Vector2(-72, 32)
 scale = Vector2(0.8, 0.8)
-texture = ExtResource("4_x56u1")
 
 [node name="MenuItems" type="Node2D" parent="."]

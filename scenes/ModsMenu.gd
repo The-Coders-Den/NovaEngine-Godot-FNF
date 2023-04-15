@@ -18,7 +18,7 @@ func _ready():
 		
 		# switch to the mod to allow us to
 		# load the modded mod config scene
-		ModManager.switch_mod(name.replace(ModManager.MOD_FOLDER, "").replace(".pck", ""))
+		ModManager.switch_mod(name.get_basename().replace(ModManager.MOD_FOLDER, ""))
 		
 		var config:ModConfig = load("res://mod_data/config.tscn").instantiate()
 		

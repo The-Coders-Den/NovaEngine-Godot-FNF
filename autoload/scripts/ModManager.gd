@@ -7,17 +7,17 @@ var path_lookup:Dictionary = {
 	FALLBACK_MOD: "Nova Engine.pck"
 }
 
-func _ready():
+func _ready() -> void:
 	if not DirAccess.dir_exists_absolute(MOD_FOLDER):
 		DirAccess.make_dir_absolute(MOD_FOLDER)
 		
 	var mod_list:PackedStringArray = list_all_mods()
 	for i in mod_list.size():
-		var mod_name:String = mod_list[i].replace(MOD_FOLDER, "").replace(".pck", "")
+		var mod_name:String = mod_list[i].get_basename().replace(MOD_FOLDER, "")
 		path_lookup[mod_name] = mod_list[i]
 
 # lists all paths to every mod pck found
-func list_all_mods():
+func list_all_mods() -> PackedStringArray:
 	var mod_list:PackedStringArray = []
 	for i in Global.list_files_in_dir(MOD_FOLDER):
 		var item:String = i
@@ -28,7 +28,7 @@ func list_all_mods():
 		
 	return mod_list
 
-func switch_mod(mod_name:String):
+func switch_mod(mod_name:String) -> void:
 	ProjectSettings.load_resource_pack("Nova Engine.pck", true)
 	
 	# already loads it 2 lines above this
@@ -39,7 +39,7 @@ func switch_mod(mod_name:String):
 	if not mod_name in path_lookup:
 		push_error("Invalid mod: "+mod_name+" tried to load.")
 		return
-		
+	
 	# godot is great
 	# the entire mod loading is one function
 	ProjectSettings.load_resource_pack(path_lookup[mod_name], true)
