@@ -97,6 +97,7 @@ static func load_chart(song:String, difficulty:String = "normal"):
 			else:
 				cool_note.type = "default"
 				
+			cool_note.alt_anim = section.altAnim if "altAnim" in section and section.altAnim != null else false
 			cool_section.notes.append(cool_note)
 		
 		# push section  !

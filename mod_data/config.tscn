@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dej6cseyb3e0k"]
+[gd_scene load_steps=13 format=3 uid="uid://dfmumomv10kwx"]
 
 [ext_resource type="Script" path="res://scripts/ModConfig.gd" id="1_ohtiw"]
 [ext_resource type="Texture2D" uid="uid://djvwyf5uvg64p" path="res://assets/images/menus/modsmenu/contributor_icons/ninjamuffin99.png" id="2_djjec"]
