@@ -1,0 +1,48 @@
+[gd_scene load_steps=13 format=3 uid="uid://dej6cseyb3e0k"]
+
+[ext_resource type="Script" path="res://mod_data/config.gd" id="1_ohtiw"]
+[ext_resource type="Texture2D" uid="uid://djvwyf5uvg64p" path="res://assets/images/menus/modsmenu/contributor_icons/ninjamuffin99.png" id="2_djjec"]
+[ext_resource type="Script" path="res://resources/ModContributor.gd" id="2_ojm8p"]
+[ext_resource type="Texture2D" uid="uid://tag1qor2scje" path="res://assets/images/menus/modsmenu/contributor_icons/mastereric.png" id="4_t33rq"]
+[ext_resource type="Texture2D" uid="uid://du2jeglm1bscp" path="res://assets/images/menus/modsmenu/contributor_icons/phantomarcade.png" id="5_aepmh"]
+[ext_resource type="Texture2D" uid="uid://biiaeswm2nhhm" path="res://assets/images/menus/modsmenu/contributor_icons/evilsk8r.png" id="6_7h8rw"]
+[ext_resource type="Texture2D" uid="uid://draluga4supay" path="res://assets/images/menus/modsmenu/contributor_icons/kawaisprite.png" id="7_c5j1q"]
+
+[sub_resource type="Resource" id="Resource_jt77w"]
+script = ExtResource("2_ojm8p")
+name = "ninjamuffin99"
+url = "https://twitter.com/ninja_muffin99"
+role = "Programmer"
+icon = ExtResource("2_djjec")
+
+[sub_resource type="Resource" id="Resource_parkq"]
+script = ExtResource("2_ojm8p")
+name = "EliteMasterEric"
+url = "https://twitter.com/EliteMasterEric"
+role = "Programmer"
+icon = ExtResource("4_t33rq")
+
+[sub_resource type="Resource" id="Resource_2bvix"]
+script = ExtResource("2_ojm8p")
+name = "PhantomArcade"
+url = "https://twitter.com/PhantomArcade3K"
+role = "Animator"
+icon = ExtResource("5_aepmh")
+
+[sub_resource type="Resource" id="Resource_ijaon"]
+script = ExtResource("2_ojm8p")
+name = "evilsk8r"
+url = "https://twitter.com/evilsk8r"
+role = "Artist"
+icon = ExtResource("6_7h8rw")
+
+[sub_resource type="Resource" id="Resource_lw5o0"]
+script = ExtResource("2_ojm8p")
+name = "KawaiSprite"
+url = "https://twitter.com/kawaisprite"
+role = "Composer"
+icon = ExtResource("7_c5j1q")
+
+[node name="config" type="Node"]
+script = ExtResource("1_ohtiw")
+contributors = Array[ExtResource("2_ojm8p")]([SubResource("Resource_jt77w"), SubResource("Resource_parkq"), SubResource("Resource_2bvix"), SubResource("Resource_ijaon"), SubResource("Resource_lw5o0")])

@@ -252,11 +252,14 @@ func _ready() -> void:
 # yo thanks srt for doing it for me i think i was boutta
 # forgor anyway :skoil: ~swordcube
 func start_countdown():
+	countdown_sprite.scale = Vector2(ui_skin.countdown_scale, ui_skin.countdown_scale)
+	countdown_sprite.texture_filter = TEXTURE_FILTER_LINEAR if ui_skin.antialiasing else TEXTURE_FILTER_NEAREST
+	
 	countdown_prepare_sound.stream = ui_skin.prepare_sound
 	countdown_ready_sound.stream = ui_skin.ready_sound
 	countdown_set_sound.stream = ui_skin.set_sound
 	countdown_go_sound.stream = ui_skin.go_sound
-	get_tree().create_timer(Conductor.crochet / 1000, false).timeout.connect(countdown_tick)
+	get_tree().create_timer((Conductor.crochet / 1000) / Conductor.rate, false).timeout.connect(countdown_tick)
 	
 	stage.callv("on_start_countdown", [])
 	script_group.call_func("on_start_countdown", [])
@@ -278,21 +281,21 @@ func countdown_tick():
 			countdown_ready_sound.play()
 	
 			countdown_sprite.texture = ui_skin.ready_texture
-			countdown_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000.0)
+			countdown_tween.tween_property(countdown_sprite, "modulate:a", 0.0, (Conductor.crochet / 1000) / Conductor.rate)
 			countdown_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		1:
 			countdown_set_sound.play()
 			
 			countdown_sprite.modulate.a = 1.0
 			countdown_sprite.texture = ui_skin.set_texture
-			countdown_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000.0)
+			countdown_tween.tween_property(countdown_sprite, "modulate:a", 0.0, (Conductor.crochet / 1000) / Conductor.rate)
 			countdown_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		0:
 			countdown_go_sound.play()
 			
 			countdown_sprite.modulate.a = 1.0
 			countdown_sprite.texture = ui_skin.go_texture
-			countdown_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000.0)
+			countdown_tween.tween_property(countdown_sprite, "modulate:a", 0.0, (Conductor.crochet / 1000) / Conductor.rate)
 			countdown_tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 			
 	stage.callv("on_countdown_tick", [countdown_ticks, countdown_tween])
@@ -300,7 +303,7 @@ func countdown_tick():
 	
 	countdown_ticks -= 1
 	if countdown_ticks >= 0:
-		get_tree().create_timer(Conductor.crochet / 1000, false).timeout.connect(countdown_tick)
+		get_tree().create_timer((Conductor.crochet / 1000) / Conductor.rate, false).timeout.connect(countdown_tick)
 
 func start_song():
 	character_bop()

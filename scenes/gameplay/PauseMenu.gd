@@ -12,7 +12,7 @@ var music_volume:float = 0.0
 var final_volume:float = 0.5
 
 @onready var bg:ColorRect = $BG
-@onready var text_template:FreeplayAlphabet = $__TemplateSong__
+@onready var text_template:FreeplayAlphabet = $__TemplateItem__
 @onready var menu_items:Node2D = $MenuItems
 @onready var game:Gameplay = $"../"
 @onready var music:AudioStreamPlayer = $Music
@@ -34,6 +34,7 @@ func _ready():
 		new_item.is_menu_item = true
 		new_item.target_y = i
 		new_item.visible = true
+		new_item.is_template = false
 		menu_items.add_child(new_item)
 		
 	change_selection()
