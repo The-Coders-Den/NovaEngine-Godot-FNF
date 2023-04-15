@@ -64,4 +64,4 @@ func update_text(force_update_mem:bool = false):
 		mem_label.text += "OS Version: "+OS.get_version()+"\n"
 		mem_label.text += "CPU: "+OS.get_processor_name()+"\n"
 		mem_label.text += "GPU: "+RenderingServer.get_rendering_device().get_device_name()+"\n"
-		mem_label.text += "Audio Latency: "+str(Performance.get_monitor(Performance.AUDIO_OUTPUT_LATENCY))+"\n"
+		mem_label.text += "Audio Latency: "+str(Performance.get_monitor(Performance.AUDIO_OUTPUT_LATENCY) * 1000.0)+" ms\n"

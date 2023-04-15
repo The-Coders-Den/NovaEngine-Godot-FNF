@@ -13,6 +13,7 @@ func play_music(path:String, volume:float = 1.0):
 	
 	music.stream = load(path)
 	music.volume_db = linear_to_db(volume)
+	music.stream.loop = true
 	music.play(0.0)
 	
 func stop_music():

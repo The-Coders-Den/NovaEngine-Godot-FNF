@@ -1,8 +1,7 @@
 extends Button
 
-@onready var file_dialog: FileDialog = $"../../FileDialog"
+@onready var file_dialog: FileDialog = $"../../file_dialog"
 
-func popup_shit():
-	file_dialog.popup_centered()
+func popup_shit() -> void:
 	file_dialog.size = Vector2(500, 500)
-	file_dialog.position = Vector2(640 - 250, 360 - 250)
+	file_dialog.popup_centered()

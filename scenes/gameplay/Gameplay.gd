@@ -323,6 +323,8 @@ func end_song():
 	stage.callv("on_end_song", [])
 	var ret:Variant = script_group.call_func("on_end_song", [])
 	if ret == false: return
+	if score > HighScore.get_score(SONG.name,Global.current_difficulty):
+		HighScore.set_score(SONG.name,Global.current_difficulty,score)
 	
 	if Global.queued_songs.size() > 0:
 		Global.SONG = Chart.load_chart(Global.queued_songs[0], Global.current_difficulty)

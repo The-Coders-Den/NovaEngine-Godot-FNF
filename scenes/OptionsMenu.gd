@@ -4,6 +4,8 @@ class_name OptionsMenu
 @onready var strum_line:StrumLine = $StrumLine
 @onready var note_group:Node2D = $Notes
 @onready var note_template:Note = $NoteTemplate
+@onready var ms_display:Label = $MSDisplay
+var ms_tween:Tween
 
 @onready var downscroll_checkbox:CheckBox = $TabContainer/Gameplay/Downscroll
 
@@ -17,6 +19,9 @@ func _ready():
 	
 	# lazy way to make strumline pop up when the scene loads
 	_on_gameplay_checkbox_pressed("Downscroll")
+	
+	Ranking.judgements = Ranking.default_judgements.duplicate(true)
+	Ranking.ranks = Ranking.default_ranks.duplicate(true)
 	
 func spawn_note(time:float):
 	var new_note:Note = note_template.duplicate()
@@ -50,6 +55,23 @@ func _process(delta):
 		if note.can_be_hit and Input.is_action_just_pressed(strum_line.controls[note.direction]):
 			var receptor:Receptor = strum_line.get_child(note.direction)
 			receptor.play_anim("confirm")
+			
+			if SettingsAPI.get_setting("show ms on note hit"):
+				var note_diff:float = (note.time - Conductor.position) / Conductor.rate
+				var judgement:Judgement = Ranking.judgement_from_time(note_diff)
+				
+				ms_display.modulate = judgement.color
+				ms_display.text = str(note_diff).pad_decimals(2)+"ms"
+				ms_display.position.x = strum_line.position.x - (ms_display.size.x * 0.5)
+				ms_display.position.y = strum_line.position.y - (ms_display.size.y * 0.5) - (110.0 * -downscroll_mult)
+				ms_display.visible = true
+				
+				if ms_tween != null:
+					ms_tween.stop()
+				
+				ms_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+				ms_tween.tween_property(ms_display, "position:y", ms_display.position.y + 10.0, 0.3)
+				ms_tween.tween_property(ms_display, "modulate:a", 0.0, 0.3).set_delay(0.5)
 			
 			note.queue_free()
 	

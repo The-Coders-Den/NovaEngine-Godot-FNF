@@ -13,7 +13,6 @@ config_version=5
 config/name="Nova Engine"
 run/main_scene="res://Init.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
-run/max_fps=240
 config/icon="res://icon.svg"
 
 [autoload]
@@ -27,6 +26,7 @@ Transition="*res://autoload/scenes/Transition.tscn"
 VolumeSlider="*res://autoload/scenes/VolumeSlider.tscn"
 FPS="*res://autoload/scenes/FPS.tscn"
 ModManager="*res://autoload/scripts/ModManager.gd"
+HighScore="*res://autoload/scripts/HighScore.gd"
 
 [display]
 
