@@ -52,6 +52,8 @@ func change_selection(change:int = 0):
 	Audio.play_sound("scrollMenu")
 	
 func _process(delta):
+	get_tree().paused = true
+	
 	if Input.is_action_just_pressed("ui_up"):
 		change_selection(-1)
 		

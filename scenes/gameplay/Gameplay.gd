@@ -30,8 +30,8 @@ var accuracy_total_hit:float = 0.0
 
 var cam_bumping:bool = true
 var cam_bumping_interval:int = 4
-
 var cam_zooming:bool = true
+var cam_switching:bool = true
 
 var icon_bumping:bool = true
 var icon_bumping_interval:int = 1
@@ -347,7 +347,8 @@ func beat_hit(beat:int):
 		position_hud()
 		
 	character_bop()
-	update_camera(Conductor.cur_section)
+	if cam_switching:
+		update_camera(Conductor.cur_section)
 	
 	script_group.call_func("on_beat_hit", [beat])
 	
