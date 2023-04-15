@@ -54,45 +54,44 @@ func convert_xml() -> void:
 				
 				if optimized and previous_rect == frame_rect:
 					frame_data = previous_atlas
-					continue
-				
-				frame_data = AtlasTexture.new()
-				frame_data.atlas = texture
-				frame_data.region = frame_rect
-				
-				if xml.has_attribute("frameX"):
-					var margin:Rect2
+				else:
+					frame_data = AtlasTexture.new()
+					frame_data.atlas = texture
+					frame_data.region = frame_rect
 					
-					var raw_frame_x:int = xml.get_named_attribute_value("frameX").to_int()
-					var raw_frame_y:int = xml.get_named_attribute_value("frameY").to_int()
+					if xml.has_attribute("frameX"):
+						var margin:Rect2
+						
+						var raw_frame_x:int = xml.get_named_attribute_value("frameX").to_int()
+						var raw_frame_y:int = xml.get_named_attribute_value("frameY").to_int()
+						
+						var raw_frame_width:int = xml.get_named_attribute_value("frameWidth").to_int()
+						var raw_frame_height:int = xml.get_named_attribute_value("frameHeight").to_int()
+						
+						var frame_size_data:Vector2 = Vector2(
+							raw_frame_width,
+							raw_frame_height
+						)
+						
+						if frame_size_data == Vector2.ZERO:
+							frame_size_data = frame_rect.size
+						
+						margin = Rect2(Vector2(-raw_frame_x, -raw_frame_y),
+								Vector2(raw_frame_width - frame_rect.size.x,
+										raw_frame_height - frame_rect.size.y)
+						)
+						
+						if margin.size.x < abs(margin.position.x):
+							margin.size.x = abs(margin.position.x)
+						if margin.size.y < abs(margin.position.y):
+							margin.size.y = abs(margin.position.y)
+						
+						frame_data.margin = margin
 					
-					var raw_frame_width:int = xml.get_named_attribute_value("frameWidth").to_int()
-					var raw_frame_height:int = xml.get_named_attribute_value("frameHeight").to_int()
+					frame_data.filter_clip = true
 					
-					var frame_size_data:Vector2 = Vector2(
-						raw_frame_width,
-						raw_frame_height
-					)
-					
-					if frame_size_data == Vector2.ZERO:
-						frame_size_data = frame_rect.size
-					
-					margin = Rect2(Vector2(-raw_frame_x, -raw_frame_y),
-							Vector2(raw_frame_width - frame_rect.size.x,
-									raw_frame_height - frame_rect.size.y)
-					)
-					
-					if margin.size.x < abs(margin.position.x):
-						margin.size.x = abs(margin.position.x)
-					if margin.size.y < abs(margin.position.y):
-						margin.size.y = abs(margin.position.y)
-					
-					frame_data.margin = margin
-				
-				frame_data.filter_clip = true
-				
-				previous_atlas = frame_data
-				previous_rect = frame_rect
+					previous_atlas = frame_data
+					previous_rect = frame_rect
 				
 				if not frames.has_animation(animation_name):
 					frames.add_animation(animation_name)
