@@ -90,6 +90,8 @@ var countdown_ticks:int = 3;
 const ICON_DELTA_MULTIPLIER:float = 60 * 0.25
 const ZOOM_DELTA_MULTIPLIER:float = 60 * 0.05
 
+signal paused
+
 func _ready() -> void:
 	super._ready()
 	get_tree().paused = false
@@ -542,6 +544,7 @@ func good_note_hit(note:Note):
 		ms_display.modulate = judgement.color
 		ms_display.text = str(note_diff).pad_decimals(2)+"ms"
 		ms_display.position.x = player_strums.position.x - (ms_display.size.x * 0.5)
+		add_child(load("res://scenes/gameplay/PauseMenu.tscn").instantiate())
 		ms_display.position.y = player_strums.position.y - (ms_display.size.y * 0.5) - (110.0 * downscroll_mult)
 		ms_display.visible = true
 		
@@ -606,10 +609,7 @@ func _process(delta:float) -> void:
 	if not pressed.has(true) and player.last_anim.begins_with("sing") and player.hold_timer >= Conductor.step_crochet * player.sing_duration * 0.0011:
 		player.hold_timer = 0.0
 		player.dance()
-		
-	if Input.is_action_just_pressed("ui_pause") and not Global.transitioning:
-		add_child(load("res://scenes/gameplay/PauseMenu.tscn").instantiate())
-			
+	
 	var percent:float = (health / max_health) * 100.0
 	health_bar.max_value = max_health
 	health_bar.value = health
@@ -663,7 +663,11 @@ func _process(delta:float) -> void:
 	
 	for sprite in combo_group.get_children():
 		VelocitySprite._process_sprite(sprite, delta)
-		
+	
+	if Input.is_action_just_pressed("ui_pause") and not Global.transitioning:
+		emit_signal("paused")
+		add_child(load("res://scenes/gameplay/PauseMenu.tscn").instantiate())
+	
 	stage.callv("_process_post", [delta])
 	script_group.call_func("_process_post", [delta])
 
