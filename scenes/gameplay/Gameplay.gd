@@ -544,7 +544,6 @@ func good_note_hit(note:Note):
 		ms_display.modulate = judgement.color
 		ms_display.text = str(note_diff).pad_decimals(2)+"ms"
 		ms_display.position.x = player_strums.position.x - (ms_display.size.x * 0.5)
-		add_child(load("res://scenes/gameplay/PauseMenu.tscn").instantiate())
 		ms_display.position.y = player_strums.position.y - (ms_display.size.y * 0.5) - (110.0 * downscroll_mult)
 		ms_display.visible = true
 		
