@@ -48,13 +48,13 @@ static func load_chart(song:String, difficulty:String = "normal"):
 	if "player" in json:
 		chart.spectator = json.player
 	
-	if "gfVersion" in json:
+	if "gfVersion" in json and json.gfVersion != null:
 		chart.spectator = json.gfVersion
 		
-	if "gf" in json:
+	if "gf" in json and json.gf != null:
 		chart.spectator = json.gf
 		
-	if "player3" in json:
+	if "player3" in json and json.player3 != null:
 		chart.spectator = json.player3
 		
 	if "spectator" in json:
