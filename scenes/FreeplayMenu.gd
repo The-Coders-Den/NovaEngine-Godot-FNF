@@ -34,6 +34,7 @@ func _ready():
 		song.visible = true
 		song.is_menu_item = true
 		song.target_y = i
+		song.is_template = false
 		songs.add_child(song)
 		
 	change_selection()
@@ -55,7 +56,7 @@ func change_difficulty(change:int = 0):
 	cur_difficulty = wrapi(cur_difficulty + change, 0, diff_amount)
 	var diff_name:String = song_list.songs[cur_selected].difficulties[cur_difficulty].to_upper()
 	
-	intended_score = HighScore.get_score(song_list.songs[cur_selected].song,diff_name) # unimplemented
+	intended_score = HighScore.get_score(song_list.songs[cur_selected].song,diff_name)
 	diff_text.text = "< "+diff_name+" >" if diff_amount > 0 else diff_name
 	
 	position_highscore()
@@ -63,6 +64,9 @@ func change_difficulty(change:int = 0):
 	
 func position_highscore():
 	score_text.text = "PERSONAL BEST:"+str(floor(lerp_score))
+	score_text.size.x = 0
+	
+	await get_tree().create_timer(0.001).timeout
 	
 	score_text.position.x = Global.game_size.x - score_text.size.x - 6
 	score_bg.scale.x = Global.game_size.x - score_text.position.x + 6
@@ -75,6 +79,9 @@ func _process(delta):
 	
 	lerp_score = lerpf(lerp_score, intended_score, clampf(delta * 60 * 0.4, 0.0, 1.0))
 	position_highscore()
+	
+	if Input.is_action_just_pressed("switch_mod"):
+		add_child(load("res://scenes/ModsMenu.tscn").instantiate())
 	
 	if Input.is_action_just_pressed("ui_up"):
 		change_selection(-1)
