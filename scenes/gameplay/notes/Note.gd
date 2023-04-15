@@ -12,6 +12,7 @@ class_name Note
 @export var length:float = 0.0
 
 @export var in_editor:bool = false
+@export var alt_anim:bool = false
 
 var og_length:float = 0.0
 
@@ -22,7 +23,6 @@ var must_press:bool = false
 var can_be_hit:bool = false
 var was_good_hit:bool = false
 var too_late:bool = false
-var alt_anim:bool = false
 
 var step_crochet:float = 0.0
 

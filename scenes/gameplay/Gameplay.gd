@@ -135,6 +135,7 @@ func _ready() -> void:
 			n.direction = note.direction
 			n.length = note.length
 			n.type = note.type
+			n.alt_anim = note.alt_anim
 			n.player_section = section.is_player
 			note_data_array.append(n)
 			
@@ -654,7 +655,10 @@ func _process(delta:float) -> void:
 		new_note.strumline = player_strums if is_player_note else cpu_strums
 		new_note.must_press = is_player_note
 		new_note.note_skin = ui_skin
-		new_note.alt_anim = note.type == "Alt Animation"
+		
+		if not new_note.alt_anim:
+			new_note.alt_anim = note.alt_anim or (note.type == "Alt Animation")
+		
 		note_group.add_child(new_note)
 		script_group.call_func("on_note_spawn", [new_note])
 		
