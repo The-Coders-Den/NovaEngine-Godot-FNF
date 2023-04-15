@@ -53,6 +53,9 @@ func _process(delta):
 	
 	if selected_week:
 		return
+		
+	if Input.is_action_just_pressed("switch_mod"):
+		add_child(load("res://scenes/ModsMenu.tscn").instantiate())
 	
 	if Input.is_action_just_pressed("ui_up"):
 		change_week(-1)

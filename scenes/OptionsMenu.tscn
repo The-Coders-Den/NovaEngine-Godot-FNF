@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://2ud3viu0v6pw"]
+[gd_scene load_steps=23 format=3 uid="uid://2ud3viu0v6pw"]
 
 [ext_resource type="Script" path="res://scenes/OptionsMenu.gd" id="1_wsch7"]
 [ext_resource type="Texture2D" uid="uid://y8c4a1bk8wkl" path="res://assets/images/menus/menuBGDesat.png" id="2_di4mo"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://3hermjx3kxw2" path="res://assets/images/material_icons/volume-mid.png" id="14_nb18d"]
 [ext_resource type="Texture2D" uid="uid://d0r5affbxqsi5" path="res://assets/images/material_icons/volume-full.png" id="15_qhl7p"]
 [ext_resource type="Texture2D" uid="uid://dw8bh3jsxd3kl" path="res://assets/images/material_icons/volume-mute.png" id="16_ofedk"]
+[ext_resource type="Texture2D" uid="uid://s111e8ow38lw" path="res://assets/images/menus/options/switchModBind.png" id="17_q6en1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2rif3"]
 bg_color = Color(1, 1, 1, 0)
@@ -133,8 +134,8 @@ offset_bottom = 162.0
 tooltip_text = "Adjusts how early/late notes spawn during gameplay.
 Negative means early and positive means late.
 Useful for bluetooth headphones or something."
-min_value = -1000.0
-max_value = 1000.0
+min_value = -5000.0
+max_value = 5000.0
 step = 5.0
 script = ExtResource("6_rfpqd")
 suffix = "ms"
@@ -388,7 +389,7 @@ layout_mode = 0
 offset_left = 8.0
 offset_top = 7.0
 offset_right = 395.0
-offset_bottom = 521.0
+offset_bottom = 520.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/ScrollContainer"]
 custom_minimum_size = Vector2(387, 510)
@@ -551,7 +552,7 @@ offset_right = 366.0
 offset_bottom = 209.0
 
 [node name="Panel2" type="Panel" parent="TabContainer/Controls/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 430)
+custom_minimum_size = Vector2(0, 470)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ul4f4")
 
@@ -902,6 +903,39 @@ position = Vector2(-28, 16)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("16_ofedk")
 
+[node name="Switch Mod Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 433.0
+offset_right = 197.0
+offset_bottom = 464.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+theme = ExtResource("7_xa45n")
+text = "TAB"
+script = ExtResource("8_715hi")
+bind = "switch_mod"
+
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Switch Mod Bind"]
+layout_mode = 0
+offset_left = 164.0
+offset_right = 319.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "SHIFT"
+script = ExtResource("8_715hi")
+bind = "switch_mod"
+bind_type = 1
+
+[node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Switch Mod Bind"]
+modulate = Color(0.352941, 0.282353, 0.4, 1)
+position = Vector2(-28, 16)
+scale = Vector2(0.06, 0.06)
+texture = ExtResource("17_q6en1")
+
 [node name="dumb warning" type="Label" parent="."]
 offset_left = 213.0
 offset_top = 608.0
@@ -974,3 +1008,5 @@ in_editor = true
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Up Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Up Bind/Alt Bind" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Mute Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Mute Bind" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Mute Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Volume Mute Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Switch Mod Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Switch Mod Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Switch Mod Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Switch Mod Bind/Alt Bind" method="_on_pressed"]

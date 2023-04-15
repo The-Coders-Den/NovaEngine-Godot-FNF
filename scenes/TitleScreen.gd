@@ -30,6 +30,9 @@ func _ready() -> void:
 func _process(delta):
 	Conductor.position = Audio.music.time
 	
+	if Input.is_action_just_pressed("switch_mod"):
+		add_child(load("res://scenes/ModsMenu.tscn").instantiate())
+	
 	if Input.is_action_just_pressed("ui_accept"):
 		if not skipped_intro:
 			skip_intro()

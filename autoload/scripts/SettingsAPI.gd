@@ -43,13 +43,14 @@ var _settings:Dictionary = {
 	"ui_accept": ["ENTER", "SPACE"],
 	"ui_cancel": ["BACKSPACE", "ESCAPE"],
 	"ui_pause": ["ENTER", "UNKNOWN"],
+	"switch_mod": ["TAB", "SHIFT"],
 	
 	"volume_up": ["EQUAL", "KP ADD"],
 	"volume_down": ["MINUS", "KP SUBTRACT"],
 	"volume_mute": ["0", "INSERT"],
 	
 	# engine
-	"current_mod": "Friday Night Funkin'",
+	"current mod": "Friday Night Funkin'",
 	"volume": 0.5,
 	"muted": false,
 }
@@ -59,7 +60,7 @@ func setup_binds():
 	
 	var binds:PackedStringArray = [
 		"note_left", "note_down", "note_up", "note_right",
-		"ui_pause",
+		"ui_pause", "switch_mod",
 		"volume_down", "volume_up", "volume_mute"
 	] 
 	for bind in binds:

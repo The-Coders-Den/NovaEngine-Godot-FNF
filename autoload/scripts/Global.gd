@@ -28,6 +28,8 @@ var is_story_mode:bool = false
 var queued_songs:PackedStringArray = []
 
 func _ready() -> void:
+	last_scene_path = get_tree().current_scene.scene_file_path
+	ModManager.switch_mod(SettingsAPI.get_setting("current mod"))
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	
 var tree_paused:bool = false
@@ -60,8 +62,10 @@ func _notification(what):
 				get_tree().paused = tree_paused
 				
 var transitioning:bool = false
+var last_scene_path:String
 
 func switch_scene(path:String) -> void:
+	last_scene_path = path
 	transitioning = true
 	get_tree().paused = true
 	
@@ -90,7 +94,7 @@ func reset_scene() -> void:
 	
 	await get_tree().create_timer(anim_player.get_animation("in").length).timeout
 	
-	get_tree().reload_current_scene()
+	get_tree().change_scene_to_file(last_scene_path)
 	
 	await get_tree().create_timer(0.05).timeout
 	

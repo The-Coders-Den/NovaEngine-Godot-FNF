@@ -54,13 +54,16 @@ func _process(delta:float) -> void:
 				game.script_group.call_func("on_cpu_hit", [note])
 				
 		# don't ask >:(
-		if note.was_good_hit and note_anim_time_player >= Conductor.step_crochet and Input.is_action_pressed(note.strumline.controls[note.direction]):
+		if note.must_press and note.was_good_hit and note_anim_time_player >= Conductor.step_crochet and Input.is_action_pressed(note.strumline.controls[note.direction]):
 			var receptor:Receptor = note.strumline.get_child(note.direction)
 			receptor.play_anim("confirm")
 
 		var note_kill_range:float = (500 / scroll_speed)
 		if note.must_press:
 			if note.time <= Conductor.position - note_kill_range and not note.was_good_hit:
+				if SettingsAPI.get_setting("miss sounds"):
+					Audio.play_sound("missnote"+str(randi_range(1, 3)), randf_range(0.1, 0.3))
+				
 				note.is_sustain_note = false
 				note._player_miss()
 				game.fake_miss(note.direction)
