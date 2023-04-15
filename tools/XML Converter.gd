@@ -1,8 +1,8 @@
 extends Panel
 
 # VARIABLES #
-@onready var sprite_data:AnimatedSprite2D = $"../SpriteData"
-@onready var fps_box:LineEdit = $FPS
+@onready var sprite_data:AnimatedSprite2D = $"../sprite_output"
+@onready var fps_box:LineEdit = $fps_box
 
 var path:StringName = "res://Assets/Images/Characters/bf/assets"
 var fps:int = 24
