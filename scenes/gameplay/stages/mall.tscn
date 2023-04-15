@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://clua6hh7k221s"]
+
+[ext_resource type="Script" path="res://scripts/Stage.gd" id="1_g7whw"]
+[ext_resource type="Texture2D" uid="uid://spiajomm7rt6" path="res://assets/images/gameplay/stages/mall/bgEscalator.png" id="2_jelh1"]
+[ext_resource type="Texture2D" uid="uid://bccq613ipfegh" path="res://assets/images/gameplay/stages/mall/christmasTree.png" id="2_n10v8"]
+[ext_resource type="Texture2D" uid="uid://buyn3nel7gcss" path="res://assets/images/gameplay/stages/mall/fgSnow.png" id="2_s0f8v"]
+
+[node name="stage" type="Node2D"]
+script = ExtResource("1_g7whw")
+default_cam_zoom = 0.8
+
+[node name="PB" type="ParallaxBackground" parent="."]
+
+[node name="0-3" type="ParallaxLayer" parent="PB"]
+motion_scale = Vector2(0.3, 0.3)
+
+[node name="BgEscalator" type="Sprite2D" parent="PB/0-3"]
+position = Vector2(-1100, -600)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("2_jelh1")
+
+[node name="0-4" type="ParallaxLayer" parent="PB"]
+motion_scale = Vector2(0.4, 0.4)
+
+[node name="FgSnow" type="Sprite2D" parent="PB/0-4"]
+position = Vector2(-370, 250)
+texture = ExtResource("2_n10v8")
+
+[node name="0-9" type="ParallaxLayer" parent="PB"]
+motion_scale = Vector2(0.9, 0.9)
+
+[node name="1-0" type="ParallaxLayer" parent="PB"]
+
+[node name="FgSnow" type="Sprite2D" parent="PB/1-0"]
+position = Vector2(-600, 700)
+texture = ExtResource("2_s0f8v")
+
+[node name="Character Positions" type="Node2D" parent="."]
+
+[node name="Opponent" type="Node2D" parent="Character Positions"]
+position = Vector2(100, 100)
+
+[node name="Spectator" type="Node2D" parent="Character Positions"]
+position = Vector2(400, 130)
+
+[node name="Player" type="Node2D" parent="Character Positions"]
+position = Vector2(970, -250)
