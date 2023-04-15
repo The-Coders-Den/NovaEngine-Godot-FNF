@@ -185,7 +185,8 @@ func _ready() -> void:
 		
 	default_cam_zoom = stage.default_cam_zoom
 	camera.zoom = Vector2(default_cam_zoom, default_cam_zoom)
-		
+	camera.position_smoothing_speed *= Conductor.rate
+	
 	add_child(stage)
 	
 	var spectator_path:String = "res://scenes/gameplay/characters/"+SONG.spectator+".tscn"
@@ -605,10 +606,24 @@ func update_score_text():
 	score_text.text = "Score: "+str(score)+" - Misses: "+str(misses)+" - Accuracy: "+str(snapped(accuracy * 100.0, 0.01))+"% ["+Ranking.rank_from_accuracy(accuracy * 100.0).name+"]"
 	script_group.call_func("on_update_score_text", [])
 
+func game_over():
+	Global.death_character = player.death_character
+	Global.death_camera_pos = camera.position
+	Global.death_char_pos = player.position
+	
+	Global.death_music = player.death_music
+	Global.death_sound = player.death_sound
+	Global.retry_sound = player.retry_sound
+	
+	get_tree().change_scene_to_file("res://scenes/gameplay/GameOver.tscn")
+	
 func _process(delta:float) -> void:
 	if not pressed.has(true) and player.last_anim.begins_with("sing") and player.hold_timer >= Conductor.step_crochet * player.sing_duration * 0.0011:
 		player.hold_timer = 0.0
 		player.dance()
+		
+	if health <= 0:
+		game_over()
 	
 	var percent:float = (health / max_health) * 100.0
 	health_bar.max_value = max_health

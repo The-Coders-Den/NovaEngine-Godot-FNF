@@ -22,6 +22,14 @@ var game_size:Vector2 = Vector2(
 	ProjectSettings.get_setting("display/window/size/viewport_height"),
 )
 
+var death_camera_pos:Vector2 = Vector2.ZERO
+var death_char_pos:Vector2 = Vector2(700, 360)
+var death_character:String = "bf-dead"
+
+var death_sound:AudioStream = preload("res://assets/sounds/death/fnf_loss_sfx.ogg")
+var death_music:AudioStream = preload("res://assets/music/gameOver.ogg")
+var retry_sound:AudioStream = preload("res://assets/music/gameOverEnd.ogg")
+
 var current_difficulty:String = "hard"
 
 var is_story_mode:bool = false

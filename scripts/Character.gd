@@ -1,14 +1,21 @@
 extends Node2D
 class_name Character
 
+@export_group("General Info")
 @export var is_player:bool = false
-
 @export var sing_duration:float = 4.0
 @export var dance_steps:Array[String] = ["idle"]
 
+@export_group("Health Icon")
 @export var health_icon:Texture2D = load("res://assets/images/gameplay/icons/icon-face.png")
 @export var health_icon_frames:int = 2
 @export var health_color:Color = Color("#A1A1A1")
+
+@export_group("Death Screen Info")
+@export var death_character:String = "bf-dead"
+@export var death_sound:AudioStream = preload("res://assets/sounds/death/fnf_loss_sfx.ogg")
+@export var death_music:AudioStream = preload("res://assets/music/gameOver.ogg")
+@export var retry_sound:AudioStream = preload("res://assets/music/gameOverEnd.ogg")
 
 @onready var anim_sprite:AnimatedSprite = $AnimatedSprite
 @onready var anim_player:AnimationPlayer = $AnimatedSprite/AnimationPlayer

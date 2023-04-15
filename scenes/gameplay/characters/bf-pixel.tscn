@@ -1,13 +1,16 @@
-[gd_scene load_steps=17 format=3 uid="uid://841861ujliwk"]
+[gd_scene load_steps=20 format=3 uid="uid://841861ujliwk"]
 
 [ext_resource type="Script" path="res://scripts/Character.gd" id="1_adf3r"]
 [ext_resource type="Texture2D" uid="uid://b71wjo1kmexma" path="res://assets/images/gameplay/icons/icon-bf-pixel.png" id="2_3auwy"]
+[ext_resource type="AudioStream" uid="uid://dt2hlq8h4ps0f" path="res://assets/sounds/death/fnf_loss_sfx-pixel.ogg" id="3_76bjx"]
 [ext_resource type="SpriteFrames" path="res://assets/images/gameplay/characters/bf/pixel/normal.res" id="3_q8mh6"]
+[ext_resource type="AudioStream" uid="uid://c4qhe3e405et2" path="res://assets/music/gameOver-pixel.ogg" id="4_l63cw"]
 [ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="4_p1yy3"]
+[ext_resource type="AudioStream" uid="uid://casumr0c0aan8" path="res://assets/music/gameOverEnd-pixel.ogg" id="5_7l6i0"]
 
 [sub_resource type="Animation" id="Animation_wucwq"]
 resource_name = "hey"
-length = 0.625004
+length = 2.37501
 step = 0.0416667
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -592,6 +595,10 @@ script = ExtResource("1_adf3r")
 is_player = true
 health_icon = ExtResource("2_3auwy")
 health_color = Color(0.482353, 0.839216, 0.964706, 1)
+death_character = "bf-pixel-dead"
+death_sound = ExtResource("3_76bjx")
+death_music = ExtResource("4_l63cw")
+retry_sound = ExtResource("5_7l6i0")
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

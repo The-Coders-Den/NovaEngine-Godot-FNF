@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://yda63viooytq"]
+
+[ext_resource type="Script" path="res://scenes/gameplay/GameOver.gd" id="1_7fqfx"]
+[ext_resource type="AudioStream" uid="uid://hqd1j0mowawd" path="res://assets/music/gameOver.ogg" id="2_g2iat"]
+[ext_resource type="AudioStream" uid="uid://bu0sjhnomo60e" path="res://assets/sounds/death/fnf_loss_sfx.ogg" id="3_2sbkk"]
+[ext_resource type="AudioStream" uid="uid://cyv62weqsoyqx" path="res://assets/music/gameOverEnd.ogg" id="3_cml2g"]
+
+[node name="GameOver" type="Node2D"]
+script = ExtResource("1_7fqfx")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="DeathMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_g2iat")
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_2sbkk")
+
+[node name="RetrySound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_cml2g")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Fade" type="ColorRect" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 1)

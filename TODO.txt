@@ -1,5 +1,3 @@
-miss sounds
-death screen
 chart editor
 dialogue
 finish mod menu

@@ -94,8 +94,8 @@ offset_left = 16.0
 offset_top = 166.0
 offset_right = 132.0
 offset_bottom = 197.0
-button_pressed = true
 theme = ExtResource("4_cqp41")
+button_pressed = true
 text = "Optimized?"
 
 [node name="Convert Button" type="Button" parent="Main Panel"]
