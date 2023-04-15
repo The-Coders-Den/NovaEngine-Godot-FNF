@@ -68,10 +68,10 @@ static func load_chart(song:String, difficulty:String = "normal"):
 	
 	for section in json.notes:
 		var cool_section:Section = Section.new()
-		cool_section.bpm = section.bpm if "bpm" in section else 0.0
-		cool_section.change_bpm = section.changeBPM if "changeBPM" in section else false
-		cool_section.is_player = section.mustHitSection if "mustHitSection" in section else true
-		cool_section.length_in_steps = section.lengthInSteps if "lengthInSteps" in section else 16
+		cool_section.bpm = section.bpm if "bpm" in section and section.bpm != null else 0.0
+		cool_section.change_bpm = section.changeBPM if "changeBPM" in section and section.changeBPM != null else false
+		cool_section.is_player = section.mustHitSection if "mustHitSection" in section and section.mustHitSection != null else true
+		cool_section.length_in_steps = section.lengthInSteps if "lengthInSteps" in section and section.lengthInSteps != null else 16
 		cool_section.notes = []
 		
 		# convermting the noite!

@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://duo1h603vpbjc"]
 
 [ext_resource type="Script" path="res://scenes/FreeplayMenu.gd" id="1_fmw2k"]
-[ext_resource type="Resource" uid="uid://dw5bby1xny12p" path="res://assets/freeplaySongList.tres" id="2_c5rpj"]
+[ext_resource type="Resource" uid="uid://rkmusgpraddm" path="res://assets/freeplaySongList.tres" id="2_c5rpj"]
 [ext_resource type="Texture2D" uid="uid://y8c4a1bk8wkl" path="res://assets/images/menus/menuBGDesat.png" id="2_qkwra"]
 [ext_resource type="PackedScene" uid="uid://bgilym2qsrs4y" path="res://scenes/fonts/Alphabet.tscn" id="3_476d5"]
 [ext_resource type="Texture2D" uid="uid://bvafd1dvo4ke4" path="res://assets/images/gameplay/icons/icon-bf.png" id="4_7vmig"]
