@@ -6,128 +6,108 @@
 [ext_resource type="Script" path="res://tools/Choose Sprites.gd" id="2_kmxvy"]
 [ext_resource type="Theme" uid="uid://blt3c0a5po0yj" path="res://assets/styles/nova_purple_button.tres" id="4_cqp41"]
 
-[node name="xml_converter" type="Node2D"]
+[node name="XML Converter" type="Node2D"]
 
-[node name="bg" type="Sprite2D" parent="."]
+[node name="BG" type="Sprite2D" parent="."]
 modulate = Color(0.105882, 0.0784314, 0.12549, 1)
 position = Vector2(-116, -58)
 scale = Vector2(1.095, 1.095)
 texture = ExtResource("1_8otpr")
 centered = false
 
-[node name="converted_panel" type="Panel" parent="."]
-offset_left = 500.0
+[node name="Converted Panel" type="Panel" parent="."]
+offset_left = 558.0
 offset_top = 20.0
-offset_right = 1220.0
+offset_right = 1258.0
 offset_bottom = 700.0
 theme = ExtResource("2_dppe3")
 
-[node name="label" type="Label" parent="converted_panel"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -360.0
-offset_top = 5.0
-offset_right = 360.0
-offset_bottom = 31.0
-grow_horizontal = 2
+[node name="ConvertedSprites" type="Label" parent="Converted Panel"]
+layout_mode = 0
+offset_right = 701.0
+offset_bottom = 60.0
 text = "Converted Sprites:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="sprite_output" type="AnimatedSprite2D" parent="."]
+[node name="SpriteData" type="AnimatedSprite2D" parent="."]
 position = Vector2(954, 403)
 
-[node name="main_panel" type="Panel" parent="."]
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 64.0
-offset_top = 208.0
-offset_right = 428.0
-offset_bottom = 512.0
-grow_vertical = 2
+[node name="Main Panel" type="Panel" parent="."]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 540.0
+offset_bottom = 260.0
 theme = ExtResource("2_dppe3")
 script = ExtResource("1_72kxm")
 
-[node name="label" type="Label" parent="main_panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.01
-anchor_right = 1.0
-anchor_bottom = 0.05
+[node name="Title" type="Label" parent="Main Panel"]
+layout_mode = 0
+offset_right = 522.0
+offset_bottom = 45.0
 text = "XML -> SpriteFrames"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="choose_sprites" type="Button" parent="main_panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.15
-anchor_right = 0.95
-anchor_bottom = 0.25
+[node name="Choose Sprites" type="Button" parent="Main Panel"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 75.0
+offset_right = 138.0
+offset_bottom = 106.0
 focus_mode = 0
 theme = ExtResource("4_cqp41")
 text = "Choose Sprites"
 script = ExtResource("2_kmxvy")
 
-[node name="fps_box" type="LineEdit" parent="main_panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.3
-anchor_right = 0.225
-anchor_bottom = 0.35
+[node name="FPS" type="LineEdit" parent="Main Panel"]
+layout_mode = 0
+offset_left = 191.0
+offset_top = 74.0
+offset_right = 258.062
+offset_bottom = 105.0
 theme = ExtResource("2_dppe3")
 text = "24"
 placeholder_text = "24"
 
-[node name="fps_label" type="Label" parent="main_panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.25
-anchor_top = 0.3
-anchor_right = 0.3
-anchor_bottom = 0.4
-text = "FPS"
-vertical_alignment = 1
+[node name="FPS Text" type="Label" parent="Main Panel"]
+layout_mode = 0
+offset_left = 268.0
+offset_top = 75.0
+offset_right = 340.0
+offset_bottom = 101.0
+text = "Anim FPS"
 
-[node name="looped_checkbox" type="CheckBox" parent="main_panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.35
-anchor_top = 0.3
-anchor_right = 0.625
-anchor_bottom = 0.4
+[node name="Looped Checkbox" type="CheckBox" parent="Main Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 129.0
+offset_right = 109.0
+offset_bottom = 160.0
 focus_mode = 0
 theme = ExtResource("4_cqp41")
 text = "Looped?"
 
-[node name="optimized_checkbox" type="CheckBox" parent="main_panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.65
-anchor_top = 0.3
-anchor_right = 0.95
-anchor_bottom = 0.4
+[node name="Optimized Checkbox" type="CheckBox" parent="Main Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 166.0
+offset_right = 132.0
+offset_bottom = 197.0
 theme = ExtResource("4_cqp41")
-button_pressed = true
 text = "Optimized?"
 
-[node name="convert_button" type="Button" parent="main_panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.45
-anchor_right = 0.95
-anchor_bottom = 0.55
+[node name="Convert Button" type="Button" parent="Main Panel"]
+layout_mode = 0
+offset_left = 191.0
+offset_top = 145.0
+offset_right = 261.0
+offset_bottom = 176.0
 focus_mode = 0
 theme = ExtResource("4_cqp41")
 text = "Convert"
 
-[node name="file_dialog" type="FileDialog" parent="."]
+[node name="FileDialog" type="FileDialog" parent="."]
 title = "Open a File"
 size = Vector2i(500, 500)
 ok_button_text = "Open"
@@ -135,9 +115,9 @@ file_mode = 0
 filters = PackedStringArray("*.png ; Spritesheets", "*.jpg ; Spritesheets", "*.jpeg ; Spritesheets", "*.xml ; XML Spritesheet Data")
 show_hidden_files = true
 
-[connection signal="pressed" from="main_panel/choose_sprites" to="main_panel/choose_sprites" method="popup_shit"]
-[connection signal="text_changed" from="main_panel/fps_box" to="main_panel" method="set_fps"]
-[connection signal="toggled" from="main_panel/looped_checkbox" to="main_panel" method="set_looped"]
-[connection signal="toggled" from="main_panel/optimized_checkbox" to="main_panel" method="set_optimized"]
-[connection signal="pressed" from="main_panel/convert_button" to="main_panel" method="convert_xml"]
-[connection signal="file_selected" from="file_dialog" to="main_panel" method="set_path"]
+[connection signal="pressed" from="Main Panel/Choose Sprites" to="Main Panel/Choose Sprites" method="popup_shit"]
+[connection signal="text_changed" from="Main Panel/FPS" to="Main Panel" method="set_fps"]
+[connection signal="toggled" from="Main Panel/Looped Checkbox" to="Main Panel" method="set_looped"]
+[connection signal="toggled" from="Main Panel/Optimized Checkbox" to="Main Panel" method="set_optimized"]
+[connection signal="pressed" from="Main Panel/Convert Button" to="Main Panel" method="convert_xml"]
+[connection signal="file_selected" from="FileDialog" to="Main Panel" method="set_path"]

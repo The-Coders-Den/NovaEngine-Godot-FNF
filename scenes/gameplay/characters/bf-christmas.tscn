@@ -596,11 +596,11 @@ health_color = Color(0.192157, 0.690196, 0.819608, 1)
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 350)
 sprite_frames = ExtResource("3_54jls")
-animation = &"BF NOTE LEFT"
-frame = 14
+animation = &"BF HEY!!"
+frame = 25
 frame_progress = 1.0
 centered = false
-offset = Vector2(-5, 6)
+offset = Vector2(-2, -5)
 script = ExtResource("4_v6geg")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite"]
