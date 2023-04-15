@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="FreeplaySongList" load_steps=35 format=3 uid="uid://dw5bby1xny12p"]
+[gd_resource type="Resource" script_class="FreeplaySongList" load_steps=35 format=3 uid="uid://rkmusgpraddm"]
 
 [ext_resource type="Script" path="res://resources/FreeplaySongList.gd" id="1_sxs7f"]
 [ext_resource type="Script" path="res://resources/FreeplaySong.gd" id="2_7bcx6"]
