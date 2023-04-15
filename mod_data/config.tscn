@@ -1,6 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://dej6cseyb3e0k"]
+[gd_scene load_steps=13 format=3]
 
-[ext_resource type="Script" path="res://mod_data/config.gd" id="1_ohtiw"]
+[ext_resource type="Script" path="res://scripts/ModConfig.gd" id="1_ohtiw"]
 [ext_resource type="Texture2D" uid="uid://djvwyf5uvg64p" path="res://assets/images/menus/modsmenu/contributor_icons/ninjamuffin99.png" id="2_djjec"]
 [ext_resource type="Script" path="res://resources/ModContributor.gd" id="2_ojm8p"]
 [ext_resource type="Texture2D" uid="uid://tag1qor2scje" path="res://assets/images/menus/modsmenu/contributor_icons/mastereric.png" id="4_t33rq"]
