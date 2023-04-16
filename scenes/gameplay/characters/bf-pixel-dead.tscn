@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://drdna7oin5mto"]
+[gd_scene load_steps=9 format=3 uid="uid://cxtnoyq5t0e18"]
 
 [ext_resource type="Script" path="res://scripts/Character.gd" id="1_ue7c4"]
 [ext_resource type="Texture2D" uid="uid://b71wjo1kmexma" path="res://assets/images/gameplay/icons/icon-bf-pixel.png" id="2_undx0"]
-[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/characters/bf/pixel/dead.res" id="6_qcw8p"]
+[ext_resource type="SpriteFrames" uid="uid://b217ww8ob6va3" path="res://assets/images/gameplay/characters/bf/pixel/dead.res" id="6_qcw8p"]
 [ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="7_aedwq"]
 
 [sub_resource type="Animation" id="Animation_j4ny0"]
@@ -181,7 +181,7 @@ texture_filter = 1
 position = Vector2(-48, -426)
 scale = Vector2(6, 6)
 sprite_frames = ExtResource("6_qcw8p")
-animation = &"RETRY CONFIRM"
+animation = &"Retry Loop"
 frame = 33
 frame_progress = 1.0
 centered = false

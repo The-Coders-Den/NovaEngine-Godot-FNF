@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://wwuas54j78dg"]
+[gd_scene load_steps=9 format=3 uid="uid://di2d1ekueo61y"]
 
 [ext_resource type="Script" path="res://scripts/Character.gd" id="1_focc0"]
 [ext_resource type="Texture2D" uid="uid://bvafd1dvo4ke4" path="res://assets/images/gameplay/icons/icon-bf.png" id="2_ejjwq"]
@@ -179,9 +179,7 @@ health_color = Color(0.192157, 0.690196, 0.819608, 1)
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 350)
 sprite_frames = ExtResource("3_n0p5m")
-animation = &"BF dies"
-frame = 57
-frame_progress = 1.0
+animation = &"BF Dead Loop"
 centered = false
 script = ExtResource("4_x1ydy")
 

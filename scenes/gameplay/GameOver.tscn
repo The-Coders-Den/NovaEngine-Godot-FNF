@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://yda63viooytq"]
+[gd_scene load_steps=5 format=3 uid="uid://cwtrmuxa56uaj"]
 
 [ext_resource type="Script" path="res://scenes/gameplay/GameOver.gd" id="1_7fqfx"]
 [ext_resource type="AudioStream" uid="uid://hqd1j0mowawd" path="res://assets/music/gameOver.ogg" id="2_g2iat"]
