@@ -58,6 +58,8 @@ func change_selection(change:int = 0):
 		var template:Panel = contributor_template.duplicate()
 		template.get_node("Icon").texture = contributor.icon
 		template.get_node("Label").text = contributor.name
+		template.visible = true
+		
 		contributor_list.add_child(template)
 		
 	Audio.play_sound("scrollMenu")
@@ -80,10 +82,21 @@ func _process(delta):
 		SettingsAPI.flush()
 		ModManager.switch_mod(SettingsAPI.get_setting("current mod"))
 		
-		Global.switch_scene("res://scenes/MainMenu.tscn")
+		Global.reset_scene(true)
 		queue_free()
 		
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().paused = false
 		Audio.play_sound("cancelMenu")
 		queue_free()
+
+func _on_show_item_pressed(name:String):
+	match name:
+		"Show Description":
+			$Description/ScrollContainer/Label.text = mod_configs[cur_selected].description
+			$Description.visible = !$Description.visible
+			$"FumnyStrip/Show Description".text = "Hide Description" if $Description.visible else "Show Description"
+			
+		"Show Contributors":
+			$Contributors.visible = !$Contributors.visible
+			$"FumnyStrip/Show Contributors".text = "Hide Contributors" if $Contributors.visible else "Show Contributors"

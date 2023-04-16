@@ -461,6 +461,9 @@ func _input(event):
 		else:
 			if not SettingsAPI.get_setting("ghost tapping"):
 				fake_miss(data)
+				if SettingsAPI.get_setting("miss sounds"):
+					Audio.play_sound("missnote"+str(randi_range(1, 3)), randf_range(0.1, 0.3))
+					
 			script_group.call_func("on_ghost_tap", [data])
 			
 func fake_miss(direction:int = -1):

@@ -94,7 +94,7 @@ func switch_scene(path:String) -> void:
 	transitioning = false
 	get_tree().paused = false
 	
-func reset_scene() -> void:
+func reset_scene(from_mod_menu:bool = false) -> void:
 	transitioning = true
 	get_tree().paused = true
 	
@@ -103,7 +103,10 @@ func reset_scene() -> void:
 	
 	await get_tree().create_timer(anim_player.get_animation("in").length).timeout
 	
-	get_tree().change_scene_to_file(last_scene_path)
+	if from_mod_menu:
+		get_tree().change_scene_to_file("res://scenes/ReloadHelper.tscn")
+	else:
+		get_tree().change_scene_to_file(last_scene_path)
 	
 	await get_tree().create_timer(0.05).timeout
 	

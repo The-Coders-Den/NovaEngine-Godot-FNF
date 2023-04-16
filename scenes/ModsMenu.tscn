@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://c7ob71i2ta1iq"]
+[gd_scene load_steps=6 format=3 uid="uid://c7ob71i2ta1iq"]
 
 [ext_resource type="Script" path="res://scenes/ModsMenu.gd" id="1_i7gh0"]
 [ext_resource type="PackedScene" uid="uid://bgilym2qsrs4y" path="res://scenes/fonts/Alphabet.tscn" id="2_1okte"]
 [ext_resource type="Script" path="res://scripts/FreeplayAlphabet.gd" id="3_4o3d3"]
-[ext_resource type="Theme" uid="uid://blt3c0a5po0yj" path="res://assets/styles/nova_purple_button.tres" id="4_2r5px"]
 [ext_resource type="Texture2D" uid="uid://djvwyf5uvg64p" path="res://assets/images/menus/modsmenu/contributor_icons/ninjamuffin99.png" id="5_56ilp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a28mi"]
@@ -50,7 +49,6 @@ offset_left = 14.0
 offset_top = 10.0
 offset_right = 179.0
 offset_bottom = 47.0
-theme = ExtResource("4_2r5px")
 text = "Show Description"
 
 [node name="Show Contributors" type="Button" parent="FumnyStrip"]
@@ -59,7 +57,6 @@ offset_left = 190.0
 offset_top = 10.0
 offset_right = 355.0
 offset_bottom = 47.0
-theme = ExtResource("4_2r5px")
 text = "Show Contributors"
 
 [node name="Description" type="Panel" parent="."]
@@ -82,6 +79,7 @@ layout_mode = 2
 text = "piss"
 
 [node name="Contributors" type="Panel" parent="."]
+visible = false
 offset_left = 189.0
 offset_top = 396.0
 offset_right = 430.0
@@ -122,3 +120,6 @@ offset_bottom = 33.0
 text = "Template"
 clip_text = true
 text_overrun_behavior = 3
+
+[connection signal="pressed" from="FumnyStrip/Show Description" to="." method="_on_show_item_pressed" binds= ["Show Description"]]
+[connection signal="pressed" from="FumnyStrip/Show Contributors" to="." method="_on_show_item_pressed" binds= ["Show Contributors"]]
