@@ -2,6 +2,8 @@ extends CanvasLayer
 
 @onready var menu_items:Node2D = $MenuItems
 @onready var text_template:FreeplayAlphabet = $__TemplateItem__
+@onready var contributor_template:Panel = $Contributors/ContributorTemplate
+@onready var contributor_list:VBoxContainer = $Contributors/ScrollContainer/VBoxContainer
 
 var cur_selected:int = 0
 var mod_list:PackedStringArray = []
@@ -48,6 +50,15 @@ func change_selection(change:int = 0):
 		var item:FreeplayAlphabet = menu_items.get_child(i)
 		item.target_y = i - cur_selected
 		item.modulate.a = 1.0 if cur_selected == i else 0.6
+		
+	for child in contributor_list.get_children():
+		child.queue_free()
+		
+	for contributor in mod_configs[cur_selected].contributors:
+		var template:Panel = contributor_template.duplicate()
+		template.get_node("Icon").texture = contributor.icon
+		template.get_node("Label").text = contributor.name
+		contributor_list.add_child(template)
 		
 	Audio.play_sound("scrollMenu")
 	

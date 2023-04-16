@@ -72,6 +72,10 @@ static func load_chart(song:String, difficulty:String = "normal"):
 		cool_section.change_bpm = section.changeBPM if "changeBPM" in section and section.changeBPM != null else false
 		cool_section.is_player = section.mustHitSection if "mustHitSection" in section and section.mustHitSection != null else true
 		cool_section.length_in_steps = section.lengthInSteps if "lengthInSteps" in section and section.lengthInSteps != null else 16
+		
+		if "sectionBeats" in section and section.sectionBeats != null:
+			cool_section.length_in_steps = int(section.sectionBeats) * 4
+		
 		cool_section.notes = []
 		
 		# convermting the noite!
