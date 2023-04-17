@@ -12,6 +12,7 @@ var note_data_array:Array[SectionNote] = []
 
 var starting_song:bool = true
 var ending_song:bool = false
+var in_cutscene = false
 
 var scroll_speed:float = 2.7
 
@@ -252,10 +253,17 @@ func _ready() -> void:
 	
 	stage.callv("_ready_post", [])
 	script_group.call_func("_ready_post", [])
-
+func start_cutscene(postfix:String = "-start"):
+	var cutscene_path = "res://scenes/gameplay/cutscenes/" + SONG.name.to_lower() + postfix + ".tscn"
+	if ResourceLoader.exists(cutscene_path):
+		in_cutscene = true
+		hud.add_child(load(cutscene_path).instantiate())
+		get_tree().paused = true
+		
 # yo thanks srt for doing it for me i think i was boutta
 # forgor anyway :skoil: ~swordcube
 func start_countdown():
+	start_cutscene()
 	countdown_sprite.scale = Vector2(ui_skin.countdown_scale, ui_skin.countdown_scale)
 	countdown_sprite.texture_filter = TEXTURE_FILTER_LINEAR if ui_skin.antialiasing else TEXTURE_FILTER_NEAREST
 	
@@ -322,6 +330,10 @@ func start_song():
 	script_group.call_func("on_start_song", [])
 	
 func end_song():
+	if not ending_song:
+		ending_song = true
+		start_cutscene("-end")
+		return
 	ending_song = true
 	
 	stage.callv("on_end_song", [])
@@ -391,7 +403,6 @@ func position_hud():
 	hud.offset.x = (hud.scale.x - 1.0) * -(Global.game_size.x * 0.5)
 	hud.offset.y = (hud.scale.y - 1.0) * -(Global.game_size.y * 0.5)
 		
-var timessynced:int = 0
 func resync_vocals():
 	if ending_song: return
 	
@@ -402,7 +413,6 @@ func resync_vocals():
 	voices.play(Conductor.position / 1000.0)
 	
 	script_group.call_func("on_resync_vocals", [])
-	timessynced += 1
 
 func key_from_event(event:InputEventKey):
 	var data:int = -1
@@ -622,6 +632,11 @@ func game_over():
 	get_tree().change_scene_to_file("res://scenes/gameplay/GameOver.tscn")
 	
 func _process(delta:float) -> void:
+	if in_cutscene:
+		get_tree().paused = true
+	else:
+		get_tree().paused = false
+	
 	if not pressed.has(true) and player.last_anim.begins_with("sing") and player.hold_timer >= Conductor.step_crochet * player.sing_duration * 0.0011:
 		player.hold_timer = 0.0
 		player.dance()
