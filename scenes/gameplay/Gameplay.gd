@@ -359,7 +359,7 @@ func beat_hit(beat:int):
 func step_hit(step:int):
 	script_group.call_func("on_step_hit", [step])
 	
-	if not ending_song and (not Conductor.is_sound_synced(inst) or (voices.stream != null and not Conductor.is_sound_synced(voices) and voices.get_playback_position() < voices.stream.get_length())):
+	if not ending_song and ((not Conductor.is_sound_synced(inst)) or (voices.stream != null and (not Conductor.is_sound_synced(voices)) and voices.get_playback_position() < voices.stream.get_length())):
 		resync_vocals()
 		
 	script_group.call_func("on_step_hit_post", [step])
@@ -400,6 +400,9 @@ func resync_vocals():
 	
 	inst.play(Conductor.position / 1000.0)
 	voices.play(Conductor.position / 1000.0)
+	
+	inst.seek(Conductor.position / 1000.0)
+	voices.seek(Conductor.position / 1000.0)
 	
 	script_group.call_func("on_resync_vocals", [])
 	timessynced += 1
