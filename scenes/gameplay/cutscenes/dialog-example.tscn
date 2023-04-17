@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://bf1cb0xc0my4t"]
 
-[ext_resource type="Script" path="res://scenes/gameplay/cutscenes/dialog.gd" id="1_hndtv"]
-[ext_resource type="FontFile" uid="uid://ui3m7nvlvh8y" path="res://assets/fonts/pixel.otf" id="2_psbwh"]
-[ext_resource type="Script" path="res://scenes/gameplay/cutscenes/typeing.gd" id="3_j5yu3"]
-[ext_resource type="AudioStream" uid="uid://n42ha0ifsni4" path="res://assets/sounds/menus/scrollMenu.ogg" id="4_ugup8"]
-[ext_resource type="Script" path="res://scripts/AudioPlayer.gd" id="5_sjfto"]
+[ext_resource type="Script" path="res://scenes/gameplay/cutscenes/dialog.gd" id="1_0elnn"]
+[ext_resource type="FontFile" uid="uid://ui3m7nvlvh8y" path="res://assets/fonts/pixel.otf" id="2_wjtgb"]
+[ext_resource type="Script" path="res://scenes/gameplay/cutscenes/typeing.gd" id="3_i1c67"]
+[ext_resource type="AudioStream" uid="uid://n42ha0ifsni4" path="res://assets/sounds/menus/scrollMenu.ogg" id="4_6lr2t"]
+[ext_resource type="Script" path="res://scripts/AudioPlayer.gd" id="5_nogg1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m1ixq"]
 bg_color = Color(0, 0, 0, 1)
@@ -18,7 +18,7 @@ shadow_size = 32
 
 [node name="dialog" type="Node"]
 process_mode = 3
-script = ExtResource("1_hndtv")
+script = ExtResource("1_0elnn")
 texts = Array[String](["hi!", "fuck you", ":C", "The FitnessGram Pacer test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter Pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal *boop*. A single lap should be completed each time you hear this sound *ding*. Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start."])
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -47,14 +47,14 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = 992.0
 offset_bottom = 204.0
-theme_override_fonts/font = ExtResource("2_psbwh")
+theme_override_fonts/font = ExtResource("2_wjtgb")
 theme_override_font_sizes/font_size = 32
 text = "fuck you boy fnf you should die!!!!!!!!!"
 autowrap_mode = 3
-script = ExtResource("3_j5yu3")
+script = ExtResource("3_i1c67")
 
 [node name="type_sound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_ugup8")
+stream = ExtResource("4_6lr2t")
 pitch_scale = 1.63
 max_polyphony = 2
-script = ExtResource("5_sjfto")
+script = ExtResource("5_nogg1")
