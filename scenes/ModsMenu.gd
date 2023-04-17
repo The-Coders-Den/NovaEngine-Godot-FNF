@@ -100,3 +100,6 @@ func _on_show_item_pressed(name:String):
 		"Show Contributors":
 			$Contributors.visible = !$Contributors.visible
 			$"FumnyStrip/Show Contributors".text = "Hide Contributors" if $Contributors.visible else "Show Contributors"
+
+		"Open Mods Folder":
+			OS.shell_open(ProjectSettings.globalize_path(ModManager.MOD_FOLDER))

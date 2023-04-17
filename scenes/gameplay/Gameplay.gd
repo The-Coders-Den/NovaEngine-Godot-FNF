@@ -253,12 +253,16 @@ func _ready() -> void:
 	
 	stage.callv("_ready_post", [])
 	script_group.call_func("_ready_post", [])
+	
 func start_cutscene(postfix:String = "-start"):
 	var cutscene_path = "res://scenes/gameplay/cutscenes/" + SONG.name.to_lower() + postfix + ".tscn"
 	if ResourceLoader.exists(cutscene_path):
 		in_cutscene = true
 		hud.add_child(load(cutscene_path).instantiate())
 		get_tree().paused = true
+		return true
+		
+	return false
 		
 # yo thanks srt for doing it for me i think i was boutta
 # forgor anyway :skoil: ~swordcube
@@ -332,9 +336,8 @@ func start_song():
 func end_song():
 	if not ending_song:
 		ending_song = true
-		start_cutscene("-end")
-		return
-	ending_song = true
+		if start_cutscene("-end"):
+			return
 	
 	stage.callv("on_end_song", [])
 	var ret:Variant = script_group.call_func("on_end_song", [])

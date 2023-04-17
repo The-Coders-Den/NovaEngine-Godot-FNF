@@ -59,6 +59,14 @@ offset_right = 355.0
 offset_bottom = 47.0
 text = "Show Contributors"
 
+[node name="Open Mods Folder" type="Button" parent="FumnyStrip"]
+layout_mode = 0
+offset_left = 1102.0
+offset_top = 10.0
+offset_right = 1267.0
+offset_bottom = 47.0
+text = "Open Mods Folder"
+
 [node name="Description" type="Panel" parent="."]
 visible = false
 offset_left = 206.5
@@ -123,3 +131,4 @@ text_overrun_behavior = 3
 
 [connection signal="pressed" from="FumnyStrip/Show Description" to="." method="_on_show_item_pressed" binds= ["Show Description"]]
 [connection signal="pressed" from="FumnyStrip/Show Contributors" to="." method="_on_show_item_pressed" binds= ["Show Contributors"]]
+[connection signal="pressed" from="FumnyStrip/Open Mods Folder" to="." method="_on_show_item_pressed" binds= ["Open Mods Folder"]]
