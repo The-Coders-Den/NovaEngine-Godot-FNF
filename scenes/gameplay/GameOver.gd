@@ -12,9 +12,11 @@ var character:Character
 
 func _ready():
 	camera.position = Global.death_camera_pos
+	camera.zoom = Global.death_camera_zoom
 	
 	character = load("res://scenes/gameplay/characters/"+Global.death_character+".tscn").instantiate()
 	character.position = Global.death_char_pos
+	character._is_true_player = true
 	add_child(character)
 	
 	character.play_anim("firstDeath")

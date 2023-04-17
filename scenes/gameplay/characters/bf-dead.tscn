@@ -173,6 +173,7 @@ _data = {
 
 [node name="bf-dead" type="Node2D"]
 script = ExtResource("1_focc0")
+is_player = true
 health_icon = ExtResource("2_ejjwq")
 health_color = Color(0.192157, 0.690196, 0.819608, 1)
 

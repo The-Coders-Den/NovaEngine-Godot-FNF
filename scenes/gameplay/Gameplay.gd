@@ -611,6 +611,7 @@ func update_score_text():
 
 func game_over():
 	Global.death_character = player.death_character
+	Global.death_camera_zoom = camera.zoom
 	Global.death_camera_pos = camera.position
 	Global.death_char_pos = player.position
 	

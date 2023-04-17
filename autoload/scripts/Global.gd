@@ -22,6 +22,7 @@ var game_size:Vector2 = Vector2(
 	ProjectSettings.get_setting("display/window/size/viewport_height"),
 )
 
+var death_camera_zoom:Vector2 = Vector2.ONE
 var death_camera_pos:Vector2 = Vector2.ZERO
 var death_char_pos:Vector2 = Vector2(700, 360)
 var death_character:String = "bf-dead"

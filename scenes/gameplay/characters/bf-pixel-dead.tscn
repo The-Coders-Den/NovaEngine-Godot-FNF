@@ -173,6 +173,7 @@ _data = {
 
 [node name="bf-pixel-dead" type="Node2D"]
 script = ExtResource("1_ue7c4")
+is_player = true
 health_icon = ExtResource("2_undx0")
 health_color = Color(0.482353, 0.839216, 0.964706, 1)
 
@@ -194,4 +195,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(219, -179)
+position = Vector2(260, -179)
