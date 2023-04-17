@@ -19,11 +19,12 @@ var final_volume:float = 0.5
 @onready var song_name:Label = $SongName
 @onready var difficulty:Label = $Difficulty
 
-func _ready():
+func _ready() -> void:
 	get_tree().paused = true
 	
 	music.volume_db = -80
 	music.play(randf_range(0.0, music.stream.get_length() * 0.5))
+	music.stream.loop = true
 	
 	for i in options.size():
 		var option:String = options[i]
