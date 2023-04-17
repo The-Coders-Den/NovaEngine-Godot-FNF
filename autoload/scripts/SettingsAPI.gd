@@ -7,7 +7,6 @@ var _settings:Dictionary = {
 	"centered notefield": false,
 	"ghost tapping": true,
 	"miss sounds": true,
-	"disable reset": false,
 	"show ms on note hit": false,
 	
 	"note offset": 0.0,

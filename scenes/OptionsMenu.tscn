@@ -94,23 +94,12 @@ text = "Miss Sounds"
 script = ExtResource("4_gjk4b")
 option = "miss sounds"
 
-[node name="Disable Reset" type="CheckBox" parent="TabContainer/Gameplay"]
-layout_mode = 0
-offset_left = 184.0
-offset_top = 8.0
-offset_right = 360.0
-offset_bottom = 39.0
-tooltip_text = "Prevents the RESET bind from insta-killing you during gameplay."
-text = "Disable Reset"
-script = ExtResource("4_gjk4b")
-option = "disable reset"
-
 [node name="Show MS on Note Hit" type="CheckBox" parent="TabContainer/Gameplay"]
 layout_mode = 0
 offset_left = 184.0
-offset_top = 32.0
+offset_top = 8.0
 offset_right = 375.0
-offset_bottom = 63.0
+offset_bottom = 39.0
 tooltip_text = "Shows how early/late you hit a note in milliseconds."
 text = "Show MS on Note Hit
 "
@@ -975,7 +964,6 @@ in_editor = true
 [connection signal="pressed" from="TabContainer/Gameplay/Centered Notefield" to="TabContainer/Gameplay/Centered Notefield" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Gameplay/Ghost Tapping" to="TabContainer/Gameplay/Ghost Tapping" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Gameplay/Miss Sounds" to="TabContainer/Gameplay/Miss Sounds" method="_on_pressed"]
-[connection signal="pressed" from="TabContainer/Gameplay/Disable Reset" to="TabContainer/Gameplay/Disable Reset" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Gameplay/Show MS on Note Hit" to="TabContainer/Gameplay/Show MS on Note Hit" method="_on_pressed"]
 [connection signal="drag_ended" from="TabContainer/Gameplay/Note Offset" to="TabContainer/Gameplay/Note Offset" method="_on_drag_ended"]
 [connection signal="value_changed" from="TabContainer/Gameplay/Note Offset" to="TabContainer/Gameplay/Note Offset" method="_on_value_changed"]
