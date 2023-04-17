@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://hueft0c17ndc"]
+
+[ext_resource type="Script" path="res://scenes/gameplay/cutscenes/dialog.gd" id="1_0i6jj"]
+
+[node name="dialog" type="Node"]
+script = ExtResource("1_0i6jj")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+offset_right = 1284.0
+offset_bottom = 721.0
+color = Color(0.0745098, 0.0745098, 0.0745098, 0.419608)
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -641.0
+offset_top = -214.0
+offset_right = 641.0
+grow_horizontal = 2
+grow_vertical = 0
