@@ -10,6 +10,7 @@ var mod_list:PackedStringArray = []
 var mod_configs:Array[ModConfig] = []
 
 func _ready():
+	get_window().files_dropped.connect(_on_files_dropped)
 	get_tree().paused = true
 	
 	mod_list = ModManager.list_all_mods()
@@ -103,3 +104,10 @@ func _on_show_item_pressed(name:String):
 
 		"Open Mods Folder":
 			OS.shell_open(ProjectSettings.globalize_path(ModManager.MOD_FOLDER))
+
+func _on_files_dropped(mods:PackedStringArray) -> void:
+	for mod_path in mods:
+		DirAccess.copy_absolute(mod_path, 'user://mods/' + mod_path.get_file())
+	
+	queue_free()
+	get_parent().add_child(load("res://scenes/ModsMenu.tscn").instantiate())
