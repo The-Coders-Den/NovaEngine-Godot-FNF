@@ -379,7 +379,15 @@ func step_hit(step:int):
 		resync_vocals()
 		
 	script_group.call_func("on_step_hit_post", [step])
-	
+
+func section_hit(section:int):
+	script_group.call_func("on_section_hit", [section])
+
+	if cam_switching:
+		update_camera(Conductor.cur_section)
+
+	script_group.call_func("on_section_hit_post", [section])
+
 func character_bop():
 	if opponent != null and opponent.dance_on_beat and not opponent.last_anim.begins_with("sing"):
 		opponent.dance()
