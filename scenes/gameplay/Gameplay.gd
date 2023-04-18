@@ -370,7 +370,7 @@ func beat_hit(beat:int):
 	if cam_switching:
 		update_camera(Conductor.cur_section)
 	
-	script_group.call_func("on_beat_hit", [beat])
+	script_group.call_func("on_beat_hit_post", [beat])
 	
 func step_hit(step:int):
 	script_group.call_func("on_step_hit", [step])
