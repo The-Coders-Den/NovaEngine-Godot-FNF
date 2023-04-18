@@ -7,6 +7,6 @@ body:
     id: suggestion_details
     attributes:
       label: Idea you want to suggest
-      placeholder: "Example: Can we have mp4 cutscenes? **X**"
+      placeholder: "Example: Can we have mp4 cutscenes?"
     validations:
       required: true
