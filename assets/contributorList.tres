@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="ContributorList" load_steps=13 format=3 uid="uid://n6bromgyvpe3"]
+
+[ext_resource type="Texture2D" uid="uid://djvwyf5uvg64p" path="res://assets/images/menus/modsmenu/contributor_icons/ninjamuffin99.png" id="1_e2mpj"]
+[ext_resource type="Script" path="res://resources/ContributorList.gd" id="1_lag7a"]
+[ext_resource type="Script" path="res://resources/ModContributor.gd" id="2_cpm0m"]
+[ext_resource type="Texture2D" uid="uid://tag1qor2scje" path="res://assets/images/menus/modsmenu/contributor_icons/mastereric.png" id="3_4uvla"]
+[ext_resource type="Texture2D" uid="uid://du2jeglm1bscp" path="res://assets/images/menus/modsmenu/contributor_icons/phantomarcade.png" id="4_8xl3d"]
+[ext_resource type="Texture2D" uid="uid://biiaeswm2nhhm" path="res://assets/images/menus/modsmenu/contributor_icons/evilsk8r.png" id="5_lj3u2"]
+[ext_resource type="Texture2D" uid="uid://draluga4supay" path="res://assets/images/menus/modsmenu/contributor_icons/kawaisprite.png" id="6_hl7ln"]
+
+[sub_resource type="Resource" id="Resource_ja4d8"]
+script = ExtResource("2_cpm0m")
+name = "ninjamuffin99"
+url = "https://twitter.com/ninja_muffin99"
+role = "Programmer"
+icon = ExtResource("1_e2mpj")
+
+[sub_resource type="Resource" id="Resource_lmcel"]
+script = ExtResource("2_cpm0m")
+name = "EliteMasterEric"
+url = "https://twitter.com/EliteMasterEric"
+role = "Programmer"
+icon = ExtResource("3_4uvla")
+
+[sub_resource type="Resource" id="Resource_5hxm5"]
+script = ExtResource("2_cpm0m")
+name = "PhantomArcade"
+url = "https://twitter.com/PhantomArcade3K"
+role = "Animator"
+icon = ExtResource("4_8xl3d")
+
+[sub_resource type="Resource" id="Resource_b8x86"]
+script = ExtResource("2_cpm0m")
+name = "evilsk8r"
+url = "https://twitter.com/evilsk8r"
+role = "Artist"
+icon = ExtResource("5_lj3u2")
+
+[sub_resource type="Resource" id="Resource_g3eqt"]
+script = ExtResource("2_cpm0m")
+name = "KawaiSprite"
+url = "https://twitter.com/kawaisprite"
+role = "Composer"
+icon = ExtResource("6_hl7ln")
+
+[resource]
+script = ExtResource("1_lag7a")
+contributors = Array[ExtResource("2_cpm0m")]([SubResource("Resource_ja4d8"), SubResource("Resource_lmcel"), SubResource("Resource_5hxm5"), SubResource("Resource_b8x86"), SubResource("Resource_g3eqt")])

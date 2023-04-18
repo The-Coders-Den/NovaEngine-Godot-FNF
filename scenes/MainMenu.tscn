@@ -120,7 +120,7 @@ theme_override_constants/outline_size = 6
 theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("7_fi2y3")
 theme_override_font_sizes/font_size = 16
-text = "Nova Engine Godot v0.1.0
+text = "Nova Engine Godot v1.1.0
 
 if you piss in reverse, you actually shit yourself! - voiddev
 pissing in slow motion would be weird as fuck - swordcube

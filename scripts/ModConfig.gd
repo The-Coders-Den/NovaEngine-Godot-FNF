@@ -11,4 +11,4 @@ class_name ModConfig
 @export var mod_version:String = "0.1.0"
 
 @export_subgroup("Author Info")
-@export var contributors:Array[ModContributor] = []
+@export var contributors:ContributorList = ContributorList.new()

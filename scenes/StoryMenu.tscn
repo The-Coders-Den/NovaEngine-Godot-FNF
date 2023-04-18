@@ -1,226 +1,11 @@
-[gd_scene load_steps=52 format=3 uid="uid://dn03drrma3p5y"]
+[gd_scene load_steps=13 format=3 uid="uid://dn03drrma3p5y"]
 
 [ext_resource type="Script" path="res://scenes/StoryMenu.gd" id="1_66cjt"]
-[ext_resource type="Script" path="res://resources/StoryWeek.gd" id="2_crd7m"]
-[ext_resource type="Script" path="res://resources/StorySong.gd" id="3_xyvlj"]
-[ext_resource type="Texture2D" uid="uid://cwo480ns8m6ri" path="res://assets/images/menus/storymenu/weeks/tutorial.png" id="4_ljnkl"]
+[ext_resource type="Resource" uid="uid://b2liyp0jv6vgq" path="res://assets/storyWeekList.tres" id="2_7t8os"]
 [ext_resource type="FontFile" uid="uid://coqcg7h14duny" path="res://assets/fonts/vcr.ttf" id="4_rt1a8"]
-[ext_resource type="Texture2D" uid="uid://c70gno0qbhc0i" path="res://assets/images/menus/storymenu/weeks/week1.png" id="4_vlt6d"]
-[ext_resource type="Texture2D" uid="uid://bcr7dl5jw2f4q" path="res://assets/images/menus/storymenu/weeks/week2.png" id="5_1qsom"]
-[ext_resource type="Texture2D" uid="uid://72mm1w7xognk" path="res://assets/images/menus/storymenu/weeks/week3.png" id="7_3kryk"]
-[ext_resource type="Texture2D" uid="uid://do7bst88fn6bb" path="res://assets/images/menus/storymenu/weeks/week4.png" id="8_mpgtv"]
-[ext_resource type="Texture2D" uid="uid://dm7epwpmfbvvg" path="res://assets/images/menus/storymenu/weeks/week5.png" id="9_2d6aj"]
 [ext_resource type="SpriteFrames" uid="uid://bbjun33w44uoy" path="res://assets/images/menus/storymenu/campaign_menu_UI_assets.res" id="9_cmblc"]
 [ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="10_j4qu2"]
-[ext_resource type="Texture2D" uid="uid://dsobdgpuqlj5q" path="res://assets/images/menus/storymenu/weeks/week6.png" id="10_m7bu5"]
-[ext_resource type="Texture2D" uid="uid://dbocq6b1dla1u" path="res://assets/images/menus/storymenu/weeks/week7.png" id="11_1hufh"]
 [ext_resource type="Texture2D" uid="uid://dq6ww4di7h8uc" path="res://assets/images/menus/storymenu/difficulties/normal.png" id="11_hvcc2"]
-
-[sub_resource type="Resource" id="Resource_xaly2"]
-script = ExtResource("3_xyvlj")
-display_name = "Tutorial"
-song_path = "tutorial"
-
-[sub_resource type="Resource" id="Resource_51oc7"]
-script = ExtResource("2_crd7m")
-name = "Tutorial"
-week_texture = ExtResource("4_ljnkl")
-bg_color = Color(0.603922, 0, 0.27451, 1)
-player = "bf"
-opponent = "hopefully nonexistent char name"
-specator = "gf"
-name_in_save = "tutorial"
-songs = Array[ExtResource("3_xyvlj")]([SubResource("Resource_xaly2")])
-difficulties = ["easy", "normal", "hard"]
-
-[sub_resource type="Resource" id="Resource_cyddg"]
-script = ExtResource("3_xyvlj")
-display_name = "Bopeebo"
-song_path = "bopeebo"
-
-[sub_resource type="Resource" id="Resource_eu44x"]
-script = ExtResource("3_xyvlj")
-display_name = "Fresh"
-song_path = "fresh"
-
-[sub_resource type="Resource" id="Resource_fyasl"]
-script = ExtResource("3_xyvlj")
-display_name = "Dad battle"
-song_path = "dad battle"
-
-[sub_resource type="Resource" id="Resource_76ypf"]
-script = ExtResource("2_crd7m")
-name = "Daddy Dearest"
-week_texture = ExtResource("4_vlt6d")
-bg_color = Color(0.54902, 0.439216, 0.784314, 1)
-player = "bf"
-opponent = "dad"
-specator = "gf"
-name_in_save = "week1"
-songs = Array[ExtResource("3_xyvlj")]([SubResource("Resource_cyddg"), SubResource("Resource_eu44x"), SubResource("Resource_fyasl")])
-difficulties = ["easy", "normal", "hard"]
-
-[sub_resource type="Resource" id="Resource_6n0y0"]
-script = ExtResource("3_xyvlj")
-display_name = "Spookeez"
-song_path = "spookeez"
-
-[sub_resource type="Resource" id="Resource_n23ml"]
-script = ExtResource("3_xyvlj")
-display_name = "South"
-song_path = "south"
-
-[sub_resource type="Resource" id="Resource_jok0a"]
-script = ExtResource("3_xyvlj")
-display_name = "Monster"
-song_path = "monster"
-
-[sub_resource type="Resource" id="Resource_buguk"]
-script = ExtResource("2_crd7m")
-name = "Spooky Month"
-week_texture = ExtResource("5_1qsom")
-bg_color = Color(0.180392, 0, 0.360784, 1)
-player = "bf"
-opponent = "spooky"
-specator = "gf"
-name_in_save = "week2"
-songs = Array[ExtResource("3_xyvlj")]([SubResource("Resource_6n0y0"), SubResource("Resource_n23ml"), SubResource("Resource_jok0a")])
-difficulties = ["easy", "normal", "hard"]
-
-[sub_resource type="Resource" id="Resource_srt0g"]
-script = ExtResource("3_xyvlj")
-display_name = "Pico"
-song_path = "pico"
-
-[sub_resource type="Resource" id="Resource_0u5o3"]
-script = ExtResource("3_xyvlj")
-display_name = "Philly Nice"
-song_path = "philly nice"
-
-[sub_resource type="Resource" id="Resource_dr3co"]
-script = ExtResource("3_xyvlj")
-display_name = "Blammed"
-song_path = "blammed"
-
-[sub_resource type="Resource" id="Resource_0w4ad"]
-script = ExtResource("2_crd7m")
-name = "Pico"
-week_texture = ExtResource("7_3kryk")
-bg_color = Color(0.239216, 0.709804, 0.282353, 1)
-player = "bf"
-opponent = "pico"
-specator = "gf"
-name_in_save = "week3"
-songs = Array[ExtResource("3_xyvlj")]([SubResource("Resource_srt0g"), SubResource("Resource_0u5o3"), SubResource("Resource_dr3co")])
-difficulties = ["easy", "normal", "hard"]
-
-[sub_resource type="Resource" id="Resource_msfqc"]
-script = ExtResource("3_xyvlj")
-display_name = "Satin Panties"
-song_path = "satin panties"
-
-[sub_resource type="Resource" id="Resource_4yein"]
-script = ExtResource("3_xyvlj")
-display_name = "High"
-song_path = "high"
-
-[sub_resource type="Resource" id="Resource_7cfnp"]
-script = ExtResource("3_xyvlj")
-display_name = "M.I.L.F"
-song_path = "m.i.l.f"
-
-[sub_resource type="Resource" id="Resource_hf5dj"]
-script = ExtResource("2_crd7m")
-name = "Mommy Must Murder"
-week_texture = ExtResource("8_mpgtv")
-bg_color = Color(0.847059, 0.333333, 0.556863, 1)
-player = "bf"
-opponent = "mom"
-specator = "gf"
-name_in_save = "week4"
-songs = Array[ExtResource("3_xyvlj")]([SubResource("Resource_msfqc"), SubResource("Resource_4yein"), SubResource("Resource_7cfnp")])
-difficulties = ["easy", "normal", "hard"]
-
-[sub_resource type="Resource" id="Resource_ouj7h"]
-script = ExtResource("3_xyvlj")
-display_name = "Cocoa"
-song_path = "cocoa"
-
-[sub_resource type="Resource" id="Resource_jjw6j"]
-script = ExtResource("3_xyvlj")
-display_name = "Eggnog"
-song_path = "eggnog"
-
-[sub_resource type="Resource" id="Resource_p874u"]
-script = ExtResource("3_xyvlj")
-display_name = "Winter Horrorland"
-song_path = "winter horrorland"
-
-[sub_resource type="Resource" id="Resource_sld5r"]
-script = ExtResource("2_crd7m")
-name = "Red Snow"
-week_texture = ExtResource("9_2d6aj")
-bg_color = Color(0.768627, 0.886275, 0.964706, 1)
-player = "bf"
-opponent = "parents-christmas"
-specator = "gf"
-name_in_save = "week5"
-songs = Array[ExtResource("3_xyvlj")]([SubResource("Resource_ouj7h"), SubResource("Resource_jjw6j"), SubResource("Resource_p874u")])
-difficulties = ["easy", "normal", "hard"]
-
-[sub_resource type="Resource" id="Resource_64lsg"]
-script = ExtResource("3_xyvlj")
-display_name = "Senpai"
-song_path = "senpai"
-
-[sub_resource type="Resource" id="Resource_tdu6o"]
-script = ExtResource("3_xyvlj")
-display_name = "Roses"
-song_path = "roses"
-
-[sub_resource type="Resource" id="Resource_ttc3m"]
-script = ExtResource("3_xyvlj")
-display_name = "Thorns"
-song_path = "thorns"
-
-[sub_resource type="Resource" id="Resource_3t06h"]
-script = ExtResource("2_crd7m")
-name = "Hating Simulator ft. Moawling"
-week_texture = ExtResource("10_m7bu5")
-bg_color = Color(0.976471, 0.639216, 0.317647, 1)
-player = "bf"
-opponent = "senpai"
-specator = "gf"
-name_in_save = "week6"
-songs = Array[ExtResource("3_xyvlj")]([SubResource("Resource_64lsg"), SubResource("Resource_tdu6o"), SubResource("Resource_ttc3m")])
-difficulties = ["easy", "normal", "hard"]
-
-[sub_resource type="Resource" id="Resource_qy430"]
-script = ExtResource("3_xyvlj")
-display_name = "Ugh"
-song_path = "ugh"
-
-[sub_resource type="Resource" id="Resource_5r12i"]
-script = ExtResource("3_xyvlj")
-display_name = "Guns"
-song_path = "guns"
-
-[sub_resource type="Resource" id="Resource_7cnd2"]
-script = ExtResource("3_xyvlj")
-display_name = "Stress"
-song_path = "stress"
-
-[sub_resource type="Resource" id="Resource_4h5mn"]
-script = ExtResource("2_crd7m")
-name = "Tankman"
-week_texture = ExtResource("11_1hufh")
-bg_color = Color(0.976471, 0.811765, 0.317647, 1)
-player = "bf"
-opponent = "tankman"
-specator = "gf"
-name_in_save = "week7"
-songs = Array[ExtResource("3_xyvlj")]([SubResource("Resource_qy430"), SubResource("Resource_5r12i"), SubResource("Resource_7cnd2")])
-difficulties = ["easy", "normal", "hard"]
 
 [sub_resource type="Animation" id="Animation_avyuw"]
 resource_name = "idle"
@@ -392,7 +177,7 @@ _data = {
 
 [node name="StoryMenu" type="Node2D"]
 script = ExtResource("1_66cjt")
-week_list = Array[ExtResource("2_crd7m")]([SubResource("Resource_51oc7"), SubResource("Resource_76ypf"), SubResource("Resource_buguk"), SubResource("Resource_0w4ad"), SubResource("Resource_hf5dj"), SubResource("Resource_sld5r"), SubResource("Resource_3t06h"), SubResource("Resource_4h5mn")])
+week_list = ExtResource("2_7t8os")
 
 [node name="WeekGroup" type="Node2D" parent="."]
 
@@ -431,7 +216,7 @@ position = Vector2(640, 450)
 [node name="Opponent" type="Node2D" parent="CharacterPositions"]
 position = Vector2(240, 440)
 
-[node name="Specator" type="Node2D" parent="CharacterPositions"]
+[node name="Spectator" type="Node2D" parent="CharacterPositions"]
 position = Vector2(1055, 440)
 
 [node name="TopBG" type="ColorRect" parent="."]
