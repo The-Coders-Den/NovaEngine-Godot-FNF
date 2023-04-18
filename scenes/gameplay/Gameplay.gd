@@ -280,7 +280,7 @@ func start_countdown():
 	stage.callv("on_start_countdown", [])
 	script_group.call_func("on_start_countdown", [])
 
-var countdown_tween:Tween = create_tween()
+var countdown_tween:Tween
 
 func countdown_tick():
 	character_bop()
@@ -288,7 +288,8 @@ func countdown_tick():
 	if countdown_tween != null:
 		countdown_tween.stop()
 		
-	countdown_tween = create_tween()
+	if countdown_ticks < 3:
+		countdown_tween = create_tween()
 	
 	match countdown_ticks:
 		3:
