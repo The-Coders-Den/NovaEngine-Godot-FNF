@@ -1,6 +1,6 @@
 extends MusicBeatScene
 
-@export var week_list:Array[StoryWeek] = []
+@export var week_list:StoryWeekList = StoryWeekList.new()
 
 var cur_week:int = 0
 # var lerp_score:int = 0
@@ -18,7 +18,7 @@ var right_x:float = 1191
 @onready var char_group:Node2D = $Characters
 
 @onready var bf_pos:Node2D = $CharacterPositions/Player
-@onready var gf_pos:Node2D = $CharacterPositions/Specator
+@onready var gf_pos:Node2D = $CharacterPositions/Spectator
 @onready var dad_pos:Node2D = $CharacterPositions/Opponent
 
 @onready var tracklist:Label = $TrackList
@@ -34,10 +34,10 @@ var lerp_score:int = 0
 func _ready():
 	Audio.play_music("freakyMenu")
 	
-	for i in week_list.size():
+	for i in week_list.weeks.size():
 		var week_sprite:WeekSprite = WeekSprite.new()
 		week_sprite.position.x = 640
-		week_sprite.texture = week_list[i].week_texture
+		week_sprite.texture = week_list.weeks[i].week_texture
 		week_sprite.position.y = 480 - week_sprite.texture.get_height()
 		week_group.add_child(week_sprite)
 	
@@ -93,10 +93,10 @@ func _process(delta):
 func change_week(inc):
 	Audio.play_sound("scrollMenu")
 
-	cur_week = wrap(cur_week + inc, 0, week_list.size())
+	cur_week = wrap(cur_week + inc, 0, week_list.weeks.size())
 	
 	var char_pos = [dad_pos, bf_pos, gf_pos]
-	var chars_to_add = [week_list[cur_week].opponent, week_list[cur_week].player, week_list[cur_week].specator]
+	var chars_to_add = [week_list.weeks[cur_week].opponent, week_list.weeks[cur_week].player, week_list.weeks[cur_week].spectator]
 
 	for i in week_group.get_child_count():
 		var week_sprite:WeekSprite = week_group.get_child(i)
@@ -104,13 +104,13 @@ func change_week(inc):
 		week_sprite.modulate.a = 1.0 if cur_week == i else 0.6
 		
 	tracklist.text = "TRACKS\n\n"
-	for i in week_list[cur_week].songs.size():
-		tracklist.text += week_list[cur_week].songs[i].display_name.to_upper() + "\n"
+	for i in week_list.weeks[cur_week].songs.size():
+		tracklist.text += week_list.weeks[cur_week].songs[i].display_name.to_upper() + "\n"
 		
-	week_name.text = week_list[cur_week].name.to_upper()
+	week_name.text = week_list.weeks[cur_week].name.to_upper()
 	
 	if !SettingsAPI.get_setting("story always yellow"):
-		get_tree().create_tween().tween_property($ColoredBG, "color", week_list[cur_week].bg_color, 0.5)
+		get_tree().create_tween().tween_property($ColoredBG, "color", week_list.weeks[cur_week].bg_color, 0.5)
 	
 	for i in 3:
 		var old_char = char_sprites[i]
@@ -125,9 +125,9 @@ func change_week(inc):
 	change_diff(0)
 	
 func change_diff(inc:int):
-	cur_diff = wrap(cur_diff + inc, 0, week_list[cur_week].difficulties.size())
+	cur_diff = wrap(cur_diff + inc, 0, week_list.weeks[cur_week].difficulties.size())
 	score = get_week_score()
-	var diff_tex = load("res://assets/images/menus/storymenu/difficulties/" + week_list[cur_week].difficulties[cur_diff] + ".png")
+	var diff_tex = load("res://assets/images/menus/storymenu/difficulties/" + week_list.weeks[cur_week].difficulties[cur_diff] + ".png")
 	diff_sprite.texture = diff_tex
 	diff_sprite.position.y = left_arrow.position.y + left_arrow.sprite_frames.get_frame_texture(left_arrow.animation.replace(" push", ""), 0).get_height() / 2 - diff_tex.get_height() / 2
 	diff_sprite.offset.y = -20
@@ -136,9 +136,10 @@ func change_diff(inc:int):
 	
 func get_week_score():
 	var _score = 0
-	for song in week_list[cur_week].songs:
-		_score += HighScore.get_score(song.song_path,week_list[cur_week].difficulties[cur_diff])
+	for song in week_list.weeks[cur_week].songs:
+		_score += HighScore.get_score(song.song_path,week_list.weeks[cur_week].difficulties[cur_diff])
 	return _score
+	
 func make_char(name:String, pos_node:Node2D, scale:float, index:int):
 	var char_path:String = "res://scenes/story_chars/" + name + ".tscn"
 	var char:Node2D
@@ -182,10 +183,11 @@ func select_week():
 	
 	Global.is_story_mode = true
 	Global.queued_songs = []
-	Global.current_difficulty = week_list[cur_week].difficulties[cur_diff]
-	Global.SONG = Chart.load_chart(week_list[cur_week].songs[0].song_path, Global.current_difficulty)
-	for i in week_list[cur_week].songs.size(): # The worst way to do it but... im dumb.
+	Global.current_difficulty = week_list.weeks[cur_week].difficulties[cur_diff]
+	Global.SONG = Chart.load_chart(week_list.weeks[cur_week].songs[0].song_path, Global.current_difficulty)
+	for i in week_list.weeks[cur_week].songs.size(): # The worst way to do it but... im dumb.
 		if i > 0:
-			Global.queued_songs.append(week_list[cur_week].songs[i].song_path)
+			Global.queued_songs.append(week_list.weeks[cur_week].songs[i].song_path)
+			
 	await get_tree().create_timer(1).timeout
 	Global.switch_scene("res://scenes/gameplay/Gameplay.tscn")

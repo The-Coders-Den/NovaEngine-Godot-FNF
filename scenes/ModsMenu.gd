@@ -55,7 +55,7 @@ func change_selection(change:int = 0):
 	for child in contributor_list.get_children():
 		child.queue_free()
 		
-	for contributor in mod_configs[cur_selected].contributors:
+	for contributor in mod_configs[cur_selected].contributors.contributors:
 		var template:Panel = contributor_template.duplicate()
 		template.get_node("Icon").texture = contributor.icon
 		template.get_node("Label").text = contributor.name

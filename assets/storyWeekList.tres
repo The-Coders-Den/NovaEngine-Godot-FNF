@@ -1,0 +1,215 @@
+[gd_resource type="Resource" script_class="StoryWeekList" load_steps=42 format=3 uid="uid://b2liyp0jv6vgq"]
+
+[ext_resource type="Script" path="res://resources/StoryWeekList.gd" id="1_gavso"]
+[ext_resource type="Script" path="res://resources/StoryWeek.gd" id="2_lywg0"]
+[ext_resource type="Texture2D" uid="uid://cwo480ns8m6ri" path="res://assets/images/menus/storymenu/weeks/tutorial.png" id="3_by41y"]
+[ext_resource type="Script" path="res://resources/StorySong.gd" id="3_sto51"]
+[ext_resource type="Texture2D" uid="uid://c70gno0qbhc0i" path="res://assets/images/menus/storymenu/weeks/week1.png" id="5_1lkfg"]
+[ext_resource type="Texture2D" uid="uid://bcr7dl5jw2f4q" path="res://assets/images/menus/storymenu/weeks/week2.png" id="6_nmk3e"]
+[ext_resource type="Texture2D" uid="uid://72mm1w7xognk" path="res://assets/images/menus/storymenu/weeks/week3.png" id="7_e8si1"]
+[ext_resource type="Texture2D" uid="uid://do7bst88fn6bb" path="res://assets/images/menus/storymenu/weeks/week4.png" id="8_gsbco"]
+[ext_resource type="Texture2D" uid="uid://dm7epwpmfbvvg" path="res://assets/images/menus/storymenu/weeks/week5.png" id="9_8nf7s"]
+[ext_resource type="Texture2D" uid="uid://dsobdgpuqlj5q" path="res://assets/images/menus/storymenu/weeks/week6.png" id="10_7pi76"]
+[ext_resource type="Texture2D" uid="uid://dbocq6b1dla1u" path="res://assets/images/menus/storymenu/weeks/week7.png" id="11_5fatn"]
+
+[sub_resource type="Resource" id="Resource_girpc"]
+script = ExtResource("3_sto51")
+display_name = "Tutorial"
+song_path = "tutorial"
+
+[sub_resource type="Resource" id="Resource_todgs"]
+script = ExtResource("2_lywg0")
+name = "HOW TO FUNK"
+week_texture = ExtResource("3_by41y")
+bg_color = Color(0.701961, 0.133333, 0.372549, 1)
+player = "bf"
+opponent = ""
+spectator = "gf"
+songs = Array[ExtResource("3_sto51")]([SubResource("Resource_girpc")])
+difficulties = ["easy", "normal", "hard"]
+
+[sub_resource type="Resource" id="Resource_dwja6"]
+script = ExtResource("3_sto51")
+display_name = "Bopeebo"
+song_path = "bopeebo"
+
+[sub_resource type="Resource" id="Resource_8n2fg"]
+script = ExtResource("3_sto51")
+display_name = "Fresh"
+song_path = "fresh"
+
+[sub_resource type="Resource" id="Resource_u1wb6"]
+script = ExtResource("3_sto51")
+display_name = "Dad Battle"
+song_path = "dadbattle"
+
+[sub_resource type="Resource" id="Resource_inpee"]
+script = ExtResource("2_lywg0")
+name = "DADDY DEAREST"
+week_texture = ExtResource("5_1lkfg")
+bg_color = Color(0.52549, 0.321569, 0.72549, 1)
+player = "bf"
+opponent = "dad"
+spectator = "gf"
+songs = Array[ExtResource("3_sto51")]([SubResource("Resource_dwja6"), SubResource("Resource_8n2fg"), SubResource("Resource_u1wb6")])
+difficulties = ["easy", "normal", "hard"]
+
+[sub_resource type="Resource" id="Resource_8hkus"]
+script = ExtResource("3_sto51")
+display_name = "Spookeez"
+song_path = "spookeez"
+
+[sub_resource type="Resource" id="Resource_8ky6l"]
+script = ExtResource("3_sto51")
+display_name = "South"
+song_path = "south"
+
+[sub_resource type="Resource" id="Resource_1hf2x"]
+script = ExtResource("3_sto51")
+display_name = "Monster"
+song_path = "monster"
+
+[sub_resource type="Resource" id="Resource_gjkiv"]
+script = ExtResource("2_lywg0")
+name = "SPOOKY MONTH"
+week_texture = ExtResource("6_nmk3e")
+bg_color = Color(0.0941176, 0.14902, 0.215686, 1)
+player = "bf"
+opponent = "spooky"
+spectator = "gf"
+songs = Array[ExtResource("3_sto51")]([SubResource("Resource_8hkus"), SubResource("Resource_8ky6l"), SubResource("Resource_1hf2x")])
+difficulties = ["easy", "normal", "hard"]
+
+[sub_resource type="Resource" id="Resource_qevpt"]
+script = ExtResource("3_sto51")
+display_name = "Pico"
+song_path = "pico"
+
+[sub_resource type="Resource" id="Resource_qonrq"]
+script = ExtResource("3_sto51")
+display_name = "Philly Nice"
+song_path = "philly nice"
+
+[sub_resource type="Resource" id="Resource_jqtyc"]
+script = ExtResource("3_sto51")
+display_name = "Blammed"
+song_path = "blammed"
+
+[sub_resource type="Resource" id="Resource_ig86q"]
+script = ExtResource("2_lywg0")
+name = "PICO"
+week_texture = ExtResource("7_e8si1")
+bg_color = Color(0.313726, 0.756863, 0.372549, 1)
+player = "bf"
+opponent = "pico"
+spectator = "gf"
+songs = Array[ExtResource("3_sto51")]([SubResource("Resource_qevpt"), SubResource("Resource_qonrq"), SubResource("Resource_jqtyc")])
+difficulties = ["easy", "normal", "hard"]
+
+[sub_resource type="Resource" id="Resource_l3std"]
+script = ExtResource("3_sto51")
+display_name = "Satin Panties"
+song_path = "satin panties"
+
+[sub_resource type="Resource" id="Resource_x6kum"]
+script = ExtResource("3_sto51")
+display_name = "High"
+song_path = "high"
+
+[sub_resource type="Resource" id="Resource_4n5ql"]
+script = ExtResource("3_sto51")
+display_name = "M.I.L.F"
+song_path = "m.i.l.f"
+
+[sub_resource type="Resource" id="Resource_ips1q"]
+script = ExtResource("2_lywg0")
+name = "MOMMY MUST MURDER"
+week_texture = ExtResource("8_gsbco")
+bg_color = Color(0.976471, 0.317647, 0.921569, 1)
+player = "bf"
+opponent = "mom"
+spectator = "gf"
+songs = Array[ExtResource("3_sto51")]([SubResource("Resource_l3std"), SubResource("Resource_x6kum"), SubResource("Resource_4n5ql")])
+difficulties = ["easy", "normal", "hard"]
+
+[sub_resource type="Resource" id="Resource_jp4at"]
+script = ExtResource("3_sto51")
+display_name = "Cocoa"
+song_path = "cocoa"
+
+[sub_resource type="Resource" id="Resource_gnoqj"]
+script = ExtResource("3_sto51")
+display_name = "Eggnog"
+song_path = "eggnog"
+
+[sub_resource type="Resource" id="Resource_ymlg5"]
+script = ExtResource("3_sto51")
+display_name = "Winter Horrorland"
+song_path = "winter horrorland"
+
+[sub_resource type="Resource" id="Resource_w2lo6"]
+script = ExtResource("2_lywg0")
+name = "RED SNOW"
+week_texture = ExtResource("9_8nf7s")
+bg_color = Color(0.501961, 0.780392, 0.94902, 1)
+player = "bf"
+opponent = "parents-christmas"
+spectator = "gf"
+songs = Array[ExtResource("3_sto51")]([SubResource("Resource_jp4at"), SubResource("Resource_gnoqj"), SubResource("Resource_ymlg5")])
+difficulties = ["easy", "normal", "hard"]
+
+[sub_resource type="Resource" id="Resource_lmn4y"]
+script = ExtResource("3_sto51")
+display_name = "Senpai"
+song_path = "senpai"
+
+[sub_resource type="Resource" id="Resource_5pbdm"]
+script = ExtResource("3_sto51")
+display_name = "Roses"
+song_path = "roses"
+
+[sub_resource type="Resource" id="Resource_ltkw4"]
+script = ExtResource("3_sto51")
+display_name = "Thorns"
+song_path = "thorns"
+
+[sub_resource type="Resource" id="Resource_82jx5"]
+script = ExtResource("2_lywg0")
+name = "hating simulator ft. moawling"
+week_texture = ExtResource("10_7pi76")
+bg_color = Color(0.976471, 0.580392, 0.317647, 1)
+player = "bf"
+opponent = "senpai"
+spectator = "gf"
+songs = Array[ExtResource("3_sto51")]([SubResource("Resource_lmn4y"), SubResource("Resource_5pbdm"), SubResource("Resource_ltkw4")])
+difficulties = ["easy", "normal", "hard"]
+
+[sub_resource type="Resource" id="Resource_rvyyn"]
+script = ExtResource("3_sto51")
+display_name = "Ugh"
+song_path = "ugh"
+
+[sub_resource type="Resource" id="Resource_ws863"]
+script = ExtResource("3_sto51")
+display_name = "Guns"
+song_path = "guns"
+
+[sub_resource type="Resource" id="Resource_fv7fb"]
+script = ExtResource("3_sto51")
+display_name = "Stress"
+song_path = "stress"
+
+[sub_resource type="Resource" id="Resource_13d4w"]
+script = ExtResource("2_lywg0")
+name = "TANKMAN"
+week_texture = ExtResource("11_5fatn")
+bg_color = Color(0.976471, 0.811765, 0.317647, 1)
+player = "bf"
+opponent = "tankman"
+spectator = "gf"
+songs = Array[ExtResource("3_sto51")]([SubResource("Resource_rvyyn"), SubResource("Resource_ws863"), SubResource("Resource_fv7fb")])
+difficulties = ["easy", "normal", "hard"]
+
+[resource]
+script = ExtResource("1_gavso")
+weeks = Array[ExtResource("2_lywg0")]([SubResource("Resource_todgs"), SubResource("Resource_inpee"), SubResource("Resource_gjkiv"), SubResource("Resource_ig86q"), SubResource("Resource_ips1q"), SubResource("Resource_w2lo6"), SubResource("Resource_82jx5"), SubResource("Resource_13d4w")])
