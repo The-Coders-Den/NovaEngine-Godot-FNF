@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://duhqsh5l5bbtm"]
+[gd_scene load_steps=12 format=3 uid="uid://duhqsh5l5bbtm"]
 
 [ext_resource type="Script" path="res://scenes/TitleScreen.gd" id="1_eg0nr"]
+[ext_resource type="Material" uid="uid://dlwbyy60pp0e2" path="res://assets/shaders/TitleScreenShaderMaterial.tres" id="2_f6nud"]
 [ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="2_rhavx"]
 [ext_resource type="SpriteFrames" uid="uid://xmmicsrmtycf" path="res://assets/images/titlescreen/gfDanceTitle.res" id="2_u0gnt"]
 [ext_resource type="SpriteFrames" path="res://assets/images/titlescreen/logoBumpin.res" id="4_dmwg3"]
@@ -127,6 +128,7 @@ script = ExtResource("1_eg0nr")
 visible = false
 
 [node name="gf" type="AnimatedSprite2D" parent="TitleGroup"]
+material = ExtResource("2_f6nud")
 position = Vector2(512, 50.4)
 sprite_frames = ExtResource("2_u0gnt")
 animation = &"gfDance"
@@ -141,6 +143,7 @@ libraries = {
 }
 
 [node name="logo" type="AnimatedSprite2D" parent="TitleGroup"]
+material = ExtResource("2_f6nud")
 position = Vector2(-150, -100)
 sprite_frames = ExtResource("4_dmwg3")
 animation = &"logo bumpin"
@@ -148,6 +151,7 @@ centered = false
 script = ExtResource("2_rhavx")
 
 [node name="titleEnter" type="AnimatedSprite2D" parent="TitleGroup"]
+material = ExtResource("2_f6nud")
 position = Vector2(100, 576)
 sprite_frames = ExtResource("5_0ol1a")
 animation = &"Press Enter to Begin"

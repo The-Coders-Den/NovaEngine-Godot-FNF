@@ -280,7 +280,7 @@ func start_countdown():
 	stage.callv("on_start_countdown", [])
 	script_group.call_func("on_start_countdown", [])
 
-var countdown_tween:Tween = create_tween()
+var countdown_tween:Tween
 
 func countdown_tick():
 	character_bop()
@@ -288,7 +288,8 @@ func countdown_tick():
 	if countdown_tween != null:
 		countdown_tween.stop()
 		
-	countdown_tween = create_tween()
+	if countdown_ticks < 3:
+		countdown_tween = create_tween()
 	
 	match countdown_ticks:
 		3:
@@ -366,10 +367,8 @@ func beat_hit(beat:int):
 		position_hud()
 		
 	character_bop()
-	if cam_switching:
-		update_camera(Conductor.cur_section)
 	
-	script_group.call_func("on_beat_hit", [beat])
+	script_group.call_func("on_beat_hit_post", [beat])
 	
 func step_hit(step:int):
 	script_group.call_func("on_step_hit", [step])
@@ -378,7 +377,15 @@ func step_hit(step:int):
 		resync_vocals()
 		
 	script_group.call_func("on_step_hit_post", [step])
-	
+
+func section_hit(section:int):
+	script_group.call_func("on_section_hit", [section])
+
+	if cam_switching:
+		update_camera(section)
+
+	script_group.call_func("on_section_hit_post", [section])
+
 func character_bop():
 	if opponent != null and opponent.dance_on_beat and not opponent.last_anim.begins_with("sing"):
 		opponent.dance()
