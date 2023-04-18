@@ -367,8 +367,6 @@ func beat_hit(beat:int):
 		position_hud()
 		
 	character_bop()
-	if cam_switching:
-		update_camera(Conductor.cur_section)
 	
 	script_group.call_func("on_beat_hit_post", [beat])
 	
@@ -384,7 +382,7 @@ func section_hit(section:int):
 	script_group.call_func("on_section_hit", [section])
 
 	if cam_switching:
-		update_camera(Conductor.cur_section)
+		update_camera(section)
 
 	script_group.call_func("on_section_hit_post", [section])
 
