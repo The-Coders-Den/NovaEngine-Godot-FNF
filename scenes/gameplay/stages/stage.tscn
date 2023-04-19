@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://hoqlhe5151kn"]
+[gd_scene load_steps=5 format=3 uid="uid://cbld2pm6f27au"]
 
 [ext_resource type="Script" path="res://scripts/Stage.gd" id="1_kglcc"]
 [ext_resource type="Texture2D" uid="uid://bf0pjitkjn6tp" path="res://assets/images/gameplay/stages/stage/stageback.png" id="2_y78mw"]
