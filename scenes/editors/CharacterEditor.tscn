@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://c46rwg2l7p4we"]
+
+[ext_resource type="Script" path="res://scenes/editors/CharacterEditor.gd" id="1_u2pfu"]
+[ext_resource type="PackedScene" uid="uid://cbld2pm6f27au" path="res://scenes/gameplay/stages/stage.tscn" id="2_72ttl"]
+[ext_resource type="PackedScene" uid="uid://cyj73wfovhpu" path="res://scenes/gameplay/characters/gf.tscn" id="3_b4g0o"]
+[ext_resource type="PackedScene" uid="uid://bv2bmp1oon3uw" path="res://scenes/gameplay/characters/dad.tscn" id="4_6qktl"]
+[ext_resource type="PackedScene" uid="uid://cygc1u17plsxp" path="res://scenes/gameplay/characters/bf.tscn" id="5_t3be4"]
+
+[node name="CharacterEditor" type="Node2D"]
+script = ExtResource("1_u2pfu")
+
+[node name="Stage" parent="." instance=ExtResource("2_72ttl")]
+script = null
+
+[node name="Character Ghosts" type="Node2D" parent="."]
+modulate = Color(0, 0, 0, 0.6)
+
+[node name="gf" parent="Character Ghosts" instance=ExtResource("3_b4g0o")]
+position = Vector2(310, 76)
+
+[node name="dad" parent="Character Ghosts" instance=ExtResource("4_6qktl")]
+position = Vector2(49, 805)
+
+[node name="bf" parent="Character Ghosts" instance=ExtResource("5_t3be4")]
+position = Vector2(774, 54)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+zoom = Vector2(0.9, 0.9)
