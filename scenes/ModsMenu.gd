@@ -12,6 +12,8 @@ var mod_configs:Array[ModConfig] = []
 func _ready():
 	get_tree().paused = true
 	
+	ModManager._ready()
+	
 	mod_list = ModManager.list_all_mods()
 	mod_list.insert(0, ModManager.FALLBACK_MOD)
 	
@@ -20,7 +22,8 @@ func _ready():
 		
 		# switch to the mod to allow us to
 		# load the modded mod config scene
-		ModManager.switch_mod(name.get_basename().replace(ModManager.MOD_FOLDER, ""))
+		var success:bool = ModManager.switch_mod(name.get_basename().replace(ModManager.MOD_FOLDER, ""))
+		if not success: continue
 		
 		var config:ModConfig = load("res://mod_data/config.tscn").instantiate()
 		

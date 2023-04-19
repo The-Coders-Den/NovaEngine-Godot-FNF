@@ -28,18 +28,24 @@ func list_all_mods() -> PackedStringArray:
 		
 	return mod_list
 
-func switch_mod(mod_name:String) -> void:
+func switch_mod(mod_name:String) -> bool:
 	ProjectSettings.load_resource_pack("Nova Engine.pck", true)
 	
 	# already loads it 2 lines above this
 	if mod_name == FALLBACK_MOD:
-		return
+		return true
 	
 	# you're wrong, sulfuric modding!
 	if not mod_name in path_lookup:
-		push_error("Invalid mod: "+mod_name+" tried to load.")
-		return
+		push_error("Non-existent mod: "+mod_name+" tried to load.")
+		return false
 	
 	# godot is great
 	# the entire mod loading is one function
-	ProjectSettings.load_resource_pack(path_lookup[mod_name], true)
+	var success:bool = ProjectSettings.load_resource_pack(path_lookup[mod_name], true)
+	if success:
+		print("Loaded mod: "+mod_name)
+		return true
+		
+	print("Failed to load mod: "+mod_name)
+	return false
