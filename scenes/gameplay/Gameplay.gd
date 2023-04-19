@@ -383,6 +383,9 @@ func section_hit(section:int):
 
 	if cam_switching:
 		update_camera(section)
+		
+	if SONG.sections[section].change_bpm:
+		Conductor.change_bpm(SONG.sections[section].bpm)
 
 	script_group.call_func("on_section_hit_post", [section])
 
