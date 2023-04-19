@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 SettingsAPI="*res://autoload/scripts/SettingsAPI.gd"
+ModManager="*res://autoload/scripts/ModManager.gd"
 Global="*res://autoload/scripts/Global.gd"
 Conductor="*res://autoload/scripts/Conductor.gd"
 Ranking="*res://autoload/scripts/Ranking.gd"
@@ -25,7 +26,6 @@ Audio="*res://autoload/scenes/Audio.tscn"
 Transition="*res://autoload/scenes/Transition.tscn"
 VolumeSlider="*res://autoload/scenes/VolumeSlider.tscn"
 FPS="*res://autoload/scenes/FPS.tscn"
-ModManager="*res://autoload/scripts/ModManager.gd"
 HighScore="*res://autoload/scripts/HighScore.gd"
 
 [display]
