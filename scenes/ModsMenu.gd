@@ -10,11 +10,14 @@ var mod_list:PackedStringArray = []
 var mod_configs:Array[ModConfig] = []
 
 func _ready():
+	ModManager._ready()
 	get_window().files_dropped.connect(_on_files_dropped)
 	get_tree().paused = true
 	
 	mod_list = ModManager.list_all_mods()
 	mod_list.insert(0, ModManager.FALLBACK_MOD)
+	
+	var titles:Array = []
 	
 	for i in mod_list.size():
 		var name:String = mod_list[i]
@@ -36,9 +39,8 @@ func _ready():
 		mod_title.target_y = i
 		mod_title.is_template = false
 		menu_items.add_child(mod_title)
-		
 		mod_configs.append(config)
-		
+	
 	# switch back to current mod to avoid conflicts or something
 	ModManager.switch_mod(SettingsAPI.get_setting("current mod"))
 	
