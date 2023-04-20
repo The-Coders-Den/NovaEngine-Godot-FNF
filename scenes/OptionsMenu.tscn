@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://2ud3viu0v6pw"]
+[gd_scene load_steps=25 format=3 uid="uid://2ud3viu0v6pw"]
 
 [ext_resource type="Script" path="res://scenes/OptionsMenu.gd" id="1_wsch7"]
 [ext_resource type="Texture2D" uid="uid://y8c4a1bk8wkl" path="res://assets/images/menus/menuBGDesat.png" id="2_di4mo"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scenes/options/Checkbox.gd" id="4_gjk4b"]
 [ext_resource type="Script" path="res://scenes/options/Display Slider.gd" id="6_rfpqd"]
 [ext_resource type="Script" path="res://scenes/options/Dropdown.gd" id="6_wrrnp"]
+[ext_resource type="Script" path="res://scenes/Fps_cap.gd" id="7_1ffuv"]
 [ext_resource type="Theme" uid="uid://blt3c0a5po0yj" path="res://assets/styles/nova_purple_button.tres" id="7_xa45n"]
 [ext_resource type="PackedScene" uid="uid://w5olx2s2jovt" path="res://scenes/gameplay/strumlines/4K.tscn" id="8_8v6jg"]
 [ext_resource type="Script" path="res://scenes/options/BindButton.gd" id="8_715hi"]
@@ -48,6 +49,7 @@ theme = ExtResource("3_cmtlj")
 theme_override_constants/side_margin = 0
 
 [node name="Gameplay" type="TabBar" parent="TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Downscroll" type="CheckBox" parent="TabContainer/Gameplay"]
@@ -301,7 +303,6 @@ theme_override_font_sizes/font_size = 16
 text = "Judgement Camera"
 
 [node name="Miscellaneous" type="TabBar" parent="TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="Auto Pause" type="CheckBox" parent="TabContainer/Miscellaneous"]
@@ -341,12 +342,42 @@ option = "vsync"
 layout_mode = 0
 offset_left = 8.0
 offset_top = 80.0
-offset_right = 146.0
+offset_right = 238.0
 offset_bottom = 111.0
 tooltip_text = "This might cause crashes when enabled!"
 text = "Multi Threaded Rendering"
 script = ExtResource("4_gjk4b")
 option = "multi threaded rendering"
+
+[node name="OptionButton" type="OptionButton" parent="TabContainer/Miscellaneous"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -187.0
+offset_top = -176.5
+offset_right = -65.0
+offset_bottom = -149.5
+grow_horizontal = 2
+grow_vertical = 2
+item_count = 7
+popup/item_0/text = "60"
+popup/item_0/id = 0
+popup/item_1/text = "120"
+popup/item_1/id = 1
+popup/item_2/text = "240"
+popup/item_2/id = 2
+popup/item_3/text = "360"
+popup/item_3/id = 3
+popup/item_4/text = "500"
+popup/item_4/id = 4
+popup/item_5/text = "1000"
+popup/item_5/id = 5
+popup/item_6/text = "UNLIMITED"
+popup/item_6/id = 6
+script = ExtResource("7_1ffuv")
 
 [node name="Tools" type="TabBar" parent="TabContainer"]
 visible = false
@@ -980,6 +1011,7 @@ in_editor = true
 [connection signal="pressed" from="TabContainer/Miscellaneous/Volume Beep Pitching" to="TabContainer/Miscellaneous/Volume Beep Pitching" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Miscellaneous/VSync" to="TabContainer/Miscellaneous/VSync" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Miscellaneous/Multi Threaded Rendering" to="TabContainer/Miscellaneous/Multi Threaded Rendering" method="_on_pressed"]
+[connection signal="item_selected" from="TabContainer/Miscellaneous/OptionButton" to="TabContainer/Miscellaneous/OptionButton" method="_on_item_selected"]
 [connection signal="pressed" from="TabContainer/Tools/XML Converter" to="." method="_on_tool_button_pressed" binds= ["XML Converter"]]
 [connection signal="pressed" from="TabContainer/Tools/TXT Converter" to="." method="_on_tool_button_pressed" binds= ["TXT Converter"]]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind" method="_on_pressed"]

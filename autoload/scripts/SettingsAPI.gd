@@ -26,6 +26,7 @@ var _settings:Dictionary = {
 	"volume beep pitching": false,
 	"vsync": false,
 	"multi threaded rendering": false,
+	"FPS": 240,
 	
 	# controls (gameplay)
 	"note_left": ["D", "LEFT"],
