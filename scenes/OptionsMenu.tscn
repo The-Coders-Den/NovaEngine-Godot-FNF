@@ -49,7 +49,6 @@ theme = ExtResource("3_cmtlj")
 theme_override_constants/side_margin = 0
 
 [node name="Gameplay" type="TabBar" parent="TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="Downscroll" type="CheckBox" parent="TabContainer/Gameplay"]
@@ -303,6 +302,7 @@ theme_override_font_sizes/font_size = 16
 text = "Judgement Camera"
 
 [node name="Miscellaneous" type="TabBar" parent="TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Auto Pause" type="CheckBox" parent="TabContainer/Miscellaneous"]
