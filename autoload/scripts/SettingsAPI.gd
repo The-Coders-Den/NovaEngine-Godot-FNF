@@ -26,7 +26,7 @@ var _settings:Dictionary = {
 	"volume beep pitching": false,
 	"vsync": false,
 	"multi threaded rendering": false,
-	"FPS": 240,
+	"fps": 240,
 	
 	# controls (gameplay)
 	"note_left": ["D", "LEFT"],
@@ -109,7 +109,7 @@ func _ready():
 	
 	setup_binds()
 	update_settings()
-		
+	
 	print("Initialized settings!")
 	
 func update_settings():
@@ -119,6 +119,8 @@ func update_settings():
 				Global.set_vsync(true)
 			"multi threaded rendering":
 				ProjectSettings.set_setting("rendering/driver/threads/thread_model", "Multi-Threaded" if _settings[key] else "Single-Safe")
+			"fps":
+				Engine.max_fps = _settings[key]
 
 func get_setting(name:String):
 	if name in _settings:
@@ -130,5 +132,5 @@ func set_setting(name:String, value:Variant):
 	_settings[name] = value
 	
 func flush():
-	var f = FileAccess.open(_json_path, FileAccess.WRITE)
-	f.store_string(JSON.stringify(_settings))
+	var file := FileAccess.open(_json_path, FileAccess.WRITE)
+	file.store_string(JSON.stringify(_settings))

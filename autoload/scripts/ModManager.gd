@@ -29,6 +29,9 @@ func list_all_mods() -> PackedStringArray:
 	return mod_list
 
 func switch_mod(mod_name:String) -> bool:
+	if OS.is_debug_build():
+		return true
+	
 	ProjectSettings.load_resource_pack("Nova Engine.pck", true)
 	
 	# already loads it 2 lines above this
