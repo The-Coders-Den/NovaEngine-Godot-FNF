@@ -9,5 +9,4 @@ func _ready():
 func _on_pressed():
 	SettingsAPI.set_setting(option, not SettingsAPI.get_setting(option))
 	SettingsAPI.flush()
-	
 	SettingsAPI.update_settings()
