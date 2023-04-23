@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clsbenvuskace"
-path="res://.godot/imported/go.png-0dd137fcb5ab99fa1a9235e7bccd61ba.ctex"
+uid="uid://d3hibxixedipg"
+path="res://.godot/imported/set.png-5bbb27e6c84592c0ce990e8eafe2fc31.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/gameplay/countdown/pixel/go.png"
-dest_files=["res://.godot/imported/go.png-0dd137fcb5ab99fa1a9235e7bccd61ba.ctex"]
+source_file="res://assets/images/gameplay/countdown/pixel/set.png"
+dest_files=["res://.godot/imported/set.png-5bbb27e6c84592c0ce990e8eafe2fc31.ctex"]
 
 [params]
 

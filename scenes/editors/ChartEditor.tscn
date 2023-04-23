@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c07nfyerg8x8l"]
+[gd_scene load_steps=9 format=3 uid="uid://dcvfinyt2yxeq"]
 
 [ext_resource type="Theme" uid="uid://br6hapg0jupnv" path="res://assets/styles/nova_purple_panel.tres" id="1_coqmp"]
 [ext_resource type="Script" path="res://scenes/editors/ChartEditor.gd" id="1_f5f6h"]
@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://b18ivib0wxmqp" path="res://assets/songs/dad battle/Voices.ogg" id="4_i51g1"]
 [ext_resource type="AudioStream" uid="uid://bydbrgy3513au" path="res://assets/sounds/hitsound.ogg" id="5_m47hh"]
 [ext_resource type="PackedScene" uid="uid://w5olx2s2jovt" path="res://scenes/gameplay/strumlines/4K.tscn" id="7_h418h"]
-[ext_resource type="PackedScene" uid="uid://c462cllic036r" path="res://scenes/editors/3do.tscn" id="8_3rxci"]
+[ext_resource type="PackedScene" path="res://scenes/editors/3do.tscn" id="8_3rxci"]
 
 [node name="ChartEditor" type="Control"]
 layout_mode = 3
