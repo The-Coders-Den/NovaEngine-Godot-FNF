@@ -138,6 +138,11 @@ func _ready() -> void:
 			n.type = note.type
 			n.alt_anim = note.alt_anim
 			n.player_section = section.is_player
+			
+			var note_type_path:String = "res://scenes/gameplay/notes/"+note.type+".tscn"
+			if not note.type in template_notes and ResourceLoader.exists(note_type_path):
+				template_notes[note_type_path] = load(note_type_path).instantiate()
+			
 			note_data_array.append(n)
 			
 	note_data_array.sort_custom(func(a, b): return a.time < b.time)
