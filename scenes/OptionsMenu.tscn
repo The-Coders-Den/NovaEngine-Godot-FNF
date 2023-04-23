@@ -351,6 +351,7 @@ option = "multi threaded rendering"
 
 [node name="HSeparator" type="HSeparator" parent="TabContainer/Miscellaneous"]
 modulate = Color(0.486275, 0.368627, 0.560784, 1)
+layout_mode = 0
 offset_left = 14.0
 offset_top = 114.0
 offset_right = 391.0
@@ -388,6 +389,7 @@ popup/item_6/id = 6
 script = ExtResource("7_q3c4n")
 
 [node name="Title" type="Label" parent="TabContainer/Miscellaneous/FPS Cap"]
+layout_mode = 0
 offset_top = -26.0
 offset_right = 135.0
 mouse_filter = 1

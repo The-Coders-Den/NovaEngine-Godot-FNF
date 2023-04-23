@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://c462cllic036r"]
+
+[ext_resource type="Script" path="res://scenes/editors/3do.gd" id="1_pqrdr"]
+[ext_resource type="Texture2D" uid="uid://m5strgod1naq" path="res://icon.svg" id="2_ws5aa"]
+
+[sub_resource type="Environment" id="Environment_el0js"]
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g8spc"]
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("2_ws5aa")
+
+[sub_resource type="BoxMesh" id="BoxMesh_a3k1n"]
+material = SubResource("StandardMaterial3D_g8spc")
+size = Vector3(10, 10, 10)
+
+[node name="3do" type="Node3D"]
+script = ExtResource("1_pqrdr")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.999999, 0, -0.00132645, 0, 1, 0, 0.00132645, 0, 0.999999, -0.0197277, 0, 14.8725)
+environment = SubResource("Environment_el0js")
+fov = 90.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.833867, 0, 0.551966, -0.454403, 0.567686, 0.686477, -0.313343, -0.823245, 0.473374, 0, 0, 0)
+mesh = SubResource("BoxMesh_a3k1n")
