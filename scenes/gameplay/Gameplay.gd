@@ -145,14 +145,7 @@ func _ready() -> void:
 			
 			note_data_array.append(n)
 			
-	note_data_array.sort_custom(func(a, b):
-		if not a.should_hit and b.should_hit:
-			return 1
-		elif a.should_hit and not b.should_hit:
-			return -1
-			
-		return a.time < b.time
-	)
+	note_data_array.sort_custom(func(a, b): return a.time < b.time)
 	
 	health = max_health * 0.5
 	
