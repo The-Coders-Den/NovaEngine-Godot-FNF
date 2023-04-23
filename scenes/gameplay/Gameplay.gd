@@ -141,7 +141,6 @@ func _ready() -> void:
 			
 			var note_type_path:String = "res://scenes/gameplay/notes/"+note.type+".tscn"
 			if not note.type in template_notes and ResourceLoader.exists(note_type_path):
-				
 				template_notes[note.type] = load(note_type_path).instantiate()
 			
 			note_data_array.append(n)
@@ -601,7 +600,12 @@ func good_note_hit(note:Note):
 		receptor.splash.visible = true
 		script_group.call_func("on_spawn_note_splash", [receptor.splash])
 	
-	pop_up_score(judgement)	
+	if note.should_hit:
+		pop_up_score(judgement)	
+	else:
+		combo = 0
+		accuracy_pressed_notes += 1
+		
 	update_score_text()
 	
 	note.was_good_hit = true
