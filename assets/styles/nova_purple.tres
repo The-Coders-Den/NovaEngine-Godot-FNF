@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=27 format=3 uid="uid://c7bhikvxte264"]
+[gd_resource type="Theme" load_steps=28 format=3 uid="uid://c7bhikvxte264"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_maoy0"]
 
@@ -7,7 +7,7 @@ color = Color(0.223529, 0.176471, 0.254902, 1)
 thickness = 5
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_tho7u"]
-color = Color(0.223529, 0.176471, 0.254902, 1)
+color = Color(0.670588, 0.588235, 0.721569, 1)
 thickness = 5
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_rbc82"]
@@ -111,9 +111,13 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mss52"]
-bg_color = Color(0.164706, 0.12549, 0.192157, 1)
+bg_color = Color(0.188235, 0.145098, 0.215686, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+expand_margin_left = 6.0
+expand_margin_right = 6.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nbcpl"]
 content_margin_left = 10.0
@@ -126,12 +130,22 @@ bg_color = Color(0.133333, 0.0980392, 0.156863, 1)
 content_margin_left = 10.0
 content_margin_right = 10.0
 bg_color = Color(0.223529, 0.176471, 0.254902, 1)
-border_width_top = 2
+corner_radius_top_left = 5
+corner_radius_top_right = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_py02u"]
 content_margin_left = 10.0
 content_margin_right = 10.0
 bg_color = Color(0.133333, 0.0980392, 0.156863, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fassx"]
+bg_color = Color(0.0980392, 0.0705882, 0.117647, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+expand_margin_right = 6.0
+expand_margin_bottom = 13.0
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_u4hag"]
 color = Color(0.223529, 0.176471, 0.254902, 1)
@@ -185,6 +199,7 @@ TabContainer/styles/panel = SubResource("StyleBoxFlat_mss52")
 TabContainer/styles/tab_disabled = SubResource("StyleBoxFlat_nbcpl")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_oy2kg")
 TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_py02u")
+TabContainer/styles/tabbar_background = SubResource("StyleBoxFlat_fassx")
 VScrollBar/styles/grabber = SubResource("StyleBoxLine_u4hag")
 VScrollBar/styles/grabber_highlight = SubResource("StyleBoxLine_yy6gd")
 VScrollBar/styles/grabber_pressed = SubResource("StyleBoxLine_pwc4c")
