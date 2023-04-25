@@ -84,7 +84,6 @@ static func load_chart(song:String, difficulty:String = "normal"):
 			cool_note.time = float(note[0])
 			cool_note.direction = int(note[1])
 			cool_note.length = float(note[2])
-			
 			# stunpid note tpye handletation
 			if note.size() > 3:
 				match note[3]:

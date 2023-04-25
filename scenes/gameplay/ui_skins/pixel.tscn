@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://cuj2mrbefda35"]
+[gd_scene load_steps=9 format=3 uid="uid://cuj2mrbefda35"]
 
 [ext_resource type="Script" path="res://scripts/UISkin.gd" id="1_1fpm8"]
+[ext_resource type="Texture2D" uid="uid://d4ihgvdi6t5l0" path="res://assets/images/gameplay/countdown/pixel/ready.png" id="2_c5lgq"]
+[ext_resource type="Texture2D" uid="uid://d3hibxixedipg" path="res://assets/images/gameplay/countdown/pixel/set.png" id="3_o854y"]
+[ext_resource type="Texture2D" uid="uid://clsbenvuskace" path="res://assets/images/gameplay/countdown/pixel/go.png" id="4_rrpsi"]
+[ext_resource type="AudioStream" uid="uid://c7yiibi2y47fi" path="res://assets/sounds/countdown/pixel/intro3.ogg" id="5_t1o8f"]
+[ext_resource type="AudioStream" uid="uid://b8c3hcp73lu52" path="res://assets/sounds/countdown/pixel/intro2.ogg" id="6_eb5t4"]
+[ext_resource type="AudioStream" uid="uid://xws55spdfs5i" path="res://assets/sounds/countdown/pixel/intro1.ogg" id="7_w1me7"]
+[ext_resource type="AudioStream" uid="uid://bjo6ousm1v1gq" path="res://assets/sounds/countdown/pixel/introGo.ogg" id="8_n37h7"]
 
 [node name="pixel" type="Node"]
 script = ExtResource("1_1fpm8")
@@ -9,9 +16,9 @@ sustain_texture_path = "res://assets/images/gameplay/notes/pixel/sustains/"
 splash_texture_path = "res://assets/images/gameplay/notes/pixel/"
 rating_texture_path = "res://assets/images/gameplay/score/pixel/"
 combo_texture_path = "res://assets/images/gameplay/score/pixel/"
-ready_texture = null
-set_texture = null
-go_texture = null
+ready_texture = ExtResource("2_c5lgq")
+set_texture = ExtResource("3_o854y")
+go_texture = ExtResource("4_rrpsi")
 note_scale = 6.0
 sustain_width_offset = -1.0
 rating_scale = 5.1
@@ -22,7 +29,7 @@ splash_antialiasing = false
 rating_antialiasing = false
 combo_antialiasing = false
 countdown_antialiasing = false
-prepare_sound = null
-ready_sound = null
-set_sound = null
-go_sound = null
+prepare_sound = ExtResource("5_t1o8f")
+ready_sound = ExtResource("6_eb5t4")
+set_sound = ExtResource("7_w1me7")
+go_sound = ExtResource("8_n37h7")

@@ -145,14 +145,7 @@ func _ready() -> void:
 			
 			note_data_array.append(n)
 			
-	note_data_array.sort_custom(func(a, b):
-		if not a.should_hit and b.should_hit:
-			return 1
-		elif a.should_hit and not b.should_hit:
-			return -1
-			
-		return a.time < b.time
-	)
+	note_data_array.sort_custom(func(a, b): return a.time < b.time)
 	
 	health = max_health * 0.5
 	
@@ -265,6 +258,7 @@ func _ready() -> void:
 	
 	stage.callv("_ready_post", [])
 	script_group.call_func("_ready_post", [])
+	print(template_notes)
 	
 func start_cutscene(postfix:String = "-start"):
 	var cutscene_path = "res://scenes/gameplay/cutscenes/" + SONG.name.to_lower() + postfix + ".tscn"
@@ -622,7 +616,7 @@ func good_note_hit(note:Note):
 	player.play_anim(sing_anim, true)
 	player.hold_timer = 0.0
 	
-	health += 0.023
+	health += 0.023*note.health_gain_mult
 	
 	if note.length <= 0:
 		note._player_hit()
@@ -712,6 +706,7 @@ func _process(delta:float) -> void:
 			
 		var instance_type:String = note.type
 		if not note.type in template_notes:
+			print("type not found " + instance_type)
 			instance_type = "default"
 			
 		var new_note:Note = template_notes[instance_type].duplicate()

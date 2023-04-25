@@ -12,9 +12,9 @@ class_name UISkin
 
 @export_group("Textures")
 
-@export var ready_texture:CompressedTexture2D = preload("res://scenes/gameplay/countdown/default/ready.png")
-@export var set_texture:CompressedTexture2D = preload("res://scenes/gameplay/countdown/default/set.png")
-@export var go_texture:CompressedTexture2D = preload("res://scenes/gameplay/countdown/default/go.png")
+@export var ready_texture:CompressedTexture2D = preload("res://assets/images/gameplay/countdown/default/ready.png")
+@export var set_texture:CompressedTexture2D = preload("res://assets/images/gameplay/countdown/default/set.png")
+@export var go_texture:CompressedTexture2D = preload("res://assets/images/gameplay/countdown/default/go.png")
 
 @export_group("Scaling")
 
