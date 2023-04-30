@@ -25,8 +25,7 @@ var was_good_hit:bool = false
 var too_late:bool = false
 
 var step_crochet:float = 0.0
-
-var note_skin:UISkin = Global.ui_skins["default"]
+var note_skin:UISkin
 
 @onready var game:Gameplay
 
@@ -58,6 +57,9 @@ func _player_miss() -> void:
 func _ready() -> void:
 	if not in_editor:
 		game = $"../../../"
+		note_skin = game.ui_skin
+	else:
+		note_skin = load("res://scenes/gameplay/ui_skins/default.tscn").instantiate()
 		
 	if length < 50: length = 0
 	

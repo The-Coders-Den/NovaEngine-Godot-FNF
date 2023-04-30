@@ -6,11 +6,6 @@ const note_directions:Array[String] = [
 	"left", "down", "up", "right",
 ]
 
-var ui_skins:Dictionary = {
-	"default": preload("res://scenes/gameplay/ui_skins/default.tscn").instantiate(),
-	"pixel": preload("res://scenes/gameplay/ui_skins/pixel.tscn").instantiate(),
-}
-
 var scene_arguments:Dictionary = {
 	"options_menu": {
 		"exit_scene_path": ""
