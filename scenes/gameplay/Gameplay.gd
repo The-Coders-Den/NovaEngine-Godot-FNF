@@ -385,6 +385,8 @@ func step_hit(step:int):
 	script_group.call_func("on_step_hit_post", [step])
 
 func section_hit(section:int):
+	if not range(SONG.sections.size()).has(section): return
+	
 	script_group.call_func("on_section_hit", [section])
 
 	if cam_switching:
