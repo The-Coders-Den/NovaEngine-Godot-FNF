@@ -3,4 +3,3 @@ make mods menu look better
 make wiki/documentation
 group characters
 MAYBE multikey??
-make ui skins less hardcoded
