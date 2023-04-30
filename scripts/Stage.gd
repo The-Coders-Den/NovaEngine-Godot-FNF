@@ -2,7 +2,12 @@ extends Node2D
 class_name Stage
 
 @onready var game:Gameplay = $"../"
+
 @export var default_cam_zoom:float = 1.05
+
+@export_group("Camera Offsets")
+@export var player_cam_offset:Vector2 = Vector2(0.0, 0.0)
+@export var opponent_cam_offset:Vector2 = Vector2(0.0, 0.0)
 
 @onready var character_positions:Dictionary = {
 	"opponent": $"Character Positions/Opponent",
@@ -26,4 +31,10 @@ func on_start_song():
 	pass
 	
 func on_end_song():
+	pass
+
+func on_beat_hit(beat:int):
+	pass
+
+func on_beat_hit_post(beat:int):
 	pass

@@ -360,6 +360,7 @@ func end_song():
 		Global.switch_scene("res://scenes/FreeplayMenu.tscn" if !Global.is_story_mode else "res://scenes/StoryMenu.tscn")
 	
 func beat_hit(beat:int):
+	stage.callv("on_beat_hit", [beat])
 	script_group.call_func("on_beat_hit", [beat])
 	
 	if icon_bumping and icon_bumping_interval > 0 and beat % icon_bumping_interval == 0:
@@ -374,6 +375,7 @@ func beat_hit(beat:int):
 		
 	character_bop()
 	
+	stage.callv("on_beat_hit_post", [beat])
 	script_group.call_func("on_beat_hit_post", [beat])
 	
 func step_hit(step:int):
@@ -414,9 +416,9 @@ func update_camera(sec:int = 0):
 	
 	var cur_sec:Section = SONG.sections[sec]
 	if cur_sec != null and cur_sec.is_player:
-		camera.position = player.get_camera_pos()
+		camera.position = player.get_camera_pos() + stage.player_cam_offset
 	else:
-		camera.position = opponent.get_camera_pos()
+		camera.position = opponent.get_camera_pos() + stage.opponent_cam_offset
 		
 	script_group.call_func("on_update_camera", [])
 	

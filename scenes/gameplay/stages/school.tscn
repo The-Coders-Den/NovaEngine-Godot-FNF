@@ -10,6 +10,7 @@
 
 [node name="stage" type="Node2D"]
 script = ExtResource("1_3caaj")
+player_cam_offset = Vector2(-100, -100)
 
 [node name="PB" type="ParallaxBackground" parent="."]
 
