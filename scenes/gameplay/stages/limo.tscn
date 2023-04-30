@@ -10,6 +10,7 @@
 z_index = -1
 script = ExtResource("1_l6mq2")
 default_cam_zoom = 0.9
+player_cam_offset = Vector2(-200, 0)
 
 [node name="PB" type="ParallaxBackground" parent="."]
 
