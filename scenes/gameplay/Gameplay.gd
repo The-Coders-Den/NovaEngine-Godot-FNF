@@ -114,7 +114,7 @@ func _ready() -> void:
 			"constant":
 				scroll_speed = SettingsAPI.get_setting("scroll speed")
 	
-	ui_skin = Global.ui_skins[SONG.ui_skin]
+	ui_skin = load("res://scenes/gameplay/ui_skins/"+SONG.ui_skin+".tscn").instantiate()
 		
 	inst.stream = load("res://assets/songs/"+SONG.name.to_lower()+"/Inst.ogg")
 	inst.pitch_scale = Conductor.rate

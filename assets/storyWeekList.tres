@@ -41,7 +41,7 @@ song_path = "fresh"
 [sub_resource type="Resource" id="Resource_u1wb6"]
 script = ExtResource("3_sto51")
 display_name = "Dad Battle"
-song_path = "dadbattle"
+song_path = "dad battle"
 
 [sub_resource type="Resource" id="Resource_inpee"]
 script = ExtResource("2_lywg0")
