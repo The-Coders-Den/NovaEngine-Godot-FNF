@@ -4,7 +4,7 @@ extends Stage
 @onready var paraBG = $PB
 	
 func _process(delta):
-	paraBG.scroll_base_scale = game.camera.zoom
+	pass
 	
 func on_beat_hit(beat:int):
 	for bopper in da_boppers:
