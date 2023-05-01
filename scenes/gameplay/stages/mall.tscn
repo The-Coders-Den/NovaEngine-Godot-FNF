@@ -34,7 +34,6 @@ _data = {
 script = ExtResource("1_e8xy8")
 default_cam_zoom = 0.8
 player_cam_offset = Vector2(0, -100)
-spectator_cam_offset = null
 
 [node name="PB" type="ParallaxBackground" parent="."]
 
@@ -48,7 +47,7 @@ texture = ExtResource("2_tuw3h")
 centered = false
 
 [node name="0-33" type="ParallaxLayer" parent="PB"]
-motion_scale = Vector2(0.2, 0.2)
+motion_scale = Vector2(0.33, 0.33)
 
 [node name="UpperBop" type="AnimatedSprite2D" parent="PB/0-33"]
 position = Vector2(-240, -90)
