@@ -26,6 +26,10 @@ func _ready():
 		
 		var song:FreeplayAlphabet = song_template.duplicate()
 		var icon:HealthIcon = song.get_node("HealthIcon")
+		
+		if meta.display_name == "dadbattle" and randf_range(0, 100) < 0.1:
+			meta.display_name = "baddattle"
+		
 		song.text = meta.display_name if meta.display_name != null and len(meta.display_name) > 0 else meta.song
 		icon.texture = meta.character_icon
 		icon.hframes = meta.icon_frames

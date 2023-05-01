@@ -26,7 +26,7 @@ func get_icon_index(health:float, icons:int):
 	return 0
 
 func _process(delta):
-	if not react_to_health: return
+	if hframes == 1 or not react_to_health: return
 	
 	var _frame:int = get_icon_index(health, hframes)
 	if _frame == 0: _frame = 1
