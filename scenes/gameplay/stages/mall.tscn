@@ -1,39 +1,121 @@
-[gd_scene load_steps=5 format=3 uid="uid://clua6hh7k221s"]
+[gd_scene load_steps=12 format=3 uid="uid://clua6hh7k221s"]
 
-[ext_resource type="Script" path="res://scripts/Stage.gd" id="1_g7whw"]
+[ext_resource type="Script" path="res://scenes/gameplay/stages/mall.gd" id="1_e8xy8"]
 [ext_resource type="Texture2D" uid="uid://spiajomm7rt6" path="res://assets/images/gameplay/stages/mall/bgEscalator.png" id="2_jelh1"]
 [ext_resource type="Texture2D" uid="uid://bccq613ipfegh" path="res://assets/images/gameplay/stages/mall/christmasTree.png" id="2_n10v8"]
 [ext_resource type="Texture2D" uid="uid://buyn3nel7gcss" path="res://assets/images/gameplay/stages/mall/fgSnow.png" id="2_s0f8v"]
+[ext_resource type="Texture2D" uid="uid://bpc0l5byrc22n" path="res://assets/images/gameplay/stages/mall/bgWalls.png" id="2_tuw3h"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/stages/mall/upperBop.res" id="3_dgiad"]
+[ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="3_wu4ul"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/stages/mall/bottomBop.res" id="7_kuy1x"]
+[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/stages/mall/santa.res" id="9_4mmiq"]
 
-[node name="stage" type="Node2D"]
-script = ExtResource("1_g7whw")
+[sub_resource type="Animation" id="Animation_2ong5"]
+resource_name = "bop"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a8lx5"]
+_data = {
+"bop": SubResource("Animation_2ong5")
+}
+
+[node name="mall" type="Node2D"]
+script = ExtResource("1_e8xy8")
 default_cam_zoom = 0.8
+player_cam_offset = Vector2(0, -100)
 
 [node name="PB" type="ParallaxBackground" parent="."]
+
+[node name="0-2" type="ParallaxLayer" parent="PB"]
+motion_scale = Vector2(0.2, 0.2)
+
+[node name="Bg" type="Sprite2D" parent="PB/0-2"]
+position = Vector2(-1000, -500)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_tuw3h")
+centered = false
+
+[node name="0-33" type="ParallaxLayer" parent="PB"]
+motion_scale = Vector2(0.33, 0.33)
+
+[node name="UpperBop" type="AnimatedSprite2D" parent="PB/0-33"]
+position = Vector2(-240, -90)
+scale = Vector2(0.85, 0.85)
+sprite_frames = ExtResource("3_dgiad")
+animation = &"Upper Crowd Bob"
+frame = 12
+frame_progress = 1.0
+centered = false
+script = ExtResource("3_wu4ul")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PB/0-33/UpperBop"]
+libraries = {
+"": SubResource("AnimationLibrary_a8lx5")
+}
 
 [node name="0-3" type="ParallaxLayer" parent="PB"]
 motion_scale = Vector2(0.3, 0.3)
 
 [node name="BgEscalator" type="Sprite2D" parent="PB/0-3"]
 position = Vector2(-1100, -600)
-scale = Vector2(1.1, 1.1)
+scale = Vector2(0.9, 0.9)
 texture = ExtResource("2_jelh1")
+centered = false
 
 [node name="0-4" type="ParallaxLayer" parent="PB"]
 motion_scale = Vector2(0.4, 0.4)
 
-[node name="FgSnow" type="Sprite2D" parent="PB/0-4"]
-position = Vector2(-370, 250)
+[node name="Tree" type="Sprite2D" parent="PB/0-4"]
+position = Vector2(370, -250)
 texture = ExtResource("2_n10v8")
+centered = false
 
 [node name="0-9" type="ParallaxLayer" parent="PB"]
 motion_scale = Vector2(0.9, 0.9)
+
+[node name="BottomBop" type="AnimatedSprite2D" parent="PB/0-9"]
+position = Vector2(-300, 140)
+sprite_frames = ExtResource("7_kuy1x")
+animation = &"Bottom Level Boppers"
+frame = 13
+frame_progress = 1.0
+centered = false
+script = ExtResource("3_wu4ul")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PB/0-9/BottomBop"]
+libraries = {
+"": SubResource("AnimationLibrary_a8lx5")
+}
 
 [node name="1-0" type="ParallaxLayer" parent="PB"]
 
 [node name="FgSnow" type="Sprite2D" parent="PB/1-0"]
 position = Vector2(-600, 700)
 texture = ExtResource("2_s0f8v")
+centered = false
+
+[node name="Santa" type="AnimatedSprite2D" parent="PB/1-0"]
+position = Vector2(-840, 150)
+sprite_frames = ExtResource("9_4mmiq")
+animation = &"santa idle in fear"
+centered = false
+script = ExtResource("3_wu4ul")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PB/1-0/Santa"]
+libraries = {
+"": SubResource("AnimationLibrary_a8lx5")
+}
 
 [node name="Character Positions" type="Node2D" parent="."]
 
@@ -44,4 +126,4 @@ position = Vector2(100, 100)
 position = Vector2(400, 130)
 
 [node name="Player" type="Node2D" parent="Character Positions"]
-position = Vector2(970, -250)
+position = Vector2(970, 100)
