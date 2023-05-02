@@ -29,7 +29,6 @@ func _process(delta:float) -> void:
 					game.player.play_anim(sing_anim, true)
 					game.player.hold_timer = 0.0
 					
-				game.voices.volume_db = 0
 				
 				note.is_sustain_note = true
 				note._player_hit()
@@ -45,7 +44,6 @@ func _process(delta:float) -> void:
 					game.opponent.play_anim(sing_anim, true)
 					game.opponent.hold_timer = 0.0
 					
-				game.voices.volume_db = 0
 				
 				note.is_sustain_note = true
 				note._cpu_hit()
@@ -72,7 +70,6 @@ func _process(delta:float) -> void:
 				note.queue_free()
 		else:
 			if note.time <= Conductor.position and note.should_hit and not note.was_good_hit:
-				game.voices.volume_db = 0
 				
 				note.was_good_hit = true
 				note.anim_sprite.visible = false
@@ -91,7 +88,6 @@ func _process(delta:float) -> void:
 					note.queue_free()
 					
 				game.opponent.hold_timer = 0.0
-				game.voices.volume_db = 0
 			if note.time <= Conductor.position - note_kill_range and not note.should_hit and not note.was_good_hit:
 				note.is_sustain_note = false
 				note._cpu_miss()

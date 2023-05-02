@@ -13,9 +13,10 @@ var player:String = "bf"
 
 var stage:String = "stage"
 var ui_skin:String = "default"
+var end_offset:float = 1500
 
 static func load_chart(song:String, difficulty:String = "normal"):
-	var json = JSON.parse_string(FileAccess.open("res://assets/songs/"+song+"/"+difficulty+".json", FileAccess.READ).get_as_text()).song
+	var json = JSON.parse_string(FileAccess.open("res://assets/songs/"+song.to_lower()+"/"+difficulty+".json", FileAccess.READ).get_as_text()).song
 	
 	var chart = new()
 	chart.name = json.song
@@ -62,6 +63,8 @@ static func load_chart(song:String, difficulty:String = "normal"):
 		
 	if "uiSkin" in json:
 		chart.ui_skin = json.uiSkin
+	if "end_offset" in json:
+		chart.end_offset = json.end_offset
 	
 	# oh god wish me luck converting these
 	# damn base game sections to cool ones!

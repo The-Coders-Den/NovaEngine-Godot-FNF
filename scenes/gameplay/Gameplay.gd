@@ -73,9 +73,6 @@ var ui_skin:UISkin
 @onready var player_icon:Sprite2D = $HUD/HealthBar/ProgressBar/PlayerIcon
 @onready var score_text:Label = $HUD/HealthBar/ScoreText
 
-@onready var inst:AudioStreamPlayer = $Inst
-@onready var voices:AudioStreamPlayer = $Voices
-
 @onready var countdown_sprite:Sprite2D = $HUD/CountdownSprite
 
 @onready var countdown_prepare_sound:AudioStreamPlayer = $CountdownSounds/Prepare
@@ -92,6 +89,22 @@ const ICON_DELTA_MULTIPLIER:float = 60 * 0.25
 const ZOOM_DELTA_MULTIPLIER:float = 60 * 0.05
 
 signal paused
+
+var tracks:Array[AudioStreamPlayer] = []
+
+func load_song():
+	var formats:PackedStringArray = [".ogg", ".mp3", ".wav"]
+	var music_path:String = "res://assets/songs/%s/audio/" % SONG.name.to_lower()
+	if DirAccess.dir_exists_absolute(music_path):
+		var dir = DirAccess.open(music_path)
+		for file in dir.get_files():
+			print(file)
+			var music:AudioStreamPlayer = AudioStreamPlayer.new()
+			for f in formats:
+				if file.replace(".import","").ends_with(f):
+					music.max_polyphony = 0
+					music.stream = load(music_path + file.replace(".import",""))
+					tracks.push_front(music)
 
 func _ready() -> void:
 	super._ready()
@@ -115,13 +128,9 @@ func _ready() -> void:
 				scroll_speed = SettingsAPI.get_setting("scroll speed")
 	
 	ui_skin = load("res://scenes/gameplay/ui_skins/"+SONG.ui_skin+".tscn").instantiate()
-		
-	inst.stream = load("res://assets/songs/"+SONG.name.to_lower()+"/Inst.ogg")
-	inst.pitch_scale = Conductor.rate
-	inst.finished.connect(end_song)
+	# music shit
 	
-	voices.stream = load("res://assets/songs/"+SONG.name.to_lower()+"/Voices.ogg")
-	voices.pitch_scale = Conductor.rate
+	load_song()
 		
 	Conductor.map_bpm_changes(SONG)
 	Conductor.change_bpm(SONG.bpm)
@@ -334,12 +343,19 @@ func start_song():
 	starting_song = false
 	Conductor.position = 0.0
 	
-	inst.play()
-	voices.play()
+	for track in tracks:
+		add_child(track)
+		track.play()
 	
 	stage.callv("on_start_song", [])
 	script_group.call_func("on_start_song", [])
 	
+func resync_tracks():
+	print("resynced audio")
+	for track in tracks:
+		track.stop()
+		track.play(Conductor.position / 1000.0)
+
 func end_song():
 	if not ending_song:
 		ending_song = true
@@ -378,13 +394,15 @@ func beat_hit(beat:int):
 	
 func step_hit(step:int):
 	script_group.call_func("on_step_hit", [step])
-	
-	if not ending_song and ((not Conductor.is_sound_synced(inst)) or (voices.stream != null and (not Conductor.is_sound_synced(voices)) and voices.get_playback_position() < voices.stream.get_length())):
-		resync_vocals()
-		
 	script_group.call_func("on_step_hit_post", [step])
 
 func section_hit(section:int):
+	if tracks.size() > 0 and abs(tracks[0].get_playback_position()*1000 - (Conductor.position)) >= 20 :
+		resync_tracks()
+	if note_data_array.size() == 0 and note_group.get_children().size() == 0:
+		get_tree().create_timer(SONG.end_offset/1000).timeout.connect(end_song)
+		
+	
 	if not range(SONG.sections.size()).has(section): return
 	
 	script_group.call_func("on_section_hit", [section])
@@ -424,19 +442,6 @@ func position_hud():
 	hud.offset.x = (hud.scale.x - 1.0) * -(Global.game_size.x * 0.5)
 	hud.offset.y = (hud.scale.y - 1.0) * -(Global.game_size.y * 0.5)
 		
-func resync_vocals():
-	if ending_song: return
-	
-	inst.stop()
-	voices.stop()
-	
-	inst.play(Conductor.position / 1000.0)
-	voices.play(Conductor.position / 1000.0)
-	
-	inst.seek(Conductor.position / 1000.0)
-	voices.seek(Conductor.position / 1000.0)
-	
-	script_group.call_func("on_resync_vocals", [])
 
 func key_from_event(event:InputEventKey):
 	var data:int = -1
@@ -506,7 +511,6 @@ func fake_miss(direction:int = -1):
 	score -= 10
 	combo = 0
 	accuracy_pressed_notes += 1
-	voices.volume_db = -80
 	update_score_text()
 	
 	if direction < 0: return
@@ -571,9 +575,6 @@ var ms_tween:Tween
 		
 func good_note_hit(note:Note):
 	if note.was_good_hit: return
-	
-	
-	voices.volume_db = 0
 	
 	var note_diff:float = (note.time - Conductor.position) / Conductor.rate
 	var judgement:Judgement = Ranking.judgement_from_time(note_diff)

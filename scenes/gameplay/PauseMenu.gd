@@ -83,6 +83,7 @@ func _process(delta):
 		match options[cur_selected]:
 			"Resume":
 				get_tree().paused = false
+				game.resync_tracks()
 				queue_free()
 				
 			"Restart Song":
