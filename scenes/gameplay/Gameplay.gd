@@ -101,7 +101,7 @@ func load_song():
 			print(file)
 			var music:AudioStreamPlayer = AudioStreamPlayer.new()
 			for f in formats:
-				if file.replace(".import","").ends_with(f):
+				if file.ends_with(f + ".import"):
 					music.max_polyphony = 0
 					music.stream = load(music_path + file.replace(".import",""))
 					tracks.push_front(music)
@@ -399,8 +399,8 @@ func step_hit(step:int):
 	script_group.call_func("on_step_hit_post", [step])
 
 func section_hit(section:int):
-	if tracks.size() > 0 and abs(tracks[0].get_playback_position()*1000 - (Conductor.position)) >= 20 :
-		resync_tracks()
+	for track in tracks:
+		if abs(track.get_playback_position()*1000 - (Conductor.position)) >= 20: resync_tracks()
 	if note_data_array.size() == 0 and note_group.get_children().size() == 0:
 		get_tree().create_timer(SONG.end_offset/1000).timeout.connect(end_song)
 		
