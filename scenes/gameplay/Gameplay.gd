@@ -8,6 +8,7 @@ var OPPONENT_HEALTH_COLOR:StyleBoxFlat = preload("res://assets/styles/healthbar/
 var PLAYER_HEALTH_COLOR:StyleBoxFlat = preload("res://assets/styles/healthbar/player.tres")
 
 var SONG:Chart = Global.SONG
+var meta:SongMetaData = SongMetaData.new()
 var note_data_array:Array[SectionNote] = []
 
 var starting_song:bool = true
@@ -118,7 +119,13 @@ func _ready() -> void:
 	if Global.SONG == null:
 		Global.SONG = Chart.load_chart("tutorial", "hard")
 		SONG = Global.SONG
+	var meta_path := "res://assets/songs/" + SONG.name.to_lower() + "/meta"
+	if ResourceLoader.exists(meta_path + ".tres"):
+		meta = load(meta_path + ".tres")
 		
+	if ResourceLoader.exists(meta_path + ".res"):
+		meta = load(meta_path + ".res")
+	print(meta.end_offset)
 	scroll_speed = SONG.scroll_speed
 	if SettingsAPI.get_setting("scroll speed") > 0:
 		match SettingsAPI.get_setting("scroll speed type").to_lower():
@@ -345,7 +352,7 @@ func start_song():
 	
 	for track in tracks:
 		add_child(track)
-		track.play()
+		track.play(meta.start_offset/1000)
 	
 	stage.callv("on_start_song", [])
 	script_group.call_func("on_start_song", [])
@@ -354,7 +361,7 @@ func resync_tracks():
 	print("resynced audio")
 	for track in tracks:
 		track.stop()
-		track.play(Conductor.position / 1000.0)
+		track.play(Conductor.position / 1000.0 + meta.start_offset/1000)
 
 func end_song():
 	if not ending_song:
@@ -400,9 +407,9 @@ func step_hit(step:int):
 
 func section_hit(section:int):
 	for track in tracks:
-		if abs(track.get_playback_position()*1000 - (Conductor.position)) >= 20: resync_tracks()
+		if abs((track.get_playback_position()*1000 - meta.start_offset) - (Conductor.position) )  >= 20: resync_tracks()
 	if note_data_array.size() == 0 and note_group.get_children().size() == 0:
-		get_tree().create_timer(SONG.end_offset/1000).timeout.connect(end_song)
+		get_tree().create_timer(meta.end_offset/1000).timeout.connect(end_song)
 		
 	
 	if not range(SONG.sections.size()).has(section): return

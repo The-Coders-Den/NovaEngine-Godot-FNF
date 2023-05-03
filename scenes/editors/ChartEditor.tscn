@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ciqqa7u45rfl2"]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Theme" uid="uid://br6hapg0jupnv" path="res://assets/styles/nova_purple_panel.tres" id="1_coqmp"]
 [ext_resource type="Script" path="res://scenes/editors/ChartEditor.gd" id="1_f5f6h"]
