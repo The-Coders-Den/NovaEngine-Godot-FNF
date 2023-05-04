@@ -4,12 +4,16 @@ class_name Gameplay
 var template_notes:Dictionary = {
 	"default": preload("res://scenes/gameplay/notes/Default.tscn").instantiate(),
 }
+
+var template_events:Dictionary = {}
+
 var OPPONENT_HEALTH_COLOR:StyleBoxFlat = preload("res://assets/styles/healthbar/opponent.tres")
 var PLAYER_HEALTH_COLOR:StyleBoxFlat = preload("res://assets/styles/healthbar/player.tres")
 
 var SONG:Chart = Global.SONG
 var meta:SongMetaData = SongMetaData.new()
 var note_data_array:Array[SectionNote] = []
+var event_data_array:Array[SongEvent] = []
 
 var starting_song:bool = true
 var ending_song:bool = false
@@ -107,6 +111,48 @@ func load_song():
 					music.stream = load(music_path + file.replace(".import",""))
 					tracks.push_front(music)
 
+func gen_song():
+	for section in SONG.sections:
+		for note in section.notes:
+			# i can't use fucking duplicate
+			# it fucks up!!!
+			var n = SectionNote.new()
+			n.time = note.time
+			n.direction = note.direction
+			n.length = note.length
+			n.type = note.type
+			n.alt_anim = note.alt_anim
+			n.player_section = section.is_player
+			
+			var note_type_path:String = "res://scenes/gameplay/notes/"+note.type+".tscn"
+			if not note.type in template_notes and ResourceLoader.exists(note_type_path):
+				template_notes[note.type] = load(note_type_path).instantiate()
+			
+			note_data_array.append(n)
+			
+	note_data_array.sort_custom(func(a, b): return a.time < b.time)
+
+func load_event():
+	var event_path = "res://assets/songs/%s/events.json" % SONG.name.to_lower()
+	var eventJson:Dictionary
+	if ResourceLoader.exists(event_path):
+		eventJson = JSON.parse_string(FileAccess.open(event_path,FileAccess.READ).get_as_text()).song
+		for event in eventJson.events:
+			var time:int = int(event[0])
+			for ev in event[1]:
+				var name:String = ev[0]
+				event_data_array.append(SongEvent.new())
+				event_data_array[event_data_array.size()-1]._name = name
+				event_data_array[event_data_array.size()-1].time = time
+				print(ev[1])
+				event_data_array[event_data_array.size()-1].parameters = [ev[1], ev[2]]
+				print(event_data_array[0]._name)
+				if !name in template_events:
+					if ResourceLoader.exists("res://scenes/events/" + name + ".tscn"):
+						template_events[name] = load("res://scenes/events/" + name + ".tscn").instantiate()
+					else:
+						print("event not found: %s" % name)
+
 func _ready() -> void:
 	super._ready()
 	get_tree().paused = false
@@ -143,25 +189,9 @@ func _ready() -> void:
 	Conductor.change_bpm(SONG.bpm)
 	Conductor.position = Conductor.crochet * -5
 		
-	for section in SONG.sections:
-		for note in section.notes:
-			# i can't use fucking duplicate
-			# it fucks up!!!
-			var n = SectionNote.new()
-			n.time = note.time
-			n.direction = note.direction
-			n.length = note.length
-			n.type = note.type
-			n.alt_anim = note.alt_anim
-			n.player_section = section.is_player
-			
-			var note_type_path:String = "res://scenes/gameplay/notes/"+note.type+".tscn"
-			if not note.type in template_notes and ResourceLoader.exists(note_type_path):
-				template_notes[note.type] = load(note_type_path).instantiate()
-			
-			note_data_array.append(n)
-			
-	note_data_array.sort_custom(func(a, b): return a.time < b.time)
+	gen_song()
+	
+	load_event()
 	
 	health = max_health * 0.5
 	
@@ -402,8 +432,23 @@ func beat_hit(beat:int):
 	script_group.call_func("on_beat_hit_post", [beat])
 	
 func step_hit(step:int):
+	if event_data_array.size() > 0 and Conductor.position >= event_data_array[0].time:
+		print(event_data_array[0]._name)
+		if event_data_array[0]._name in template_events:
+			var event:Event = template_events[event_data_array[0]._name].duplicate()
+			event.parameters = event_data_array[0].parameters
+			print(event_data_array[0].parameters)
+			add_child(event)
+		event_data_array.erase(event_data_array[0])
+
 	script_group.call_func("on_step_hit", [step])
 	script_group.call_func("on_step_hit_post", [step])
+
+func do_event(name:String,parameters:Array[String]):
+	var ev:Event = load("res://scenes/events/" + name + ".tscn").instantiate()
+	ev.parameters = parameters
+	add_child(ev)
+	
 
 func section_hit(section:int):
 	for track in tracks:
