@@ -137,6 +137,10 @@ func load_event():
 	var eventJson:Dictionary
 	if ResourceLoader.exists(event_path):
 		eventJson = JSON.parse_string(FileAccess.open(event_path,FileAccess.READ).get_as_text()).song
+		
+		if not eventJson.has('events'):
+			return
+		
 		for event in eventJson.events:
 			var time:int = int(event[0])
 			for ev in event[1]:
