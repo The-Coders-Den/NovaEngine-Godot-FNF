@@ -50,6 +50,7 @@ theme = ExtResource("3_cmtlj")
 theme_override_constants/side_margin = 0
 
 [node name="Gameplay" type="TabBar" parent="TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Downscroll" type="CheckBox" parent="TabContainer/Gameplay"]
@@ -211,7 +212,6 @@ theme_override_font_sizes/font_size = 16
 text = "Scroll Speed Type"
 
 [node name="Appearance" type="TabBar" parent="TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="FPS Counter" type="CheckBox" parent="TabContainer/Appearance"]
@@ -254,7 +254,7 @@ offset_top = 80.0
 offset_right = 146.0
 offset_bottom = 111.0
 tooltip_text = "Displays subtitles for songs like Monster or Winter Horrorland."
-text = "Subtitles (TO BE IMPLEMENTED)"
+text = "Subtitles"
 script = ExtResource("4_gjk4b")
 option = "note splashes"
 
@@ -269,21 +269,32 @@ text = "Story Menu BG Always Yellow"
 script = ExtResource("4_gjk4b")
 option = "story always yellow"
 
+[node name="Judgement Stacking" type="CheckBox" parent="TabContainer/Appearance"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 128.0
+offset_right = 264.0
+offset_bottom = 159.0
+tooltip_text = "Disables the color tween of the BG in the story mode menu."
+text = "Judgement Stacking"
+script = ExtResource("4_gjk4b")
+option = "judgement stacking"
+
 [node name="HSeparator" type="HSeparator" parent="TabContainer/Appearance"]
 modulate = Color(0.486275, 0.368627, 0.560784, 1)
 layout_mode = 0
 offset_left = 14.0
-offset_top = 136.0
+offset_top = 160.0
 offset_right = 391.0
-offset_bottom = 140.0
+offset_bottom = 164.0
 scale = Vector2(1, 2)
 
 [node name="Judgement Camera" type="OptionButton" parent="TabContainer/Appearance"]
 layout_mode = 0
 offset_left = 13.0
-offset_top = 176.0
+offset_top = 200.0
 offset_right = 388.0
-offset_bottom = 199.0
+offset_bottom = 223.0
 tooltip_text = "Changes how your speed is applied.
 Multiplier multiplies the song's scroll speed by the one set here, Constant directly sets the song's scroll speed."
 item_count = 2
@@ -1026,6 +1037,7 @@ in_editor = true
 [connection signal="pressed" from="TabContainer/Appearance/Opaque Sustains" to="TabContainer/Appearance/Opaque Sustains" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Appearance/Subtitles" to="TabContainer/Appearance/Subtitles" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Appearance/Story Always Yellow" to="TabContainer/Appearance/Story Always Yellow" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Appearance/Judgement Stacking" to="TabContainer/Appearance/Judgement Stacking" method="_on_pressed"]
 [connection signal="item_selected" from="TabContainer/Appearance/Judgement Camera" to="TabContainer/Appearance/Judgement Camera" method="_on_item_selected"]
 [connection signal="pressed" from="TabContainer/Miscellaneous/Auto Pause" to="TabContainer/Miscellaneous/Auto Pause" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Miscellaneous/Volume Beep Pitching" to="TabContainer/Miscellaneous/Volume Beep Pitching" method="_on_pressed"]

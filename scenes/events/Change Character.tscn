@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://kures0qw0nvo"]
-
-[ext_resource type="Script" path="res://scenes/events/Change Character.gd" id="1_pjpjp"]
-
-[node name="Change Character" type="Node2D"]
-script = ExtResource("1_pjpjp")

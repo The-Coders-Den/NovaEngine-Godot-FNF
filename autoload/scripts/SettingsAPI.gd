@@ -20,6 +20,7 @@ var _settings:Dictionary = {
 	"subtitles": true,
 	"story always yellow": false,
 	"judgement camera": "World",
+	"judgement stacking": true,
 	
 	# misc
 	"auto pause": true,

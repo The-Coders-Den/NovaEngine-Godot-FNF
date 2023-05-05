@@ -132,30 +132,64 @@ func gen_song():
 			
 	note_data_array.sort_custom(func(a, b): return a.time < b.time)
 
-func load_event():
-	var event_path = "res://assets/songs/%s/events.json" % SONG.name.to_lower()
-	var eventJson:Dictionary
-	if ResourceLoader.exists(event_path):
-		eventJson = JSON.parse_string(FileAccess.open(event_path,FileAccess.READ).get_as_text()).song
-		
-		if not eventJson.has('events'):
-			return
-		
-		for event in eventJson.events:
-			var time:int = int(event[0])
-			for ev in event[1]:
-				var name:String = ev[0]
-				event_data_array.append(SongEvent.new())
-				event_data_array[event_data_array.size()-1]._name = name
-				event_data_array[event_data_array.size()-1].time = time
-				print(ev[1])
-				event_data_array[event_data_array.size()-1].parameters = [ev[1], ev[2]]
-				print(event_data_array[0]._name)
-				if !name in template_events:
-					if ResourceLoader.exists("res://scenes/events/" + name + ".tscn"):
-						template_events[name] = load("res://scenes/events/" + name + ".tscn").instantiate()
-					else:
-						print("event not found: %s" % name)
+func load_event_array(event_array:Array[Variant]) -> Array[SongEvent]:
+	var return_events:Array[SongEvent] = []
+	
+	# newer multi-event style
+	if event_array[1] is Array:
+		for inner_event in event_array[1]:
+			var song_event:SongEvent = SongEvent.new()
+			song_event.time = event_array[0]
+			song_event.name = inner_event[0]
+			song_event.parameters = [inner_event[1], inner_event[2]]
+			return_events.append(song_event)
+	# older one-event style
+	else:
+		var song_event:SongEvent = SongEvent.new()
+		song_event.time = event_array[0]
+		song_event.name = event_array[2]
+		song_event.parameters = [event_array[3], event_array[4]]
+		return_events.append(song_event)
+	
+	return return_events
+
+func load_events() -> void:
+	var event_path:String = "res://assets/songs/%s/events.json" % SONG.name.to_lower()
+	
+	if not ResourceLoader.exists(event_path):
+		return
+	
+	var event_data:Dictionary = \
+			JSON.parse_string(FileAccess.open(event_path, FileAccess.READ).get_as_text()).song
+	
+	if not event_data.has('events'):
+		event_data['events'] = []
+	if not event_data.has('notes'):
+		event_data['notes'] = []
+	
+	for event in event_data.events:
+		for song_event in load_event_array(event):
+			event_data_array.append(song_event)
+			
+			if not template_events.has(song_event.name):
+				var song_event_path:String = "res://scenes/gameplay/events/%s.tscn" % song_event.name
+				if ResourceLoader.exists(song_event_path):
+					template_events[song_event.name] = load(song_event_path).instantiate()
+				else:
+					printerr("event not found: %s" % song_event.name)
+	
+	for section in event_data.notes:
+		for note in section.sectionNotes:
+			if note[1] is Array or note[1] < 0:
+				for song_event in load_event_array(note):
+					event_data_array.append(song_event)
+					
+					if not template_events.has(song_event.name):
+						var song_event_path:String = "res://scenes/gameplay/events/%s.tscn" % song_event.name
+						if ResourceLoader.exists(song_event_path):
+							template_events[song_event.name] = load(song_event_path).instantiate()
+						else:
+							printerr("event not found: %s" % song_event.name)
 
 func _ready() -> void:
 	super._ready()
@@ -192,10 +226,9 @@ func _ready() -> void:
 	Conductor.map_bpm_changes(SONG)
 	Conductor.change_bpm(SONG.bpm)
 	Conductor.position = Conductor.crochet * -5
-		
-	gen_song()
 	
-	load_event()
+	gen_song()
+	load_events()
 	
 	health = max_health * 0.5
 	
@@ -296,6 +329,9 @@ func _ready() -> void:
 		hud.add_child(combo_group)
 		
 	combo_group.move_to_front()
+	combo_group.remove_child(rating_template)
+	combo_group.remove_child(combo_template)
+	
 	update_camera()
 	
 	for i in player_strums.get_child_count():
@@ -436,15 +472,6 @@ func beat_hit(beat:int):
 	script_group.call_func("on_beat_hit_post", [beat])
 	
 func step_hit(step:int):
-	if event_data_array.size() > 0 and Conductor.position >= event_data_array[0].time:
-		print(event_data_array[0]._name)
-		if event_data_array[0]._name in template_events:
-			var event:Event = template_events[event_data_array[0]._name].duplicate()
-			event.parameters = event_data_array[0].parameters
-			print(event_data_array[0].parameters)
-			add_child(event)
-		event_data_array.erase(event_data_array[0])
-
 	script_group.call_func("on_step_hit", [step])
 	script_group.call_func("on_step_hit_post", [step])
 
@@ -590,6 +617,11 @@ func pop_up_score(judgement:Judgement) -> void:
 	accuracy_total_hit += judgement.accuracy_gain
 	score += judgement.score
 	combo += 1
+	
+	if not SettingsAPI.get_setting('judgement stacking'):
+		for child in combo_group.get_children():
+			combo_group.remove_child(child)
+			child.queue_free()
 	
 	display_judgement(judgement, pop_up_score_tweener)
 	display_combo(pop_up_score_tweener)
@@ -796,6 +828,19 @@ func _process(delta:float) -> void:
 	
 	stage.callv("_process_post", [delta])
 	script_group.call_func("_process_post", [delta])
+
+func _physics_process(delta: float) -> void:
+	while (not event_data_array.is_empty()) and Conductor.position >= event_data_array[0].time:
+		print('running %s at %.3f ms with %s.' % [event_data_array[0].name,
+				event_data_array[0].time,
+				event_data_array[0].parameters])
+		
+		if template_events.has(event_data_array[0].name):
+			var event:Event = template_events[event_data_array[0].name].duplicate()
+			event.parameters = event_data_array[0].parameters
+			add_child(event)
+		
+		event_data_array.pop_front()
 
 func _exit_tree():
 	script_group.call_func("on_destroy", [])
