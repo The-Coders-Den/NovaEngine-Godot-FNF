@@ -100,16 +100,17 @@ var tracks:Array[AudioStreamPlayer] = []
 func load_song():
 	var formats:PackedStringArray = [".ogg", ".mp3", ".wav"]
 	var music_path:String = "res://assets/songs/%s/audio/" % SONG.name.to_lower()
+	
 	if DirAccess.dir_exists_absolute(music_path):
 		var dir = DirAccess.open(music_path)
+		
 		for file in dir.get_files():
-			print(file)
 			var music:AudioStreamPlayer = AudioStreamPlayer.new()
 			for f in formats:
 				if file.ends_with(f + ".import"):
-					music.max_polyphony = 0
 					music.stream = load(music_path + file.replace(".import",""))
-					tracks.push_front(music)
+					music.pitch_scale = Conductor.rate
+					tracks.append(music)
 
 func gen_song():
 	for section in SONG.sections:
@@ -203,13 +204,14 @@ func _ready() -> void:
 	if Global.SONG == null:
 		Global.SONG = Chart.load_chart("tutorial", "hard")
 		SONG = Global.SONG
-	var meta_path := "res://assets/songs/" + SONG.name.to_lower() + "/meta"
+		
+	var meta_path:String = "res://assets/songs/" + SONG.name.to_lower() + "/meta"
 	if ResourceLoader.exists(meta_path + ".tres"):
 		meta = load(meta_path + ".tres")
 		
 	if ResourceLoader.exists(meta_path + ".res"):
 		meta = load(meta_path + ".res")
-	print(meta.end_offset)
+	
 	scroll_speed = SONG.scroll_speed
 	if SettingsAPI.get_setting("scroll speed") > 0:
 		match SettingsAPI.get_setting("scroll speed type").to_lower():
@@ -344,7 +346,6 @@ func _ready() -> void:
 	
 	stage.callv("_ready_post", [])
 	script_group.call_func("_ready_post", [])
-	print(template_notes)
 	
 func start_cutscene(postfix:String = "-start"):
 	var cutscene_path = "res://scenes/gameplay/cutscenes/" + SONG.name.to_lower() + postfix + ".tscn"
@@ -428,10 +429,9 @@ func start_song():
 	script_group.call_func("on_start_song", [])
 	
 func resync_tracks():
-	print("resynced audio")
 	for track in tracks:
 		track.stop()
-		track.play(Conductor.position / 1000.0 + meta.start_offset/1000)
+		track.play((Conductor.position + meta.start_offset) / 1000)
 
 func end_song():
 	if not ending_song:
@@ -483,11 +483,12 @@ func do_event(name:String,parameters:Array[String]):
 
 func section_hit(section:int):
 	for track in tracks:
-		if abs((track.get_playback_position()*1000 - meta.start_offset) - (Conductor.position) )  >= 20: resync_tracks()
+		if abs((track.get_playback_position()*1000 - meta.start_offset) - (Conductor.position) )  >= 20:
+			resync_tracks()
+			
 	if note_data_array.size() == 0 and note_group.get_children().size() == 0:
-		get_tree().create_timer(meta.end_offset/1000).timeout.connect(end_song)
+		get_tree().create_timer((meta.end_offset/1000) / Conductor.rate).timeout.connect(end_song)
 		
-	
 	if not range(SONG.sections.size()).has(section): return
 	
 	script_group.call_func("on_section_hit", [section])
@@ -719,7 +720,7 @@ func good_note_hit(note:Note):
 		note.queue_free()
 	else:
 		note.anim_sprite.visible = false
-		note.length += note_diff
+		note.length += note_diff * Conductor.rate
 		note._player_hit()
 		note._note_hit(true)
 		script_group.call_func("on_note_hit", [note])
