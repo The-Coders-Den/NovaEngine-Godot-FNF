@@ -707,7 +707,7 @@ func good_note_hit(note:Note):
 	player.play_anim(sing_anim, true)
 	player.hold_timer = 0.0
 	
-	health += 0.023*note.health_gain_mult
+	health += 0.023 * note.health_gain_mult * judgement.health_gain_mult
 	
 	if note.length <= 0:
 		note._player_hit()
