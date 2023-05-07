@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cvdlr3wfsrmlc"]
+[gd_scene load_steps=25 format=3 uid="uid://cvdlr3wfsrmlc"]
 
 [ext_resource type="Script" path="res://scenes/OptionsMenu.gd" id="1_wsch7"]
 [ext_resource type="Texture2D" uid="uid://y8c4a1bk8wkl" path="res://assets/images/menus/menuBGDesat.png" id="2_di4mo"]
@@ -21,7 +21,6 @@
 [ext_resource type="Texture2D" uid="uid://dw8bh3jsxd3kl" path="res://assets/images/material_icons/volume-mute.png" id="16_ofedk"]
 [ext_resource type="Texture2D" uid="uid://s111e8ow38lw" path="res://assets/images/menus/options/switchModBind.png" id="17_q6en1"]
 [ext_resource type="FontFile" uid="uid://cf2wd6a4pa5kb" path="res://assets/fonts/funkin.ttf" id="17_u2vjg"]
-[ext_resource type="Script" path="res://scenes/gameplay/notes/Note.gd" id="22_2x3gw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2rif3"]
 bg_color = Color(1, 1, 1, 0)
@@ -50,7 +49,6 @@ theme = ExtResource("3_cmtlj")
 theme_override_constants/side_margin = 0
 
 [node name="Gameplay" type="TabBar" parent="TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="Downscroll" type="CheckBox" parent="TabContainer/Gameplay"]
@@ -212,6 +210,7 @@ theme_override_font_sizes/font_size = 16
 text = "Scroll Speed Type"
 
 [node name="Appearance" type="TabBar" parent="TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="FPS Counter" type="CheckBox" parent="TabContainer/Appearance"]
@@ -1016,7 +1015,6 @@ position = Vector2(884, 787)
 [node name="NoteTemplate" parent="." instance=ExtResource("9_rjold")]
 visible = false
 position = Vector2(-83.9998, 212)
-script = ExtResource("22_2x3gw")
 in_editor = true
 
 [node name="Notes" type="Node2D" parent="."]
