@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://duo1h603vpbjc"]
+[gd_scene load_steps=12 format=3 uid="uid://duo1h603vpbjc"]
 
 [ext_resource type="Script" path="res://scenes/FreeplayMenu.gd" id="1_fmw2k"]
 [ext_resource type="Resource" uid="uid://rkmusgpraddm" path="res://assets/freeplaySongList.tres" id="2_c5rpj"]
@@ -8,6 +8,9 @@
 [ext_resource type="Script" path="res://scripts/FreeplayAlphabet.gd" id="5_x5jdf"]
 [ext_resource type="Script" path="res://scripts/HealthIcon.gd" id="5_y3j5c"]
 [ext_resource type="FontFile" uid="uid://coqcg7h14duny" path="res://assets/fonts/vcr.ttf" id="8_rgyml"]
+[ext_resource type="Theme" uid="uid://br6hapg0jupnv" path="res://assets/styles/nova_purple_panel.tres" id="9_l28b6"]
+[ext_resource type="Theme" uid="uid://c7bhikvxte264" path="res://assets/styles/nova_purple.tres" id="10_8grtk"]
+[ext_resource type="Script" path="res://scenes/options/Display Slider Optionless.gd" id="11_g1sif"]
 
 [node name="FreeplayMenu" type="Node2D"]
 script = ExtResource("1_fmw2k")
@@ -38,6 +41,21 @@ offset_right = 1.0
 offset_bottom = 66.0
 color = Color(0, 0, 0, 0.6)
 
+[node name="InfoStrip" type="ColorRect" parent="."]
+offset_top = 688.0
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 0.6)
+
+[node name="TextShit" type="Label" parent="InfoStrip"]
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 281.0
+offset_bottom = 25.0
+theme_override_fonts/font = ExtResource("8_rgyml")
+theme_override_font_sizes/font_size = 18
+text = "CTRL - Open Gameplay Modifiers / SPACE - Listen to the selected song"
+
 [node name="ScoreText" type="Label" parent="."]
 offset_top = 5.0
 offset_right = 1.0
@@ -53,3 +71,125 @@ offset_bottom = 63.0
 theme_override_fonts/font = ExtResource("8_rgyml")
 theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
+
+[node name="SongTracks" type="Node" parent="."]
+
+[node name="GameplayModifiers" type="Panel" parent="."]
+visible = false
+offset_left = 372.0
+offset_top = 220.0
+offset_right = 908.0
+offset_bottom = 500.0
+theme = ExtResource("9_l28b6")
+
+[node name="Control" type="Control" parent="GameplayModifiers"]
+anchors_preset = 0
+offset_right = 537.0
+offset_bottom = 281.0
+theme = ExtResource("10_8grtk")
+
+[node name="Playback Rate" type="HSlider" parent="GameplayModifiers/Control"]
+offset_left = 14.0
+offset_top = 26.0
+offset_right = 527.0
+offset_bottom = 42.0
+tooltip_text = "Adjusts how early/late notes spawn during gameplay.
+Negative means early and positive means late.
+Useful for bluetooth headphones or something."
+theme = ExtResource("10_8grtk")
+min_value = 0.5
+max_value = 3.0
+step = 0.05
+value = 1.0
+script = ExtResource("11_g1sif")
+decimals = 2
+
+[node name="Title" type="Label" parent="GameplayModifiers/Control/Playback Rate"]
+layout_mode = 0
+offset_top = -20.0
+offset_right = 90.0
+offset_bottom = 6.0
+mouse_filter = 1
+theme_override_font_sizes/font_size = 16
+text = "Playback Rate"
+
+[node name="Display" type="Label" parent="GameplayModifiers/Control/Playback Rate"]
+layout_mode = 0
+offset_left = 449.0
+offset_top = -20.0
+offset_right = 514.0
+offset_bottom = 6.0
+text = "1"
+horizontal_alignment = 2
+
+[node name="Health Gain Mult" type="HSlider" parent="GameplayModifiers/Control"]
+offset_left = 14.0
+offset_top = 66.0
+offset_right = 527.0
+offset_bottom = 82.0
+tooltip_text = "Adjusts how early/late notes spawn during gameplay.
+Negative means early and positive means late.
+Useful for bluetooth headphones or something."
+theme = ExtResource("10_8grtk")
+min_value = 0.5
+max_value = 5.0
+step = 0.1
+value = 1.0
+script = ExtResource("11_g1sif")
+decimals = 1
+
+[node name="Title" type="Label" parent="GameplayModifiers/Control/Health Gain Mult"]
+layout_mode = 0
+offset_top = -20.0
+offset_right = 90.0
+offset_bottom = 6.0
+mouse_filter = 1
+theme_override_font_sizes/font_size = 16
+text = "Health Gain Mult"
+
+[node name="Display" type="Label" parent="GameplayModifiers/Control/Health Gain Mult"]
+layout_mode = 0
+offset_left = 449.0
+offset_top = -20.0
+offset_right = 514.0
+offset_bottom = 6.0
+text = "1"
+horizontal_alignment = 2
+
+[node name="Health Loss Mult" type="HSlider" parent="GameplayModifiers/Control"]
+offset_left = 14.0
+offset_top = 106.0
+offset_right = 527.0
+offset_bottom = 122.0
+tooltip_text = "Adjusts how early/late notes spawn during gameplay.
+Negative means early and positive means late.
+Useful for bluetooth headphones or something."
+theme = ExtResource("10_8grtk")
+min_value = 0.5
+max_value = 5.0
+step = 0.1
+value = 1.0
+script = ExtResource("11_g1sif")
+decimals = 1
+
+[node name="Title" type="Label" parent="GameplayModifiers/Control/Health Loss Mult"]
+layout_mode = 0
+offset_top = -20.0
+offset_right = 90.0
+offset_bottom = 6.0
+mouse_filter = 1
+theme_override_font_sizes/font_size = 16
+text = "Health Loss Mult"
+
+[node name="Display" type="Label" parent="GameplayModifiers/Control/Health Loss Mult"]
+layout_mode = 0
+offset_left = 449.0
+offset_top = -20.0
+offset_right = 514.0
+offset_bottom = 6.0
+text = "1"
+horizontal_alignment = 2
+
+[connection signal="value_changed" from="GameplayModifiers/Control/Playback Rate" to="GameplayModifiers/Control/Playback Rate" method="_on_value_changed"]
+[connection signal="value_changed" from="GameplayModifiers/Control/Health Gain Mult" to="GameplayModifiers/Control/Health Gain Mult" method="_on_value_changed"]
+[connection signal="value_changed" from="GameplayModifiers/Control/Health Loss Mult" to="GameplayModifiers/Control/Health Loss Mult" method="_on_value_changed"]

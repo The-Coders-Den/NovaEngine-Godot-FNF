@@ -64,7 +64,8 @@ func _process(delta):
 
 	cur_dec_step = last_change.step_time + ((position - last_change.song_time) / step_crochet)
 	cur_dec_beat = cur_dec_step / 4.0
-	cur_dec_section = cur_dec_step/16.0
+	cur_dec_section = cur_dec_step / 16.0
+	
 	if old_step != cur_step && cur_step > 0: step_hit.emit(cur_step)
 	if old_beat != cur_beat && cur_beat > 0: beat_hit.emit(cur_beat)
 	if old_section != cur_section && cur_section > 0: section_hit.emit(cur_section)

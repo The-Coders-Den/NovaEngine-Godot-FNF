@@ -42,3 +42,13 @@ offset_right = 21.0
 offset_bottom = 76.0
 theme_override_fonts/font = ExtResource("5_6nkco")
 theme_override_font_sizes/font_size = 32
+
+[node name="SkipTimeLabel" type="Label" parent="."]
+offset_left = 1.0
+offset_right = 210.0
+offset_bottom = 32.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("5_6nkco")
+theme_override_font_sizes/font_size = 64
+text = "0:00 / 0:00"

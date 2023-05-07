@@ -163,6 +163,7 @@ max_value = 10.0
 step = 0.1
 value = 2.7
 script = ExtResource("6_rfpqd")
+suffix = null
 option = "scroll speed"
 decimals = 1
 
