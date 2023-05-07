@@ -56,9 +56,8 @@ func _process(delta):
 		if position >= bpm_change_map[i].song_time:
 			last_change = bpm_change_map[i]
 			
-	if bpm != last_change.bpm:
-		change_bpm(last_change.bpm)
-			
+	if last_change.bpm > 0 and bpm != last_change.bpm: change_bpm(last_change.bpm)
+	
 	cur_step = last_change.step_time + floor((position - last_change.song_time) / step_crochet)
 	cur_beat = floor(cur_step / 4.0)
 	cur_section = floor(cur_step / 16)
