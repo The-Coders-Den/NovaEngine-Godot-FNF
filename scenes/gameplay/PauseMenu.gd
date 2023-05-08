@@ -3,6 +3,8 @@ extends CanvasLayer
 var options:PackedStringArray = [
 	"Resume",
 	"Restart Song",
+	"Skip Time",
+	"Skip Intro",
 	"Change Options",
 	"Exit To Menu"
 ]
@@ -11,13 +13,20 @@ var cur_selected:int = 0
 var music_volume:float = 0.0
 var final_volume:float = 0.5
 
-@onready var bg:ColorRect = $BG
-@onready var text_template:FreeplayAlphabet = $__TemplateItem__
-@onready var menu_items:Node2D = $MenuItems
+var cur_time:float = Conductor.position
+var hold_time:float = 0.0
+
 @onready var game:Gameplay = $"../"
+@onready var text_template:FreeplayAlphabet = $__TemplateItem__
+
+@onready var bg:ColorRect = $BG
+@onready var menu_items:Node2D = $MenuItems
 @onready var music:AudioStreamPlayer = $Music
+
 @onready var song_name:Label = $SongName
 @onready var difficulty:Label = $Difficulty
+
+@onready var skip_time_label:Label = $SkipTimeLabel
 
 func _ready() -> void:
 	get_tree().paused = true
@@ -25,6 +34,9 @@ func _ready() -> void:
 	music.volume_db = -80
 	music.play(randf_range(0.0, music.stream.get_length() * 0.5))
 	music.stream.loop = true
+	
+	if game.skipped_intro:
+		options.remove_at(options.find("Skip Intro"))
 	
 	for i in options.size():
 		var option:String = options[i]
@@ -37,6 +49,12 @@ func _ready() -> void:
 		new_item.visible = true
 		new_item.is_template = false
 		menu_items.add_child(new_item)
+		
+		if option == "Skip Time":
+			remove_child(skip_time_label)
+			new_item.add_child(skip_time_label)
+			
+			skip_time_label.position.x = new_item.size.x + 50
 		
 	change_selection()
 		
@@ -73,20 +91,91 @@ func change_selection(change:int = 0):
 		item.target_y = i - cur_selected
 		item.modulate.a = 1.0 if cur_selected == i else 0.6
 		
+	skip_time_label.visible = options[cur_selected] == "Skip Time"
 	Audio.play_sound("scrollMenu")
 
 func _process(delta):
+	var length:float = game.note_data_array[game.note_data_array.size()-1].time + game.meta.end_offset if game.note_data_array.size() > 0 else game.tracks[0].stream.get_length() * 1000.0
+	skip_time_label.text = "%s / %s" % [Global.format_time(cur_time / 1000.0), Global.format_time(length / 1000.0)]
+	
 	music_volume = clampf(music_volume + (0.01 * delta), 0.0, final_volume)
 	music.volume_db = linear_to_db(music_volume)
+	
+	match options[cur_selected]:
+		"Skip Time":
+			if Input.is_action_just_pressed("ui_left"):
+				cur_time = clampf(cur_time - 1000.0, 0.0, length)
+				
+			if Input.is_action_just_pressed("ui_right"):
+				cur_time = clampf(cur_time + 1000.0, 0.0, length)
+				
+			if Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right"):
+				hold_time += delta
+				if hold_time > 0.5:
+					hold_time = 0.435
+					cur_time = clampf(cur_time + (1000.0 * (-1.0 if Input.is_action_pressed("ui_left") else 1.0)), 0.0, length)
+			else:
+				hold_time = 0.0
 				
 	if Input.is_action_just_pressed("ui_accept"):
 		match options[cur_selected]:
 			"Resume":
 				get_tree().paused = false
+				game.resync_tracks()
 				queue_free()
 				
 			"Restart Song":
 				Global.reset_scene()
+				queue_free()
+				
+			"Skip Time":
+				# Remove bad notes
+				var old_pos:float = Conductor.position
+									
+				if cur_time != Conductor.position:
+					if game.countdown_timer != null:
+						game.countdown_timer.unreference()
+						game.countdown_timer = null
+						
+					if game.starting_song:
+						game.start_song()
+						
+					Conductor.position = cur_time
+					
+					if cur_time > old_pos:
+						while game.note_data_array.size() > 0:
+							if game.note_data_array[0].time >= cur_time + 500: break
+							game.note_data_array.pop_front()
+							
+						while game.note_group.get_child_count() > 0:
+							var c = game.note_group.get_child(0)
+							c.queue_free()
+							game.note_group.remove_child(c)
+					else:
+						game.note_data_array = []
+						game.gen_song(cur_time + 500)
+						
+				game.load_events()
+				
+				get_tree().paused = false
+				game.resync_tracks()
+				
+				queue_free()
+				
+			"Skip Intro":
+				game.skipped_intro = true
+				
+				if game.countdown_timer != null:
+					game.countdown_timer.unreference()
+					game.countdown_timer = null
+					
+				var first_note:Note = game.note_group.get_child(0) if game.note_group.get_child_count() > 0 else null
+				Conductor.position = clampf((first_note.time if first_note != null else game.note_data_array[0].time) - 1500.0, 0.0, INF)
+					
+				if not game.starting_song:
+					game.resync_tracks()
+				
+				get_tree().paused = false
 				queue_free()
 				
 			"Change Options":
@@ -97,7 +186,6 @@ func _process(delta):
 				queue_free()
 				
 			"Exit To Menu":
-				# no stororey mode  yet!
 				Audio.play_music("freakyMenu")
 				
 				Global.queued_songs = []

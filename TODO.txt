@@ -2,4 +2,5 @@ chart editor
 make mods menu look better
 make wiki/documentation
 group characters
-MAYBE multikey??
+MAYBE multikey?? (this will not be added for a while)
+gameplay modifiers

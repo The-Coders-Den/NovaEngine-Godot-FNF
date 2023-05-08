@@ -8,9 +8,17 @@ ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g8spc"]
-vertex_color_use_as_albedo = true
-vertex_color_is_srgb = true
+diffuse_mode = 1
 albedo_texture = ExtResource("2_ws5aa")
+uv1_scale = Vector3(-0.226, -0.226, -0.226)
+uv1_triplanar = true
+uv1_triplanar_sharpness = 150.0
+uv1_world_triplanar = true
+uv2_triplanar_sharpness = 150.0
+point_size = 128.0
+proximity_fade_distance = 215.58
+distance_fade_min_distance = 37.7
+distance_fade_max_distance = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_a3k1n"]
 material = SubResource("StandardMaterial3D_g8spc")
@@ -25,5 +33,5 @@ environment = SubResource("Environment_el0js")
 fov = 90.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.833867, 0, 0.551966, -0.454403, 0.567686, 0.686477, -0.313343, -0.823245, 0.473374, 0, 0, 0)
+transform = Transform3D(-0.835372, 0.434301, 0.337568, -0.163227, -0.781977, 0.601804, 0.525313, 0.447663, 0.723781, 0, 0, 0)
 mesh = SubResource("BoxMesh_a3k1n")

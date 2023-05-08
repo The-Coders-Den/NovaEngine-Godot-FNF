@@ -1,6 +1,7 @@
 extends OptionSlider
 class_name DisplaySlider
 
+@export var decimals:int = 10
 @export var suffix:String = ""
 @onready var display:Label = $Display
 

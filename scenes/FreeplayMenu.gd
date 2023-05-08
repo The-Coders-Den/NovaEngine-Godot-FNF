@@ -6,15 +6,25 @@ var cur_difficulty:int = 1
 var intended_score:int = 0
 var lerp_score:float = 0.0
 
+var song_meta:SongMetaData = SongMetaData.new()
+
 @export var song_list:FreeplaySongList = FreeplaySongList.new()
 
 @onready var bg:Sprite2D = $bg
 @onready var songs:CanvasGroup = $Songs
 @onready var song_template:FreeplayAlphabet = $__TemplateSong__
 
+@onready var song_tracks:Node = $SongTracks
+
 @onready var score_bg:ColorRect = $ScoreBG
 @onready var score_text:Label = $ScoreText
 @onready var diff_text:Label = $DiffText
+
+@onready var gameplay_modifiers:Panel = $GameplayModifiers
+
+@onready var playback_rate_slider:DisplaySliderOptionless = $"GameplayModifiers/Control/Playback Rate"
+@onready var health_gain_mult_slider:DisplaySliderOptionless = $"GameplayModifiers/Control/Health Gain Mult"
+@onready var health_loss_mult_slider:DisplaySliderOptionless = $"GameplayModifiers/Control/Health Loss Mult"
 
 func _ready():
 	super._ready()
@@ -26,6 +36,10 @@ func _ready():
 		
 		var song:FreeplayAlphabet = song_template.duplicate()
 		var icon:HealthIcon = song.get_node("HealthIcon")
+		
+		if meta.display_name == "dadbattle" and randf_range(0, 100) < 0.1:
+			meta.display_name = "baddattle"
+		
 		song.text = meta.display_name if meta.display_name != null and len(meta.display_name) > 0 else meta.song
 		icon.texture = meta.character_icon
 		icon.hframes = meta.icon_frames
@@ -39,6 +53,7 @@ func _ready():
 		
 	change_selection()
 	position_highscore()
+	update_sliders()
 		
 func change_selection(change:int = 0):
 	cur_selected = wrapi(cur_selected + change, 0, song_list.songs.size())
@@ -61,6 +76,17 @@ func change_difficulty(change:int = 0):
 	
 	position_highscore()
 	
+func _input(e):
+	if not e is InputEventMouseButton: return
+	var event:InputEventMouseButton = e
+	if not event.pressed: return
+	
+	match event.button_index:
+		MOUSE_BUTTON_WHEEL_UP:
+			change_selection(-1)
+			
+		MOUSE_BUTTON_WHEEL_DOWN:
+			change_selection(1)
 	
 func position_highscore():
 	score_text.text = "PERSONAL BEST:"+str(floor(lerp_score))
@@ -73,8 +99,28 @@ func position_highscore():
 	score_bg.position.x = Global.game_size.x - score_bg.scale.x
 	diff_text.position.x = score_bg.position.x + score_bg.scale.x / 2
 	diff_text.position.x -= diff_text.size.x / 2
+	
+var playing_song:bool = false
+	
+func _physics_process(delta):
+	if not playing_song: return
+	for t in song_tracks.get_children():
+		var track:AudioStreamPlayer = t
+		if not track.is_playing():
+			playing_song = false
+			get_tree().create_timer((song_meta.end_offset/1000) / Conductor.rate).timeout.connect(func(): Audio.play_music("freakyMenu"))
+			break
+
+func update_sliders():
+	playback_rate_slider.value = Conductor.rate
+	health_gain_mult_slider.value = Global.health_gain_mult
+	health_loss_mult_slider.value = Global.health_loss_mult
 
 func _process(delta):
+	Conductor.rate = playback_rate_slider.value
+	Global.health_gain_mult = health_gain_mult_slider.value
+	Global.health_loss_mult = health_loss_mult_slider.value
+	
 	bg.modulate = lerp(bg.modulate, song_list.songs[cur_selected].bg_color, delta * 60 * 0.045)
 	
 	lerp_score = lerpf(lerp_score, intended_score, clampf(delta * 60 * 0.4, 0.0, 1.0))
@@ -94,8 +140,42 @@ func _process(delta):
 		
 	if Input.is_action_just_pressed("ui_right"):
 		change_difficulty(1)
+		
+	if Input.is_action_just_pressed("open_gameplay_modifiers"):
+		gameplay_modifiers.visible = !gameplay_modifiers.visible
 	
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("space_bar"):
+		Audio.stop_music()
+		
+		var meta_path:String = "res://assets/songs/%s/meta" % song_list.songs[cur_selected].song.to_lower()
+		if ResourceLoader.exists(meta_path + ".tres"):
+			song_meta = load(meta_path + ".tres")
+			
+		if ResourceLoader.exists(meta_path + ".res"):
+			song_meta = load(meta_path + ".res")
+			
+		playing_song = true
+		
+		while song_tracks.get_child_count() > 0:
+			var m = song_tracks.get_child(0)
+			m.queue_free()
+			song_tracks.remove_child(m)
+			
+		var music_path:String = "res://assets/songs/%s/audio/" % song_list.songs[cur_selected].song.to_lower()
+		if DirAccess.dir_exists_absolute(music_path):
+			var dir := DirAccess.open(music_path)
+			for file in dir.get_files():
+				var music:AudioStreamPlayer = AudioStreamPlayer.new()
+				for f in Global.audio_formats:
+					if file.ends_with(f + ".import"):
+						music.stream = load(music_path + file.replace(".import",""))
+						music.pitch_scale = Conductor.rate
+						song_tracks.add_child(music)
+						
+		for music in song_tracks.get_children():
+			music.play()
+				
+	elif Input.is_action_just_pressed("ui_accept"):
 		Global.queued_songs = []
 		Global.is_story_mode = false
 		Global.current_difficulty = song_list.songs[cur_selected].difficulties[cur_difficulty]

@@ -6,10 +6,7 @@ const note_directions:Array[String] = [
 	"left", "down", "up", "right",
 ]
 
-var ui_skins:Dictionary = {
-	"default": preload("res://scenes/gameplay/ui_skins/default.tscn").instantiate(),
-	"pixel": preload("res://scenes/gameplay/ui_skins/pixel.tscn").instantiate(),
-}
+const audio_formats:PackedStringArray = [".ogg", ".mp3", ".wav"]
 
 var scene_arguments:Dictionary = {
 	"options_menu": {
@@ -26,6 +23,9 @@ var death_camera_zoom:Vector2 = Vector2.ONE
 var death_camera_pos:Vector2 = Vector2.ZERO
 var death_char_pos:Vector2 = Vector2(700, 360)
 var death_character:String = "bf-dead"
+
+var health_gain_mult:float = 1.0
+var health_loss_mult:float = 1.0
 
 var death_sound:AudioStream = preload("res://assets/sounds/death/fnf_loss_sfx.ogg")
 var death_music:AudioStream = preload("res://assets/music/gameOver.ogg")
@@ -156,8 +156,12 @@ func bytes_to_human(size:float) -> String:
 	
 	return str(r_size).pad_decimals(2) + labels[label]
 	
-func format_time(seconds: float) -> String:
-	var minutes_int: int = int(seconds / 60.0)
-	var seconds_int: int = int(seconds) % 60
+func float_to_minute(value:float) -> int:
+	return int(value / 60)
 	
-	return "%s:%s" % [minutes_int, add_zeros(str(seconds_int), 1)]
+func float_to_seconds(value:float) -> float: 
+	return fmod(value, 60)
+
+func format_time(value:float) -> String:
+	if value < 0.0: value = 0.0
+	return "%02d:%02d" % [float_to_minute(value), float_to_seconds(value)]

@@ -32,6 +32,7 @@ func toggle_mute():
 	update_volume()
 
 func change_by(amount:float):
+	SettingsAPI.set_setting("muted", false)
 	SettingsAPI.set_setting("volume", clampf(SettingsAPI.get_setting("volume") + amount, 0.0, 1.0))
 	SettingsAPI.flush()
 	show_panel()

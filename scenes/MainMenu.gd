@@ -66,6 +66,18 @@ func _process(delta):
 					_: print("bro how the fuck did you select "+button+"???")
 			)
 		)
+		
+func _input(e):
+	if not e is InputEventMouseButton: return
+	var event:InputEventMouseButton = e
+	if not event.pressed: return
+	
+	match event.button_index:
+		MOUSE_BUTTON_WHEEL_UP:
+			change_selection(-1)
+			
+		MOUSE_BUTTON_WHEEL_DOWN:
+			change_selection(1)
 	
 func change_selection(change:int = 0):
 	cur_selected = wrapi(cur_selected + change, 0, buttons.get_child_count())

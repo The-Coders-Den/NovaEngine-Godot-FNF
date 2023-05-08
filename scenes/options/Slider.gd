@@ -2,7 +2,6 @@ extends HSlider
 class_name OptionSlider
 
 @export var option:String = ""
-@export var decimals:int = 10
 
 func _ready():
 	value = SettingsAPI.get_setting(option)

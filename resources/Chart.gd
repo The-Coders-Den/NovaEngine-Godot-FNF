@@ -15,7 +15,7 @@ var stage:String = "stage"
 var ui_skin:String = "default"
 
 static func load_chart(song:String, difficulty:String = "normal"):
-	var json = JSON.parse_string(FileAccess.open("res://assets/songs/"+song+"/"+difficulty+".json", FileAccess.READ).get_as_text()).song
+	var json = JSON.parse_string(FileAccess.open("res://assets/songs/"+song.to_lower()+"/"+difficulty+".json", FileAccess.READ).get_as_text()).song
 	
 	var chart = new()
 	chart.name = json.song

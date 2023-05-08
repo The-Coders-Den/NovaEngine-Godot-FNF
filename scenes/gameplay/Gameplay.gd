@@ -4,11 +4,16 @@ class_name Gameplay
 var template_notes:Dictionary = {
 	"default": preload("res://scenes/gameplay/notes/Default.tscn").instantiate(),
 }
+
+var template_events:Dictionary = {}
+
 var OPPONENT_HEALTH_COLOR:StyleBoxFlat = preload("res://assets/styles/healthbar/opponent.tres")
 var PLAYER_HEALTH_COLOR:StyleBoxFlat = preload("res://assets/styles/healthbar/player.tres")
 
 var SONG:Chart = Global.SONG
+var meta:SongMetaData = SongMetaData.new()
 var note_data_array:Array[SectionNote] = []
+var event_data_array:Array[SongEvent] = []
 
 var starting_song:bool = true
 var ending_song:bool = false
@@ -47,6 +52,8 @@ var cpu_strums:StrumLine
 var player_strums:StrumLine
 
 var default_cam_zoom:float = 1.05
+
+var skipped_intro:bool = false
 	
 var accuracy:float:
 	get:
@@ -60,7 +67,7 @@ var ui_skin:UISkin
 
 @onready var strumlines:Node2D = $HUD/StrumLines
 
-@onready var note_group:Node2D = $HUD/Notes
+@onready var note_group:NoteGroup = $HUD/Notes
 @onready var combo_group:Node2D = $Ratings
 
 @onready var rating_template:VelocitySprite = $Ratings/RatingTemplate
@@ -72,9 +79,6 @@ var ui_skin:UISkin
 @onready var cpu_icon:Sprite2D = $HUD/HealthBar/ProgressBar/CPUIcon
 @onready var player_icon:Sprite2D = $HUD/HealthBar/ProgressBar/PlayerIcon
 @onready var score_text:Label = $HUD/HealthBar/ScoreText
-
-@onready var inst:AudioStreamPlayer = $Inst
-@onready var voices:AudioStreamPlayer = $Voices
 
 @onready var countdown_sprite:Sprite2D = $HUD/CountdownSprite
 
@@ -93,42 +97,28 @@ const ZOOM_DELTA_MULTIPLIER:float = 60 * 0.05
 
 signal paused
 
-func _ready() -> void:
-	super._ready()
-	get_tree().paused = false
+var tracks:Array[AudioStreamPlayer] = []
+
+func load_song():
+	var music_path:String = "res://assets/songs/%s/audio/" % SONG.name.to_lower()
 	
-	Audio.stop_music()
-	
-	Ranking.judgements = Ranking.default_judgements.duplicate(true)
-	Ranking.ranks = Ranking.default_ranks.duplicate(true)
-	
-	if Global.SONG == null:
-		Global.SONG = Chart.load_chart("tutorial", "hard")
-		SONG = Global.SONG
+	if DirAccess.dir_exists_absolute(music_path):
+		var dir = DirAccess.open(music_path)
 		
-	scroll_speed = SONG.scroll_speed
-	if SettingsAPI.get_setting("scroll speed") > 0:
-		match SettingsAPI.get_setting("scroll speed type").to_lower():
-			"multiplier":
-				scroll_speed *= SettingsAPI.get_setting("scroll speed")
-			"constant":
-				scroll_speed = SettingsAPI.get_setting("scroll speed")
-	
-	ui_skin = Global.ui_skins[SONG.ui_skin]
-		
-	inst.stream = load("res://assets/songs/"+SONG.name.to_lower()+"/Inst.ogg")
-	inst.pitch_scale = Conductor.rate
-	inst.finished.connect(end_song)
-	
-	voices.stream = load("res://assets/songs/"+SONG.name.to_lower()+"/Voices.ogg")
-	voices.pitch_scale = Conductor.rate
-		
-	Conductor.map_bpm_changes(SONG)
-	Conductor.change_bpm(SONG.bpm)
-	Conductor.position = Conductor.crochet * -5
-		
+		for file in dir.get_files():
+			var music:AudioStreamPlayer = AudioStreamPlayer.new()
+			for f in Global.audio_formats:
+				if file.ends_with(f + ".import"):
+					music.stream = load(music_path + file.replace(".import",""))
+					music.pitch_scale = Conductor.rate
+					tracks.append(music)
+
+func gen_song(delete_before_time:float = -1.0):
 	for section in SONG.sections:
 		for note in section.notes:
+			if note.time <= delete_before_time:
+				continue
+				
 			# i can't use fucking duplicate
 			# it fucks up!!!
 			var n = SectionNote.new()
@@ -146,6 +136,105 @@ func _ready() -> void:
 			note_data_array.append(n)
 			
 	note_data_array.sort_custom(func(a, b): return a.time < b.time)
+
+func load_event_array(event_array:Array[Variant]) -> Array[SongEvent]:
+	var return_events:Array[SongEvent] = []
+	
+	# newer multi-event style
+	if event_array[1] is Array:
+		for inner_event in event_array[1]:
+			var song_event:SongEvent = SongEvent.new()
+			song_event.time = event_array[0]
+			song_event.name = inner_event[0]
+			song_event.parameters = [inner_event[1], inner_event[2]]
+			return_events.append(song_event)
+	# older one-event style
+	else:
+		var song_event:SongEvent = SongEvent.new()
+		song_event.time = event_array[0]
+		song_event.name = event_array[2]
+		song_event.parameters = [event_array[3], event_array[4]]
+		return_events.append(song_event)
+	
+	return return_events
+
+func load_events() -> void:
+	var event_path:String = "res://assets/songs/%s/events.json" % SONG.name.to_lower()
+	
+	if not ResourceLoader.exists(event_path):
+		return
+	
+	var event_data:Dictionary = \
+			JSON.parse_string(FileAccess.open(event_path, FileAccess.READ).get_as_text()).song
+	
+	if not event_data.has('events'):
+		event_data['events'] = []
+	if not event_data.has('notes'):
+		event_data['notes'] = []
+	
+	for event in event_data.events:
+		for song_event in load_event_array(event):
+			event_data_array.append(song_event)
+			
+			if not template_events.has(song_event.name):
+				var song_event_path:String = "res://scenes/gameplay/events/%s.tscn" % song_event.name
+				if ResourceLoader.exists(song_event_path):
+					template_events[song_event.name] = load(song_event_path).instantiate()
+				else:
+					printerr("event not found: %s" % song_event.name)
+	
+	for section in event_data.notes:
+		for note in section.sectionNotes:
+			if note[1] is Array or note[1] < 0:
+				for song_event in load_event_array(note):
+					event_data_array.append(song_event)
+					
+					if not template_events.has(song_event.name):
+						var song_event_path:String = "res://scenes/gameplay/events/%s.tscn" % song_event.name
+						if ResourceLoader.exists(song_event_path):
+							template_events[song_event.name] = load(song_event_path).instantiate()
+						else:
+							printerr("event not found: %s" % song_event.name)
+
+func _ready() -> void:
+	super._ready()
+	get_tree().paused = false
+	
+	Audio.stop_music()
+	
+	Ranking.judgements = Ranking.default_judgements.duplicate(true)
+	Ranking.ranks = Ranking.default_ranks.duplicate(true)
+	
+	if Global.SONG == null:
+		Global.SONG = Chart.load_chart("tutorial", "hard")
+		SONG = Global.SONG
+		
+	var meta_path:String = "res://assets/songs/" + SONG.name.to_lower() + "/meta"
+	if ResourceLoader.exists(meta_path + ".tres"):
+		meta = load(meta_path + ".tres")
+		
+	if ResourceLoader.exists(meta_path + ".res"):
+		meta = load(meta_path + ".res")
+	
+	scroll_speed = SONG.scroll_speed
+	if SettingsAPI.get_setting("scroll speed") > 0:
+		match SettingsAPI.get_setting("scroll speed type").to_lower():
+			"multiplier":
+				scroll_speed *= SettingsAPI.get_setting("scroll speed")
+			"constant":
+				scroll_speed = SettingsAPI.get_setting("scroll speed")
+	
+	ui_skin = load("res://scenes/gameplay/ui_skins/"+SONG.ui_skin+".tscn").instantiate()
+	# music shit
+	
+	load_song()
+		
+	Conductor.map_bpm_changes(SONG)
+	Conductor.change_bpm(SONG.bpm)
+	Conductor.position = Conductor.crochet * -5
+	
+	gen_song()
+	load_events()
 	
 	health = max_health * 0.5
 	
@@ -246,6 +335,9 @@ func _ready() -> void:
 		hud.add_child(combo_group)
 		
 	combo_group.move_to_front()
+	combo_group.remove_child(rating_template)
+	combo_group.remove_child(combo_template)
+	
 	update_camera()
 	
 	for i in player_strums.get_child_count():
@@ -258,7 +350,6 @@ func _ready() -> void:
 	
 	stage.callv("_ready_post", [])
 	script_group.call_func("_ready_post", [])
-	print(template_notes)
 	
 func start_cutscene(postfix:String = "-start"):
 	var cutscene_path = "res://scenes/gameplay/cutscenes/" + SONG.name.to_lower() + postfix + ".tscn"
@@ -269,11 +360,15 @@ func start_cutscene(postfix:String = "-start"):
 		return true
 		
 	return false
+	
+var countdown_timer:SceneTreeTimer
 		
 # yo thanks srt for doing it for me i think i was boutta
 # forgor anyway :skoil: ~swordcube
 func start_countdown():
-	start_cutscene()
+	if Global.is_story_mode:
+		start_cutscene()
+		
 	countdown_sprite.scale = Vector2(ui_skin.countdown_scale, ui_skin.countdown_scale)
 	countdown_sprite.texture_filter = TEXTURE_FILTER_LINEAR if ui_skin.antialiasing else TEXTURE_FILTER_NEAREST
 	
@@ -281,7 +376,9 @@ func start_countdown():
 	countdown_ready_sound.stream = ui_skin.ready_sound
 	countdown_set_sound.stream = ui_skin.set_sound
 	countdown_go_sound.stream = ui_skin.go_sound
-	get_tree().create_timer((Conductor.crochet / 1000) / Conductor.rate, false).timeout.connect(countdown_tick)
+	
+	countdown_timer = get_tree().create_timer((Conductor.crochet / 1000) / Conductor.rate, false)
+	countdown_timer.timeout.connect(countdown_tick)
 	
 	stage.callv("on_start_countdown", [])
 	script_group.call_func("on_start_countdown", [])
@@ -326,7 +423,8 @@ func countdown_tick():
 	
 	countdown_ticks -= 1
 	if countdown_ticks >= 0:
-		get_tree().create_timer((Conductor.crochet / 1000) / Conductor.rate, false).timeout.connect(countdown_tick)
+		countdown_timer = get_tree().create_timer((Conductor.crochet / 1000) / Conductor.rate, false)
+		countdown_timer.timeout.connect(countdown_tick)
 
 func start_song():
 	character_bop()
@@ -334,12 +432,18 @@ func start_song():
 	starting_song = false
 	Conductor.position = 0.0
 	
-	inst.play()
-	voices.play()
+	for track in tracks:
+		add_child(track)
+		track.play(meta.start_offset/1000)
 	
 	stage.callv("on_start_song", [])
 	script_group.call_func("on_start_song", [])
 	
+func resync_tracks():
+	for track in tracks:
+		track.stop()
+		track.play((Conductor.position + meta.start_offset) / 1000)
+
 func end_song():
 	if not ending_song:
 		ending_song = true
@@ -360,6 +464,7 @@ func end_song():
 		Global.switch_scene("res://scenes/FreeplayMenu.tscn" if !Global.is_story_mode else "res://scenes/StoryMenu.tscn")
 	
 func beat_hit(beat:int):
+	stage.callv("on_beat_hit", [beat])
 	script_group.call_func("on_beat_hit", [beat])
 	
 	if icon_bumping and icon_bumping_interval > 0 and beat % icon_bumping_interval == 0:
@@ -374,24 +479,33 @@ func beat_hit(beat:int):
 		
 	character_bop()
 	
+	stage.callv("on_beat_hit_post", [beat])
 	script_group.call_func("on_beat_hit_post", [beat])
 	
 func step_hit(step:int):
 	script_group.call_func("on_step_hit", [step])
-	
-	if not ending_song and ((not Conductor.is_sound_synced(inst)) or (voices.stream != null and (not Conductor.is_sound_synced(voices)) and voices.get_playback_position() < voices.stream.get_length())):
-		resync_vocals()
-		
 	script_group.call_func("on_step_hit_post", [step])
 
+func do_event(name:String,parameters:Array[String]):
+	var ev:Event = load("res://scenes/events/" + name + ".tscn").instantiate()
+	ev.parameters = parameters
+	add_child(ev)
+	
+
 func section_hit(section:int):
+	for track in tracks:
+		if abs((track.get_playback_position()*1000 - meta.start_offset) - (Conductor.position) )  >= 20:
+			resync_tracks()
+			
+	if note_data_array.size() == 0 and note_group.get_children().size() == 0:
+		get_tree().create_timer((meta.end_offset/1000) / Conductor.rate).timeout.connect(end_song)
+		
+	if not range(SONG.sections.size()).has(section): return
+	
 	script_group.call_func("on_section_hit", [section])
 
 	if cam_switching:
 		update_camera(section)
-		
-	if SONG.sections[section].change_bpm:
-		Conductor.change_bpm(SONG.sections[section].bpm)
 
 	script_group.call_func("on_section_hit_post", [section])
 
@@ -412,9 +526,9 @@ func update_camera(sec:int = 0):
 	
 	var cur_sec:Section = SONG.sections[sec]
 	if cur_sec != null and cur_sec.is_player:
-		camera.position = player.get_camera_pos()
+		camera.position = player.get_camera_pos() + stage.player_cam_offset
 	else:
-		camera.position = opponent.get_camera_pos()
+		camera.position = opponent.get_camera_pos() + stage.opponent_cam_offset
 		
 	script_group.call_func("on_update_camera", [])
 	
@@ -422,19 +536,6 @@ func position_hud():
 	hud.offset.x = (hud.scale.x - 1.0) * -(Global.game_size.x * 0.5)
 	hud.offset.y = (hud.scale.y - 1.0) * -(Global.game_size.y * 0.5)
 		
-func resync_vocals():
-	if ending_song: return
-	
-	inst.stop()
-	voices.stop()
-	
-	inst.play(Conductor.position / 1000.0)
-	voices.play(Conductor.position / 1000.0)
-	
-	inst.seek(Conductor.position / 1000.0)
-	voices.seek(Conductor.position / 1000.0)
-	
-	script_group.call_func("on_resync_vocals", [])
 
 func key_from_event(event:InputEventKey):
 	var data:int = -1
@@ -499,12 +600,11 @@ func _input(event):
 			script_group.call_func("on_ghost_tap", [data])
 			
 func fake_miss(direction:int = -1):
-	health -= 0.0475
+	health -= 0.0475 * Global.health_loss_mult
 	misses += 1
 	score -= 10
 	combo = 0
 	accuracy_pressed_notes += 1
-	voices.volume_db = -80
 	update_score_text()
 	
 	if direction < 0: return
@@ -526,6 +626,11 @@ func pop_up_score(judgement:Judgement) -> void:
 	accuracy_total_hit += judgement.accuracy_gain
 	score += judgement.score
 	combo += 1
+	
+	if not SettingsAPI.get_setting('judgement stacking'):
+		for child in combo_group.get_children():
+			combo_group.remove_child(child)
+			child.queue_free()
 	
 	display_judgement(judgement, pop_up_score_tweener)
 	display_combo(pop_up_score_tweener)
@@ -570,8 +675,7 @@ var ms_tween:Tween
 func good_note_hit(note:Note):
 	if note.was_good_hit: return
 	
-	
-	voices.volume_db = 0
+	skipped_intro = true
 	
 	var note_diff:float = (note.time - Conductor.position) / Conductor.rate
 	var judgement:Judgement = Ranking.judgement_from_time(note_diff)
@@ -616,7 +720,7 @@ func good_note_hit(note:Note):
 	player.play_anim(sing_anim, true)
 	player.hold_timer = 0.0
 	
-	health += 0.023*note.health_gain_mult
+	health += 0.023 * note.health_gain_mult * judgement.health_gain_mult * Global.health_gain_mult
 	
 	if note.length <= 0:
 		note._player_hit()
@@ -626,7 +730,7 @@ func good_note_hit(note:Note):
 		note.queue_free()
 	else:
 		note.anim_sprite.visible = false
-		note.length += note_diff
+		note.length += note_diff * Conductor.rate
 		note._player_hit()
 		note._note_hit(true)
 		script_group.call_func("on_note_hit", [note])
@@ -695,6 +799,29 @@ func _process(delta:float) -> void:
 		if Conductor.position >= 0.0 and starting_song:
 			start_song()
 	
+	for sprite in combo_group.get_children():
+		VelocitySprite._process_sprite(sprite, delta)
+	
+	if Input.is_action_just_pressed("ui_pause") and not Global.transitioning:
+		emit_signal("paused")
+		add_child(load("res://scenes/gameplay/PauseMenu.tscn").instantiate())
+	
+	stage.callv("_process_post", [delta])
+	script_group.call_func("_process_post", [delta])
+
+func _physics_process(delta: float) -> void:
+	while (not event_data_array.is_empty()) and Conductor.position >= event_data_array[0].time:
+		print('running %s at %.3f ms with %s.' % [event_data_array[0].name,
+				event_data_array[0].time,
+				event_data_array[0].parameters])
+		
+		if template_events.has(event_data_array[0].name):
+			var event:Event = template_events[event_data_array[0].name].duplicate()
+			event.parameters = event_data_array[0].parameters
+			add_child(event)
+		
+		event_data_array.pop_front()
+		
 	for note in note_data_array:
 		if note.time > Conductor.position + (2500 / (scroll_speed / Conductor.rate)): break
 		
@@ -725,16 +852,6 @@ func _process(delta:float) -> void:
 		script_group.call_func("on_note_spawn", [new_note])
 		
 		note_data_array.erase(note)
-	
-	for sprite in combo_group.get_children():
-		VelocitySprite._process_sprite(sprite, delta)
-	
-	if Input.is_action_just_pressed("ui_pause") and not Global.transitioning:
-		emit_signal("paused")
-		add_child(load("res://scenes/gameplay/PauseMenu.tscn").instantiate())
-	
-	stage.callv("_process_post", [delta])
-	script_group.call_func("_process_post", [delta])
 
 func _exit_tree():
 	script_group.call_func("on_destroy", [])

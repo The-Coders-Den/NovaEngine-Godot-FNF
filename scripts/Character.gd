@@ -34,7 +34,7 @@ var anim_finished:bool = false
 var _is_true_player:bool = false
 var dance_on_beat:bool = true
 
-var initial_size:Vector2
+var initial_size:Vector2 = Vector2.ZERO
 
 func _ready():
 	anim_sprite.speed_scale = Conductor.rate
@@ -44,10 +44,11 @@ func _ready():
 	anim_player.connect("animation_finished", func(name): anim_finished = true)
 	dance(true)
 	
-	initial_size = Vector2(
-		anim_sprite.sprite_frames.get_frame_texture(anim_sprite.animation, 0).get_width(),
-		anim_sprite.sprite_frames.get_frame_texture(anim_sprite.animation, 0).get_height()
-	)
+	if anim_sprite.sprite_frames:
+		initial_size = Vector2(
+			anim_sprite.sprite_frames.get_frame_texture(anim_sprite.animation, 0).get_width(),
+			anim_sprite.sprite_frames.get_frame_texture(anim_sprite.animation, 0).get_height()
+		)
 	if is_player != _is_true_player:
 		scale.x *= -1
 		anim_sprite.position.x -= initial_size.x * absf(anim_sprite.scale.x)

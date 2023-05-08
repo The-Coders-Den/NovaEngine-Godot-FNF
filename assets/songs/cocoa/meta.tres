@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SongMetaData" load_steps=2 format=3 uid="uid://csvpjhjh0jgtf"]
+
+[ext_resource type="Script" path="res://resources/SongMetaData.gd" id="1_jp15r"]
+
+[resource]
+script = ExtResource("1_jp15r")
+start_offset = 0.0
+end_offset = 3500.0

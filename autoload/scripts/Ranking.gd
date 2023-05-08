@@ -1,10 +1,10 @@
 extends Node
 
 var default_judgements:Array[Judgement] = [
-	Judgement.create("sick", 350, 45.0, 1.0, true, Color.CYAN),
-	Judgement.create("good", 200, 75.0, 0.7, false, Color.GREEN),
-	Judgement.create("bad", 100, 90.0, 0.3, false, Color.YELLOW),
-	Judgement.create("shit", 50, 135.0, 0.0, false, Color.RED)
+	Judgement.create("sick", 350, 45.0, 1.0, 1.0, true, Color.CYAN),
+	Judgement.create("good", 200, 75.0, 0.7, 1.0, false, Color.GREEN),
+	Judgement.create("bad", 100, 90.0, 0.3, 0.75, false, Color.YELLOW),
+	Judgement.create("shit", 50, 135.0, 0.0, -4.5, false, Color.RED)
 ]
 var default_ranks:Array[AccuracyRank] = [
 	AccuracyRank.create("S+", 100.0),

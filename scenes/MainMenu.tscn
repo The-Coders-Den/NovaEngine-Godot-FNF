@@ -113,19 +113,14 @@ libraries = {
 [node name="Version" type="Label" parent="PB/UILayer"]
 offset_left = 9.0
 offset_top = 702.0
-offset_right = 588.0
-offset_bottom = 935.0
+offset_right = 239.0
+offset_bottom = 717.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
 theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("7_fi2y3")
 theme_override_font_sizes/font_size = 16
-text = "Nova Engine Godot v1.1.0
-
-if you piss in reverse, you actually shit yourself! - voiddev
-pissing in slow motion would be weird as fuck - swordcube
-pissing fast is just a x2 multiplier irl - alexg1247
-Godot /ˈɡɒdoʊ/[a] is a cross-platform, free and open-source game engine released under the MIT license. It was initially developed by Argentine software developers Juan Linietsky and Ariel Manzur[7] for several companies in Latin America prior to its public release.[8] The development environment runs on multiple operating systems including Linux, BSDs, macOS, and Microsoft Windows. It is designed to create both 2D and 3D games targeting PC, mobile, and web platforms and can also be used to develop non-game software, including editors. - leather128"
+text = "Nova Engine Godot v1.2.0"
 autowrap_mode = 3
 
 [node name="Camera2D" type="Camera2D" parent="."]

@@ -25,8 +25,7 @@ var was_good_hit:bool = false
 var too_late:bool = false
 
 var step_crochet:float = 0.0
-
-var note_skin:UISkin = Global.ui_skins["default"]
+var note_skin:UISkin
 
 @onready var game:Gameplay
 
@@ -58,6 +57,9 @@ func _player_miss() -> void:
 func _ready() -> void:
 	if not in_editor:
 		game = $"../../../"
+		note_skin = game.ui_skin
+	else:
+		note_skin = load("res://scenes/gameplay/ui_skins/default.tscn").instantiate()
 		
 	if length < 50: length = 0
 	
@@ -108,8 +110,9 @@ func _process(delta: float) -> void:
 	else:
 		clip_rect.position.y = 0
 		sustain.position.y = 0
-		
+	
+	var last_point:int = sustain.points.size() - 1
 	var scroll_speed:float = game.scroll_speed if not in_editor else SettingsAPI.get_setting("scroll speed")
-	sustain.points[1].y = (((length / 2.5) * (scroll_speed / Conductor.rate)) / scale.y) * downscroll_mult
-	sustain_end.position.y = sustain.points[1].y + (((sustain_end.texture.get_height() * sustain_end.scale.y) * 0.5) * downscroll_mult)
+	sustain.points[last_point].y = (((length / 2.5) * (scroll_speed / Conductor.rate)) / scale.y) * downscroll_mult
+	sustain_end.position.y = sustain.points[last_point].y + (((sustain_end.texture.get_height() * sustain_end.scale.y) * 0.5) * downscroll_mult)
 	sustain_end.flip_v = downscroll_mult < 0
