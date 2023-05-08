@@ -48,6 +48,7 @@ offset_bottom = 720.0
 color = Color(0, 0, 0, 0.6)
 
 [node name="TextShit" type="Label" parent="InfoStrip"]
+layout_mode = 0
 offset_left = 6.0
 offset_top = 6.0
 offset_right = 281.0
@@ -89,6 +90,7 @@ offset_bottom = 281.0
 theme = ExtResource("10_8grtk")
 
 [node name="Playback Rate" type="HSlider" parent="GameplayModifiers/Control"]
+layout_mode = 0
 offset_left = 14.0
 offset_top = 26.0
 offset_right = 527.0
@@ -123,6 +125,7 @@ text = "1"
 horizontal_alignment = 2
 
 [node name="Health Gain Mult" type="HSlider" parent="GameplayModifiers/Control"]
+layout_mode = 0
 offset_left = 14.0
 offset_top = 66.0
 offset_right = 527.0
@@ -157,6 +160,7 @@ text = "1"
 horizontal_alignment = 2
 
 [node name="Health Loss Mult" type="HSlider" parent="GameplayModifiers/Control"]
+layout_mode = 0
 offset_left = 14.0
 offset_top = 106.0
 offset_right = 527.0

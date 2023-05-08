@@ -130,9 +130,9 @@ min_value = -5000.0
 max_value = 5000.0
 step = 5.0
 script = ExtResource("6_rfpqd")
+decimals = 0
 suffix = "ms"
 option = "note offset"
-decimals = 0
 
 [node name="Title" type="Label" parent="TabContainer/Gameplay/Note Offset"]
 layout_mode = 0
@@ -163,9 +163,9 @@ max_value = 10.0
 step = 0.1
 value = 2.7
 script = ExtResource("6_rfpqd")
+decimals = 1
 suffix = null
 option = "scroll speed"
-decimals = 1
 
 [node name="Title" type="Label" parent="TabContainer/Gameplay/Scroll Speed"]
 layout_mode = 0

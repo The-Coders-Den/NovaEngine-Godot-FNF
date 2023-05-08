@@ -383,7 +383,7 @@ _data = {
 script = ExtResource("1_cermu")
 sing_duration = 6.1
 health_icon = ExtResource("2_ml8k3")
-health_color = Color(0.494118, 0.494118, 0.494118, 1)
+health_color = Color(0.121569, 0.121569, 0.121569, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 240)
