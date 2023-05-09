@@ -93,6 +93,14 @@ func play_anim(anim:String, force:bool = false):
 			anim = "singRIGHT"
 		elif anim == "singRIGHT":
 			anim = "singLEFT"
+		elif anim == "singLEFT-alt":
+			anim = "singRIGHT-alt"
+		elif anim == "singRIGHT-alt":
+			anim = "singLEFT-alt"
+			
+	# lazy ass fix for alt anim sections not working
+	if not anim_player.has_animation(anim):
+		anim = anim.replace("-alt", "")
 			
 	if not anim_player.has_animation(anim):
 		push_warning("Animation \""+anim+"\" doesn't exist.")
