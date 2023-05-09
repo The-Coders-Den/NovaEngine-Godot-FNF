@@ -1,8 +1,45 @@
-[gd_scene load_steps=4 format=3 uid="uid://crjiwnwuatn6u"]
+[gd_scene load_steps=10 format=3 uid="uid://crjiwnwuatn6u"]
 
 [ext_resource type="Script" path="res://tools/SM to FNF Converter.gd" id="1_gfpcq"]
 [ext_resource type="Texture2D" uid="uid://y8c4a1bk8wkl" path="res://assets/images/menus/menuBGDesat.png" id="2_gs7lv"]
 [ext_resource type="Theme" uid="uid://br6hapg0jupnv" path="res://assets/styles/nova_purple_panel.tres" id="3_7vfew"]
+[ext_resource type="FontFile" uid="uid://coqcg7h14duny" path="res://assets/fonts/vcr.ttf" id="4_3kaqm"]
+[ext_resource type="Theme" uid="uid://blt3c0a5po0yj" path="res://assets/styles/nova_purple_button.tres" id="4_gw78g"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o4m6x"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.270588, 0.211765, 0.309804, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jb7pg"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.270588, 0.211765, 0.309804, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_45ray"]
+bg_color = Color(0.223529, 0.176471, 0.254902, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Theme" id="Theme_fsgyb"]
+default_font = ExtResource("4_3kaqm")
+Button/styles/focus = SubResource("StyleBoxFlat_o4m6x")
+Button/styles/hover = SubResource("StyleBoxFlat_jb7pg")
+Button/styles/normal = SubResource("StyleBoxFlat_45ray")
 
 [node name="SM to FNF" type="Node2D"]
 script = ExtResource("1_gfpcq")
@@ -13,10 +50,10 @@ position = Vector2(640, 360)
 texture = ExtResource("2_gs7lv")
 
 [node name="Label" type="Label" parent="."]
-offset_left = 189.0
-offset_top = 39.0
-offset_right = 371.0
-offset_bottom = 91.0
+offset_left = 449.0
+offset_top = 37.0
+offset_right = 873.0
+offset_bottom = 89.0
 text = "converter not done yet. also it doesnt work at all :skull:
 sorry nothing"
 
@@ -33,54 +70,65 @@ offset_left = 29.0
 offset_top = 21.0
 offset_right = 186.0
 offset_bottom = 47.0
-text = "sm to fnf converyter"
+text = "StepMania to FNF Chart converter"
 
 [node name="player1" type="LineEdit" parent="Panel"]
 layout_mode = 0
-offset_left = 3.0
+offset_left = 31.0
 offset_top = 63.0
-offset_right = 247.0
+offset_right = 275.0
 offset_bottom = 101.0
+theme = ExtResource("4_gw78g")
+text = "bf"
 placeholder_text = "player1"
 
 [node name="player2" type="LineEdit" parent="Panel"]
 layout_mode = 0
-offset_left = 3.0
+offset_left = 31.0
 offset_top = 108.0
-offset_right = 247.0
+offset_right = 275.0
 offset_bottom = 146.0
+theme = ExtResource("4_gw78g")
+text = "dad"
 placeholder_text = "player2"
 
 [node name="spectator" type="LineEdit" parent="Panel"]
 layout_mode = 0
-offset_left = 3.0
+offset_left = 31.0
 offset_top = 153.0
-offset_right = 247.0
+offset_right = 275.0
 offset_bottom = 191.0
+theme = ExtResource("4_gw78g")
+text = "gf"
 placeholder_text = "spectator"
 
 [node name="scroll_speed" type="LineEdit" parent="Panel"]
 layout_mode = 0
-offset_left = 3.0
+offset_left = 31.0
 offset_top = 199.0
-offset_right = 247.0
+offset_right = 275.0
 offset_bottom = 237.0
+theme = ExtResource("4_gw78g")
+text = "2.5"
 placeholder_text = "scroll speed"
 
 [node name="song_name" type="LineEdit" parent="Panel"]
 layout_mode = 0
-offset_left = 4.0
+offset_left = 32.0
 offset_top = 245.0
-offset_right = 248.0
+offset_right = 276.0
 offset_bottom = 283.0
+theme = ExtResource("4_gw78g")
+text = "testing"
 placeholder_text = "song name"
 
 [node name="snapping" type="SpinBox" parent="Panel"]
 layout_mode = 0
-offset_left = 4.0
+offset_left = 32.0
 offset_top = 288.0
-offset_right = 248.0
+offset_right = 276.0
 offset_bottom = 326.0
+theme = ExtResource("4_gw78g")
 min_value = 4.0
 max_value = 192.0
 value = 16.0
@@ -92,12 +140,13 @@ offset_right = 1205.0
 offset_bottom = 328.0
 theme = ExtResource("3_7vfew")
 
-[node name="Button" type="Button" parent="Panel2"]
+[node name="Select Chart" type="Button" parent="Panel2"]
 layout_mode = 0
 offset_left = 24.0
 offset_top = 55.0
 offset_right = 217.0
 offset_bottom = 102.0
+theme = ExtResource("4_gw78g")
 text = "Select (.sm) files"
 
 [node name="Label" type="Label" parent="Panel2"]
@@ -121,6 +170,7 @@ offset_left = 24.0
 offset_top = 55.0
 offset_right = 217.0
 offset_bottom = 102.0
+theme = ExtResource("4_gw78g")
 text = "Export FNF json chart"
 
 [node name="Label" type="Label" parent="Panel3"]
@@ -131,4 +181,28 @@ offset_right = 202.0
 offset_bottom = 157.0
 text = "Path Selected: "
 
+[node name="Select File" type="FileDialog" parent="."]
+title = "Open a File"
+position = Vector2i(415, 174)
+size = Vector2i(460, 480)
+popup_window = true
+theme = SubResource("Theme_fsgyb")
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.sm")
+
+[node name="Save Chart" type="FileDialog" parent="."]
+title = "Save FNF chart json"
+position = Vector2i(415, 174)
+size = Vector2i(460, 480)
+popup_window = true
+theme = SubResource("Theme_fsgyb")
+ok_button_text = "Save"
+filters = PackedStringArray("*.json")
+
+[connection signal="pressed" from="Panel2/Select Chart" to="." method="_on_select_chart_pressed"]
 [connection signal="pressed" from="Panel3/Button" to="." method="_on_button_pressed"]
+[connection signal="close_requested" from="Select File" to="." method="_on_select_file_close_requested"]
+[connection signal="confirmed" from="Select File" to="." method="_on_select_file_confirmed"]
+[connection signal="file_selected" from="Select File" to="." method="_on_select_file_file_selected"]
+[connection signal="confirmed" from="Save Chart" to="." method="_on_save_chart_confirmed"]
