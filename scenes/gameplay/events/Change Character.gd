@@ -11,8 +11,12 @@ func _ready() -> void:
 	change_char()
 
 func change_char() -> void:
+	var character_path:String = "res://scenes/gameplay/characters/" + parameters[1] + ".tscn"
+	if !ResourceLoader.exists(character_path):
+		printerr("Character Not Found: " + character_path)
+		return
 	var old_character:Character
-	var new_character:Character = load("res://scenes/gameplay/characters/" + parameters[1] + ".tscn").instantiate()
+	var new_character:Character = load(character_path).instantiate()
 	
 	if character == "bf":
 		new_character._is_true_player = true
