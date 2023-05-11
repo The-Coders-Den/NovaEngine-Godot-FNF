@@ -273,7 +273,6 @@ _data = {
 
 [node name="spirit" type="Node2D"]
 script = ExtResource("1_ub1fd")
-sing_duration = 6.1
 health_icon = ExtResource("2_kre1c")
 health_color = Color(1, 0.235294, 0.431373, 1)
 

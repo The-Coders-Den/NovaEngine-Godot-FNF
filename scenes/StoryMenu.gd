@@ -72,6 +72,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_right"):
 		change_diff(1)
 		
+		
 	if Input.is_action_pressed("ui_left"):
 		left_arrow.anim_player.play("push")
 	else:
@@ -89,6 +90,18 @@ func _process(delta):
 		
 	if Input.is_action_just_pressed("ui_accept"):
 		select_week()
+		
+func _input(e):
+	if not e is InputEventMouseButton: return
+	var event:InputEventMouseButton = e
+	if not event.pressed: return
+	
+	match event.button_index:
+		MOUSE_BUTTON_WHEEL_UP:
+			change_week(-1)
+			
+		MOUSE_BUTTON_WHEEL_DOWN:
+			change_week(1)
 
 func change_week(inc):
 	Audio.play_sound("scrollMenu")

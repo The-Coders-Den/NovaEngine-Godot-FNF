@@ -273,7 +273,6 @@ _data = {
 
 [node name="mom-car" type="Node2D"]
 script = ExtResource("1_f8fwq")
-sing_duration = 6.1
 health_icon = ExtResource("2_g0u1h")
 health_color = Color(0.847059, 0.333333, 0.556863, 1)
 

@@ -385,12 +385,11 @@ func start_countdown():
 
 var countdown_tween:Tween
 
-func countdown_tick():
+func countdown_tick() -> void:
 	character_bop()
 	
 	if countdown_tween != null:
 		countdown_tween.stop()
-		
 	if countdown_ticks < 3:
 		countdown_tween = create_tween()
 	
@@ -428,21 +427,23 @@ func countdown_tick():
 
 func start_song():
 	character_bop()
-	
-	starting_song = false
 	Conductor.position = 0.0
+	
+	if SettingsAPI.get_setting('skip intro by default'):
+		skip_intro()
 	
 	for track in tracks:
 		add_child(track)
-		track.play(meta.start_offset/1000)
+		track.play((Conductor.position + meta.start_offset) / 1000.0)
+	
+	starting_song = false
 	
 	stage.callv("on_start_song", [])
 	script_group.call_func("on_start_song", [])
 	
-func resync_tracks():
+func resync_tracks() -> void:
 	for track in tracks:
-		track.stop()
-		track.play((Conductor.position + meta.start_offset) / 1000)
+		track.seek((Conductor.position + meta.start_offset) / 1000.0)
 
 func end_song():
 	if not ending_song:
@@ -494,12 +495,12 @@ func do_event(name:String,parameters:Array[String]):
 
 func section_hit(section:int):
 	for track in tracks:
-		if abs((track.get_playback_position()*1000 - meta.start_offset) - (Conductor.position) )  >= 20:
+		if abs((track.get_playback_position() * 1000.0 - meta.start_offset) - (Conductor.position)) >= 20:
 			resync_tracks()
-			
+	
 	if note_data_array.size() == 0 and note_group.get_children().size() == 0:
 		get_tree().create_timer((meta.end_offset/1000) / Conductor.rate).timeout.connect(end_song)
-		
+	
 	if not range(SONG.sections.size()).has(section): return
 	
 	script_group.call_func("on_section_hit", [section])
@@ -547,7 +548,7 @@ func key_from_event(event:InputEventKey):
 	
 var pressed:Array[bool] = []
 	
-func _input(event):
+func _input(event:InputEvent) -> void:
 	if event is InputEventKey:
 		var key_event:InputEventKey = event
 		var data:int = key_from_event(key_event)
@@ -588,14 +589,14 @@ func _input(event):
 						var bad_note:Note = possible_notes[i]
 						if absf(bad_note.time - note.time) <= 5 and note.direction == data:
 							bad_note.queue_free()
-					
+				
 				break
 		else:
 			if not SettingsAPI.get_setting("ghost tapping"):
 				fake_miss(data)
 				if SettingsAPI.get_setting("miss sounds"):
 					Audio.play_sound("missnote"+str(randi_range(1, 3)), randf_range(0.1, 0.3))
-					
+			
 			script_group.call_func("on_ghost_tap", [data])
 			
 func fake_miss(direction:int = -1):
@@ -719,7 +720,9 @@ func good_note_hit(note:Note):
 	player.play_anim(sing_anim, true)
 	player.hold_timer = 0.0
 	
-	health += 0.023 * note.health_gain_mult * judgement.health_gain_mult * Global.health_gain_mult
+	health += 0.023 * note.health_gain_mult * judgement.health_gain_mult * (
+			Global.health_gain_mult if judgement.health_gain_mult > 0.0 \
+			else Global.health_loss_mult)
 	
 	if note.length <= 0:
 		note._player_hit()
@@ -746,7 +749,13 @@ func position_icons():
 	script_group.call_func("on_position_icons", [])
 
 func update_score_text():
-	score_text.text = "Score: "+str(score)+" - Misses: "+str(misses)+" - Accuracy: "+str(snapped(accuracy * 100.0, 0.01))+"% ["+Ranking.rank_from_accuracy(accuracy * 100.0).name+"]"
+	if not SettingsAPI.get_setting("hide score"):
+		score_text.text = "Score: %s - Misses: %s - Accuracy: %.2f%s [%s]" % [score, misses,
+				accuracy * 100.0, '%', Ranking.rank_from_accuracy(accuracy * 100.0).name]
+	else:
+		score_text.text = "Accuracy: %.2f%s - Misses: %s [%s]" % [accuracy * 100.0, '%',
+				misses, Ranking.rank_from_accuracy(accuracy * 100.0).name]
+	
 	script_group.call_func("on_update_score_text", [])
 
 func game_over():
@@ -805,6 +814,9 @@ func _process(delta:float) -> void:
 		emit_signal("paused")
 		add_child(load("res://scenes/gameplay/PauseMenu.tscn").instantiate())
 	
+	if Input.is_action_just_pressed('space_bar') and not (skipped_intro or starting_song):
+		skip_intro()
+	
 	stage.callv("_process_post", [delta])
 	script_group.call_func("_process_post", [delta])
 
@@ -851,6 +863,24 @@ func _physics_process(delta: float) -> void:
 		script_group.call_func("on_note_spawn", [new_note])
 		
 		note_data_array.erase(note)
+
+var can_skip_intro: bool = true
+
+func skip_intro() -> void:
+	if not (can_skip_intro or skipped_intro):
+		return
+	
+	skipped_intro = true
+	
+	if countdown_timer != null:
+		countdown_timer.unreference()
+		countdown_timer = null
+	
+	var first_note:Note = note_group.get_child(0) if note_group.get_child_count() > 0 else null
+	Conductor.position = clampf((first_note.time if first_note != null else note_data_array[0].time) - 1500.0, 0.0, INF)
+	
+	if not starting_song:
+		resync_tracks()
 
 func _exit_tree():
 	script_group.call_func("on_destroy", [])

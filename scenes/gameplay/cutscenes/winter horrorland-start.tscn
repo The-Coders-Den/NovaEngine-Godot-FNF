@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://s1v35dixgiwm"]
+[gd_scene load_steps=4 format=3 uid="uid://bujng6p3xvw1r"]
 
 [ext_resource type="Script" path="res://scenes/gameplay/cutscenes/winter horrorland-start.gd" id="1_iuwjr"]
 [ext_resource type="AudioStream" uid="uid://mveky65lg27j" path="res://assets/sounds/stages/mallEvil/lightsOn.ogg" id="2_f00g4"]
