@@ -535,8 +535,7 @@ func update_camera(sec:int = 0):
 func position_hud():
 	hud.offset.x = (hud.scale.x - 1.0) * -(Global.game_size.x * 0.5)
 	hud.offset.y = (hud.scale.y - 1.0) * -(Global.game_size.y * 0.5)
-		
-
+	
 func key_from_event(event:InputEventKey):
 	var data:int = -1
 	for i in player_strums.controls.size():
