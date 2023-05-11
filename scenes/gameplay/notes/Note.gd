@@ -114,5 +114,12 @@ func _process(delta: float) -> void:
 	var last_point:int = sustain.points.size() - 1
 	var scroll_speed:float = game.scroll_speed if not in_editor else SettingsAPI.get_setting("scroll speed")
 	sustain.points[last_point].y = (((length / 2.5) * (scroll_speed / Conductor.rate)) / scale.y) * downscroll_mult
+	
+	for i in sustain.points.size():
+		if i == 0 or i == last_point:
+			continue
+		
+		sustain.points[i].y = (sustain.points[last_point].y / sustain.points.size()) * i
+	
 	sustain_end.position.y = sustain.points[last_point].y + (((sustain_end.texture.get_height() * sustain_end.scale.y) * 0.5) * downscroll_mult)
 	sustain_end.flip_v = downscroll_mult < 0
