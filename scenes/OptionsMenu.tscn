@@ -107,6 +107,17 @@ text = "Show MS on Note Hit
 script = ExtResource("4_gjk4b")
 option = "show ms on note hit"
 
+[node name="Skip Intro by Default" type="CheckBox" parent="TabContainer/Gameplay"]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 32.0
+offset_right = 375.0
+offset_bottom = 63.0
+tooltip_text = "Shows how early/late you hit a note in milliseconds."
+text = "Skip Intro by Default"
+script = ExtResource("4_gjk4b")
+option = "skip intro by default"
+
 [node name="HSeparator" type="HSeparator" parent="TabContainer/Gameplay"]
 modulate = Color(0.486275, 0.368627, 0.560784, 1)
 layout_mode = 0
@@ -279,6 +290,17 @@ tooltip_text = "Disables the color tween of the BG in the story mode menu."
 text = "Judgement Stacking"
 script = ExtResource("4_gjk4b")
 option = "judgement stacking"
+
+[node name="Hide Score" type="CheckBox" parent="TabContainer/Appearance"]
+layout_mode = 0
+offset_left = 208.0
+offset_top = 8.0
+offset_right = 390.0
+offset_bottom = 39.0
+tooltip_text = "Disables the color tween of the BG in the story mode menu."
+text = "Hide Score"
+script = ExtResource("4_gjk4b")
+option = "hide score"
 
 [node name="HSeparator" type="HSeparator" parent="TabContainer/Appearance"]
 modulate = Color(0.486275, 0.368627, 0.560784, 1)
@@ -1026,6 +1048,7 @@ in_editor = true
 [connection signal="pressed" from="TabContainer/Gameplay/Ghost Tapping" to="TabContainer/Gameplay/Ghost Tapping" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Gameplay/Miss Sounds" to="TabContainer/Gameplay/Miss Sounds" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Gameplay/Show MS on Note Hit" to="TabContainer/Gameplay/Show MS on Note Hit" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Gameplay/Skip Intro by Default" to="TabContainer/Gameplay/Skip Intro by Default" method="_on_pressed"]
 [connection signal="drag_ended" from="TabContainer/Gameplay/Note Offset" to="TabContainer/Gameplay/Note Offset" method="_on_drag_ended"]
 [connection signal="value_changed" from="TabContainer/Gameplay/Note Offset" to="TabContainer/Gameplay/Note Offset" method="_on_value_changed"]
 [connection signal="drag_ended" from="TabContainer/Gameplay/Scroll Speed" to="TabContainer/Gameplay/Scroll Speed" method="_on_drag_ended"]
@@ -1037,6 +1060,7 @@ in_editor = true
 [connection signal="pressed" from="TabContainer/Appearance/Subtitles" to="TabContainer/Appearance/Subtitles" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Appearance/Story Always Yellow" to="TabContainer/Appearance/Story Always Yellow" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Appearance/Judgement Stacking" to="TabContainer/Appearance/Judgement Stacking" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Appearance/Hide Score" to="TabContainer/Appearance/Hide Score" method="_on_pressed"]
 [connection signal="item_selected" from="TabContainer/Appearance/Judgement Camera" to="TabContainer/Appearance/Judgement Camera" method="_on_item_selected"]
 [connection signal="pressed" from="TabContainer/Miscellaneous/Auto Pause" to="TabContainer/Miscellaneous/Auto Pause" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Miscellaneous/Volume Beep Pitching" to="TabContainer/Miscellaneous/Volume Beep Pitching" method="_on_pressed"]

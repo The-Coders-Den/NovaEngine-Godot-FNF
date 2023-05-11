@@ -163,18 +163,7 @@ func _process(delta):
 				queue_free()
 				
 			"Skip Intro":
-				game.skipped_intro = true
-				
-				if game.countdown_timer != null:
-					game.countdown_timer.unreference()
-					game.countdown_timer = null
-					
-				var first_note:Note = game.note_group.get_child(0) if game.note_group.get_child_count() > 0 else null
-				Conductor.position = clampf((first_note.time if first_note != null else game.note_data_array[0].time) - 1500.0, 0.0, INF)
-					
-				if not game.starting_song:
-					game.resync_tracks()
-				
+				game.skip_intro()
 				get_tree().paused = false
 				queue_free()
 				

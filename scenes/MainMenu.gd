@@ -47,7 +47,7 @@ func _process(delta):
 				
 				var tween = get_tree().create_tween()
 				tween.set_ease(Tween.EASE_OUT)
-				tween.set_trans(Tween.TRANS_QUAD)	
+				tween.set_trans(Tween.TRANS_QUAD)
 				tween.tween_property(button, "modulate:a", 0.0, 0.4)
 				
 			var timer:SceneTreeTimer = get_tree().create_timer(0.45)

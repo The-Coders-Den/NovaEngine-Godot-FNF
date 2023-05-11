@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://q64jd3rbs8je"]
+[gd_scene load_steps=13 format=3 uid="uid://q64jd3rbs8je"]
 
 [ext_resource type="Script" path="res://scenes/MainMenu.gd" id="1_f3mce"]
 [ext_resource type="Texture2D" uid="uid://8cpkvnc78sok" path="res://assets/images/menus/menuBG.png" id="2_25v5u"]
@@ -30,7 +30,7 @@ _data = {
 "flash": SubResource("Animation_vsdk4")
 }
 
-[sub_resource type="Animation" id="Animation_pnoft"]
+[sub_resource type="Animation" id="Animation_kyg7j"]
 resource_name = "flash"
 step = 0.06
 tracks/0/type = "value"
@@ -40,15 +40,31 @@ tracks/0/path = NodePath(".:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24, 0.3, 0.36, 0.42, 0.48, 0.54, 0.6, 0.66, 0.72, 0.78, 0.84, 0.9, 0.96),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.06, 0.0601, 0.12, 0.18, 0.24, 0.3, 0.3001, 0.36, 0.42, 0.48, 0.54, 0.5401, 0.6, 0.66, 0.72, 0.78, 0.7801, 0.84, 0.9, 0.96),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false]
+"values": [false, true, true, false, true, false, true, true, false, true, false, true, true, false, true, false, true, true, false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_j6yp2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o48h0"]
 _data = {
-"flash": SubResource("Animation_pnoft")
+"RESET": SubResource("Animation_j6yp2"),
+"flash": SubResource("Animation_kyg7j")
 }
 
 [node name="MainMenu" type="Node2D"]
@@ -84,9 +100,6 @@ libraries = {
 [node name="UILayer" type="ParallaxLayer" parent="PB"]
 motion_scale = Vector2(0, 0)
 
-[node name="dont worry bout this node" type="Node2D" parent="PB/UILayer"]
-visible = false
-
 [node name="Buttons" type="Node2D" parent="PB/UILayer"]
 
 [node name="StoryMode" type="AnimatedSprite2D" parent="PB/UILayer/Buttons"]
@@ -97,7 +110,7 @@ animation = &"selected"
 [node name="Freeplay" type="AnimatedSprite2D" parent="PB/UILayer/Buttons"]
 position = Vector2(640, 360)
 sprite_frames = ExtResource("5_q251e")
-animation = &"idle"
+animation = &"selected"
 
 [node name="Options" type="AnimatedSprite2D" parent="PB/UILayer/Buttons"]
 position = Vector2(640, 504)
@@ -105,7 +118,7 @@ sprite_frames = ExtResource("6_jtmjb")
 animation = &"idle"
 
 [node name="ButtonFlashing" type="AnimationPlayer" parent="PB/UILayer"]
-root_node = NodePath("../dont worry bout this node")
+root_node = NodePath("../Buttons")
 libraries = {
 "": SubResource("AnimationLibrary_o48h0")
 }

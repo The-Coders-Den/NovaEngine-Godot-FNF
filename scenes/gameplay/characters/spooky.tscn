@@ -328,7 +328,6 @@ _data = {
 [node name="spooky" type="Node2D"]
 position = Vector2(0, 5)
 script = ExtResource("1_1vwn2")
-sing_duration = 6.1
 dance_steps = Array[String](["danceLeft", "danceRight"])
 health_icon = ExtResource("2_7rgst")
 health_color = Color(0.835294, 0.494118, 0, 1)

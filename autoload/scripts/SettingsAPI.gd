@@ -8,6 +8,7 @@ var _settings:Dictionary = {
 	"ghost tapping": true,
 	"miss sounds": true,
 	"show ms on note hit": false,
+	"skip intro by default": false,
 	
 	"note offset": 0.0,
 	"scroll speed": 0.0,
@@ -21,6 +22,7 @@ var _settings:Dictionary = {
 	"story always yellow": false,
 	"judgement camera": "World",
 	"judgement stacking": true,
+	"hide score": false,
 	
 	# misc
 	"auto pause": true,

@@ -273,7 +273,6 @@ _data = {
 
 [node name="monster" type="Node2D"]
 script = ExtResource("1_qfit6")
-sing_duration = 6.1
 health_icon = ExtResource("2_7kg4l")
 health_color = Color(0.952941, 1, 0.431373, 1)
 

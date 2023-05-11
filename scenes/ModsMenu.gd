@@ -9,7 +9,11 @@ var cur_selected:int = 0
 var mod_list:PackedStringArray = []
 var mod_configs:Array[ModConfig] = []
 
-func _ready():
+func _ready() -> void:
+	if OS.is_debug_build():
+		queue_free()
+		return
+	
 	ModManager._ready()
 	get_window().files_dropped.connect(_on_files_dropped)
 	get_tree().paused = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dce60syt3ciy7"]
+[gd_scene load_steps=5 format=3 uid="uid://db8ukjocqly28"]
 
 [ext_resource type="Script" path="res://scripts/Stage.gd" id="1_02ijf"]
 [ext_resource type="Texture2D" uid="uid://nl0ylx34txwb" path="res://assets/images/gameplay/stages/mall/evilBG.png" id="2_ccujm"]

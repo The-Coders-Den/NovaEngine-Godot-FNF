@@ -274,7 +274,6 @@ _data = {
 [node name="senpai-angry" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_ydu0a")
-sing_duration = 6.1
 health_icon = ExtResource("2_4xoi6")
 health_color = Color(1, 0.666667, 0.435294, 1)
 
@@ -294,4 +293,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(332, -410)
+position = Vector2(588, -410)
