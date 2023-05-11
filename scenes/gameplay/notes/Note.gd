@@ -118,8 +118,7 @@ func _process(delta: float) -> void:
 	for i in sustain.points.size():
 		if i == 0 or i == last_point:
 			continue
-		
-		sustain.points[i].y = (sustain.points[last_point].y / sustain.points.size()) * i
+		sustain.points[i].y = sustain.points[last_point].y * ((1.0 / sustain.points.size()) * i)
 	
 	sustain_end.position.y = sustain.points[last_point].y + (((sustain_end.texture.get_height() * sustain_end.scale.y) * 0.5) * downscroll_mult)
 	sustain_end.flip_v = downscroll_mult < 0
