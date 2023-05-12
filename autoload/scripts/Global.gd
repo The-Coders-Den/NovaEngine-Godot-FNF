@@ -46,7 +46,7 @@ var tree_paused:bool = false
 
 func set_vsync(value:bool):
 	if value:
-		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED if SettingsAPI.get_setting("vsync") else DisplayServer.VSYNC_DISABLED)
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_MAILBOX if SettingsAPI.get_setting("vsync") else DisplayServer.VSYNC_DISABLED)
 	else:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	
