@@ -47,7 +47,8 @@ func _process(delta):
 			Audio.play_sound("menus/confirmMenu")
 			
 			var timer:SceneTreeTimer = get_tree().create_timer(2.0)
-			timer.timeout.connect(func(): 
+			timer.timeout.connect(func():
+				SettingsAPI.update_settings()
 				Global.switch_scene("res://scenes/MainMenu.tscn")
 			)
 	
