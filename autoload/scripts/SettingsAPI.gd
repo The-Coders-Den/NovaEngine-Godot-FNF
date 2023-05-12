@@ -115,11 +115,11 @@ func _ready():
 	
 	print("Initialized settings!")
 	
-func update_settings():
+func update_settings() -> void:
 	for key in _settings.keys():
 		match key:
 			"vsync":
-				Global.set_vsync(true)
+				Global.set_vsync(_settings[key])
 			"multi threaded rendering":
 				ProjectSettings.set_setting("rendering/driver/threads/thread_model", "Multi-Threaded" if _settings[key] else "Single-Safe")
 			"fps":
