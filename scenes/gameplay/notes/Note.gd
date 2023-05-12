@@ -62,6 +62,8 @@ func _ready() -> void:
 		note_skin = load("res://scenes/gameplay/ui_skins/default.tscn").instantiate()
 		
 	if length < 50: length = 0
+	if length <= 0:
+		sustain.visible = false
 	
 	step_crochet = Conductor.step_crochet
 	og_length = length
