@@ -54,7 +54,7 @@ func _notification(what):
 	match what:
 		NOTIFICATION_APPLICATION_FOCUS_OUT:
 			if SettingsAPI.get_setting("auto pause"):
-				set_vsync(false)
+				set_vsync(SettingsAPI.get_setting('vsync'))
 				Engine.max_fps = 10
 				
 				Audio.process_mode = Node.PROCESS_MODE_INHERIT
@@ -64,7 +64,7 @@ func _notification(what):
 			
 		NOTIFICATION_APPLICATION_FOCUS_IN:
 			if SettingsAPI.get_setting("auto pause"):
-				set_vsync(true)
+				set_vsync(SettingsAPI.get_setting('vsync'))
 				Engine.max_fps = SettingsAPI.get_setting("fps")
 				
 				Audio.process_mode = Node.PROCESS_MODE_ALWAYS
