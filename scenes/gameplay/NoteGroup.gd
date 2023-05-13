@@ -75,13 +75,7 @@ func _process(delta:float) -> void:
 				note._note_hit(false)
 				game.script_group.call_func("on_note_hit", [note])
 				game.script_group.call_func("on_cpu_hit", [note])
-				
-				var sing_anim:String = "sing%s" % game.cpu_strums.get_child(note.direction).direction.to_upper()
-				if note.alt_anim:
-					sing_anim += "-alt"
-					
-				game.opponent.play_anim(sing_anim, true)
-				game.opponent.hold_timer = 0.0
+				game.opponent_note_hit(note)
 				
 				if note.length <= 0:
 					note.queue_free()
