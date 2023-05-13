@@ -714,9 +714,7 @@ func good_note_hit(note:Note):
 	
 	note.was_good_hit = true
 	
-	var sing_anim:String = "sing"+player_strums.get_child(note.direction).direction.to_upper()
-	if note.alt_anim:
-		sing_anim += "-alt"
+	var sing_anim = get_sing_anim(note)
 	player.play_anim(sing_anim, true)
 	player.hold_timer = 0.0
 	
@@ -737,6 +735,26 @@ func good_note_hit(note:Note):
 		note._note_hit(true)
 		script_group.call_func("on_note_hit", [note])
 		script_group.call_func("on_player_hit", [note])
+
+func opponent_note_hit(note:Note):
+	var sing_anim:String = get_sing_anim(note)
+	opponent.play_anim(sing_anim, true)
+	opponent.hold_timer = 0.0
+	
+	if opponent.name.to_lower() == "tankman":
+		if sing_anim.ends_with("DOWN-alt"):
+			opponent.special_anim = true
+			opponent.anim_timer = 3
+
+func get_sing_anim(note:Note):
+	var strums = player_strums if note.must_press else cpu_strums
+	var sing_anim:String = "sing%s" % strums.get_child(note.direction).direction.to_upper()
+	
+	# add here suffixes if needed and stuff!!!
+	if note.alt_anim:
+		sing_anim += "-alt"
+	
+	return sing_anim
 
 func position_icons():
 	var icon_offset:int = 26

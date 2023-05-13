@@ -2,6 +2,10 @@ extends Resource
 class_name Chart
 
 var name:String = "Test"
+#i don't know if you guys already have this, if so, just delete this
+#@BeastlyGabi
+var raw_name:String = "test"
+
 var bpm:float = 150.0
 var sections:Array[Section] = []
 var key_count:int = 4
@@ -19,6 +23,7 @@ static func load_chart(song:String, difficulty:String = "normal"):
 	
 	var chart = new()
 	chart.name = json.song
+	chart.raw_name = song.to_lower()
 	chart.bpm = json.bpm
 	chart.key_count = 4
 	chart.scroll_speed = json.speed
@@ -62,7 +67,7 @@ static func load_chart(song:String, difficulty:String = "normal"):
 		
 	if "uiSkin" in json:
 		chart.ui_skin = json.uiSkin
-	
+
 	# oh god wish me luck converting these
 	# damn base game sections to cool ones!
 	
