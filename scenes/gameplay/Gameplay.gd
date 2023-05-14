@@ -242,8 +242,6 @@ func _ready() -> void:
 	health_bar.max_value = max_health
 	health_bar.value = health
 	
-	update_score_text()
-	
 	cpu_strums = load("res://scenes/gameplay/strumlines/"+str(SONG.key_count)+"K.tscn").instantiate()
 	cpu_strums.note_skin = ui_skin
 	strumlines.add_child(cpu_strums)
@@ -347,6 +345,8 @@ func _ready() -> void:
 	
 	position_icons()
 	start_countdown()
+	
+	update_score_text()
 	
 	stage.callv("_ready_post", [])
 	script_group.call_func("_ready_post", [])
