@@ -23,6 +23,7 @@ var _settings:Dictionary = {
 	"judgement camera": "World",
 	"judgement stacking": true,
 	"hide score": false,
+	"freeplay icon bumping": true,
 	
 	# misc
 	"auto pause": true,

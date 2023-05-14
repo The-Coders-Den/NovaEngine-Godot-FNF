@@ -1,5 +1,6 @@
 extends MusicBeatScene
 
+var cur_icon:int = -1
 var cur_selected:int = 0
 var cur_difficulty:int = 1
 
@@ -25,6 +26,12 @@ var song_meta:SongMetaData = SongMetaData.new()
 @onready var playback_rate_slider:DisplaySliderOptionless = $"GameplayModifiers/Control/Playback Rate"
 @onready var health_gain_mult_slider:DisplaySliderOptionless = $"GameplayModifiers/Control/Health Gain Mult"
 @onready var health_loss_mult_slider:DisplaySliderOptionless = $"GameplayModifiers/Control/Health Loss Mult"
+
+# info about chart loaded from playing song lol (kinda caching type beat ig)
+var loaded_chart_info:Dictionary = {
+	"name": null,
+	"difficulty": null,
+}
 
 func _ready():
 	super._ready()
@@ -54,7 +61,8 @@ func _ready():
 	change_selection()
 	position_highscore()
 	update_sliders()
-		
+	Conductor.beat_hit.connect(on_beat_hit)
+
 func change_selection(change:int = 0):
 	cur_selected = wrapi(cur_selected + change, 0, song_list.songs.size())
 	
@@ -147,6 +155,19 @@ func _process(delta):
 	if Input.is_action_just_pressed("space_bar"):
 		Audio.stop_music()
 		
+		if SettingsAPI.get_setting("freeplay icon bumping"):
+			cur_icon = cur_selected
+			
+			Global.current_difficulty = song_list.songs[cur_selected].difficulties[cur_difficulty]
+			Global.SONG = Chart.load_chart(song_list.songs[cur_selected].song, Global.current_difficulty)
+			
+			loaded_chart_info = {
+				"name": song_list.songs[cur_selected].song,
+				"difficulty": Global.current_difficulty,
+			}
+		
+		Conductor.change_bpm(Global.SONG.bpm)
+		
 		var meta_path:String = "res://assets/songs/%s/meta" % song_list.songs[cur_selected].song.to_lower()
 		if ResourceLoader.exists(meta_path + ".tres"):
 			song_meta = load(meta_path + ".tres")
@@ -171,17 +192,32 @@ func _process(delta):
 						music.stream = load(music_path + file.replace(".import",""))
 						music.pitch_scale = Conductor.rate
 						song_tracks.add_child(music)
-						
 		for music in song_tracks.get_children():
 			music.play()
-				
 	elif Input.is_action_just_pressed("ui_accept"):
 		Global.queued_songs = []
 		Global.is_story_mode = false
+		
 		Global.current_difficulty = song_list.songs[cur_selected].difficulties[cur_difficulty]
-		Global.SONG = Chart.load_chart(song_list.songs[cur_selected].song, Global.current_difficulty)
+		
+		if loaded_chart_info.difficulty != Global.current_difficulty or \
+			loaded_chart_info.name != song_list.songs[cur_selected].song:
+			Global.SONG = Chart.load_chart(song_list.songs[cur_selected].song, Global.current_difficulty)
+		
 		Global.switch_scene("res://scenes/gameplay/Gameplay.tscn")
 		
 	if Input.is_action_just_pressed("ui_cancel"):
 		Audio.play_sound("cancelMenu")
 		Global.switch_scene("res://scenes/MainMenu.tscn")
+	
+	if song_tracks.get_child_count() > 0:
+		Conductor.position = song_tracks.get_child(0).get_playback_position() * 1000.0
+	
+	if cur_icon > -1:
+		var icon:Sprite2D = songs.get_child(cur_icon).get_node('HealthIcon')
+		icon.scale = lerp(icon.scale, Vector2.ONE, delta * 9.0)
+
+func on_beat_hit(beat:int) -> void:
+	if cur_icon > -1:
+		var icon:Sprite2D = songs.get_child(cur_icon).get_node('HealthIcon')
+		icon.scale += Vector2(0.2, 0.2)

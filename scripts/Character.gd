@@ -1,5 +1,4 @@
-extends Node2D
-class_name Character
+class_name Character extends Node2D
 
 @export_group("General Info")
 @export var is_player:bool = false
@@ -53,13 +52,6 @@ func _ready():
 		scale.x *= -1
 		anim_sprite.position.x -= initial_size.x * absf(anim_sprite.scale.x)
 	
-	# HARDCODING FOR PICO SPEAKER ONLY
-	# JUST DE-HARDCODE THIS IF NEEDED OR SMTH LOL!!!
-	match name:
-		"picospeaker":
-			if _spectator_chart_exists():
-				load_animation_notes()
-	
 func get_midpoint():
 	return Vector2(position.x + anim_sprite.position.x + initial_size.x * 0.5, position.y + anim_sprite.position.y + initial_size.y * 0.5)
 	
@@ -71,7 +63,7 @@ func get_camera_pos():
 	p.x += anim_sprite.position.x
 		
 	return p
-	
+
 func _process(delta):
 	if anim_timer > 0.0:
 		anim_timer -= delta
@@ -90,21 +82,6 @@ func _process(delta):
 		if not _is_true_player and hold_timer >= Conductor.step_crochet * sing_duration * 0.0011:
 			hold_timer = 0.0
 			dance()
-	
-	if _spectator_chart.size() > 0:
-		var spec_note = _spectator_chart[0]
-		if Conductor.position > spec_note.time:
-			#print("animation "+str(spec_note.direction)+" at character section")
-			
-			var anim_number = 1
-			if spec_note.direction >= 2:
-				anim_number = 3
-			
-			anim_number += randi_range(0, 1)
-			if anim_player.has_animation("shoot"+str(anim_number)):
-				play_anim("shoot"+str(anim_number), true)
-			
-			_spectator_chart.erase(spec_note)
 
 func play_anim(anim:String, force:bool = false):
 	special_anim = false
@@ -146,15 +123,3 @@ func dance(force:bool = false):
 	cur_dance_step += 1
 	if cur_dance_step > dance_steps.size() - 1:
 		cur_dance_step = 0
-
-var _spectator_chart:Array[SectionNote] = []
-
-func load_animation_notes():
-	var chart_temp:Chart = Chart.load_chart(Global.SONG.raw_name, "spectator_notes")
-	for sec in chart_temp.sections:
-		for note in sec.notes:
-			_spectator_chart.append(note)
-
-func _spectator_chart_exists():
-	return ResourceLoader.exists("res://assets/songs/"+Global.SONG.raw_name+ \
-		"/spectator_notes.json")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cvdlr3wfsrmlc"]
+[gd_scene load_steps=25 format=3 uid="uid://cvdlr3wfsrmlc"]
 
 [ext_resource type="Script" path="res://scenes/OptionsMenu.gd" id="1_wsch7"]
 [ext_resource type="Texture2D" uid="uid://y8c4a1bk8wkl" path="res://assets/images/menus/menuBGDesat.png" id="2_di4mo"]
@@ -21,7 +21,6 @@
 [ext_resource type="Texture2D" uid="uid://dw8bh3jsxd3kl" path="res://assets/images/material_icons/volume-mute.png" id="16_ofedk"]
 [ext_resource type="Texture2D" uid="uid://s111e8ow38lw" path="res://assets/images/menus/options/switchModBind.png" id="17_q6en1"]
 [ext_resource type="FontFile" uid="uid://cf2wd6a4pa5kb" path="res://assets/fonts/funkin.ttf" id="17_u2vjg"]
-[ext_resource type="Script" path="res://scenes/gameplay/notes/Note.gd" id="22_s05i8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2rif3"]
 bg_color = Color(1, 1, 1, 0)
@@ -50,6 +49,7 @@ theme = ExtResource("3_cmtlj")
 theme_override_constants/side_margin = 0
 
 [node name="Gameplay" type="TabBar" parent="TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Downscroll" type="CheckBox" parent="TabContainer/Gameplay"]
@@ -223,7 +223,6 @@ theme_override_font_sizes/font_size = 16
 text = "Scroll Speed Type"
 
 [node name="Appearance" type="TabBar" parent="TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="FPS Counter" type="CheckBox" parent="TabContainer/Appearance"]
@@ -302,6 +301,17 @@ tooltip_text = "Whether or not the score is displayed during gameplay."
 text = "Hide Score"
 script = ExtResource("4_gjk4b")
 option = "hide score"
+
+[node name="Freeplay Icon Bumping" type="CheckBox" parent="TabContainer/Appearance"]
+layout_mode = 0
+offset_left = 208.0
+offset_top = 32.0
+offset_right = 413.0
+offset_bottom = 63.0
+tooltip_text = "Whether or not the score is displayed during gameplay."
+text = "Freeplay Icons Bump"
+script = ExtResource("4_gjk4b")
+option = "freeplay icon bumping"
 
 [node name="HSeparator" type="HSeparator" parent="TabContainer/Appearance"]
 modulate = Color(0.486275, 0.368627, 0.560784, 1)
@@ -1039,7 +1049,6 @@ position = Vector2(884, 787)
 [node name="NoteTemplate" parent="." instance=ExtResource("9_rjold")]
 visible = false
 position = Vector2(-83.9998, 212)
-script = ExtResource("22_s05i8")
 in_editor = true
 
 [node name="Notes" type="Node2D" parent="."]
@@ -1063,6 +1072,7 @@ in_editor = true
 [connection signal="pressed" from="TabContainer/Appearance/Story Always Yellow" to="TabContainer/Appearance/Story Always Yellow" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Appearance/Judgement Stacking" to="TabContainer/Appearance/Judgement Stacking" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Appearance/Hide Score" to="TabContainer/Appearance/Hide Score" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Appearance/Freeplay Icon Bumping" to="TabContainer/Appearance/Freeplay Icon Bumping" method="_on_pressed"]
 [connection signal="item_selected" from="TabContainer/Appearance/Judgement Camera" to="TabContainer/Appearance/Judgement Camera" method="_on_item_selected"]
 [connection signal="pressed" from="TabContainer/Miscellaneous/Auto Pause" to="TabContainer/Miscellaneous/Auto Pause" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Miscellaneous/Volume Beep Pitching" to="TabContainer/Miscellaneous/Volume Beep Pitching" method="_on_pressed"]
