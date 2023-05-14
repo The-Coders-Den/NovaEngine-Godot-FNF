@@ -131,7 +131,6 @@ func play_anim(anim:String, force:bool = false):
 	if force or last_anim != anim or anim_finished:
 		if last_anim == anim:
 			anim_player.seek(0.0)
-			anim_sprite.frame = 0
 			
 		last_anim = anim
 		anim_finished = false
