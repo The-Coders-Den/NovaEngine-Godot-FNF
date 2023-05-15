@@ -487,13 +487,12 @@ health_color = Color(0.192157, 0.690196, 0.819608, 1)
 death_character = "bf-holding-gf-dead"
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 350)
+position = Vector2(-280, -434)
 sprite_frames = ExtResource("3_ds3je")
-animation = &"BF NOTE UP MISS"
-frame = 23
+animation = &"BF idle dance w gf"
+frame = 13
 frame_progress = 1.0
 centered = false
-offset = Vector2(42, -5)
 script = ExtResource("4_5fk8i")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite"]
@@ -502,4 +501,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(0, 430)
+position = Vector2(-280, -354)

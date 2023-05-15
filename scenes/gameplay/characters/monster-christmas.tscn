@@ -277,7 +277,7 @@ health_icon = ExtResource("2_7kg4l")
 health_color = Color(0.952941, 1, 0.431373, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 130)
+position = Vector2(-240, -710)
 sprite_frames = ExtResource("3_qh3ta")
 animation = &"monster idle"
 frame = 14
@@ -291,4 +291,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(468, 284)
+position = Vector2(228, -556)

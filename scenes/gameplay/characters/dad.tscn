@@ -278,13 +278,12 @@ health_icon = ExtResource("2_r8kkf")
 health_color = Color(0.686275, 0.4, 0.807843, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -767)
+position = Vector2(-216, -767)
 sprite_frames = ExtResource("2_8b7lu")
-animation = &"Dad Sing Note LEFT"
-frame = 15
+animation = &"Dad idle dance"
+frame = 12
 frame_progress = 1.0
 centered = false
-offset = Vector2(9, -10)
 script = ExtResource("3_jmwth")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite"]
@@ -293,4 +292,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(468, -483)
+position = Vector2(248, -483)

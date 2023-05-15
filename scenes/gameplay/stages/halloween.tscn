@@ -21,13 +21,13 @@ script = ExtResource("3_j3ley")
 [node name="Character Positions" type="Node2D" parent="."]
 
 [node name="Opponent" type="Node2D" parent="Character Positions"]
-position = Vector2(108, 100)
+position = Vector2(298.5, 884)
 
 [node name="Spectator" type="Node2D" parent="Character Positions"]
-position = Vector2(400, 130)
+position = Vector2(698, 852)
 
 [node name="Player" type="Node2D" parent="Character Positions"]
-position = Vector2(770, 100)
+position = Vector2(973, 884)
 
 [node name="Icon" type="Sprite2D" parent="."]
 position = Vector2(554, 501)

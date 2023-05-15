@@ -58,13 +58,13 @@ centered = false
 [node name="Character Positions" type="Node2D" parent="."]
 
 [node name="Opponent" type="Node2D" parent="Character Positions"]
-position = Vector2(100, 100)
+position = Vector2(317.5, 884)
 
 [node name="Spectator" type="Node2D" parent="Character Positions"]
-position = Vector2(400, 130)
+position = Vector2(749.5, 764)
 
 [node name="Player" type="Node2D" parent="Character Positions"]
-position = Vector2(770, 100)
+position = Vector2(973, 884)
 
 [node name="train_sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_bk0u4")

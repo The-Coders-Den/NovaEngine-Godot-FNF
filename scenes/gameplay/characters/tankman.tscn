@@ -385,7 +385,7 @@ health_icon = ExtResource("2_ml8k3")
 health_color = Color(0.121569, 0.121569, 0.121569, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 240)
+position = Vector2(-216, -576)
 sprite_frames = ExtResource("3_1uiba")
 animation = &"Tankman Idle Dance"
 frame = 13
@@ -400,4 +400,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(360, 448)
+position = Vector2(144, -368)

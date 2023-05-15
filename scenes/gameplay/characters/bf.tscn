@@ -594,10 +594,10 @@ health_icon = ExtResource("2_83nrd")
 health_color = Color(0.192157, 0.690196, 0.819608, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 350)
+position = Vector2(-208, -413)
 sprite_frames = ExtResource("1_8fsw1")
-animation = &"BF HEY!!"
-frame = 25
+animation = &"BF idle dance"
+frame = 13
 frame_progress = 1.0
 centered = false
 offset = Vector2(-2, -5)
@@ -609,4 +609,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(0, 430)
+position = Vector2(-208, -333)

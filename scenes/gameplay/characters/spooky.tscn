@@ -333,7 +333,7 @@ health_icon = ExtResource("2_7rgst")
 health_color = Color(0.835294, 0.494118, 0, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 168)
+position = Vector2(-248, -554)
 sprite_frames = ExtResource("3_pqwo2")
 animation = &"spooky dance idle"
 centered = false
@@ -345,4 +345,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(468, 380)
+position = Vector2(220, -342)

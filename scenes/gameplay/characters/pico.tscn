@@ -277,7 +277,7 @@ health_icon = ExtResource("2_4sg0p")
 health_color = Color(0.717647, 0.847059, 0.333333, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 296)
+position = Vector2(-224, -475)
 sprite_frames = ExtResource("3_ldhoe")
 animation = &"Pico Idle Dance"
 frame = 13
@@ -292,4 +292,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(580, 388)
+position = Vector2(356, -383)
