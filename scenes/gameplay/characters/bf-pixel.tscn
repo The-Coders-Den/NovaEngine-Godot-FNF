@@ -602,7 +602,7 @@ retry_sound = ExtResource("5_7l6i0")
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(0, -437)
+position = Vector2(-219, -437)
 scale = Vector2(6, 6)
 sprite_frames = ExtResource("3_q8mh6")
 animation = &"BF IDLE instance 1"
@@ -617,4 +617,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(154, -234)
+position = Vector2(-65, -234)
