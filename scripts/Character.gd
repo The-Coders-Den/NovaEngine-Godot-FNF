@@ -50,17 +50,12 @@ func _ready():
 		)
 	if is_player != _is_true_player:
 		scale.x *= -1
-		anim_sprite.position.x -= initial_size.x * absf(anim_sprite.scale.x)
 	
 func get_midpoint():
 	return Vector2(position.x + anim_sprite.position.x + initial_size.x * 0.5, position.y + anim_sprite.position.y + initial_size.y * 0.5)
 	
 func get_camera_pos():
 	var p:Vector2 = camera_pos.global_position
-	if is_player != _is_true_player:
-		p.x += 850
-		
-		
 	return p
 
 func _process(delta):
