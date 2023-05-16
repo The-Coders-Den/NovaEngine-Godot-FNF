@@ -861,6 +861,7 @@ func _physics_process(delta: float) -> void:
 		
 	for note in note_data_array:
 		if note.time > Conductor.position + (2500 / (scroll_speed / Conductor.rate)): break
+		if note.direction < 0: continue
 		
 		var key_count:int = 4
 		var is_player_note:bool = note.player_section
