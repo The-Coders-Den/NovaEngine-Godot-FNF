@@ -19,6 +19,8 @@ func _process(delta:float) -> void:
 		note.position.x = strum_pos.x
 		note.position.y = strum_pos.y - ((0.45 * downscroll_mult) * (Conductor.position - note.time) * scroll_speed)
 		
+		if note.direction < 0: continue
+		
 		if note.was_good_hit:
 			note.position.y = strum_pos.y
 			
