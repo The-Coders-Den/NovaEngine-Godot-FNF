@@ -637,9 +637,17 @@ func pop_up_score(judgement:Judgement) -> void:
 	
 	script_group.call_func("on_pop_up_score", [combo])
 	
+var cached_shit:Dictionary = {}
+	
+func load_and_cache(path:String):
+	if not path in cached_shit:
+		cached_shit[path] = load(path)
+		
+	return cached_shit[path]
+	
 func display_judgement(judgement:Judgement, tween:Tween):	
 	var rating_spr:VelocitySprite = rating_template.duplicate()
-	rating_spr.texture = load(ui_skin.rating_texture_path+judgement.name+".png")
+	rating_spr.texture = load_and_cache(ui_skin.rating_texture_path+judgement.name+".png")
 	rating_spr.visible = true
 	rating_spr.scale = Vector2(ui_skin.rating_scale, ui_skin.rating_scale)
 	rating_spr.texture_filter = TEXTURE_FILTER_LINEAR if ui_skin.rating_antialiasing else TEXTURE_FILTER_NEAREST
@@ -656,7 +664,7 @@ func display_combo(tween:Tween):
 	var separated_score:String = Global.add_zeros(str(combo), 3)
 	for i in len(separated_score):
 		var num_score:VelocitySprite = combo_template.duplicate()
-		num_score.texture = load(ui_skin.combo_texture_path+"num"+separated_score.substr(i, 1)+".png")
+		num_score.texture = load_and_cache(ui_skin.combo_texture_path+"num"+separated_score.substr(i, 1)+".png")
 		num_score.position = Vector2((43 * i) - 90, 80)
 		num_score.visible = true
 		num_score.scale = Vector2(ui_skin.combo_scale, ui_skin.combo_scale)
