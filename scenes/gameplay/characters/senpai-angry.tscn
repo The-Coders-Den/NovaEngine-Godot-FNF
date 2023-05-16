@@ -278,7 +278,7 @@ health_icon = ExtResource("2_4xoi6")
 health_color = Color(1, 0.666667, 0.435294, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(4, -882)
+position = Vector2(-372, -882)
 scale = Vector2(6, 6)
 sprite_frames = ExtResource("3_v36ws")
 animation = &"Angry Senpai Idle"
@@ -293,4 +293,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(588, -410)
+position = Vector2(212, -410)

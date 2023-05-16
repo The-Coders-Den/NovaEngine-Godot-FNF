@@ -22,10 +22,10 @@ animation = &"background 2 instance 1"
 [node name="Character Positions" type="Node2D" parent="."]
 
 [node name="Opponent" type="Node2D" parent="Character Positions"]
-position = Vector2(-179, 779)
+position = Vector2(205, 779)
 
 [node name="Spectator" type="Node2D" parent="Character Positions"]
 position = Vector2(692, 714)
 
 [node name="Player" type="Node2D" parent="Character Positions"]
-position = Vector2(795, 790)
+position = Vector2(1014, 790)

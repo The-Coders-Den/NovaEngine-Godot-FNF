@@ -278,14 +278,13 @@ health_color = Color(1, 0.235294, 0.431373, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(0, -714)
+position = Vector2(-384, -714)
 scale = Vector2(6, 6)
 sprite_frames = ExtResource("3_b6qp7")
-animation = &"spirit down"
+animation = &"idle spirit"
 frame = 19
 frame_progress = 1.0
 centered = false
-offset = Vector2(-70, -65)
 script = ExtResource("4_cqb0l")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite"]
@@ -294,4 +293,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(556, -355)
+position = Vector2(172, -355)

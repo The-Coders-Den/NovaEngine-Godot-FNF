@@ -230,7 +230,7 @@ dance_steps = Array[String]([""])
 health_color = Color(0.647059, 0, 0.301961, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -64)
+position = Vector2(-368, -800)
 sprite_frames = ExtResource("3_a7ohd")
 animation = &"Pico shoot 1"
 frame = 25
@@ -245,4 +245,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(341, 259)
+position = Vector2(-35, -477)
