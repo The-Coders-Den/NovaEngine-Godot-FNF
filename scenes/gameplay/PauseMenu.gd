@@ -154,6 +154,7 @@ func _process(delta):
 					else:
 						game.note_data_array = []
 						game.gen_song(cur_time + 500)
+						Conductor.change_bpm(Global.SONG.bpm)
 						
 				game.load_events()
 				
