@@ -38,3 +38,6 @@ func on_beat_hit(beat:int):
 
 func on_beat_hit_post(beat:int):
 	pass
+	
+func on_event(name:String, parameters:Array):
+	pass

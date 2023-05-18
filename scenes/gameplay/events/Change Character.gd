@@ -29,16 +29,12 @@ func change_char() -> void:
 			old_character = game.opponent
 			new_character.position = old_character.position
 			game.opponent = new_character
-			game.cpu_icon.texture = new_character.health_icon
-			game.cpu_icon.hframes = new_character.health_icon_frames
-			game.OPPONENT_HEALTH_COLOR.bg_color = new_character.health_color
+			game.update_health_bar()
 		"bf":
 			old_character = game.player
 			new_character.position = old_character.position
 			game.player = new_character
-			game.player_icon.texture = new_character.health_icon
-			game.player_icon.hframes = new_character.health_icon_frames
-			game.PLAYER_HEALTH_COLOR.bg_color = new_character.health_color
+			game.update_health_bar()
 		"gf":
 			old_character = game.spectator
 			new_character.position = old_character.position

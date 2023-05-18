@@ -44,6 +44,7 @@ var icon_bumping_interval:int = 1
 var icon_zooming:bool = true
 
 var stage:Stage
+
 var opponent:Character
 var spectator:Character
 var player:Character
@@ -282,48 +283,11 @@ func _ready() -> void:
 	
 	add_child(stage)
 	
-	var spectator_path:String = "res://scenes/gameplay/characters/"+SONG.spectator+".tscn"
-	if ResourceLoader.exists(spectator_path):
-		spectator = load(spectator_path).instantiate()
-	else:
-		spectator = load("res://scenes/gameplay/characters/bf.tscn").instantiate()
-		
-	spectator.position = stage.character_positions["spectator"].position
-	add_child(spectator)
+	load_spectator()
+	load_opponent()
+	load_player()
 	
-	var opponent_path:String = "res://scenes/gameplay/characters/"+SONG.opponent+".tscn"
-	if ResourceLoader.exists(opponent_path):
-		opponent = load(opponent_path).instantiate()
-	else:
-		opponent = load("res://scenes/gameplay/characters/bf.tscn").instantiate()
-		
-	opponent.position = stage.character_positions["opponent"].position
-	add_child(opponent)
-	
-	if SONG.opponent == SONG.spectator:
-		opponent.position = spectator.position
-		
-		spectator.queue_free()
-		spectator = null
-	
-	var player_path:String = "res://scenes/gameplay/characters/"+SONG.player+".tscn"
-	if ResourceLoader.exists(player_path):
-		player = load(player_path).instantiate()
-	else:
-		player = load("res://scenes/gameplay/characters/bf.tscn").instantiate()
-		
-	player._is_true_player = true
-	player.position = stage.character_positions["player"].position
-	add_child(player)
-	
-	cpu_icon.texture = opponent.health_icon
-	cpu_icon.hframes = opponent.health_icon_frames
-	
-	player_icon.texture = player.health_icon
-	player_icon.hframes = player.health_icon_frames
-	
-	OPPONENT_HEALTH_COLOR.bg_color = opponent.health_color
-	PLAYER_HEALTH_COLOR.bg_color = player.health_color
+	update_health_bar()
 	
 	if SettingsAPI.get_setting("downscroll"):
 		health_bar_bg.position.y = 60
@@ -350,6 +314,53 @@ func _ready() -> void:
 	
 	stage.callv("_ready_post", [])
 	script_group.call_func("_ready_post", [])
+	
+func load_spectator():
+	var spectator_path:String = "res://scenes/gameplay/characters/"+SONG.spectator+".tscn"
+	if ResourceLoader.exists(spectator_path):
+		spectator = load(spectator_path).instantiate()
+	else:
+		spectator = load("res://scenes/gameplay/characters/bf.tscn").instantiate()
+		
+	spectator.position = stage.character_positions["spectator"].position
+	add_child(spectator)
+	
+func load_opponent():
+	var opponent_path:String = "res://scenes/gameplay/characters/"+SONG.opponent+".tscn"
+	if ResourceLoader.exists(opponent_path):
+		opponent = load(opponent_path).instantiate()
+	else:
+		opponent = load("res://scenes/gameplay/characters/bf.tscn").instantiate()
+		
+	opponent.position = stage.character_positions["opponent"].position
+	add_child(opponent)
+	
+	if SONG.opponent == SONG.spectator:
+		opponent.position = spectator.position
+		
+		spectator.queue_free()
+		spectator = null
+	
+func load_player():
+	var player_path:String = "res://scenes/gameplay/characters/"+SONG.player+".tscn"
+	if ResourceLoader.exists(player_path):
+		player = load(player_path).instantiate()
+	else:
+		player = load("res://scenes/gameplay/characters/bf.tscn").instantiate()
+		
+	player._is_true_player = true
+	player.position = stage.character_positions["player"].position
+	add_child(player)
+	
+func update_health_bar():
+	cpu_icon.texture = opponent.health_icon
+	cpu_icon.hframes = opponent.health_icon_frames
+	
+	player_icon.texture = player.health_icon
+	player_icon.hframes = player.health_icon_frames
+	
+	OPPONENT_HEALTH_COLOR.bg_color = opponent.health_color
+	PLAYER_HEALTH_COLOR.bg_color = player.health_color
 	
 func start_cutscene(postfix:String = "-start"):
 	var cutscene_path = "res://scenes/gameplay/cutscenes/" + SONG.name.to_lower() + postfix + ".tscn"
@@ -856,6 +867,9 @@ func _physics_process(delta: float) -> void:
 			var event:Event = template_events[event_data_array[0].name].duplicate()
 			event.parameters = event_data_array[0].parameters
 			add_child(event)
+			
+		stage.callv("on_event", [event_data_array[0].name, event_data_array[0].parameters])
+		script_group.call_func("on_event", [event_data_array[0].name, event_data_array[0].parameters])
 		
 		event_data_array.pop_front()
 		

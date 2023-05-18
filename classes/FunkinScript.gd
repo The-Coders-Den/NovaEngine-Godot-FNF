@@ -94,6 +94,9 @@ func on_start_countdown():
 func on_countdown_tick(tick:int, tween:Tween):
 	pass
 	
+func on_event(name:String, parameters:Array):
+	pass
+	
 func on_destroy():
 	pass
 

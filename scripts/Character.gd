@@ -1,6 +1,8 @@
 class_name Character extends Node2D
 
 @export_group("General Info")
+@export var is_animated:bool = true
+@export var can_sing:bool = true
 @export var is_player:bool = false
 @export var sing_duration:float = 4.0
 @export var dance_steps:Array[String] = ["idle"]
@@ -78,6 +80,9 @@ func _process(delta):
 			dance()
 
 func play_anim(anim:String, force:bool = false):
+	if not is_animated: return
+	if "sing" in anim and not can_sing: return
+	
 	special_anim = false
 	
 	# swap left and right anims
