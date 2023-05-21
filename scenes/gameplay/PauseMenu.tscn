@@ -62,4 +62,4 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 12
 theme_override_fonts/font = ExtResource("5_6nkco")
 theme_override_font_sizes/font_size = 16
-text = "HOLD SHFIT TO MOVE FASTER"
+text = "HOLD SHIFT TO MOVE FASTER"
