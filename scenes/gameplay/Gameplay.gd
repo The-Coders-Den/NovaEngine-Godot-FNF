@@ -891,11 +891,11 @@ func _physics_process(delta: float) -> void:
 			instance_type = "default"
 			
 		var new_note:Note = template_notes[instance_type].duplicate()
-		new_note.position = Vector2(-9999, -9999)
-		new_note.time = note.time
-		new_note.direction = note.direction % key_count
-		new_note.length = note.length * 0.85
 		new_note.strumline = player_strums if is_player_note else cpu_strums
+		new_note.direction = note.direction % key_count
+		new_note.position = Vector2(new_note.strumline.get_child(note.direction).position.x, -9999)
+		new_note.time = note.time
+		new_note.length = note.length * 0.85
 		new_note.must_press = is_player_note
 		new_note.note_skin = ui_skin
 		

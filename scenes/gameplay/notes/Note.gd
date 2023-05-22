@@ -24,6 +24,8 @@ var can_be_hit:bool = false
 var was_good_hit:bool = false
 var too_late:bool = false
 
+var independent:bool = false
+
 var step_crochet:float = 0.0
 var note_skin:UISkin
 

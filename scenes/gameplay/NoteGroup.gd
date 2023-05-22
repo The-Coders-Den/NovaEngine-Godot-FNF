@@ -15,11 +15,15 @@ func _process(delta:float) -> void:
 	for i in get_child_count():
 		var downscroll_mult:int = -1 if SettingsAPI.get_setting("downscroll") else 1
 		var note:Note = get_child(i)
-		var strum_pos:Vector2 = note.strumline.get_child(note.direction).global_position
-		note.position.x = strum_pos.x
-		note.position.y = strum_pos.y - ((0.45 * downscroll_mult) * (Conductor.position - note.time) * scroll_speed)
 		
 		if note.direction < 0: continue
+		
+		var strum_pos:Vector2 = note.strumline.get_child(note.direction).global_position
+		note.position.y = strum_pos.y - ((0.45 * downscroll_mult) * (Conductor.position - note.time) * scroll_speed)
+		
+		if not note.independent:
+			note.position.x = strum_pos.x
+			note.rotation_degrees = note.strumline.get_child(note.direction).global_rotation_degrees
 		
 		if note.was_good_hit:
 			note.position.y = strum_pos.y
