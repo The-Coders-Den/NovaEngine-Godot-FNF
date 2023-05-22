@@ -113,6 +113,8 @@ func _process(delta):
 				hold_time += delta
 				if hold_time > 0.5:
 					hold_time = 0.435
+					if Input.is_action_pressed("shift_key"):
+						hold_time = 0.475
 					cur_time = clampf(cur_time + (1000.0 * (-1.0 if Input.is_action_pressed("ui_left") else 1.0)), 0.0, length)
 			else:
 				hold_time = 0.0

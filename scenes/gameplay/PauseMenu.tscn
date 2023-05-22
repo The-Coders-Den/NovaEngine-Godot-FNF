@@ -52,3 +52,14 @@ theme_override_constants/outline_size = 24
 theme_override_fonts/font = ExtResource("5_6nkco")
 theme_override_font_sizes/font_size = 64
 text = "0:00 / 0:00"
+
+[node name="SkipTimeLabel2" type="Label" parent="SkipTimeLabel"]
+offset_left = 82.0
+offset_top = 67.0
+offset_right = 326.0
+offset_bottom = 85.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("5_6nkco")
+theme_override_font_sizes/font_size = 16
+text = "HOLD SHIFT TO MOVE FASTER"
