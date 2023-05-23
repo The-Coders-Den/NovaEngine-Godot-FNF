@@ -559,56 +559,54 @@ func key_from_event(event:InputEventKey):
 	
 var pressed:Array[bool] = []
 	
-func _input(event:InputEvent) -> void:
-	if event is InputEventKey:
-		var key_event:InputEventKey = event
-		var data:int = key_from_event(key_event)
+func _unhandled_key_input(key_event:InputEvent) -> void:
+	var data:int = key_from_event(key_event)
+	
+	if data > -1:
+		pressed[data] = key_event.is_pressed()
+	
+	if data == -1 or not Input.is_action_just_pressed(player_strums.controls[data]):
+		return
+	
+	var receptor:Receptor = player_strums.get_child(data)
+	receptor.play_anim("pressed")
+	
+	var possible_notes:Array[Note] = []
+	for note in note_group.get_children().filter(func(note:Note):
+		return (note.direction == data and !note.too_late and note.can_be_hit and note.must_press and not note.was_good_hit)	
+	): possible_notes.append(note)
+	
+	possible_notes.sort_custom(sort_hit_notes)
+	
+	var dont_hit:Array[bool] = []
+	for i in player_strums.get_child_count():
+		dont_hit.append(false)
 		
-		if data > -1:
-			pressed[data] = event.is_pressed()
-		
-		if data == -1 or not Input.is_action_just_pressed(player_strums.controls[data]):
-			return
-		
-		var receptor:Receptor = player_strums.get_child(data)
-		receptor.play_anim("pressed")
-		
-		var possible_notes:Array[Note] = []
-		for note in note_group.get_children().filter(func(note:Note):
-			return (note.direction == data and !note.too_late and note.can_be_hit and note.must_press and not note.was_good_hit)	
-		): possible_notes.append(note)
-		
-		possible_notes.sort_custom(sort_hit_notes)
-		
-		var dont_hit:Array[bool] = []
-		for i in player_strums.get_child_count():
-			dont_hit.append(false)
-			
-		if possible_notes.size() > 0:
-			for note in possible_notes:
-				if not dont_hit[data] and note.direction == data:
-					dont_hit[data] = true
-					
-				receptor.play_anim("confirm")
-				good_note_hit(note)
+	if possible_notes.size() > 0:
+		for note in possible_notes:
+			if not dont_hit[data] and note.direction == data:
+				dont_hit[data] = true
 				
-				# fuck you stacked notes
-				# they can go kiss my juicy ass
-				if possible_notes.size() > 1:
-					for i in possible_notes.size():
-						if i == 0: continue
-						var bad_note:Note = possible_notes[i]
-						if absf(bad_note.time - note.time) <= 5 and note.direction == data:
-							bad_note.queue_free()
-				
-				break
-		else:
-			if not SettingsAPI.get_setting("ghost tapping"):
-				fake_miss(data)
-				if SettingsAPI.get_setting("miss sounds"):
-					Audio.play_sound("missnote"+str(randi_range(1, 3)), randf_range(0.1, 0.3))
+			receptor.play_anim("confirm")
+			good_note_hit(note)
 			
-			script_group.call_func("on_ghost_tap", [data])
+			# fuck you stacked notes
+			# they can go kiss my juicy ass
+			if possible_notes.size() > 1:
+				for i in possible_notes.size():
+					if i == 0: continue
+					var bad_note:Note = possible_notes[i]
+					if absf(bad_note.time - note.time) <= 5 and note.direction == data:
+						bad_note.queue_free()
+			
+			break
+	else:
+		if not SettingsAPI.get_setting("ghost tapping"):
+			fake_miss(data)
+			if SettingsAPI.get_setting("miss sounds"):
+				Audio.play_sound("missnote"+str(randi_range(1, 3)), randf_range(0.1, 0.3))
+		
+		script_group.call_func("on_ghost_tap", [data])
 			
 func fake_miss(direction:int = -1):
 	health -= 0.0475 * Global.health_loss_mult

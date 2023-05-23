@@ -54,6 +54,7 @@ theme_override_font_sizes/font_size = 64
 text = "0:00 / 0:00"
 
 [node name="SkipTimeLabel2" type="Label" parent="SkipTimeLabel"]
+layout_mode = 0
 offset_left = 82.0
 offset_top = 67.0
 offset_right = 326.0
