@@ -487,7 +487,7 @@ health_color = Color(0.192157, 0.690196, 0.819608, 1)
 death_character = "bf-holding-gf-dead"
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(-280, -434)
+position = Vector2(-216, -434)
 sprite_frames = ExtResource("3_ds3je")
 animation = &"BF idle dance w gf"
 frame = 13

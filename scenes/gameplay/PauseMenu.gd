@@ -142,6 +142,7 @@ func _process(delta):
 					if game.starting_song:
 						game.start_song()
 						
+					game.score = 0 # fuck you i'm lazy
 					Conductor.position = cur_time
 					
 					if cur_time > old_pos:

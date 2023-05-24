@@ -43,7 +43,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(23, -30)]
+"values": [Vector2(31, -10)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -96,7 +96,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(23, 1)]
+"values": [Vector2(23, 6)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -149,7 +149,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(23, -16)]
+"values": [Vector2(23, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -178,13 +178,12 @@ health_icon = ExtResource("2_1iar7")
 health_color = Color(0.192157, 0.690196, 0.819608, 1)
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 350)
+position = Vector2(32, -218)
 sprite_frames = ExtResource("3_kdmym")
 animation = &"RETRY confirm holding gf"
 frame = 33
 frame_progress = 1.0
-centered = false
-offset = Vector2(23, -14)
+offset = Vector2(31, -10)
 script = ExtResource("4_la40q")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite"]
@@ -193,4 +192,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(241, 578)
+position = Vector2(4, -198)

@@ -91,7 +91,7 @@ var ui_skin:UISkin
 @onready var ms_display:Label = $HUD/MSDisplay
 @onready var script_group:ScriptGroup = $ScriptGroup
 
-var countdown_ticks:int = 3;
+var countdown_ticks:int = 3
 
 const ICON_DELTA_MULTIPLIER:float = 60 * 0.25
 const ZOOM_DELTA_MULTIPLIER:float = 60 * 0.05
