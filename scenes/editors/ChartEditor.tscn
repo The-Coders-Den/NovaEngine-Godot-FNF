@@ -1,13 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://d82jsypulsbw"]
+[gd_scene load_steps=10 format=3 uid="uid://d82jsypulsbw"]
 
 [ext_resource type="Theme" uid="uid://br6hapg0jupnv" path="res://assets/styles/nova_purple_panel.tres" id="1_coqmp"]
 [ext_resource type="Script" path="res://scenes/editors/ChartEditor.gd" id="1_f5f6h"]
 [ext_resource type="Texture2D" uid="uid://y8c4a1bk8wkl" path="res://assets/images/menus/menuBGDesat.png" id="3_jjy8c"]
-[ext_resource type="AudioStream" uid="uid://dlp8s18yv544" path="res://assets/songs/dad battle/audio/Inst.ogg" id="4_ra667"]
 [ext_resource type="AudioStream" uid="uid://bydbrgy3513au" path="res://assets/sounds/hitsound.ogg" id="5_m47hh"]
-[ext_resource type="AudioStream" uid="uid://b18ivib0wxmqp" path="res://assets/songs/dad battle/audio/Voices.ogg" id="5_oiib8"]
+[ext_resource type="Shader" path="res://assets/shaders/ChartLine.gdshader" id="7_ccjci"]
 [ext_resource type="PackedScene" uid="uid://w5olx2s2jovt" path="res://scenes/gameplay/strumlines/4K.tscn" id="7_h418h"]
 [ext_resource type="PackedScene" uid="uid://c462cllic036r" path="res://scenes/editors/3do.tscn" id="8_3rxci"]
+[ext_resource type="Texture2D" uid="uid://cvnq5kqghy3tp" path="res://assets/images/menus/charteditor/note.png" id="10_1xrm3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7uhct"]
+shader = ExtResource("7_ccjci")
+shader_parameter/bg_color = Quaternion(0.16, 0.13, 0.19, 1)
 
 [node name="ChartEditor" type="Control"]
 layout_mode = 3
@@ -30,12 +34,6 @@ metadata/_edit_lock_ = true
 
 [node name="sounds" type="Node" parent="."]
 
-[node name="inst" type="AudioStreamPlayer" parent="sounds"]
-stream = ExtResource("4_ra667")
-
-[node name="voices" type="AudioStreamPlayer" parent="sounds"]
-stream = ExtResource("5_oiib8")
-
 [node name="hitsound" type="AudioStreamPlayer" parent="sounds"]
 stream = ExtResource("5_m47hh")
 volume_db = 24.0
@@ -53,26 +51,40 @@ offset_right = 205.0
 offset_bottom = 340.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/h_separation = 10
 columns = 2
 
-[node name="player Lane" type="Panel" parent="GridContainer"]
+[node name="OpponentLane" type="Panel" parent="GridContainer"]
+material = SubResource("ShaderMaterial_7uhct")
 custom_minimum_size = Vector2(200, 680)
 layout_mode = 2
+mouse_filter = 2
+theme = ExtResource("1_coqmp")
 
-[node name="player Strum" parent="GridContainer/player Lane" instance=ExtResource("7_h418h")]
+[node name="OpponentStrum" parent="GridContainer/OpponentLane" instance=ExtResource("7_h418h")]
 position = Vector2(100, 654)
 scale = Vector2(0.45, 0.45)
 handle_input = false
 
-[node name="oppnent lane" type="Panel" parent="GridContainer"]
+[node name="PlayerLane" type="Panel" parent="GridContainer"]
+material = SubResource("ShaderMaterial_7uhct")
 custom_minimum_size = Vector2(200, 680)
 layout_mode = 2
+mouse_filter = 2
+theme = ExtResource("1_coqmp")
 
-[node name="Oppnent Strum" parent="GridContainer/oppnent lane" instance=ExtResource("7_h418h")]
+[node name="PlayerStrum" parent="GridContainer/PlayerLane" instance=ExtResource("7_h418h")]
 position = Vector2(98, 654)
 scale = Vector2(0.45, 0.45)
 handle_input = false
+
+[node name="StrumLine" type="Line2D" parent="."]
+position = Vector2(435, 20)
+points = PackedVector2Array(0, 0, 410, 0)
+width = 5.0
+begin_cap_mode = 2
+end_cap_mode = 2
 
 [node name="chart" type="Window" parent="."]
 title = "chart"
@@ -144,5 +156,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="notes" type="CanvasGroup" parent="."]
-position = Vector2(642, 28)
+[node name="NotesGroup" type="CanvasGroup" parent="."]
+
+[node name="HoverArrow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.490196)
+position = Vector2(-35, -19)
+scale = Vector2(0.275, 0.275)
+texture = ExtResource("10_1xrm3")
