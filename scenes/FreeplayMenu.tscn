@@ -76,6 +76,7 @@ horizontal_alignment = 1
 [node name="SongTracks" type="Node" parent="."]
 
 [node name="GameplayModifiers" type="Panel" parent="."]
+visible = false
 offset_left = 372.0
 offset_top = 220.0
 offset_right = 908.0

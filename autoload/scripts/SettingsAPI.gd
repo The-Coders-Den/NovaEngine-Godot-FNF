@@ -33,25 +33,25 @@ var _settings:Dictionary = {
 	"fps": 240,
 	
 	# controls (gameplay)
-	"note_left": ["D", "LEFT", "2_JOY"],
-	"note_down": ["F", "DOWN", "0_JOY"],
-	"note_up": ["J", "UP", "3_JOY"],
-	"note_right": ["K", "RIGHT", "1_JOY"],
+	"note_left": ["D", "LEFT"],
+	"note_down": ["F", "DOWN"],
+	"note_up": ["J", "UP"],
+	"note_right": ["K", "RIGHT"],
 	
 	# controls (ui)
-	"ui_left": ["A", "LEFT", "2_JOY"],
-	"ui_down": ["S", "DOWN", "0_JOY"],
-	"ui_up": ["W", "UP", "3_JOY"],
-	"ui_right": ["D", "RIGHT", "1_JOY"],
+	"ui_left": ["A", "LEFT"],
+	"ui_down": ["S", "DOWN"],
+	"ui_up": ["W", "UP"],
+	"ui_right": ["D", "RIGHT"],
 	
-	"ui_accept": ["ENTER", "SPACE", "0_JOY"],
-	"ui_cancel": ["BACKSPACE", "ESCAPE", "4_JOY"],
-	"ui_pause": ["ENTER", "UNKNOWN", "6_JOY"],
-	"switch_mod": ["TAB", "SHIFT", "9_JOY"],
+	"ui_accept": ["ENTER", "SPACE"],
+	"ui_cancel": ["BACKSPACE", "ESCAPE"],
+	"ui_pause": ["ENTER", "UNKNOWN"],
+	"switch_mod": ["TAB", "SHIFT"],
 	
-	"volume_up": ["EQUAL", "KP ADD", "UNKNOWN"],
-	"volume_down": ["MINUS", "KP SUBTRACT", "UNKNOWN"],
-	"volume_mute": ["0", "INSERT", "UNKNOWN"],
+	"volume_up": ["EQUAL", "KP ADD"],
+	"volume_down": ["MINUS", "KP SUBTRACT"],
+	"volume_mute": ["0", "INSERT"],
 	
 	# engine
 	"current mod": "Friday Night Funkin'",
@@ -77,21 +77,15 @@ func setup_binds():
 		# alt bind
 		var event2 = InputEventKey.new()
 		event2.set_keycode(OS.find_keycode_from_string(_settings[bind][1].to_lower()))
-		#print(_settings[bind])
-		# Joypad button bind
-		var event3 = InputEventJoypadButton.new()
-		event3.button_index = int(str(_settings[bind][2]).left(_settings[bind][2].length() - 4))
 		
-		if keys.size() - 1 != -1: # error handling
+		if keys.size() - 1 != -1: # error handling shit
 			for i in keys:
 				InputMap.action_erase_event(bind, i)
 		else:
 			InputMap.add_action(bind)
-		
+			
 		InputMap.action_add_event(bind, event1)
 		InputMap.action_add_event(bind, event2)
-		InputMap.action_add_event(bind, event3)
-
 
 func _ready():
 	var json:Dictionary = {}
