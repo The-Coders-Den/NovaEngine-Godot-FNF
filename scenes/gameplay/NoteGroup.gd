@@ -24,6 +24,8 @@ func _process(delta:float) -> void:
 		if not note.independent:
 			note.position.x = strum_pos.x
 			note.rotation_degrees = note.strumline.get_child(note.direction).global_rotation_degrees
+			note.scale = note.initial_scale * note.strumline.scale
+			note.modulate = note.strumline.modulate
 		
 		if note.was_good_hit:
 			note.position.y = strum_pos.y

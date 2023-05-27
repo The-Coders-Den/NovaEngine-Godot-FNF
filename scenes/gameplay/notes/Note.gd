@@ -37,6 +37,7 @@ var note_skin:UISkin
 
 @onready var clip_rect:ColorRect = $ColorRect
 
+var initial_scale:Vector2
 var strumline:StrumLine
 
 ## override these functions if you need to
@@ -80,6 +81,8 @@ func _ready() -> void:
 		sustain.width /= ((note_skin.note_scale + 0.3) - note_skin.sustain_width_offset)
 		
 		texture_filter = TEXTURE_FILTER_LINEAR if note_skin.antialiasing else TEXTURE_FILTER_NEAREST
+		
+	initial_scale = scale
 		
 	if SettingsAPI.get_setting("opaque sustains"):
 		sustain.modulate.a = 1.0
