@@ -41,8 +41,6 @@ func _ready() -> void:
 	ModManager.switch_mod(SettingsAPI.get_setting("current mod"))
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	
-var tree_paused:bool = false
 
 func set_vsync(value:bool):
 	if value:
@@ -59,7 +57,6 @@ func _notification(what):
 				
 				Audio.process_mode = Node.PROCESS_MODE_INHERIT
 				Transition.process_mode = Node.PROCESS_MODE_INHERIT
-				tree_paused = get_tree().paused
 				get_tree().paused = true
 			
 		NOTIFICATION_APPLICATION_FOCUS_IN:
@@ -69,7 +66,7 @@ func _notification(what):
 				
 				Audio.process_mode = Node.PROCESS_MODE_ALWAYS
 				Transition.process_mode = Node.PROCESS_MODE_ALWAYS
-				get_tree().paused = tree_paused
+				get_tree().paused = false
 				
 var transitioning:bool = false
 var last_scene_path:String

@@ -99,7 +99,6 @@ const ZOOM_DELTA_MULTIPLIER:float = 60 * 0.05
 signal paused
 
 var tracks:Array[AudioStreamPlayer] = []
-
 func load_song():
 	var music_path:String = "res://assets/songs/%s/audio/" % SONG.name.to_lower()
 	
@@ -338,7 +337,7 @@ func load_opponent():
 	if SONG.opponent == SONG.spectator:
 		opponent.position = spectator.position
 		
-		spectator.queue_free()
+		await spectator.queue_free()
 		spectator = null
 	
 func load_player():
