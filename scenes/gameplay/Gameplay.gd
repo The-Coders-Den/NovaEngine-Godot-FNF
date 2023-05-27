@@ -336,8 +336,9 @@ func load_opponent():
 	
 	if SONG.opponent == SONG.spectator:
 		opponent.position = spectator.position
-		
-		await spectator.queue_free()
+		spectator.queue_free()
+		# someone complain about dis
+		await get_tree().create_timer(0.01).timeout
 		spectator = null
 	
 func load_player():
