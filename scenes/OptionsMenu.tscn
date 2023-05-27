@@ -498,7 +498,7 @@ text = "Note Binds"
 layout_mode = 0
 offset_left = 42.0
 offset_top = 33.0
-offset_right = 197.0
+offset_right = 142.0
 offset_bottom = 64.0
 tooltip_text = "Click on this button to change this bind.
 
@@ -509,8 +509,8 @@ script = ExtResource("8_715hi")
 
 [node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind"]
 layout_mode = 0
-offset_left = 164.0
-offset_right = 319.0
+offset_left = 114.0
+offset_right = 206.0
 offset_bottom = 31.0
 tooltip_text = "Click on this button to change this bind.
 
@@ -518,6 +518,18 @@ Once this button is clicked, it will wait for a keyboard input and set that key 
 text = "LEFT"
 script = ExtResource("8_715hi")
 bind_type = 1
+
+[node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind/Alt Bind"]
+layout_mode = 0
+offset_left = 100.0
+offset_right = 192.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "#_JOY"
+script = ExtResource("8_715hi")
+bind_type = 2
 
 [node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind"]
 position = Vector2(-28, 16)
@@ -529,7 +541,7 @@ hframes = 4
 layout_mode = 0
 offset_left = 42.0
 offset_top = 73.0
-offset_right = 197.0
+offset_right = 142.0
 offset_bottom = 104.0
 tooltip_text = "Click on this button to change this bind.
 
@@ -541,8 +553,8 @@ bind = "note_down"
 
 [node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind"]
 layout_mode = 0
-offset_left = 164.0
-offset_right = 319.0
+offset_left = 114.0
+offset_right = 206.0
 offset_bottom = 31.0
 tooltip_text = "Click on this button to change this bind.
 
@@ -551,6 +563,19 @@ text = "DOWN"
 script = ExtResource("8_715hi")
 bind = "note_down"
 bind_type = 1
+
+[node name="Alt Bind2" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind"]
+layout_mode = 0
+offset_left = 215.0
+offset_right = 307.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "#_JOY"
+script = ExtResource("8_715hi")
+bind = "note_down"
+bind_type = 2
 
 [node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind"]
 position = Vector2(-28, 16)
@@ -563,7 +588,7 @@ frame = 1
 layout_mode = 0
 offset_left = 42.0
 offset_top = 113.0
-offset_right = 197.0
+offset_right = 142.0
 offset_bottom = 144.0
 tooltip_text = "Click on this button to change this bind.
 
@@ -575,8 +600,8 @@ bind = "note_up"
 
 [node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Up Bind"]
 layout_mode = 0
-offset_left = 164.0
-offset_right = 319.0
+offset_left = 114.0
+offset_right = 207.0
 offset_bottom = 31.0
 tooltip_text = "Click on this button to change this bind.
 
@@ -585,6 +610,19 @@ text = "UP"
 script = ExtResource("8_715hi")
 bind = "note_up"
 bind_type = 1
+
+[node name="Alt Bind2" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Up Bind"]
+layout_mode = 0
+offset_left = 215.0
+offset_right = 308.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "#_JOY"
+script = ExtResource("8_715hi")
+bind = "note_up"
+bind_type = 2
 
 [node name="Note" type="Sprite2D" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Up Bind"]
 position = Vector2(-28, 16)
@@ -597,7 +635,7 @@ frame = 2
 layout_mode = 0
 offset_left = 42.0
 offset_top = 153.0
-offset_right = 197.0
+offset_right = 142.0
 offset_bottom = 184.0
 tooltip_text = "Click on this button to change this bind.
 
@@ -609,13 +647,26 @@ bind = "note_right"
 
 [node name="Alt Bind" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Right Bind"]
 layout_mode = 0
-offset_left = 164.0
-offset_right = 319.0
+offset_left = 115.0
+offset_right = 207.0
 offset_bottom = 31.0
 tooltip_text = "Click on this button to change this bind.
 
 Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
 text = "RIGHT"
+script = ExtResource("8_715hi")
+bind = "note_right"
+bind_type = 1
+
+[node name="Alt Bind2" type="Button" parent="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Right Bind"]
+layout_mode = 0
+offset_left = 214.0
+offset_right = 306.0
+offset_bottom = 31.0
+tooltip_text = "Click on this button to change this bind.
+
+Once this button is clicked, it will wait for a keyboard input and set that key as the bind."
+text = "#_JOY"
 script = ExtResource("8_715hi")
 bind = "note_right"
 bind_type = 1
@@ -1083,12 +1134,16 @@ in_editor = true
 [connection signal="pressed" from="TabContainer/Tools/TXT Converter" to="." method="_on_tool_button_pressed" binds= ["TXT Converter"]]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind/Alt Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind/Alt Bind/Alt Bind" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind/Alt Bind2" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind/Alt Bind2" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Up Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Up Bind" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Up Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Up Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Up Bind/Alt Bind2" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Up Bind/Alt Bind2" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Right Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Right Bind" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Right Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Right Bind/Alt Bind" method="_on_pressed"]
+[connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Right Bind/Alt Bind2" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Right Bind/Alt Bind2" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Left Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Left Bind" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Left Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Left Bind/Alt Bind" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Down Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel2/UI Binds/Down Bind" method="_on_pressed"]

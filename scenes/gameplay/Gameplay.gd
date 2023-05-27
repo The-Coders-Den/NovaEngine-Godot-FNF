@@ -548,7 +548,7 @@ func position_hud():
 	hud.offset.x = (hud.scale.x - 1.0) * -(Global.game_size.x * 0.5)
 	hud.offset.y = (hud.scale.y - 1.0) * -(Global.game_size.y * 0.5)
 	
-func key_from_event(event:InputEventKey):
+func key_from_event(event):
 	var data:int = -1
 	for i in player_strums.controls.size():
 		if event.is_action_pressed(player_strums.controls[i]) or event.is_action_released(player_strums.controls[i]):
@@ -559,7 +559,8 @@ func key_from_event(event:InputEventKey):
 	
 var pressed:Array[bool] = []
 	
-func _unhandled_key_input(key_event:InputEvent) -> void:
+func _unhandled_input(key_event) -> void:
+	#print(key_event)
 	var data:int = key_from_event(key_event)
 	
 	if data > -1:
@@ -567,7 +568,6 @@ func _unhandled_key_input(key_event:InputEvent) -> void:
 	
 	if data == -1 or not Input.is_action_just_pressed(player_strums.controls[data]):
 		return
-	
 	var receptor:Receptor = player_strums.get_child(data)
 	receptor.play_anim("pressed")
 	

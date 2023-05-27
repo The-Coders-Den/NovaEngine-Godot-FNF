@@ -31,14 +31,19 @@ func update_skin() -> void:
 		receptor.splash.scale = Vector2(note_skin.splash_scale, note_skin.splash_scale) / note_skin.note_scale
 
 func _input(event:InputEvent) -> void:
+	if event is InputEventJoypadButton and handle_input:
+		key_shit()
 	if event is InputEventKey and handle_input:
 		key_shit()
+		print(event)
+	
 		
 func key_shit() -> void:
 	for i in get_child_count():
 		if not current_scene is Gameplay and Input.is_action_just_pressed(controls[i]):
 			var receptor:Receptor = get_child(i)
 			receptor.play_anim("pressed")
+			#print("pressed")
 			
 		if Input.is_action_just_released(controls[i]):
 			var receptor:Receptor = get_child(i)
