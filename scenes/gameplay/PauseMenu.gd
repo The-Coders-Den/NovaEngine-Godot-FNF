@@ -30,7 +30,6 @@ var hold_time:float = 0.0
 
 func _ready() -> void:
 	get_tree().paused = true
-	
 	music.volume_db = -80
 	music.play(randf_range(0.0, music.stream.get_length() * 0.5))
 	music.stream.loop = true
@@ -93,6 +92,10 @@ func change_selection(change:int = 0):
 		
 	skip_time_label.visible = options[cur_selected] == "Skip Time"
 	Audio.play_sound("scrollMenu")
+
+func _notification(what):
+	if what == NOTIFICATION_APPLICATION_FOCUS_IN:
+		get_tree().paused = true
 
 func _process(delta):
 	var length:float = game.note_data_array[game.note_data_array.size()-1].time + game.meta.end_offset if game.note_data_array.size() > 0 else game.tracks[0].stream.get_length() * 1000.0
