@@ -54,18 +54,18 @@ func _notification(what):
 			if SettingsAPI.get_setting("auto pause"):
 				set_vsync(SettingsAPI.get_setting('vsync'))
 				Engine.max_fps = 10
-				
-				Audio.process_mode = Node.PROCESS_MODE_INHERIT
-				Transition.process_mode = Node.PROCESS_MODE_INHERIT
+				Audio.process_mode = Node.PROCESS_MODE_DISABLED
+				Transition.process_mode = Node.PROCESS_MODE_DISABLED
+				AudioServer.set_bus_volume_db(0,-INF)
 				get_tree().paused = true
 			
 		NOTIFICATION_APPLICATION_FOCUS_IN:
 			if SettingsAPI.get_setting("auto pause"):
 				set_vsync(SettingsAPI.get_setting('vsync'))
 				Engine.max_fps = SettingsAPI.get_setting("fps")
-				
 				Audio.process_mode = Node.PROCESS_MODE_ALWAYS
 				Transition.process_mode = Node.PROCESS_MODE_ALWAYS
+				VolumeSlider.update_volume()
 				get_tree().paused = false
 				
 var transitioning:bool = false

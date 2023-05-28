@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://codq4ckxxy1nt"]
-
-[ext_resource type="Script" path="res://assets/songs/m.i.l.f/modchart.gd" id="1_0wl78"]
-
-[node name="modchart" type="Node"]
-script = ExtResource("1_0wl78")
