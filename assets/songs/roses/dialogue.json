@@ -1,0 +1,34 @@
+{
+    "info": {
+        "proceedSound": "pixelProceed"
+    },
+    "lines": [
+        {
+            "char": "senpai-angry", 
+            "emotion": "default", 
+            "text": "Not bad for an ugly worm.", 
+            "box": "pixel/boxPixel", 
+            "font": "pixel", 
+            "speed": 0.04, 
+            "bg": "week6"
+        },
+        {
+            "char": "senpai-angry", 
+            "emotion": "default", 
+            "text": "But this time I'll rip your nuts off right after your girlfriend finishes gargling mine.", 
+            "box": "pixel/boxPixel", 
+            "font": "pixel", 
+            "speed": 0.04, 
+            "bg": "week6"
+        },
+        {
+            "char": "bf-pixel", 
+            "emotion": "default", 
+            "text": "Bop beep be be skdoo bep", 
+            "box": "pixel/boxPixel", 
+            "font": "pixel", 
+            "speed": 0.04, 
+            "bg": "week6"
+        }
+    ]
+}
