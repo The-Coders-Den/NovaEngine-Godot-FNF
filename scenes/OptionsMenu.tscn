@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cvdlr3wfsrmlc"]
+[gd_scene load_steps=26 format=3 uid="uid://cvdlr3wfsrmlc"]
 
 [ext_resource type="Script" path="res://scenes/OptionsMenu.gd" id="1_wsch7"]
 [ext_resource type="Texture2D" uid="uid://y8c4a1bk8wkl" path="res://assets/images/menus/menuBGDesat.png" id="2_di4mo"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://dw8bh3jsxd3kl" path="res://assets/images/material_icons/volume-mute.png" id="16_ofedk"]
 [ext_resource type="Texture2D" uid="uid://s111e8ow38lw" path="res://assets/images/menus/options/switchModBind.png" id="17_q6en1"]
 [ext_resource type="FontFile" uid="uid://cf2wd6a4pa5kb" path="res://assets/fonts/funkin.ttf" id="17_u2vjg"]
+[ext_resource type="Script" path="res://scenes/gameplay/notes/Note.gd" id="22_o25go"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2rif3"]
 bg_color = Color(1, 1, 1, 0)
@@ -49,6 +50,7 @@ theme = ExtResource("3_cmtlj")
 theme_override_constants/side_margin = 0
 
 [node name="Gameplay" type="TabBar" parent="TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Downscroll" type="CheckBox" parent="TabContainer/Gameplay"]
@@ -443,7 +445,6 @@ theme_override_font_sizes/font_size = 16
 text = "FPS Cap"
 
 [node name="Tools" type="TabBar" parent="TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="XML Converter" type="Button" parent="TabContainer/Tools"]
@@ -463,6 +464,15 @@ offset_right = 379.0
 offset_bottom = 91.0
 theme = ExtResource("7_xa45n")
 text = "TXT Converter"
+
+[node name="Adobe Json Converter" type="Button" parent="TabContainer/Tools"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 100.0
+offset_right = 379.0
+offset_bottom = 131.0
+theme = ExtResource("7_xa45n")
+text = "Adobe Json Converter(BETA)"
 
 [node name="Controls" type="TabBar" parent="TabContainer"]
 visible = false
@@ -1049,6 +1059,7 @@ position = Vector2(884, 787)
 [node name="NoteTemplate" parent="." instance=ExtResource("9_rjold")]
 visible = false
 position = Vector2(-83.9998, 212)
+script = ExtResource("22_o25go")
 in_editor = true
 
 [node name="Notes" type="Node2D" parent="."]
@@ -1081,6 +1092,7 @@ in_editor = true
 [connection signal="item_selected" from="TabContainer/Miscellaneous/FPS Cap" to="TabContainer/Miscellaneous/FPS Cap" method="_on_item_selected"]
 [connection signal="pressed" from="TabContainer/Tools/XML Converter" to="." method="_on_tool_button_pressed" binds= ["XML Converter"]]
 [connection signal="pressed" from="TabContainer/Tools/TXT Converter" to="." method="_on_tool_button_pressed" binds= ["TXT Converter"]]
+[connection signal="pressed" from="TabContainer/Tools/Adobe Json Converter" to="." method="_on_tool_button_pressed" binds= ["Adobe Json Converter"]]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind/Alt Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Left Bind/Alt Bind" method="_on_pressed"]
 [connection signal="pressed" from="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind" to="TabContainer/Controls/ScrollContainer/VBoxContainer/Panel/Note Binds/Down Bind" method="_on_pressed"]

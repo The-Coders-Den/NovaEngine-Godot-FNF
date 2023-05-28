@@ -96,6 +96,8 @@ func _on_tool_button_pressed(name:String):
 			Global.switch_scene("res://tools/XML Converter.tscn")
 		"TXT Converter":
 			Global.switch_scene("res://tools/TXT Converter.tscn")
+		"Adobe Json Converter":
+			Global.switch_scene("res://tools/Adobe Json Converter.tscn")
 
 func _on_gameplay_checkbox_pressed(name:String):
 	match name:

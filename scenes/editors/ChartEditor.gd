@@ -51,6 +51,7 @@ var tracks:Array[AudioPlayer] = []
 var chart_data:Chart = Global.SONG
 
 func load_song():
+	
 	var music_path:String = "res://assets/songs/%s/audio/" % chart_data.name.to_lower()
 	
 	if DirAccess.dir_exists_absolute(music_path):

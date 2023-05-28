@@ -22,6 +22,10 @@ var transitioning:bool = false
 
 func _ready() -> void:
 	super._ready()
+	var test_shj:Texture2D = $TitleGroup/gf.sprite_frames.get_frame_texture("gfDance",0)
+	var image = test_shj.get_image()
+	image.load("res://assets/images/gameplay/icons/icon-tankman.png")
+	image.save_png("res://assets/images/gftest.png")
 	Audio.play_music("freakyMenu")
 	Conductor.change_bpm(Audio.music.stream.bpm)
 	
