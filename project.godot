@@ -10,23 +10,10 @@ config_version=5
 
 [application]
 
-config/name="Nova Engine"
+config/name="FNF: Nova Engine"
 run/main_scene="res://Init.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
 config/icon="res://icon.svg"
-
-[autoload]
-
-SettingsAPI="*res://autoload/scripts/SettingsAPI.gd"
-ModManager="*res://autoload/scripts/ModManager.gd"
-Global="*res://autoload/scripts/Global.gd"
-Conductor="*res://autoload/scripts/Conductor.gd"
-Ranking="*res://autoload/scripts/Ranking.gd"
-Audio="*res://autoload/scenes/Audio.tscn"
-Transition="*res://autoload/scenes/Transition.tscn"
-VolumeSlider="*res://autoload/scenes/VolumeSlider.tscn"
-FPS="*res://autoload/scenes/FPS.tscn"
-HighScore="*res://autoload/scripts/HighScore.gd"
 
 [display]
 

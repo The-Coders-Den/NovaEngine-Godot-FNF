@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://hnmovcacq0if"]
-
-[ext_resource type="Script" path="res://scripts/UISkin.gd" id="1_phcbl"]
-
-[node name="default" type="Node"]
-script = ExtResource("1_phcbl")

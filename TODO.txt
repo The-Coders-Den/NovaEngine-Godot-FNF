@@ -1,6 +1,0 @@
-chart editor
-make mods menu look better
-make wiki/documentation
-group characters
-MAYBE multikey?? (this will not be added for a while)
-make notes use one script for optimization

@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dpxxrsholrsob"]
-
-[ext_resource type="Script" path="res://scenes/options/Dropdown.gd" id="1_ium6d"]
-
-[node name="Dropdown" type="OptionButton"]
-script = ExtResource("1_ium6d")
-
-[connection signal="item_selected" from="." to="." method="_on_item_selected"]

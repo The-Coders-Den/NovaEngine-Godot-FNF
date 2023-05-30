@@ -1,6 +1,5 @@
-[gd_scene load_steps=6 format=3 uid="uid://685c4n3n15v1"]
+[gd_scene load_steps=5 format=3 uid="uid://685c4n3n15v1"]
 
-[ext_resource type="Texture2D" uid="uid://y8c4a1bk8wkl" path="res://assets/images/menus/menuBGDesat.png" id="1_dytjv"]
 [ext_resource type="Theme" uid="uid://br6hapg0jupnv" path="res://assets/styles/nova_purple_panel.tres" id="2_yycrj"]
 [ext_resource type="Script" path="res://tools/Adobe Json Converter.gd" id="3_3gd5o"]
 [ext_resource type="Theme" uid="uid://blt3c0a5po0yj" path="res://assets/styles/nova_purple_button.tres" id="4_eli0x"]
@@ -12,7 +11,6 @@
 modulate = Color(0.105882, 0.0784314, 0.12549, 1)
 position = Vector2(-116, -58)
 scale = Vector2(1.095, 1.095)
-texture = ExtResource("1_dytjv")
 centered = false
 
 [node name="Converted Panel" type="Panel" parent="."]

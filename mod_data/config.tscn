@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfmumomv10kwx"]
-
-[ext_resource type="Script" path="res://scripts/ModConfig.gd" id="1_ohtiw"]
-[ext_resource type="Resource" uid="uid://n6bromgyvpe3" path="res://assets/contributorList.tres" id="2_oa0ki"]
-
-[node name="config" type="Node"]
-script = ExtResource("1_ohtiw")
-contributors = ExtResource("2_oa0ki")
