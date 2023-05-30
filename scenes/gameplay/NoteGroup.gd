@@ -65,7 +65,7 @@ func _process(delta:float) -> void:
 
 		var note_kill_range:float = (500 / scroll_speed)
 		if note.must_press:
-			if note.time <= Conductor.position - note_kill_range and not note.was_good_hit:
+			if note.time <= Conductor.position - note_kill_range and note.should_hit and not note.was_good_hit:
 				if SettingsAPI.get_setting("miss sounds"):
 					Audio.play_sound("missnote"+str(randi_range(1, 3)), randf_range(0.1, 0.3))
 				
