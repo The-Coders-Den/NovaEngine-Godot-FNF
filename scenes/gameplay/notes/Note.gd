@@ -102,7 +102,7 @@ func _process(delta: float) -> void:
 				game.fake_miss(direction)
 				
 			queue_free()
-		
+	
 	var safe_zone:float = (Conductor.safe_zone_offset * (1.2 * Conductor.rate))
 	can_be_hit = time > Conductor.position - safe_zone and time < Conductor.position + safe_zone
 

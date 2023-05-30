@@ -623,8 +623,8 @@ func fake_miss(direction:int = -1):
 	player.hold_timer = 0.0
 		
 func sort_hit_notes(a:Note, b:Note):
-	if not a.should_hit and b.should_hit: return 1
-	elif a.should_hit and not b.should_hit: return -1
+	if not a.should_hit and b.should_hit: return 0
+	elif a.should_hit and not b.should_hit: return 1
 	
 	return a.time < b.time
 
