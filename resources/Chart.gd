@@ -18,6 +18,8 @@ var player:String = "bf"
 var stage:String = "stage"
 var ui_skin:String = "default"
 
+var notetypes:PackedStringArray = []
+
 static func load_chart(song:String, difficulty:String = "normal"):
 	var json = JSON.parse_string(FileAccess.open("res://assets/songs/"+song.to_lower()+"/"+difficulty+".json", FileAccess.READ).get_as_text()).song
 	
@@ -27,6 +29,7 @@ static func load_chart(song:String, difficulty:String = "normal"):
 	chart.bpm = json.bpm
 	chart.key_count = 4
 	chart.scroll_speed = json.speed
+	chart.notetypes = json.notetypes if "notetypes" in json else []
 	
 	if "keyCount" in json:
 		chart.key_count = json.keyCount
@@ -100,6 +103,8 @@ static func load_chart(song:String, difficulty:String = "normal"):
 					_:
 						if note[3] is String:
 							cool_note.type = note[3]
+						elif note[3] is int:
+							cool_note.type = chart.notetypes[int(note[3])] if chart.notetypes.size() > 0 else "default"
 						else:
 							cool_note.type = "default"
 			else:
