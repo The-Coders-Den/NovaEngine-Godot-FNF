@@ -80,6 +80,8 @@ func start_song():
 		track.play()
 		
 func resync_tracks():
+	print_debug("synced audio")
+	Conductor.position = tracks.get_child(0).get_playback_position()*1000.0
 	for track in tracks.get_children():
 		track.seek(Conductor.position / 1000.0)
 		

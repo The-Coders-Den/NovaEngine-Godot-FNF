@@ -15,6 +15,10 @@ run/main_scene="res://scenes/menus/TitleScreen.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
 config/icon="res://icon.png"
 
+[audio]
+
+driver/output_latency=10
+
 [autoload]
 
 Tools="*res://autoload/Tools.gd"
