@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://d3fj0ihfppxji"]
+[gd_scene load_steps=3 format=3 uid="uid://d3fj0ihfppxji"]
 
 [ext_resource type="Script" path="res://scenes/Gameplay.gd" id="1_iu0w0"]
+[ext_resource type="PackedScene" uid="uid://bffin4yq5g3rf" path="res://scenes/gameplay/HUD.tscn" id="2_ydbqt"]
 
 [node name="Gameplay" type="Node2D"]
 script = ExtResource("1_iu0w0")
+
+[node name="HUDContainer" type="CanvasLayer" parent="."]
+layer = 128
+
+[node name="HUD" parent="HUDContainer" instance=ExtResource("2_ydbqt")]
+
+[node name="Tracks" type="Node" parent="."]

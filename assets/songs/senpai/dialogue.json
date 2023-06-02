@@ -1,0 +1,34 @@
+{
+    "info": {
+        "proceedSound": "pixelProceed"
+    },
+    "lines": [
+        {
+            "char": "senpai", 
+            "emotion": "default", 
+            "text": "Ah, a new fair maiden has come in search of true love!", 
+            "box": "pixel/boxPixel", 
+            "font": "pixel", 
+            "speed": 0.04, 
+            "bg": "week6"
+        },
+        {
+            "char": "senpai", 
+            "emotion": "default", 
+            "text": "A serenade between gentlemen shall decide where her beautiful heart shall reside.", 
+            "box": "pixel/boxPixel", 
+            "font": "pixel", 
+            "speed": 0.04, 
+            "bg": "week6"
+        },
+        {
+            "char": "bf-pixel", 
+            "emotion": "default", 
+            "text": "Beep bo bop", 
+            "box": "pixel/boxPixel", 
+            "font": "pixel", 
+            "speed": 0.04, 
+            "bg": "week6"
+        }
+    ]
+}

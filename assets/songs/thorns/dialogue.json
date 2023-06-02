@@ -1,0 +1,52 @@
+{
+    "info": {
+        "proceedSound": "pixelProceed"
+    },
+    "lines": [
+        {
+            "char": "spirit", 
+            "emotion": "default", 
+            "text": "Direct contact with real humans, after being trapped in here for so long...", 
+            "box": "pixel/boxPixelEvil", 
+            "font": "pixelWhite",
+            "speed": 0.04, 
+            "bg": "week6"
+        },
+        {
+            "char": "spirit", 
+            "emotion": "default", 
+            "text": "and HER of all people.", 
+            "box": "pixel/boxPixelEvil", 
+            "font": "pixelWhite", 
+            "speed": 0.04, 
+            "bg": "week6"
+        },
+        {
+            "char": "spirit", 
+            "emotion": "default", 
+            "text": "I'll make her father pay for what he's done to me and all the others....", 
+            "box": "pixel/boxPixelEvil", 
+            "font": "pixelWhite", 
+            "speed": 0.04, 
+            "bg": "week6"
+        },
+        {
+            "char": "spirit", 
+            "emotion": "default", 
+            "text": "I'll beat you and make you take my place.", 
+            "box": "pixel/boxPixelEvil", 
+            "font": "pixelWhite", 
+            "speed": 0.04, 
+            "bg": "week6"
+        },
+        {
+            "char": "spirit", 
+            "emotion": "default", 
+            "text": "You don't mind your bodies being borrowed right? It's only fair...", 
+            "box": "pixel/boxPixelEvil", 
+            "font": "pixelWhite", 
+            "speed": 0.04, 
+            "bg": "week6"
+        }
+    ]
+}

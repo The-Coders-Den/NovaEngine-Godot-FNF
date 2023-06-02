@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0lvu73628v1t"]
+
+[ext_resource type="PackedScene" uid="uid://bqrpnftne1dvf" path="res://scenes/gameplay/strumlines/Receptor.tscn" id="1_16q07"]
+[ext_resource type="Script" path="res://scenes/gameplay/strumlines/StrumLine.gd" id="1_uh8qq"]
+
+[node name="4K" type="Node2D"]
+script = ExtResource("1_uh8qq")
+
+[node name="0" parent="." instance=ExtResource("1_16q07")]
+position = Vector2(-168, 0)
+
+[node name="1" parent="." instance=ExtResource("1_16q07")]
+position = Vector2(-56, 0)
+direction = 1
+
+[node name="2" parent="." instance=ExtResource("1_16q07")]
+position = Vector2(56, 0)
+direction = 2
+
+[node name="3" parent="." instance=ExtResource("1_16q07")]
+position = Vector2(168, 0)
+direction = 3

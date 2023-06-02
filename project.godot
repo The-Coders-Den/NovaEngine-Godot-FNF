@@ -11,9 +11,16 @@ config_version=5
 [application]
 
 config/name="FNF: Nova Engine"
-run/main_scene="res://Init.tscn"
+run/main_scene="res://scenes/menus/TitleScreen.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://icon.png"
+
+[autoload]
+
+Tools="*res://autoload/Tools.gd"
+Statics="*res://autoload/Statics.gd"
+Paths="*res://autoload/Paths.gd"
+Conductor="*res://autoload/Conductor.gd"
 
 [display]
 
