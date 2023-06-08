@@ -152,7 +152,7 @@ func sort_hit_notes(a:Note, b:Note):
 	
 func beat_hit(beat:int):
 	for track in tracks.get_children():
-		if absf((track.get_playback_position() * 1000.0) - Conductor.position) >= 20:
+		if absf((track.get_playback_position() * 1000.0) - Conductor.position) >= 25 if OS.get_name() == "Windows" else 20:
 			resync_tracks()
 	
 func step_hit(step:int):
