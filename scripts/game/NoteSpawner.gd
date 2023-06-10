@@ -45,9 +45,7 @@ func _physics_process(delta):
 		new_note.type = note.type
 		new_note.position = Vector2(-999999, -999999)
 		new_note.strumline.notes.add_child(new_note)
-		
-		new_note.add_anim("normal", Global.dir_to_str(new_note.direction), 24)
-		new_note.play_anim("normal")
+		new_note.play(Global.dir_to_str(new_note.direction))
 		
 		_notes_to_spawn.erase(note)
 		

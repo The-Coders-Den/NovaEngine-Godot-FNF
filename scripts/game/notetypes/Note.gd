@@ -1,4 +1,4 @@
-class_name Note extends SparrowSprite
+class_name Note extends AnimatedSprite2D
 
 @export var should_hit:bool = true
 @export var increase_combo:bool = true

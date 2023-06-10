@@ -1,4 +1,4 @@
-class_name Receptor extends SparrowSprite
+class_name Receptor extends AnimatedSprite2D
 
 @export var direction := Global.NoteDirection.LEFT
 

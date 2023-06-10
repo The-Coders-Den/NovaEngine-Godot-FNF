@@ -12,10 +12,7 @@ func _ready():
 	for receptor in receptors.get_children():
 		receptor = receptor as Receptor
 		var dir_str:String = Global.dir_to_str(receptor.direction)
-		receptor.add_anim("static", "%s static" % dir_str, 24)
-		receptor.add_anim("press", "%s press" % dir_str, 24, false)
-		receptor.add_anim("confirm", "%s confirm" % dir_str, 24, false)
-		receptor.play_anim("static")
+		receptor.play("%s static" % dir_str)
 
 func dir_from_event(event:InputEventKey):
 	for i in receptors.get_child_count():
@@ -60,7 +57,8 @@ func _on_key_down(dir:int, action:StringName):
 		# delete the real note
 		good_note_hit(possible_notes[0])
 	
-	receptor.play_anim("confirm" if possible_notes.size() > 0 else "press")
+	var dir_str:String = Global.dir_to_str(dir)
+	receptor.play("%s confirm" % dir_str if possible_notes.size() > 0 else "%s press" % dir_str)
 	
 func good_note_hit(note:Note):
 	note.queue_free()
@@ -73,4 +71,4 @@ func sort_hit_notes(a:Note, b:Note):
 func _on_key_up(dir:int, action:StringName):
 	var receptor:Receptor = receptors.get_child(dir)
 	receptor.pressed = false
-	receptor.play_anim("static")
+	receptor.play("%s static" % Global.dir_to_str(dir))
