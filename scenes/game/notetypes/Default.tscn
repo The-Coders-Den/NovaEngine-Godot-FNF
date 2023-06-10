@@ -1,0 +1,21 @@
+[gd_scene load_steps=7 format=3 uid="uid://dy7l5drirdi8t"]
+
+[ext_resource type="Texture2D" uid="uid://du1lbndn1yuk4" path="res://icon.png" id="1_fs8sa"]
+[ext_resource type="Script" path="res://scripts/game/notetypes/Note.gd" id="2_cajdv"]
+[ext_resource type="Script" path="res://scripts/resources/SparrowAtlas.gd" id="3_re4ye"]
+[ext_resource type="Texture2D" uid="uid://dyhycnlhjkk3u" path="res://assets/funkin/images/notes/default/notes.png" id="4_dcw1f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dvb5q"]
+atlas = ExtResource("1_fs8sa")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="Resource" id="Resource_fdvcm"]
+script = ExtResource("3_re4ye")
+texture = ExtResource("4_dcw1f")
+xml_path = "res://assets/funkin/images/notes/default/notes.xml"
+
+[node name="Default" type="Sprite2D"]
+scale = Vector2(0.7, 0.7)
+texture = SubResource("AtlasTexture_dvb5q")
+script = ExtResource("2_cajdv")
+atlas = SubResource("Resource_fdvcm")

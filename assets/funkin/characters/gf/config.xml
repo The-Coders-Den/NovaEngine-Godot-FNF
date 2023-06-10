@@ -1,0 +1,19 @@
+<character danceSteps="danceLeft,danceRight" camX="-150" camY="50" scrollX="0.95" scrollY="0.95" >
+	<healthbar icon="gf" color="165,0,77"/>
+	<anims>
+		<anim name="danceLeft"  prefix="GF Dancing Beat" fps="24" loop="false" x="0" y="-9"  indices="0,1,2,3,4,5,6,7,8,9,10,11,12,13,14" />
+		<anim name="danceRight" prefix="GF Dancing Beat" fps="24" loop="false" x="0" y="-9"  indices="15,16,17,18,19,20,21,22,23,24,25,26,27,28,29" />
+
+		<anim name="scared"     prefix="GF FEAR"         fps="24" loop="true" x="-2" y="-17" />
+		<anim name="cheer"      prefix="GF Cheer"        fps="24" loop="false" x="3" y="0"   />
+		<anim name="sad"        prefix="GF sad"          fps="24" loop="true" x="-2" y="-21" indices="0,1,2,3,4,5,6,7,8,9,10,11,12" />
+
+		<anim name="hairBlow"   prefix="Hair blowing"    fps="24" loop="true" x="45" y="-8"  indices="0,1,2,3" specialAnim="true" />
+		<anim name="hairFall"   prefix="Hair Landing"    fps="24" loop="false" x="0" y="-9"  indices="0,1,2,3,4,5,6,7,8,9,10,11" specialAnim="true" />
+
+		<anim name="singLEFT"   prefix="GF left note"    fps="24" loop="false" x="0" y="-19" />
+		<anim name="singDOWN"   prefix="GF Down Note"    fps="24" loop="false" x="0" y="-20" />
+		<anim name="singUP"     prefix="GF Up Note"      fps="24" loop="false" x="0" y="4" />
+		<anim name="singRIGHT"  prefix="GF Right Note"   fps="24" loop="false" x="0" y="-20" />
+	</anims>
+</character>

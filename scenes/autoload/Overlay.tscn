@@ -1,0 +1,76 @@
+[gd_scene load_steps=3 format=3 uid="uid://cawg7gpxnigb7"]
+
+[ext_resource type="Script" path="res://scripts/autoload/Overlay.gd" id="1_c2nit"]
+[ext_resource type="StyleBox" uid="uid://dc6v1rd0x2f0g" path="res://styles/Separator.tres" id="2_6ux6s"]
+
+[node name="OverlayContainer" type="CanvasLayer"]
+layer = 128
+
+[node name="BG" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 26.0
+color = Color(0, 0, 0, 0.6)
+
+[node name="Overlay" type="MarginContainer" parent="."]
+clip_contents = true
+offset_right = 1280.0
+offset_bottom = 26.0
+theme_override_constants/margin_left = 5
+script = ExtResource("1_c2nit")
+
+[node name="MainContainer" type="HBoxContainer" parent="Overlay"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="FPS" type="Label" parent="Overlay/MainContainer"]
+layout_mode = 2
+text = "0 FPS"
+vertical_alignment = 1
+
+[node name="Sep1" type="VSeparator" parent="Overlay/MainContainer"]
+layout_mode = 2
+theme_override_styles/separator = ExtResource("2_6ux6s")
+
+[node name="MEM" type="Label" parent="Overlay/MainContainer"]
+layout_mode = 2
+text = "0mb / 0mb"
+vertical_alignment = 1
+
+[node name="Sep2" type="VSeparator" parent="Overlay/MainContainer"]
+layout_mode = 2
+theme_override_styles/separator = ExtResource("2_6ux6s")
+
+[node name="Scene" type="Label" parent="Overlay/MainContainer"]
+layout_mode = 2
+text = "UnknownScene"
+vertical_alignment = 1
+
+[node name="VersionContainer" type="HBoxContainer" parent="Overlay"]
+layout_mode = 2
+theme_override_constants/separation = 5
+alignment = 2
+
+[node name="Version" type="Label" parent="Overlay/VersionContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "v0.0.0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Sep1" type="VSeparator" parent="Overlay/VersionContainer"]
+layout_mode = 2
+theme_override_styles/separator = ExtResource("2_6ux6s")
+
+[node name="Type" type="Label" parent="Overlay/VersionContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "???"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Sep2" type="VSeparator" parent="Overlay/VersionContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_styles/separator = ExtResource("2_6ux6s")
+
+[node name="UpdateTimer" type="Timer" parent="Overlay"]

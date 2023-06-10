@@ -1,0 +1,21 @@
+[gd_scene load_steps=7 format=3 uid="uid://ctu7bcsf2gmo6"]
+
+[ext_resource type="Texture2D" uid="uid://du1lbndn1yuk4" path="res://icon.png" id="1_chsgb"]
+[ext_resource type="Script" path="res://scripts/resources/SparrowAtlas.gd" id="2_5aoyb"]
+[ext_resource type="Script" path="res://scripts/game/Receptor.gd" id="2_doypc"]
+[ext_resource type="Texture2D" uid="uid://cors6xiuk23rq" path="res://assets/funkin/images/notes/default/receptors.png" id="3_w8slt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ih82o"]
+atlas = ExtResource("1_chsgb")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="Resource" id="Resource_noj3m"]
+script = ExtResource("2_5aoyb")
+texture = ExtResource("3_w8slt")
+xml_path = "res://assets/funkin/images/notes/default/receptors.xml"
+
+[node name="Receptor" type="Sprite2D"]
+scale = Vector2(0.7, 0.7)
+texture = SubResource("AtlasTexture_ih82o")
+script = ExtResource("2_doypc")
+atlas = SubResource("Resource_noj3m")

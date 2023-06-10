@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://unr0dbfnn1vr"]
+
+[ext_resource type="Script" path="res://scripts/game/Gameplay.gd" id="1_he0ft"]
+[ext_resource type="PackedScene" uid="uid://bpckue4jgen34" path="res://scenes/game/StrumLine.tscn" id="2_prky5"]
+
+[node name="Gameplay" type="Node2D"]
+script = ExtResource("1_he0ft")
+
+[node name="HUDContainer" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Node2D" parent="HUDContainer"]
+position = Vector2(640, 360)
+
+[node name="OpponentStrums" parent="HUDContainer/HUD" instance=ExtResource("2_prky5")]
+position = Vector2(-328, -248)
+
+[node name="PlayerStrums" parent="HUDContainer/HUD" instance=ExtResource("2_prky5")]
+position = Vector2(328, -248)
+opponent = false

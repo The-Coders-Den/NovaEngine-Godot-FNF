@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpckue4jgen34"]
+
+[ext_resource type="Script" path="res://scripts/game/StrumLine.gd" id="1_ns5ki"]
+[ext_resource type="PackedScene" uid="uid://ctu7bcsf2gmo6" path="res://scenes/game/Receptor.tscn" id="2_i8ioc"]
+[ext_resource type="Script" path="res://scripts/game/NoteGroup.gd" id="4_k8wv6"]
+
+[node name="StrumLine" type="Node2D"]
+script = ExtResource("1_ns5ki")
+
+[node name="Receptors" type="Node2D" parent="."]
+
+[node name="0" parent="Receptors" instance=ExtResource("2_i8ioc")]
+position = Vector2(-168, 0)
+
+[node name="1" parent="Receptors" instance=ExtResource("2_i8ioc")]
+position = Vector2(-56, 0)
+direction = 1
+
+[node name="2" parent="Receptors" instance=ExtResource("2_i8ioc")]
+position = Vector2(56, 0)
+direction = 2
+
+[node name="3" parent="Receptors" instance=ExtResource("2_i8ioc")]
+position = Vector2(168, 0)
+direction = 3
+
+[node name="Notes" type="CanvasGroup" parent="."]
+script = ExtResource("4_k8wv6")
