@@ -1,5 +1,6 @@
 class_name Note extends AnimatedSprite2D
 
+@onready var splash:AnimatedSprite2D = $Splash
 @export var should_hit:bool = true
 @export var increase_combo:bool = true
 @export var play_sing_anim:bool = true

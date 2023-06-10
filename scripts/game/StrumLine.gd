@@ -40,8 +40,8 @@ func _on_key_down(dir:int, action:StringName):
 	receptor.pressed = true
 	
 	var possible_notes:Array[Node] = notes.get_children().filter(func(note:Note):
-		var can_be_hit:bool = (note.time > Conductor.position - Conductor.safe_zone_offset and note.time < Conductor.position + (Conductor.safe_zone_offset * 1.5))
-		var too_late:bool = (note.time < Conductor.position - Conductor.safe_zone_offset and not note.was_already_hit)
+		var can_be_hit:bool = (note.time > Conductor.position - (Conductor.safe_zone_offset * Conductor.rate) and note.time < Conductor.position + (Conductor.safe_zone_offset * 1.5 * Conductor.rate))
+		var too_late:bool = (note.time < Conductor.position - (Conductor.safe_zone_offset * Conductor.rate) and not note.was_already_hit)
 		return note.strumline == self and note.direction == dir and can_be_hit and not too_late
 	)
 	if possible_notes.size() > 0:
@@ -61,6 +61,13 @@ func _on_key_down(dir:int, action:StringName):
 	receptor.play("%s confirm" % dir_str if possible_notes.size() > 0 else "%s press" % dir_str)
 	
 func good_note_hit(note:Note):
+	note.remove_child(note.splash)
+	note.strumline.add_child(note.splash)
+	
+	note.splash.visible = true
+	note.splash.position = note.strumline.receptors.get_child(note.direction).position
+	note.splash.play("%s%s" % [Global.dir_to_str(note.direction), str(randi_range(1, 2))])
+	note.splash.animation_finished.connect(note.splash.queue_free)
 	note.queue_free()
 
 func sort_hit_notes(a:Note, b:Note):

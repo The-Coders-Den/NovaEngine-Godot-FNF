@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ctu7bcsf2gmo6"]
 
-[ext_resource type="SpriteFrames" path="res://assets/funkin/images/notes/default/receptors.res" id="1_nty72"]
+[ext_resource type="SpriteFrames" uid="uid://dt2g7ofdxudqm" path="res://assets/funkin/images/notes/default/receptors.res" id="1_nty72"]
 [ext_resource type="Script" path="res://scripts/game/Receptor.gd" id="2_doypc"]
 
 [node name="Receptor" type="AnimatedSprite2D"]

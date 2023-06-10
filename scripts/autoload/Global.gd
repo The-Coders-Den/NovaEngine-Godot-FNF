@@ -18,6 +18,8 @@ var GAME_SIZE:Vector2 = Vector2(
 	ProjectSettings.get_setting("display/window/size/viewport_width"),
 	ProjectSettings.get_setting("display/window/size/viewport_height")
 )
+var SONG_NAME:String
+var SONG_DIFFICULTY:String
 var CHART:Chart
 
 func _ready():

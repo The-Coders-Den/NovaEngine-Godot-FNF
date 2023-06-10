@@ -1,10 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://dy7l5drirdi8t"]
+[gd_scene load_steps=4 format=3 uid="uid://dy7l5drirdi8t"]
 
 [ext_resource type="SpriteFrames" path="res://assets/funkin/images/notes/default/notes.res" id="1_e08tc"]
 [ext_resource type="Script" path="res://scripts/game/notetypes/Note.gd" id="2_cajdv"]
+[ext_resource type="SpriteFrames" uid="uid://cfno6cllk3u4o" path="res://assets/funkin/images/notes/default/splashes.res" id="3_ge8de"]
 
 [node name="Default" type="AnimatedSprite2D"]
 scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("1_e08tc")
 animation = &"left"
 script = ExtResource("2_cajdv")
+
+[node name="Splash" type="AnimatedSprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.6)
+sprite_frames = ExtResource("3_ge8de")
+animation = &"left1"

@@ -17,3 +17,5 @@ position = Vector2(-328, -248)
 [node name="PlayerStrums" parent="HUDContainer/HUD" instance=ExtResource("2_prky5")]
 position = Vector2(328, -248)
 opponent = false
+
+[node name="Tracks" type="Node" parent="."]
