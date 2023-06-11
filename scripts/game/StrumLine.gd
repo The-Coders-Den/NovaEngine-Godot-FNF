@@ -1,12 +1,18 @@
 class_name StrumLine extends Node2D
 
-@export var opponent:bool = true
+enum StrumLineType {
+	OPPONENT,
+	PLAYER,
+	ADDITIONAL
+}
+
+@export var type:StrumLineType = StrumLineType.ADDITIONAL
 
 @onready var receptors:Node2D = $Receptors
 @onready var notes:CanvasGroup = $Notes
 
 var scroll_speed:float = -INF
-var downscroll:bool = false
+var downscroll:bool = true
 
 func _ready():
 	for receptor in receptors.get_children():
@@ -22,7 +28,7 @@ func dir_from_event(event:InputEventKey):
 	return -1
 
 func _unhandled_key_input(event:InputEvent):
-	if opponent: return
+	if type != StrumLineType.PLAYER: return
 	event = event as InputEventKey
 	
 	var dir:int = dir_from_event(event)

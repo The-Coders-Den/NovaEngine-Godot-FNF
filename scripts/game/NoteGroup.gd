@@ -9,8 +9,8 @@ func _process(delta:float):
 		var downscroll_mult:int = -1 if note.strumline.downscroll else 1
 		var receptor:Receptor = note.strumline.receptors.get_child(note.direction)
 		
-		if note.strumline.opponent and note.time <= Conductor.position:
-			opponent_note_hit(note)
+		if note.strumline.type != StrumLine.StrumLineType.PLAYER and note.time <= Conductor.position:
+			other_note_hit(note, note.strumline.type)
 			continue
 		
 		if note.time <= Conductor.position - (500 / _get_note_speed(note)):
@@ -20,7 +20,7 @@ func _process(delta:float):
 		note.position.x = receptor.position.x
 		note.position.y = receptor.position.y - ((0.45 * downscroll_mult) * (Conductor.position - note.time) * _get_note_speed(note))
 
-func opponent_note_hit(note:Note):
+func other_note_hit(note:Note, type:StrumLine.StrumLineType):
 	note.was_already_hit = true
 	note.queue_free()
 

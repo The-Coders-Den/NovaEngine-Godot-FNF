@@ -1,10 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://unr0dbfnn1vr"]
+[gd_scene load_steps=5 format=3 uid="uid://unr0dbfnn1vr"]
 
 [ext_resource type="Script" path="res://scripts/game/Gameplay.gd" id="1_he0ft"]
 [ext_resource type="PackedScene" uid="uid://bpckue4jgen34" path="res://scenes/game/StrumLine.tscn" id="2_prky5"]
+[ext_resource type="PackedScene" uid="uid://cfnsvdh70get0" path="res://scenes/game/CharacterGroup.tscn" id="2_yfcfv"]
+[ext_resource type="Texture2D" uid="uid://b7gwofpy7qb77" path="res://assets/funkin/images/gui/countdown/default/ready.png" id="4_idf3d"]
 
 [node name="Gameplay" type="Node2D"]
 script = ExtResource("1_he0ft")
+
+[node name="OpponentGroup" parent="." instance=ExtResource("2_yfcfv")]
+
+[node name="SpectatorGroup" parent="." instance=ExtResource("2_yfcfv")]
+
+[node name="PlayerGroup" parent="." instance=ExtResource("2_yfcfv")]
 
 [node name="HUDContainer" type="CanvasLayer" parent="."]
 
@@ -12,10 +20,16 @@ script = ExtResource("1_he0ft")
 position = Vector2(640, 360)
 
 [node name="OpponentStrums" parent="HUDContainer/HUD" instance=ExtResource("2_prky5")]
-position = Vector2(-328, -248)
+position = Vector2(-328, 264)
+type = 1
 
 [node name="PlayerStrums" parent="HUDContainer/HUD" instance=ExtResource("2_prky5")]
-position = Vector2(328, -248)
-opponent = false
+position = Vector2(328, 264)
+type = 0
+
+[node name="CountdownSprite" type="Sprite2D" parent="HUDContainer/HUD"]
+visible = false
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("4_idf3d")
 
 [node name="Tracks" type="Node" parent="."]

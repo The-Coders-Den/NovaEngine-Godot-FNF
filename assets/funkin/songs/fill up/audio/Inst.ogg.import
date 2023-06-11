@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cd03wtfp7axhq"
+path="res://.godot/imported/Inst.ogg-a17535a30647a1d1515b8b294132be82.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/funkin/songs/fill up/audio/Inst.ogg"
+dest_files=["res://.godot/imported/Inst.ogg-a17535a30647a1d1515b8b294132be82.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
