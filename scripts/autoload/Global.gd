@@ -3,6 +3,7 @@ extends Node
 enum VersionType {
 	DEV,
 	BETA,
+	PRE_RELEASE,
 	RELEASE
 }
 

@@ -1,6 +1,6 @@
 extends Node
 
-var rate:float = 1.2
+var rate:float = 1.0
 var bpm:float = 100.0
 
 var crochet:float = ((60.0 / bpm) * 1000.0) # beats in milliseconds

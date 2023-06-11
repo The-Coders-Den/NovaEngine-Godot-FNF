@@ -89,7 +89,7 @@ static func _parse_fnf(json:Dictionary) -> Chart:
 		if last_camera_switch != section.mustHitSection:
 			last_camera_switch = section.mustHitSection
 			
-			var event_group := ChartEventGroup.new(-99999999999.0 if cur_time <= 0.01 else cur_time, [ChartEvent.new("Camera Focus", [last_camera_switch])])
+			var event_group := ChartEventGroup.new(-INF if cur_time <= 0.05 else cur_time, [ChartEvent.new("Camera Focus", [last_camera_switch])])
 			parsed.events.append(event_group)
 			
 		# parse notes
