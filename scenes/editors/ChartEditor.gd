@@ -18,14 +18,17 @@ extends Control
 
 @onready var window = get_window()
 
+@onready var pos_info = $PosInfo
+
 var hold_tex:Texture2D = preload("res://assets/images/menus/charteditor/hold.png")
 var tail_tex:Texture2D = preload("res://assets/images/menus/charteditor/tail.png")
 
 var selected_time:float = 0
 var lane_id:int = 0
 
-var section_start:float = 0.0;
-var cur_snap:float = 1;
+var cur_section:int = 0 # i would of loved to used section_hit.connect but for some reason it doesnt work going backwards!
+var section_start:float = 0.0
+var cur_snap:float = 1
 
 var over_left:bool = false
 var over_right:bool = false
@@ -44,14 +47,14 @@ var quant_colors:Array[Color] = [
 	Color8(96, 103, 137)
 ]
 
-var arrow_rotations:Array[float] = [0, 270, 90, 180];
+var arrow_rotations:Array[float] = [0, 270, 90, 180]
 
 var tracks:Array[AudioPlayer] = []
 
 var chart_data:Chart = Global.SONG
+var track_length:float = 100000;
 
 func load_song():
-	
 	var music_path:String = "res://assets/songs/%s/audio/" % chart_data.name.to_lower()
 	
 	if DirAccess.dir_exists_absolute(music_path):
@@ -72,16 +75,18 @@ func _ready():
 		Global.SONG = chart_data
 	
 	load_song()
+	track_length = tracks[0].stream.get_length() * 1000;
 	
 	Conductor.position = 0
 	Conductor.map_bpm_changes(chart_data)
-	Conductor.connect("section_hit", regen_notes)
-	regen_notes(0)
+	regen_notes()
 
-func regen_notes(_section:int):
+func regen_notes():
+	cur_section = Conductor.cur_section
+	
 	var cur_bpm = chart_data.bpm;
 	section_start = 0.0;
-	for i in Conductor.cur_section:
+	for i in cur_section:
 		if chart_data.sections[i].change_bpm:
 			cur_bpm = chart_data.sections[i].bpm
 		section_start += 60 / cur_bpm * 4000;
@@ -92,12 +97,12 @@ func regen_notes(_section:int):
 		note.queue_free()
 		notes_group.remove_child(note)
 	
-	for note_data in chart_data.sections[Conductor.cur_section].notes:
+	for note_data in chart_data.sections[cur_section].notes:
 		var note = Sprite2D.new()
 		notes_group.add_child(note)
 		note.texture = hover_arrow.texture
 		note.scale = Vector2(0.275, 0.275)
-		var lane_to_place = opponent_lane if note_data.direction % 8 < 4 != chart_data.sections[Conductor.cur_section].is_player else player_lane
+		var lane_to_place = opponent_lane if note_data.direction % 8 < 4 != chart_data.sections[cur_section].is_player else player_lane
 		note.rotation_degrees = arrow_rotations[note_data.direction % 4]
 		
 		var cur_quant = quants.size() - 1
@@ -114,10 +119,11 @@ func regen_notes(_section:int):
 		note.position.x = (container.position.x + lane_to_place.position.x) + note_data.direction % 4 * (lane_to_place.size.x / 4) + (lane_to_place.size.x / 64) + hover_size.x * 0.275 * 0.5
 		note.position.y = container.position.y + (note_data.time - section_start) / Conductor.step_crochet * (container.size.y / 16) + hover_size.y * 0.275 * 0.5
 
+		note.z_index += 1;
 		add_sustain(note)
 		if note_data.length > 0:
 			var hold:Line2D = note.get_child(0)
-			hold.points[1].y = note_data.length - container.size.y / 16
+			hold.points[1].y = ((note_data.length / Conductor.step_crochet * container.size.y / 16) - container.size.y / 16) / 0.275
 			var tail = hold.get_child(0)
 			tail.position.y = hold.points[1].y + tail_tex.get_height() * 0.5
 			tail.visible = true
@@ -132,6 +138,7 @@ func add_sustain(note:Sprite2D):
 	]
 	line.texture_mode = Line2D.LINE_TEXTURE_TILE
 	line.rotation_degrees = -note.rotation_degrees
+	line.z_as_relative = false
 	note.add_child(line)
 	
 	var tail = Sprite2D.new()
@@ -141,6 +148,8 @@ func add_sustain(note:Sprite2D):
 	line.add_child(tail)
 
 func _input(event):
+	if char_dialog.visible or stage_dialog.visible or ui_skin_dialog.visible: return
+	
 	if event is InputEventMouseButton \
 	and event.button_index == MOUSE_BUTTON_LEFT \
 	and event.pressed and hover_arrow.visible:
@@ -159,11 +168,16 @@ func play_song():
 		for track in tracks:
 			track.play(Conductor.position / 1000)
 	else:
-		print("fresda")
 		for track in tracks:
 			track.stop()
 
 func _process(delta):
+	if char_dialog.visible or stage_dialog.visible or ui_skin_dialog.visible: return
+	
+	if Input.is_action_just_pressed("ui_cancel"):
+		Global.switch_scene("res://scenes/gameplay/Gameplay.tscn")
+		return
+	
 	if Input.is_action_just_pressed("ui_accept"):
 		play_song()
 	
@@ -211,5 +225,100 @@ func _process(delta):
 			hover_arrow.modulate = quant_colors[cur_quant]
 			hover_arrow.modulate.a = 0.5
 
+	var mult:float = 4 if Input.is_key_pressed(KEY_SHIFT) else 1
+	
+	var vert_axis = Input.get_axis("ui_up", "ui_down");
+	var hori_axis = Input.get_axis("ui_left", "ui_right");
+	
 	if tracks[0].playing:
 		Conductor.position = tracks[0].time
+	elif vert_axis != 0:
+		Conductor.position += delta * 500 * mult * vert_axis
+	elif Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_right"):
+		Conductor.position += Conductor.crochet * 4 * mult * hori_axis
+	Conductor.position = clampf(Conductor.position, 0, track_length);
+	
+	if cur_section != Conductor.cur_section:
+		regen_notes()
+		
+	var format_array = [
+		float_to_minute(Conductor.position * 0.001),
+		float_to_seconds(Conductor.position * 0.001),
+		float_to_minute(track_length * 0.001),
+		float_to_seconds(track_length * 0.001),
+		Conductor.cur_step,
+		Conductor.cur_beat,
+		Conductor.cur_section
+	]
+		
+	pos_info.text = "%02d:%02d / %02d:%02d\n\nStep: %01d\nBeat: %01d\nSection: %01d" % format_array
+
+# thanks @BeastlyGabi for letting me use these lol.
+func float_to_minute(value:float): return int(value / 60)
+func float_to_seconds(value:float): return fmod(value, 60)
+
+@onready var char_dialog:FileDialog = $CharDialog
+@onready var stage_dialog:FileDialog = $StageDialog
+@onready var ui_skin_dialog:FileDialog = $UISkinDialog
+@onready var switch_buttons = [
+	$assets/Panel/ScrollContainer/VBoxContainer/Player/SwitchButton,
+	$assets/Panel/ScrollContainer/VBoxContainer/Opponent/SwitchButton,
+	$assets/Panel/ScrollContainer/VBoxContainer/Spectator/SwitchButton,
+	$assets/Panel/ScrollContainer/VBoxContainer/Stage/SwitchButton,
+	$assets/Panel/ScrollContainer/VBoxContainer/UISKin/SwitchButton
+]
+var cur_button:String = "bf" # For Char Switching.
+
+func enable_switches():
+	for button in switch_buttons:
+		button.disabled = false
+
+func disable_switches():
+	for button in switch_buttons:
+		button.disabled = true
+
+func select_char(path:String):
+	match cur_button:
+		"bf":
+			chart_data.player = path.get_file().get_basename()
+			$assets/Panel/ScrollContainer/VBoxContainer/Player.text = "Player: " + chart_data.player
+		"gf":
+			chart_data.spectator = path.get_file().get_basename()
+			$assets/Panel/ScrollContainer/VBoxContainer/Spectator.text = "Spectator: " + chart_data.spectator
+		"dad":
+			chart_data.opponent = path.get_file().get_basename()
+			$assets/Panel/ScrollContainer/VBoxContainer/Opponent.text = "Opponent: " + chart_data.opponent
+	enable_switches()
+
+func select_stage(path:String):
+	chart_data.stage = path.get_file().get_basename()
+	$assets/Panel/ScrollContainer/VBoxContainer/Stage.text = "Stage: " + chart_data.stage
+	enable_switches()
+	
+func select_ui_skin(path:String):
+	chart_data.ui_skin = path.get_file().get_basename()
+	$assets/Panel/ScrollContainer/VBoxContainer/UISKin.text = "UI Skin: " + chart_data.ui_skin
+	enable_switches()
+
+func _switch_player():
+	cur_button = "bf"
+	char_dialog.popup_centered()
+	disable_switches()
+	
+func _switch_spectator():
+	cur_button = "gf"
+	char_dialog.popup_centered()
+	disable_switches()
+	
+func _switch_opponent():
+	cur_button = "dad"
+	char_dialog.popup_centered()
+	disable_switches()
+
+func _switch_stage():
+	stage_dialog.popup_centered()
+	disable_switches()
+	
+func _switch_ui_skin():
+	ui_skin_dialog.popup_centered()
+	disable_switches()

@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://bydbrgy3513au" path="res://assets/sounds/hitsound.ogg" id="5_m47hh"]
 [ext_resource type="Shader" path="res://assets/shaders/ChartLine.gdshader" id="7_ccjci"]
 [ext_resource type="PackedScene" uid="uid://w5olx2s2jovt" path="res://scenes/gameplay/strumlines/4K.tscn" id="7_h418h"]
-[ext_resource type="PackedScene" uid="uid://c462cllic036r" path="res://scenes/editors/3do.tscn" id="8_3rxci"]
+[ext_resource type="FontFile" uid="uid://coqcg7h14duny" path="res://assets/fonts/vcr.ttf" id="9_4xp5r"]
 [ext_resource type="Texture2D" uid="uid://cvnq5kqghy3tp" path="res://assets/images/menus/charteditor/note.png" id="10_1xrm3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7uhct"]
@@ -79,35 +79,26 @@ position = Vector2(98, 654)
 scale = Vector2(0.45, 0.45)
 handle_input = false
 
+[node name="NotesGroup" type="CanvasGroup" parent="."]
+
 [node name="StrumLine" type="Line2D" parent="."]
+z_index = 2
 position = Vector2(435, 20)
 points = PackedVector2Array(0, 0, 410, 0)
 width = 5.0
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="chart" type="Window" parent="."]
-title = "chart"
-position = Vector2i(50, 100)
-size = Vector2i(200, 200)
-unresizable = true
-transparent = true
-content_scale_size = Vector2i(150, 150)
-content_scale_mode = 2
-content_scale_aspect = 1
-
-[node name="Panel" type="Panel" parent="chart"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="3do" parent="chart" instance=ExtResource("8_3rxci")]
+[node name="HoverArrow" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.490196)
+z_index = 2
+position = Vector2(-35, -19)
+scale = Vector2(0.275, 0.275)
+texture = ExtResource("10_1xrm3")
 
 [node name="song" type="Window" parent="."]
-title = "song"
-position = Vector2i(50, 350)
+title = "Song Data"
+position = Vector2i(50, 100)
 size = Vector2i(200, 200)
 unresizable = true
 transparent = true
@@ -122,8 +113,139 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="SongLabel" type="Label" parent="song/Panel"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 5.0
+offset_right = 92.0
+offset_bottom = 31.0
+theme_override_font_sizes/font_size = 14
+text = "Song Name"
+
+[node name="SongName" type="LineEdit" parent="song/Panel"]
+layout_mode = 0
+offset_top = 25.0
+offset_right = 150.0
+offset_bottom = 56.0
+text = "Bopeebo"
+
+[node name="BPM" type="SpinBox" parent="song/Panel"]
+layout_mode = 0
+offset_top = 80.0
+offset_right = 150.0
+offset_bottom = 111.0
+min_value = 60.0
+max_value = 500.0
+value = 60.0
+suffix = "BPM"
+
+[node name="ScrollSpeed" type="SpinBox" parent="song/Panel"]
+layout_mode = 0
+offset_top = 115.0
+offset_right = 150.0
+offset_bottom = 146.0
+min_value = 1.0
+max_value = 10.0
+step = 0.1
+value = 2.5
+prefix = "Scroll Speed:"
+custom_arrow_step = 0.1
+
+[node name="assets" type="Window" parent="."]
+title = "Song Assets"
+position = Vector2i(50, 350)
+size = Vector2i(200, 200)
+unresizable = true
+transparent = true
+content_scale_size = Vector2i(150, 150)
+content_scale_mode = 2
+content_scale_aspect = 1
+
+[node name="Panel" type="Panel" parent="assets"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="assets/Panel"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 150.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="assets/Panel/ScrollContainer"]
+custom_minimum_size = Vector2(150, 280)
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Player" type="Label" parent="assets/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Player: bf"
+
+[node name="SwitchButton" type="Button" parent="assets/Panel/ScrollContainer/VBoxContainer/Player"]
+layout_mode = 2
+offset_top = 20.0
+offset_right = 150.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 12
+text = "Change"
+
+[node name="Opponent" type="Label" parent="assets/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Opponent: dad"
+
+[node name="SwitchButton" type="Button" parent="assets/Panel/ScrollContainer/VBoxContainer/Opponent"]
+layout_mode = 2
+offset_top = 20.0
+offset_right = 150.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 12
+text = "Change"
+
+[node name="Spectator" type="Label" parent="assets/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Spectator: gf"
+
+[node name="SwitchButton" type="Button" parent="assets/Panel/ScrollContainer/VBoxContainer/Spectator"]
+layout_mode = 2
+offset_top = 20.0
+offset_right = 150.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 12
+text = "Change"
+
+[node name="Stage" type="Label" parent="assets/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Stage: stage"
+
+[node name="SwitchButton" type="Button" parent="assets/Panel/ScrollContainer/VBoxContainer/Stage"]
+layout_mode = 2
+offset_top = 20.0
+offset_right = 150.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 12
+text = "Change"
+
+[node name="UISKin" type="Label" parent="assets/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "UI Skin: default"
+
+[node name="SwitchButton" type="Button" parent="assets/Panel/ScrollContainer/VBoxContainer/UISKin"]
+layout_mode = 2
+offset_top = 20.0
+offset_right = 150.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 12
+text = "Change"
+
 [node name="section" type="Window" parent="."]
-title = "section"
+title = "Section Data"
 position = Vector2i(1040, 100)
 size = Vector2i(200, 200)
 unresizable = true
@@ -140,7 +262,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="note" type="Window" parent="."]
-title = "note"
+title = "Note Data"
 position = Vector2i(1040, 350)
 size = Vector2i(200, 200)
 unresizable = true
@@ -156,10 +278,68 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NotesGroup" type="CanvasGroup" parent="."]
+[node name="CharDialog" type="FileDialog" parent="."]
+initial_position = 2
+title = "Select a Character"
+size = Vector2i(500, 500)
+always_on_top = true
+ok_button_text = "Switch"
+mode_overrides_title = false
+file_mode = 0
+root_subfolder = "res://scenes/gameplay/characters"
+filters = PackedStringArray("*.tscn")
 
-[node name="HoverArrow" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.490196)
-position = Vector2(-35, -19)
-scale = Vector2(0.275, 0.275)
-texture = ExtResource("10_1xrm3")
+[node name="StageDialog" type="FileDialog" parent="."]
+initial_position = 2
+title = "Select a Character"
+size = Vector2i(500, 500)
+always_on_top = true
+ok_button_text = "Open"
+mode_overrides_title = false
+file_mode = 0
+root_subfolder = "res://scenes/gameplay/stages"
+filters = PackedStringArray("*.tscn")
+
+[node name="UISkinDialog" type="FileDialog" parent="."]
+initial_position = 2
+title = "Select a Character"
+size = Vector2i(500, 500)
+always_on_top = true
+ok_button_text = "Open"
+mode_overrides_title = false
+file_mode = 0
+root_subfolder = "res://scenes/gameplay/ui_skins"
+filters = PackedStringArray("*.tscn")
+
+[node name="PosInfo" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -110.0
+offset_right = 228.0
+offset_bottom = -5.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("9_4xp5r")
+theme_override_font_sizes/font_size = 20
+text = "0:00 / 4:20 (laugh)
+
+Step: 0
+Beat: 0
+Section: 0"
+
+[connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/Player/SwitchButton" to="." method="_switch_player"]
+[connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/Opponent/SwitchButton" to="." method="_switch_opponent"]
+[connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/Spectator/SwitchButton" to="." method="_switch_spectator"]
+[connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/Stage/SwitchButton" to="." method="_switch_stage"]
+[connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/UISKin/SwitchButton" to="." method="_switch_ui_skin"]
+[connection signal="canceled" from="CharDialog" to="." method="enable_switches"]
+[connection signal="confirmed" from="CharDialog" to="." method="enable_switches"]
+[connection signal="file_selected" from="CharDialog" to="." method="select_char"]
+[connection signal="canceled" from="StageDialog" to="." method="enable_switches"]
+[connection signal="confirmed" from="StageDialog" to="." method="enable_switches"]
+[connection signal="file_selected" from="StageDialog" to="." method="select_stage"]
+[connection signal="canceled" from="UISkinDialog" to="." method="enable_switches"]
+[connection signal="confirmed" from="UISkinDialog" to="." method="enable_switches"]
+[connection signal="file_selected" from="UISkinDialog" to="." method="select_ui_skin"]
