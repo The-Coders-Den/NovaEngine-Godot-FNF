@@ -6,6 +6,7 @@ class_name Note extends AnimatedSprite2D
 @export var play_sing_anim:bool = true
 @export var health_gain_mult:float = 1.0
 
+# backend shit
 var time:float
 var direction:int
 var length:float
