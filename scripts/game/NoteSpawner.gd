@@ -32,22 +32,27 @@ func _setup_spawning():
 		_notes_to_spawn.append(note.copy())
 		
 	_notes_to_spawn.sort_custom(func(a, b): return a.time < b.time)
+	
+var _note_spawn_timer:float = 0.0
 
-func _physics_process(delta):
-	for note in _notes_to_spawn:
-		if note.time > Conductor.position + (2500 / _get_note_speed(note)): break
-		
-		var new_note:Note = _note_templates[note.type].duplicate()
-		new_note.time = note.time
-		new_note.direction = note.direction % Global.CHART.key_count
-		new_note.length = note.length
-		new_note.strumline = _connected_strumlines[note.strumline]
-		new_note.type = note.type
-		new_note.position = Vector2(-999999, -999999)
-		new_note.strumline.notes.add_child(new_note)
-		new_note.play(Global.dir_to_str(new_note.direction))
-		
-		_notes_to_spawn.erase(note)
+func _physics_process(delta:float):
+	_note_spawn_timer += delta
+	if _note_spawn_timer >= 0.15:
+		_note_spawn_timer = 0.0
+		for note in _notes_to_spawn:
+			if note.time > Conductor.position + (2500 / _get_note_speed(note)): break
+			
+			var new_note:Note = _note_templates[note.type].duplicate()
+			new_note.time = note.time
+			new_note.direction = note.direction % Global.CHART.key_count
+			new_note.length = note.length
+			new_note.strumline = _connected_strumlines[note.strumline]
+			new_note.type = note.type
+			new_note.position = Vector2(-999999, -999999)
+			new_note.strumline.notes.add_child(new_note)
+			new_note.play(Global.dir_to_str(new_note.direction))
+			
+			_notes_to_spawn.erase(note)
 		
 func _get_note_speed(note:ChartNote):
 	var strumline:StrumLine = _connected_strumlines[note.strumline]
