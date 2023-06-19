@@ -143,7 +143,7 @@ func pop_up_score(note:Note):
 	var rating_sprite:Sprite2D = ratingcopy.get_node("rating") as Sprite2D
 	ratingcopy.visible = true
 	ratingcopy.modulate.a = 1.0
-	rating_sprite.scale = Vector2(0.9,0.5)
+	rating_sprite.scale = Vector2(0.9,0.9)
 	rating_sprite.texture = load("res://assets/funkin/images/gui/score/default/%s.png"% rating.to_lower())
 	create_tween().tween_property(rating_sprite,"scale",Vector2(0.7,0.7),0.5*Conductor.crochet/1000).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	
@@ -160,7 +160,7 @@ func pop_up_score(note:Note):
 		num_sprite.scale *= 0.7
 		create_tween().tween_property(num_sprite,"scale",Vector2(0.5,0.5),0.25*Conductor.crochet/1000).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		i += 1
-	create_tween().tween_property(ratingcopy,"modulate:a",0,Conductor.crochet/1000).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	create_tween().tween_property(ratingcopy,"modulate:a",0,Conductor.crochet/1000).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN).finished.connect(ratingcopy.queue_free)
 	if rating == "SICK":
 		note.splash.visible = true
 		note.splash.position = note.strumline.receptors.get_child(note.direction).position
