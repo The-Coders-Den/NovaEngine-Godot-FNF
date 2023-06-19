@@ -5,6 +5,8 @@ class_name Note extends AnimatedSprite2D
 @export var increase_combo:bool = true
 @export var play_sing_anim:bool = true
 @export var health_gain_mult:float = 1.0
+@export var colors:PackedColorArray = []
+@export var dynamic_note_colors:bool = false
 
 # backend shit
 var time:float

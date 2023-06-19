@@ -50,6 +50,8 @@ func _physics_process(delta:float):
 			new_note.type = note.type
 			new_note.position = Vector2(-999999, -999999)
 			new_note.strumline.notes.add_child(new_note)
+			if(new_note.material):
+				new_note.material = (new_note.material as ShaderMaterial).duplicate()
 			new_note.play(Global.dir_to_str(new_note.direction))
 			
 			_notes_to_spawn.erase(note)

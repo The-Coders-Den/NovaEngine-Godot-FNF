@@ -22,11 +22,11 @@ position = Vector2(640, 360)
 
 [node name="OpponentStrums" parent="HUDContainer/HUD" instance=ExtResource("2_prky5")]
 position = Vector2(-328, 250)
-type = 1
+type = 0
 
 [node name="PlayerStrums" parent="HUDContainer/HUD" instance=ExtResource("2_prky5")]
 position = Vector2(328, 250)
-type = 0
+type = 1
 
 [node name="CountdownSprite" type="Sprite2D" parent="HUDContainer/HUD"]
 visible = false

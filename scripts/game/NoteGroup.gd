@@ -19,6 +19,9 @@ func _process(delta:float):
 		
 		note.position.x = receptor.position.x
 		note.position.y = receptor.position.y - ((0.45 * downscroll_mult) * (Conductor.position - note.time) * _get_note_speed(note))
+		if note.material is ShaderMaterial:
+			note.material.set_shader_parameter("enabled",note.dynamic_note_colors)
+			note.material.set_shader_parameter("color",note.colors[note.direction])
 
 func other_note_hit(note:Note, type:StrumLine.StrumLineType):
 	note.was_already_hit = true
