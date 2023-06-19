@@ -1,5 +1,5 @@
 class_name StrumLine extends Node2D
-
+@onready var game:Gameplay = $"../../.."
 enum StrumLineType {
 	OPPONENT,
 	PLAYER,
@@ -61,20 +61,10 @@ func _on_key_down(dir:int, action:StringName):
 			else:
 				break
 		# delete the real note
-		good_note_hit(possible_notes[0])
+		game.good_note_hit(possible_notes[0])
 	
 	var dir_str:String = Global.dir_to_str(dir)
 	receptor.play("%s confirm" % dir_str if possible_notes.size() > 0 else "%s press" % dir_str)
-	
-func good_note_hit(note:Note):
-	note.remove_child(note.splash)
-	note.strumline.add_child(note.splash)
-	
-	note.splash.visible = true
-	note.splash.position = note.strumline.receptors.get_child(note.direction).position
-	note.splash.play("%s%s" % [Global.dir_to_str(note.direction), str(randi_range(1, 2))])
-	note.splash.animation_finished.connect(note.splash.queue_free)
-	note.queue_free()
 
 func sort_hit_notes(a:Note, b:Note):
 	if not a.should_hit and b.should_hit: return 0
