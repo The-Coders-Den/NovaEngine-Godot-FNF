@@ -34,7 +34,7 @@ func load_chart():
 	Global.CHART = Chart.load_song(Global.SONG_NAME, Global.SONG_DIFFICULTY, Chart.ChartType.FNF)
 	Conductor.setup_song(Global.CHART)
 	Conductor.position = Conductor.crochet * -5
-	Conductor.rate = 1
+	
 func load_tracks():
 	var dir := DirAccess.open("res://assets/funkin/songs/%s/audio" % Global.SONG_NAME.to_lower())
 	for file in dir.get_files():

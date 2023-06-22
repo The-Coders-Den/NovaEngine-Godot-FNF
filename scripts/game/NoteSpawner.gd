@@ -29,7 +29,9 @@ func _load_note_templates():
 func _setup_spawning():
 	for note in Global.CHART.notes:
 		if note.direction < 0: continue # this is an invalid!! a bade!!!
-		_notes_to_spawn.append(note.copy())
+		var _copied_note:ChartNote = note.copy()
+		_copied_note.time += Options.note_offset
+		_notes_to_spawn.append(_copied_note)
 		
 	_notes_to_spawn.sort_custom(func(a, b): return a.time < b.time)
 	
