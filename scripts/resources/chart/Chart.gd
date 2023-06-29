@@ -109,5 +109,7 @@ static func _parse_fnf(json:Dictionary) -> Chart:
 			parsed.notes.append(parsed_note)
 			
 		cur_time += cur_crochet * beats_per_measure
+		
+	parsed.notes.sort_custom(func(a, b): return a.time < b.time)
 	
 	return parsed
