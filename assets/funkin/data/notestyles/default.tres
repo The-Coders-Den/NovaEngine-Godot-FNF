@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="NoteStyle" load_steps=5 format=3 uid="uid://xinh4abw4evy"]
+
+[ext_resource type="SpriteFrames" uid="uid://bm42h1p1vak5n" path="res://assets/funkin/images/notes/default/notes.res" id="1_kb6ls"]
+[ext_resource type="Script" path="res://scripts/resources/NoteStyle.gd" id="1_vfl7u"]
+[ext_resource type="SpriteFrames" uid="uid://dt2g7ofdxudqm" path="res://assets/funkin/images/notes/default/receptors.res" id="2_rsr6v"]
+[ext_resource type="SpriteFrames" uid="uid://cfno6cllk3u4o" path="res://assets/funkin/images/notes/default/splashes.res" id="4_mqpik"]
+
+[resource]
+script = ExtResource("1_vfl7u")
+receptors = ExtResource("2_rsr6v")
+notes = ExtResource("1_kb6ls")
+splashes = ExtResource("4_mqpik")
+receptor_scale = 0.7
+note_scale = 0.7
+splash_scale = 1.0

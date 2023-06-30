@@ -13,11 +13,15 @@ class_name Gameplay extends Node2D
 @onready var tracks:Node = $Tracks
 
 var RATING_TIMES:Dictionary = {
-	"SICK": 45.0,
-	"GOOD": 90.0,
-	"BAD": 135.0,
-	"SHIT": 180.0
+	"sick": 45.0,
+	"good": 90.0,
+	"bad":  135.0,
+	"shit": 180.0
 }
+
+var rating_textures:Dictionary = {}
+var combo_textures:Dictionary = {}
+
 @onready var rating_template = $"HUDContainer/Rating Template"
 
 var combo:int = 0
@@ -27,6 +31,9 @@ var scroll_speed:float = -INF
 var starting_song:bool = true
 var ending_song:bool = false
 
+var note_style:NoteStyle
+var ui_style:UIStyle
+
 func load_chart():
 	var piss:Control = Control.new()
 	Global.SONG_NAME = "fill up"
@@ -34,6 +41,10 @@ func load_chart():
 	Global.CHART = Chart.load_song(Global.SONG_NAME, Global.SONG_DIFFICULTY, Chart.ChartType.FNF)
 	Conductor.setup_song(Global.CHART)
 	Conductor.position = Conductor.crochet * -5
+	
+func load_styles():
+	note_style = load("res://assets/funkin/data/notestyles/%s.tres" % Global.CHART.note_style)
+	ui_style = load("res://assets/funkin/data/uistyles/%s.tres" % Global.CHART.ui_style)
 	
 func load_tracks():
 	var dir := DirAccess.open("res://assets/funkin/songs/%s/audio" % Global.SONG_NAME.to_lower())
@@ -51,6 +62,13 @@ func load_tracks():
 		track.stream = load("res://assets/funkin/songs/%s/audio/%s" % [Global.SONG_NAME.to_lower(), file.replace(".import", "")])
 		track.pitch_scale = Conductor.rate
 		tracks.add_child(track)
+		
+func load_textures():
+	for shit in RATING_TIMES.keys():
+		rating_textures[shit] = load("%s/%s.png" % [ui_style.rating_texture_folder, shit])
+		
+	for num in 10:
+		combo_textures[str(num)] = load("%s/num%s.png" % [ui_style.combo_texture_folder, str(num)])
 		
 func setup_note_spawner():
 	note_spawner = NoteSpawner.new()
@@ -77,7 +95,9 @@ func resync_tracks():
 
 func _ready():
 	load_chart()
+	load_styles()
 	load_tracks()
+	load_textures()
 	setup_note_spawner()
 	setup_conductor()
 
@@ -90,7 +110,6 @@ func _process(delta:float):
 	hud.scale = lerp(hud.scale, Vector2.ONE, clampf(delta * 3.0 * Conductor.rate, 0.0, 1.0))
 
 func beat_hit(beat:int):
-
 	if starting_song:
 		countdown_tick(absi(beat))
 		return
@@ -107,12 +126,21 @@ func countdown_tick(tick:int):
 	if countdown_tween:
 		countdown_tween.stop()
 	
-	# will prolly be reworked when skins are added
-	var images:PackedStringArray = ["prepare", "ready", "set", "go"]
-	var sounds:PackedStringArray = ["3", "2", "1", "Go"]
-	SFXHelper.play(load("res://assets/funkin/sounds/countdown/default/intro%s.ogg" % sounds[tick]))
+	var images:Array[CompressedTexture2D] = [
+		ui_style.prepare_texture,
+		ui_style.ready_texture,
+		ui_style.set_texture,
+		ui_style.go_texture
+	]
+	var sounds:Array[AudioStream] = [
+		ui_style.prepare_sound,
+		ui_style.ready_sound,
+		ui_style.set_sound,
+		ui_style.go_sound
+	]
+	SFXHelper.play(sounds[tick])
 	
-	countdown_sprite.texture = load("res://assets/funkin/images/gui/countdown/default/%s.png" % images[tick])
+	countdown_sprite.texture = images[tick]
 	countdown_sprite.visible = true
 	countdown_sprite.modulate.a = 1.0
 	
@@ -132,36 +160,38 @@ func pop_up_score(note:Note):
 	var combo_split = str(combo).pad_zeros(3).split("")
 	var hit_diff = absf(note.time - Conductor.position)
 	
-	var rating:String = "SHIT"
-	
+	var rating:String = RATING_TIMES.keys()[RATING_TIMES.keys().size()-1]
 	for time in RATING_TIMES.values():
-		if (hit_diff <= time):
+		if hit_diff <= time:
 			rating = RATING_TIMES.find_key(time)
 			break
+			
 	var ratingcopy:Node2D = rating_template.duplicate()
 	add_child(ratingcopy)
 	var rating_sprite:Sprite2D = ratingcopy.get_node("rating") as Sprite2D
 	ratingcopy.visible = true
 	ratingcopy.modulate.a = 1.0
 	rating_sprite.scale = Vector2(0.9,0.9)
-	rating_sprite.texture = load("res://assets/funkin/images/gui/score/default/%s.png"% rating.to_lower())
+	rating_sprite.texture = rating_textures[rating]
+	rating_sprite.process_mode = Node.PROCESS_MODE_DISABLED
 	create_tween().tween_property(rating_sprite,"scale",Vector2(0.7,0.7),0.5*Conductor.crochet/1000).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	
 	var i:int = 0
 	for num in combo_split:
-
 		var num_sprite:Sprite2D = Sprite2D.new()
-		num_sprite.texture = load("res://assets/funkin/images/gui/score/default/num%s.png"%num)
-		
-			
-		ratingcopy.add_child(num_sprite)
+		num_sprite.texture = combo_textures[num]
 		num_sprite.position.y += 75
-		num_sprite.position.x = rating_sprite.position.x - 22.5*combo_split.size() + 50*i
+		num_sprite.position.x = rating_sprite.position.x - 22.5 * combo_split.size() + 50 * i
 		num_sprite.scale *= 0.7
+		num_sprite.process_mode = Node.PROCESS_MODE_DISABLED
+		ratingcopy.add_child(num_sprite)
+		
 		create_tween().tween_property(num_sprite,"scale",Vector2(0.5,0.5),0.25*Conductor.crochet/1000).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		i += 1
+		
 	create_tween().tween_property(ratingcopy,"modulate:a",0,Conductor.crochet/1000).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN).finished.connect(ratingcopy.queue_free)
-	if rating == "SICK":
+	
+	if rating == "sick":
 		note.splash.visible = true
 		note.splash.position = note.strumline.receptors.get_child(note.direction).position
 		note.splash.play("%s%s" % [Global.dir_to_str(note.direction), str(randi_range(1, 2))])

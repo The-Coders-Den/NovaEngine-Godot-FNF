@@ -28,6 +28,9 @@ var key_count:int = 4
 var beats_per_measure:float = 4.0
 var steps_per_beat:float = 4.0
 
+var note_style:String = "default"
+var ui_style:String = "default"
+
 static func load_song(song:String, difficulty:String, type:ChartType = ChartType.FNF) -> Chart:
 	var json:Dictionary = JSON.parse_string(FileAccess.open(Paths.chart_json(song, difficulty), FileAccess.READ).get_as_text())
 	match type:
@@ -52,6 +55,16 @@ static func _parse_fnf(json:Dictionary) -> Chart:
 	parsed.characters.opponent = [json.player2]
 	parsed.characters.player = [json.player1]
 	parsed.characters.spectator = ["gf"]
+	
+	# notestyle shit
+	if "uiSkin" in json: parsed.note_style = json.uiSkin
+	if "uiStyle" in json: parsed.note_style = json.uiStyle
+	if "noteSkin" in json: parsed.note_style = json.noteSkin
+	if "noteStyle" in json: parsed.note_style = json.noteStyle
+	
+	# ui style shit
+	if "uiSkin" in json: parsed.ui_style = json.uiSkin
+	if "uiStyle" in json: parsed.ui_style = json.uiStyle
 	
 	# gf shit
 	if "player3" in json: parsed.characters.spectator = [json.player3]
