@@ -23,6 +23,12 @@ var SONG_NAME:String
 var SONG_DIFFICULTY:String
 var CHART:Chart
 
+var EASE_FUNCS:Dictionary = {
+	"cube_out": func(t:float): 
+		t -= 1.0
+		return 1.0 + t * t * t
+}
+
 func _ready():
 	get_tree().tree_changed.connect(Overlay.get_node("Overlay")._update_scene_text)
 	RenderingServer.set_default_clear_color(Color.BLACK)

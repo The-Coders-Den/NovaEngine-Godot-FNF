@@ -1,14 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://dy7l5drirdi8t"]
+[gd_scene load_steps=8 format=3 uid="uid://dy7l5drirdi8t"]
 
 [ext_resource type="SpriteFrames" uid="uid://bm42h1p1vak5n" path="res://assets/funkin/images/notes/default/notes.res" id="1_e08tc"]
 [ext_resource type="Shader" path="res://assets/funkin/shaders/NOTE_COLOR.gdshader" id="1_tmvhx"]
 [ext_resource type="Script" path="res://scripts/game/notetypes/Note.gd" id="2_cajdv"]
 [ext_resource type="SpriteFrames" uid="uid://cfno6cllk3u4o" path="res://assets/funkin/images/notes/default/splashes.res" id="3_ge8de"]
+[ext_resource type="Texture2D" uid="uid://bo46ery8nodrp" path="res://assets/funkin/images/notes/default/hold.png" id="5_kodas"]
+[ext_resource type="Texture2D" uid="uid://dnsvctiiabidg" path="res://assets/funkin/images/notes/default/tail.png" id="6_574dr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8xd6k"]
 shader = ExtResource("1_tmvhx")
-shader_parameter/color = null
-shader_parameter/enabled = null
+shader_parameter/color = Color(1, 0, 0, 1)
+shader_parameter/enabled = true
 
 [node name="Default" type="AnimatedSprite2D"]
 material = SubResource("ShaderMaterial_8xd6k")
@@ -16,8 +18,23 @@ scale = Vector2(0.7, 0.7)
 sprite_frames = ExtResource("1_e08tc")
 animation = &"right"
 script = ExtResource("2_cajdv")
-colors = [Color(0.760784, 0.294118, 0.6, 1), Color(0, 1, 1, 1), Color(0.0705882, 0.980392, 0.0196078, 1), Color(0.976471, 0.223529, 0.247059, 1)]
 dynamic_note_colors = true
+
+[node name="Sustain" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.6)
+z_index = -1
+material = SubResource("ShaderMaterial_8xd6k")
+offset_left = -26.0
+offset_right = 24.0
+offset_bottom = 234.0
+scale = Vector2(1, -1)
+texture = ExtResource("5_kodas")
+
+[node name="Tail" type="Sprite2D" parent="Sustain"]
+material = SubResource("ShaderMaterial_8xd6k")
+position = Vector2(25, 265.715)
+scale = Vector2(1, 1)
+texture = ExtResource("6_574dr")
 
 [node name="Splash" type="AnimatedSprite2D" parent="."]
 visible = false

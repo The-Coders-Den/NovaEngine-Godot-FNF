@@ -14,7 +14,7 @@ func _process(delta:float):
 			continue
 		
 		if note.time <= Conductor.position - (500 / _get_note_speed(note)):
-			note.queue_free()
+			game.fake_miss(note.direction, note)
 			continue
 		
 		note.position.x = receptor.position.x
@@ -22,6 +22,9 @@ func _process(delta:float):
 		if note.material is ShaderMaterial:
 			note.material.set_shader_parameter("enabled",note.dynamic_note_colors)
 			note.material.set_shader_parameter("color",note.colors[note.direction])
+			
+		note.sustain.size.y = note.length
+		note.tail.position.y = note.length + (note.tail.texture.get_size().y * 0.5)
 
 func other_note_hit(note:Note, type:StrumLine.StrumLineType):
 	note.was_already_hit = true

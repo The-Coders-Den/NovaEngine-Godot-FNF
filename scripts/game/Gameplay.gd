@@ -12,6 +12,12 @@ class_name Gameplay extends Node2D
 @onready var hud:Node2D = $HUDContainer/HUD
 @onready var tracks:Node = $Tracks
 
+@onready var rating_template:Node2D = $"HUDContainer/Rating Template"
+@onready var icons:Node2D = $HUDContainer/HUD/HealthBar/Icons
+
+@onready var score_text:Label = $HUDContainer/HUD/HealthBar/ScoreText
+@onready var ms_text:Label = $HUDContainer/HUD/MSText
+
 var RATING_TIMES:Dictionary = {
 	"sick": 45.0,
 	"good": 90.0,
@@ -22,9 +28,18 @@ var RATING_TIMES:Dictionary = {
 var rating_textures:Dictionary = {}
 var combo_textures:Dictionary = {}
 
-@onready var rating_template = $"HUDContainer/Rating Template"
-
+var hit_times:Array[float] = []
+var avg_ms:float:
+	get:
+		var num:float = 0
+		for time in hit_times:
+			num += time
+		return num / hit_times.size()-1
+		
+var combo_streaks:int = 0
+var score:int = 0
 var combo:int = 0
+var misses:int = 0
 
 var note_spawner:NoteSpawner
 var scroll_speed:float = -INF
@@ -35,9 +50,8 @@ var note_style:NoteStyle
 var ui_style:UIStyle
 
 func load_chart():
-	var piss:Control = Control.new()
-	Global.SONG_NAME = "fill up"
-	Global.SONG_DIFFICULTY = "normal"
+	Global.SONG_NAME = "blackened"
+	Global.SONG_DIFFICULTY = "despair"
 	Global.CHART = Chart.load_song(Global.SONG_NAME, Global.SONG_DIFFICULTY, Chart.ChartType.FNF)
 	Conductor.setup_song(Global.CHART)
 	Conductor.position = Conductor.crochet * -5
@@ -100,6 +114,7 @@ func _ready():
 	load_textures()
 	setup_note_spawner()
 	setup_conductor()
+	update_score_text()
 
 func _process(delta:float):
 	Conductor.position += (delta * 1000.0) * Conductor.rate
@@ -107,6 +122,9 @@ func _process(delta:float):
 	if starting_song and Conductor.position >= 0.0:
 		start_song()
 		
+	var big_fart:float = lerpf(1.2, 1.0, Global.EASE_FUNCS.cube_out.call(fmod(Conductor.cur_dec_beat, 1.0))) if not starting_song else 1.0
+	icons.scale = Vector2(big_fart, big_fart)
+	
 	hud.scale = lerp(hud.scale, Vector2.ONE, clampf(delta * 3.0 * Conductor.rate, 0.0, 1.0))
 
 func beat_hit(beat:int):
@@ -157,8 +175,17 @@ func good_note_hit(note:Note):
 	
 func pop_up_score(note:Note):
 	combo += 1
-	var combo_split = str(combo).pad_zeros(3).split("")
-	var hit_diff = absf(note.time - Conductor.position)
+	var combo_split:PackedStringArray = str(combo).pad_zeros(3).split("")
+	var hit_diff:float = absf(note.time - Conductor.position) / Conductor.rate
+	hit_times.append((note.time - Conductor.position) / Conductor.rate)
+	
+	if combo % 10 == 0:
+		combo_streaks += 1
+		
+	ms_text.text = "Avg MS: %.2fms" % avg_ms
+	ms_text.text += "\nCombo Streaks: %s" % combo_streaks
+	
+	update_score_text()
 	
 	var rating:String = RATING_TIMES.keys()[RATING_TIMES.keys().size()-1]
 	for time in RATING_TIMES.values():
@@ -196,6 +223,24 @@ func pop_up_score(note:Note):
 		note.splash.position = note.strumline.receptors.get_child(note.direction).position
 		note.splash.play("%s%s" % [Global.dir_to_str(note.direction), str(randi_range(1, 2))])
 		note.splash.animation_finished.connect(note.splash.queue_free)
+
+func fake_miss(direction:int, note:Note = null):
+	combo = 0
+	misses += 1
+	update_score_text()
+	
+	if is_instance_valid(note):
+		note.queue_free()
+
+func update_score_text():
+	score_text.text = "Score: %s" % score
+	score_text.text += " • Accuracy: %.2f" % calculate_accuracy()
+	score_text.text += "%"
+	score_text.text += " • Combo Breaks: %s" % misses
+	
+func calculate_accuracy() -> float:
+	var acc:float = 0.0
+	return acc
 
 func step_hit(step:int):
 	pass

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d4noev768gjg4"
-path="res://.godot/imported/notes_copy.png-1fcc546584ffbfda7cd5747bded29916.ctex"
+uid="uid://dtgxajf8ectgx"
+path="res://.godot/imported/senpai.png-6ff5fa5066e74df4165252b728e958dd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/funkin/images/notes/default/notes_copy.png"
-dest_files=["res://.godot/imported/notes_copy.png-1fcc546584ffbfda7cd5747bded29916.ctex"]
+source_file="res://assets/funkin/images/icons/senpai.png"
+dest_files=["res://.godot/imported/senpai.png-6ff5fa5066e74df4165252b728e958dd.ctex"]
 
 [params]
 
