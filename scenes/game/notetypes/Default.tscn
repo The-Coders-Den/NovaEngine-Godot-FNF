@@ -33,7 +33,6 @@ texture = ExtResource("5_kodas")
 [node name="Tail" type="Sprite2D" parent="Sustain"]
 material = SubResource("ShaderMaterial_8xd6k")
 position = Vector2(25, 265.715)
-scale = Vector2(1, 1)
 texture = ExtResource("6_574dr")
 
 [node name="Splash" type="AnimatedSprite2D" parent="."]

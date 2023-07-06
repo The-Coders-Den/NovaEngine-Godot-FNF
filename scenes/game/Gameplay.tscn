@@ -1,20 +1,28 @@
-[gd_scene load_steps=12 format=3 uid="uid://unr0dbfnn1vr"]
+[gd_scene load_steps=15 format=3 uid="uid://unr0dbfnn1vr"]
 
 [ext_resource type="Script" path="res://scripts/game/Gameplay.gd" id="1_he0ft"]
 [ext_resource type="PackedScene" uid="uid://bpckue4jgen34" path="res://scenes/game/StrumLine.tscn" id="2_prky5"]
 [ext_resource type="PackedScene" uid="uid://cfnsvdh70get0" path="res://scenes/game/CharacterGroup.tscn" id="2_yfcfv"]
+[ext_resource type="Texture2D" uid="uid://du1lbndn1yuk4" path="res://icon.png" id="3_ckanc"]
 [ext_resource type="Texture2D" uid="uid://b0tq0x1vg2b18" path="res://assets/funkin/images/gui/healthBar.png" id="4_36fjo"]
 [ext_resource type="Texture2D" uid="uid://b7gwofpy7qb77" path="res://assets/funkin/images/gui/countdown/default/ready.png" id="4_idf3d"]
 [ext_resource type="Texture2D" uid="uid://bhxweh2uiv1gm" path="res://assets/funkin/images/gui/score/default/sick.png" id="5_ar4u7"]
 [ext_resource type="Texture2D" uid="uid://b6kem5v0vyxp1" path="res://assets/funkin/images/icons/dad.png" id="5_cm1x1"]
 [ext_resource type="Texture2D" uid="uid://ck00udrf2ylry" path="res://assets/funkin/images/icons/bf.png" id="6_6yxoy"]
 [ext_resource type="FontFile" uid="uid://coqcg7h14duny" path="res://assets/funkin/fonts/vcr.ttf" id="7_rwvkc"]
+[ext_resource type="Shader" path="res://assets/funkin/shaders/Wavy.gdshader" id="10_gsejb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5ra4n"]
 bg_color = Color(1, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qvuv3"]
 bg_color = Color(0.509804, 0.960784, 0.137255, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mbho6"]
+shader = ExtResource("10_gsejb")
+shader_parameter/frequency = 8.0
+shader_parameter/amplitude = 0.05
+shader_parameter/color = Color(0.968627, 0, 1, 1)
 
 [node name="Gameplay" type="Node2D"]
 script = ExtResource("1_he0ft")
@@ -29,6 +37,11 @@ script = ExtResource("1_he0ft")
 
 [node name="HUD" type="Node2D" parent="HUDContainer"]
 position = Vector2(640, 360)
+
+[node name="Icon" type="Sprite2D" parent="HUDContainer/HUD"]
+position = Vector2(-3, 3)
+scale = Vector2(9.9375, 5.70312)
+texture = ExtResource("3_ckanc")
 
 [node name="OpponentStrums" parent="HUDContainer/HUD" instance=ExtResource("2_prky5")]
 position = Vector2(-328, 250)
@@ -100,6 +113,13 @@ autowrap_mode = 3
 visible = false
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("4_idf3d")
+
+[node name="ColorRect" type="ColorRect" parent="HUDContainer/HUD"]
+material = SubResource("ShaderMaterial_mbho6")
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 642.0
+offset_bottom = 365.0
 
 [node name="Rating Template" type="Node2D" parent="HUDContainer"]
 visible = false

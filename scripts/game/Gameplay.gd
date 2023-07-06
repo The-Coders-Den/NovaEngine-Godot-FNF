@@ -50,8 +50,8 @@ var note_style:NoteStyle
 var ui_style:UIStyle
 
 func load_chart():
-	Global.SONG_NAME = "blackened"
-	Global.SONG_DIFFICULTY = "despair"
+	Global.SONG_NAME = "breakout"
+	Global.SONG_DIFFICULTY = "hard"
 	Global.CHART = Chart.load_song(Global.SONG_NAME, Global.SONG_DIFFICULTY, Chart.ChartType.FNF)
 	Conductor.setup_song(Global.CHART)
 	Conductor.position = Conductor.crochet * -5
@@ -76,6 +76,8 @@ func load_tracks():
 		track.stream = load("res://assets/funkin/songs/%s/audio/%s" % [Global.SONG_NAME.to_lower(), file.replace(".import", "")])
 		track.pitch_scale = Conductor.rate
 		tracks.add_child(track)
+		
+	Engine.time_scale = Conductor.rate
 		
 func load_textures():
 	for shit in RATING_TIMES.keys():
@@ -115,9 +117,18 @@ func _ready():
 	setup_note_spawner()
 	setup_conductor()
 	update_score_text()
+	
+func _unhandled_key_input(event):
+	event = event as InputEventKey
+	if not OS.is_debug_build(): return
+	
+	match event.keycode:
+		KEY_F3:
+			Conductor.position += 10000
+			resync_tracks()
 
 func _process(delta:float):
-	Conductor.position += (delta * 1000.0) * Conductor.rate
+	Conductor.position += delta * 1000.0
 
 	if starting_song and Conductor.position >= 0.0:
 		start_song()
@@ -125,7 +136,7 @@ func _process(delta:float):
 	var big_fart:float = lerpf(1.2, 1.0, Global.EASE_FUNCS.cube_out.call(fmod(Conductor.cur_dec_beat, 1.0))) if not starting_song else 1.0
 	icons.scale = Vector2(big_fart, big_fart)
 	
-	hud.scale = lerp(hud.scale, Vector2.ONE, clampf(delta * 3.0 * Conductor.rate, 0.0, 1.0))
+	hud.scale = lerp(hud.scale, Vector2.ONE, clampf(delta * 3.0, 0.0, 1.0))
 
 func beat_hit(beat:int):
 	if starting_song:
@@ -165,7 +176,7 @@ func countdown_tick(tick:int):
 	countdown_tween = create_tween()
 	countdown_tween.set_ease(Tween.EASE_IN_OUT)
 	countdown_tween.set_trans(Tween.TRANS_CUBIC)
-	countdown_tween.tween_property(countdown_sprite, "modulate:a", 0.0, (Conductor.crochet / 1000.0) / Conductor.rate)
+	countdown_tween.tween_property(countdown_sprite, "modulate:a", 0.0, Conductor.crochet / 1000.0)
 	
 func good_note_hit(note:Note):
 	note.remove_child(note.splash)
