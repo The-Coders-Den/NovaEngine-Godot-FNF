@@ -71,7 +71,8 @@ func _process(delta:float):
 			
 			# Cancelling the event won't matter here
 			note.missed = true
-			game.note_miss(note.direction, null, event)
+			if not strum_line.autoplay:
+				game.note_miss(note.direction, null, event)
 			
 			event.unreference()
 			
