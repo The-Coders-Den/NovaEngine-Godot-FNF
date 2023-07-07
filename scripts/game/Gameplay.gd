@@ -109,15 +109,13 @@ func update_score_text():
 
 func _ready():
 	var old:float = Time.get_ticks_msec()
-	CHART = Chart.load_chart("bushwhack", "hard")
+	CHART = Chart.load_chart("amusia", "hard")
 	print("Chart parse time: %s ms" % str(Time.get_ticks_msec() - old))
 	
 	# prepare song
 	Conductor.setup_song(CHART)
 	Conductor.position = Conductor.crochet * -5
 	cam_zooming_interval = Conductor.beats_per_measure
-	
-	Conductor.rate = 1.25
 	
 	# load chart notes & music
 	for note in CHART.notes:

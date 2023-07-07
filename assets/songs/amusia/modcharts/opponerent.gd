@@ -4,7 +4,7 @@ var shaking:bool = false
 var shake_timer:float = 0.0
 
 const shake_intensity:float = 3.0
-const shake_duration:float = 0.02
+const shake_duration:float = 0.01
 
 func _ready():
 	game.opponent_strums.receptors.modulate.a = 0.6
