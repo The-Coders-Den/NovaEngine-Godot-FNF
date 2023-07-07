@@ -1,6 +1,20 @@
 extends Node
 
-var rate:float = 1
+class BPMChangeEvent extends Resource:
+	var step:float = 0
+	var time:float = 0.0
+	var bpm:float = 100.0
+
+	func _init(step:float = 0, time:float = 0, bpm:float = 0):
+		self.step = step
+		self.time = time
+		self.bpm = bpm
+
+var rate:float = 1:
+	set(v):
+		Engine.time_scale = v
+		rate = v
+	
 var bpm:float = 100.0
 
 var crochet:float = ((60.0 / bpm) * 1000.0) # beats in milliseconds
@@ -88,9 +102,3 @@ func _process(delta):
 	if old_step != cur_step: step_hit.emit(cur_step)
 	if old_beat != cur_beat: beat_hit.emit(cur_beat)
 	if old_measure != cur_measure: measure_hit.emit(cur_measure)
-	
-func is_sound_synced(sound:AudioStreamPlayer):
-	# i love windows
-	var ms_allowed:float = (30 if OS.get_name() == "Windows" else 20) * sound.pitch_scale
-	var sound_time:float = sound.get_playback_position() * 1000.0
-	return !(absf(sound_time - position) > ms_allowed)

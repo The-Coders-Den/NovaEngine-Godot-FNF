@@ -11,26 +11,28 @@ config_version=5
 [application]
 
 config/name="FNF: Nova Engine"
+config/tags=PackedStringArray("rhythm", "2d", "funkin")
 run/main_scene="res://scenes/game/Gameplay.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
 config/icon="res://icon.png"
 
 [autoload]
 
-Paths="*res://scripts/autoload/Paths.gd"
-SFXHelper="*res://scenes/autoload/SFXHelper.tscn"
-Global="*res://scripts/autoload/Global.gd"
-JudgementTimings="*res://scripts/autoload/JudgementTimings.gd"
-Conductor="*res://scripts/autoload/Conductor.gd"
 Options="*res://scripts/autoload/Options.gd"
+Conductor="*res://scripts/autoload/Conductor.gd"
 Overlay="*res://scenes/autoload/Overlay.tscn"
-Volume="*res://scenes/autoload/Volume.tscn"
+Signals="*res://scripts/autoload/Signals.gd"
+Initializers="*res://scripts/autoload/Initializers.gd"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/parallax_node/plugin.cfg")
 
 [input]
 

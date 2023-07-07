@@ -1,21 +1,24 @@
 extends Node
 
+#-- important, don't touch --#
+var __config:ConfigFile
+
 #-- constants --#
-const SAVE_FILE_PATH := "user://funkin_settings.json"
+const SAVE_FILE_PATH := "user://funkin_settings.cfg"
 
 #-- engine settings --#
 var volume:float = 0.3
 var muted:bool = false
 
 #-- funkin settings --#
-var scroll_type:ScrollType = ScrollType.UP
+var downscroll:bool = false
 var centered_notefield:bool = false
 var ghost_tapping:bool = true
 var safe_frames:int = 10
 var judgement_timings:Dictionary = JudgementTimings.VANILLA
 var note_offset:float = 0.0
-var sustain_layer:SustainLayer = SustainLayer.ABOVE
-var splash_opacity:float = 60
+var sustain_layer:SustainLayer = SustainLayer.BEHIND
+var splash_opacity:int = 60
 var judgement_camera:JudgementCamera = JudgementCamera.WORLD
 var anti_aliasing:bool = true
 var flashing_lights:bool = true
@@ -25,13 +28,6 @@ var framerate_cap:int = 120
 var vsync:bool = false
 
 #-- enums --#
-enum ScrollType {
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT
-}
-
 enum SustainLayer {
 	BEHIND,
 	ABOVE
@@ -52,6 +48,7 @@ enum JudgementCamera {
 
 #-- functions --#
 func _ready():
+	RenderingServer.set_default_clear_color(Color.BLACK)
 	setup()
 	apply("all")
 	
@@ -61,6 +58,9 @@ func apply(setting:String):
 		properties.remove_at(0)
 		
 		for property in properties:
+			if property.name.begins_with("__"):
+				continue
+			
 			apply(property.name)
 		return
 		
@@ -76,40 +76,36 @@ func apply(setting:String):
 		"vsync":
 			var vsync:int = DisplayServer.VSYNC_ENABLED if vsync else DisplayServer.VSYNC_DISABLED
 			DisplayServer.window_set_vsync_mode(vsync)
-	
+
 func setup():
+	__config = ConfigFile.new()
+	__config.load(SAVE_FILE_PATH)
+		
 	var properties:Array[Dictionary] = get_script().get_script_property_list()
 	properties.remove_at(0)
-	
-	var json:Dictionary = {}
-	
-	if not ResourceLoader.exists(SAVE_FILE_PATH):
-		var f = FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)
-		f.store_string("{}")
-	else:
-		var f = FileAccess.open(SAVE_FILE_PATH, FileAccess.READ)
-		if f.get_as_text() == null or len(f.get_as_text()) < 1:
-			json = {}
-		else:
-			json = JSON.parse_string(f.get_as_text())
+		
+	for property in properties:
+		if property.name.begins_with("__"):
+			continue
 			
-	for key in properties:
-		if not key.name in json:
-			json[key.name] = get(key.name)
+		if __config.get_value("Settings", property.name, null) == null:
+			print(property.name, " not saved, saving to file")
+			__config.set_value("Settings", property.name, get(property.name))
 		else:
-			set(key.name, json[key.name])
-			
-	var f := FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)
-	f.store_string(JSON.stringify(json))
-
+			print(property.name, " found")
+			set(property.name, __config.get_value("Settings", property.name))
+	
+	__config.save(SAVE_FILE_PATH)
+	
 func flush():
-	var _settings:Dictionary = {}
+	if __config == null: return
 	
 	var properties:Array[Dictionary] = get_script().get_script_property_list()
 	properties.remove_at(0)
 	
 	for property in properties:
-		_settings[property.name] = get(property.name)
-	
-	var file := FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)
-	file.store_string(JSON.stringify(_settings))
+		if property.name.starts_with("__"):
+			continue
+		__config.set_value("Settings", property.name, get(property.name))
+		
+	__config.save(SAVE_FILE_PATH)

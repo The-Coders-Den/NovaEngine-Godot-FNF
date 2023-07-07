@@ -72,10 +72,6 @@ func convert_xml():
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	
-func _process(delta):
-	if Input.is_action_just_pressed("ui_cancel") and not fps_box.has_focus():
-		Global.switch_scene("res://scenes/MainMenu.tscn")
 
 # funny signal shits
 func set_path(new_path: String):

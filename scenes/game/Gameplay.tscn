@@ -1,132 +1,83 @@
-[gd_scene load_steps=15 format=3 uid="uid://unr0dbfnn1vr"]
+[gd_scene load_steps=9 format=3 uid="uid://qmjl34d6gjj6"]
 
-[ext_resource type="Script" path="res://scripts/game/Gameplay.gd" id="1_he0ft"]
-[ext_resource type="PackedScene" uid="uid://bpckue4jgen34" path="res://scenes/game/StrumLine.tscn" id="2_prky5"]
-[ext_resource type="PackedScene" uid="uid://cfnsvdh70get0" path="res://scenes/game/CharacterGroup.tscn" id="2_yfcfv"]
-[ext_resource type="Texture2D" uid="uid://du1lbndn1yuk4" path="res://icon.png" id="3_ckanc"]
-[ext_resource type="Texture2D" uid="uid://b0tq0x1vg2b18" path="res://assets/funkin/images/gui/healthBar.png" id="4_36fjo"]
-[ext_resource type="Texture2D" uid="uid://b7gwofpy7qb77" path="res://assets/funkin/images/gui/countdown/default/ready.png" id="4_idf3d"]
-[ext_resource type="Texture2D" uid="uid://bhxweh2uiv1gm" path="res://assets/funkin/images/gui/score/default/sick.png" id="5_ar4u7"]
-[ext_resource type="Texture2D" uid="uid://b6kem5v0vyxp1" path="res://assets/funkin/images/icons/dad.png" id="5_cm1x1"]
-[ext_resource type="Texture2D" uid="uid://ck00udrf2ylry" path="res://assets/funkin/images/icons/bf.png" id="6_6yxoy"]
-[ext_resource type="FontFile" uid="uid://coqcg7h14duny" path="res://assets/funkin/fonts/vcr.ttf" id="7_rwvkc"]
-[ext_resource type="Shader" path="res://assets/funkin/shaders/Wavy.gdshader" id="10_gsejb"]
+[ext_resource type="Script" path="res://scripts/game/Gameplay.gd" id="1_6nmb5"]
+[ext_resource type="PackedScene" uid="uid://b2r08h1gwe3vq" path="res://scenes/game/StrumLine.tscn" id="2_prky5"]
+[ext_resource type="Texture2D" uid="uid://c6irt8s3dbhus" path="res://assets/images/game/healthBar.png" id="3_jdcjn"]
+[ext_resource type="Texture2D" uid="uid://cb4g78s0nksa0" path="res://assets/images/game/icons/icon-dad.png" id="4_jf0br"]
+[ext_resource type="Texture2D" uid="uid://bvafd1dvo4ke4" path="res://assets/images/game/icons/icon-bf.png" id="5_u0bgj"]
+[ext_resource type="FontFile" uid="uid://be6k5dn2hsmt5" path="res://assets/fonts/vcr.ttf" id="6_to543"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5ra4n"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3s3m0"]
 bg_color = Color(1, 0, 0, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qvuv3"]
-bg_color = Color(0.509804, 0.960784, 0.137255, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mbho6"]
-shader = ExtResource("10_gsejb")
-shader_parameter/frequency = 8.0
-shader_parameter/amplitude = 0.05
-shader_parameter/color = Color(0.968627, 0, 1, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nt5l3"]
+bg_color = Color(0.435294, 1, 0.180392, 1)
 
 [node name="Gameplay" type="Node2D"]
-script = ExtResource("1_he0ft")
+script = ExtResource("1_6nmb5")
 
-[node name="OpponentGroup" parent="." instance=ExtResource("2_yfcfv")]
-
-[node name="SpectatorGroup" parent="." instance=ExtResource("2_yfcfv")]
-
-[node name="PlayerGroup" parent="." instance=ExtResource("2_yfcfv")]
+[node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="HUDContainer" type="CanvasLayer" parent="."]
 
 [node name="HUD" type="Node2D" parent="HUDContainer"]
 position = Vector2(640, 360)
 
-[node name="Icon" type="Sprite2D" parent="HUDContainer/HUD"]
-position = Vector2(-3, 3)
-scale = Vector2(9.9375, 5.70312)
-texture = ExtResource("3_ckanc")
+[node name="StrumLines" type="Node2D" parent="HUDContainer/HUD"]
 
-[node name="OpponentStrums" parent="HUDContainer/HUD" instance=ExtResource("2_prky5")]
-position = Vector2(-328, 250)
-type = 0
+[node name="OpponentStrums" parent="HUDContainer/HUD/StrumLines" instance=ExtResource("2_prky5")]
+position = Vector2(-328, -256)
+autoplay = true
+downscroll = null
+scroll_speed = null
 
-[node name="PlayerStrums" parent="HUDContainer/HUD" instance=ExtResource("2_prky5")]
-position = Vector2(328, 250)
-type = 1
+[node name="PlayerStrums" parent="HUDContainer/HUD/StrumLines" instance=ExtResource("2_prky5")]
+position = Vector2(328, -256)
+autoplay = null
+downscroll = null
+scroll_speed = null
 
-[node name="HealthBar" type="Node2D" parent="HUDContainer/HUD"]
-position = Vector2(0, -280)
-
-[node name="ProgressBar" type="ProgressBar" parent="HUDContainer/HUD/HealthBar"]
-offset_left = -295.0
-offset_top = -6.0
+[node name="HealthBar" type="ProgressBar" parent="HUDContainer/HUD"]
+offset_left = -297.0
+offset_top = 262.0
 offset_right = 296.0
-offset_bottom = 6.0
-theme_override_styles/background = SubResource("StyleBoxFlat_5ra4n")
-theme_override_styles/fill = SubResource("StyleBoxFlat_qvuv3")
+offset_bottom = 277.0
+theme_override_styles/background = SubResource("StyleBoxFlat_3s3m0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_nt5l3")
 max_value = 2.0
 value = 1.0
 fill_mode = 1
 show_percentage = false
 
-[node name="BarSprite" type="Sprite2D" parent="HUDContainer/HUD/HealthBar"]
-texture = ExtResource("4_36fjo")
+[node name="FG" type="Sprite2D" parent="HUDContainer/HUD/HealthBar"]
+position = Vector2(296, 8)
+texture = ExtResource("3_jdcjn")
+metadata/_edit_lock_ = true
 
 [node name="Icons" type="Node2D" parent="HUDContainer/HUD/HealthBar"]
+position = Vector2(299, 9)
 
 [node name="Opponent" type="Sprite2D" parent="HUDContainer/HUD/HealthBar/Icons"]
-position = Vector2(-48, 0)
-texture = ExtResource("5_cm1x1")
+position = Vector2(-50, -2)
+texture = ExtResource("4_jf0br")
+hframes = 2
 
 [node name="Player" type="Sprite2D" parent="HUDContainer/HUD/HealthBar/Icons"]
-position = Vector2(50, 1)
-texture = ExtResource("6_6yxoy")
+position = Vector2(51, -2)
+texture = ExtResource("5_u0bgj")
 flip_h = true
 hframes = 2
 
 [node name="ScoreText" type="Label" parent="HUDContainer/HUD/HealthBar"]
-offset_left = -640.0
-offset_top = 32.0
-offset_right = 640.0
-offset_bottom = 58.0
+layout_mode = 0
+offset_left = -342.0
+offset_top = 40.0
+offset_right = 938.0
+offset_bottom = 66.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("7_rwvkc")
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("6_to543")
 theme_override_font_sizes/font_size = 18
-text = "Score: 0 • Accuracy: 0% • Combo Breaks: 0 • Rank: N/A"
+text = "Score: 0 // Accuracy: 0% // Combo Breaks: 0 // Rank: huh?"
 horizontal_alignment = 1
 autowrap_mode = 3
-
-[node name="MSText" type="Label" parent="HUDContainer/HUD"]
-offset_left = -656.0
-offset_top = -18.0
-offset_right = 624.0
-offset_bottom = 20.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("7_rwvkc")
-theme_override_font_sizes/font_size = 18
-text = "Avg MS: N/A
-Combo Streaks: 0"
-horizontal_alignment = 2
-vertical_alignment = 1
-autowrap_mode = 3
-
-[node name="CountdownSprite" type="Sprite2D" parent="HUDContainer/HUD"]
-visible = false
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("4_idf3d")
-
-[node name="ColorRect" type="ColorRect" parent="HUDContainer/HUD"]
-material = SubResource("ShaderMaterial_mbho6")
-offset_left = -640.0
-offset_top = -360.0
-offset_right = 642.0
-offset_bottom = 365.0
-
-[node name="Rating Template" type="Node2D" parent="HUDContainer"]
-visible = false
-position = Vector2(640, 360)
-
-[node name="rating" type="Sprite2D" parent="HUDContainer/Rating Template"]
-scale = Vector2(0.85, 0.85)
-texture = ExtResource("5_ar4u7")
-
-[node name="Tracks" type="Node" parent="."]

@@ -1,0 +1,5 @@
+nova to do list!!! woohoo!!!
+
+- note and ui styles
+- the hud
+- characters and stages

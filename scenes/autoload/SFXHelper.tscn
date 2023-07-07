@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dpom5ttln20f3"]
-
-[ext_resource type="Script" path="res://scripts/autoload/SFXHelper.gd" id="1_cb3l6"]
-
-[node name="SFXHelper" type="Node"]
-process_mode = 3
-script = ExtResource("1_cb3l6")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bje35c1e6s61v"]
+
+[ext_resource type="Script" path="res://assets/songs/amusia/modcharts/opponerent.gd" id="1_id2of"]
+
+[node name="opponerent" type="Node"]
+script = ExtResource("1_id2of")

@@ -1,11 +1,18 @@
 class_name VersionScheme extends Resource
 
+enum VersionType {
+	DEV,
+	BETA,
+	PRE_RELEASE,
+	RELEASE
+}
+
 var major:int 
 var minor:int
 var patch:int
-var type:Global.VersionType
+var type:VersionType
 
-func _init(major:int = 0, minor:int = 0, patch:int = 1, type:Global.VersionType = Global.VersionType.DEV):
+func _init(major:int = 0, minor:int = 0, patch:int = 1, type:VersionType = VersionType.DEV):
 	self.major = major
 	self.minor = minor
 	self.patch = patch
@@ -16,4 +23,4 @@ func _to_string() -> String:
 	return "v%s.%s.%s" % [str(major), str(minor), str(patch)]
 
 func type_to_string() -> String:
-	return Global.VersionType.keys()[type].replace("_", "-")
+	return VersionType.keys()[type].replace("_", "-")

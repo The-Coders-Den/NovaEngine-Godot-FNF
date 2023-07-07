@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ct1e6o7l8oxn6"
+path="res://.godot/imported/Inst.ogg-35aa3deb62e2c6870ad598482f385671.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/songs/no more deals/music/Inst.ogg"
+dest_files=["res://.godot/imported/Inst.ogg-35aa3deb62e2c6870ad598482f385671.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
