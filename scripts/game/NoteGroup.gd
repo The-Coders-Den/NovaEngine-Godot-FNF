@@ -50,7 +50,9 @@ func _process(delta:float):
 				end.position.x = (end.texture.get_width() * end.scale.x) * 0.5
 				end.position.y += (end.texture.get_height() * end.scale.y) * 0.5
 		
-		if strum_line.autoplay and note.hit_time < Conductor.position and not note.was_already_hit:
+		if strum_line.autoplay and note.hit_time < Conductor.position and note.should_hit and note.hit_allowed and not note.was_already_hit:
+			note.hit_allowed = false
+			
 			var event := NoteHitEvent.new(note, note.direction, 0.023)
 			Signals.on_note_hit.emit(event)
 			

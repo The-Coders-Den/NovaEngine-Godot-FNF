@@ -12,8 +12,11 @@ func _ready():
 func on_note_hit(e:NoteHitEvent):
 	if e.note.strum_line != game.opponent_strums:
 		return
+	
 	shaking = true
 	shake_timer = 0.0
+	
+	e.note.hit_allowed = true
 	e.cancel()
 	
 func _physics_process(delta:float):

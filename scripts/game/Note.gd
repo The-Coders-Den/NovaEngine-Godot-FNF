@@ -21,4 +21,5 @@ var scroll_speed:float = -INF
 var was_already_hit:bool = false
 var has_splash:bool = false
 var missed:bool = false
+var hit_allowed:bool = true
 var splash:AnimatedSprite2D
