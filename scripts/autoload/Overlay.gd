@@ -19,6 +19,10 @@ func _ready():
 	update_timer.start(1.0)
 	_update_text()
 	_update_scene_text(get_tree().current_scene)
+	
+	if not OS.is_debug_build():
+		mem.visible = false
+		$MainContainer/Sep2.visible = false
 
 func _update_text():
 	fps.text = "%s FPS" % str(Engine.get_frames_per_second())

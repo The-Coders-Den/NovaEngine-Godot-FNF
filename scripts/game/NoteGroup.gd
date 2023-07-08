@@ -28,6 +28,7 @@ func _process(delta:float):
 			if not strum_line.autoplay and note.length >= 80.0 and not Input.is_action_pressed("note_%s" % StrumLine.NoteDirection.keys()[note.direction].to_lower()) and not note.missed:
 				note.was_already_hit = false
 				note.missed = true
+				game.note_miss(note.direction)
 		else:
 			note.position.y = receptor.position.y - ((0.45 * downscroll_mult) * (Conductor.position - note.hit_time) * note_speed)
 		
@@ -49,6 +50,17 @@ func _process(delta:float):
 				var end := note.sustain_end as Sprite2D
 				end.position.x = (end.texture.get_width() * end.scale.x) * 0.5
 				end.position.y += (end.texture.get_height() * end.scale.y) * 0.5
+		
+		if (strum_line.autoplay or receptor.pressed) and note.was_already_hit and anim_timer >= Conductor.step_crochet:
+			if not strum_line.autoplay:
+				game.health += 0.0115
+				
+			strum_line.play_anim(note.direction, "confirm")
+			
+		if note.missed:
+			note.length = note.og_length
+			note.sustain_clip_rect.clip_contents = false
+			note.modulate.a = 0.3
 		
 		if strum_line.autoplay and note.hit_time < Conductor.position and note.should_hit and note.hit_allowed and not note.was_already_hit:
 			note.hit_allowed = false
@@ -78,17 +90,6 @@ func _process(delta:float):
 			
 		if note.hit_time < Conductor.position - ((500 + (note.length * 4.3)) / note_speed) and not note.was_already_hit and note.missed:
 			note.queue_free()
-			
-		if (strum_line.autoplay or receptor.pressed) and note.was_already_hit and anim_timer >= Conductor.step_crochet:
-			if not strum_line.autoplay:
-				game.health += 0.0115
-				
-			strum_line.play_anim(note.direction, "confirm")
-			
-		if note.missed:
-			note.length = note.og_length
-			note.sustain_clip_rect.clip_contents = false
-			note.modulate.a = 0.3
 			
 	if anim_timer >= Conductor.step_crochet:
 		anim_timer = 0.0
