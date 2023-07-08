@@ -74,12 +74,6 @@ func call_on_modcharts(method:String, args:Array[Variant]):
 		modchart.call_method(method, args)
 		
 func load_modcharts():
-	# Setup signals
-	Signals.on_note_hit.connect(func(e): call_on_modcharts("on_note_hit", [e]))
-	Signals.on_note_miss.connect(func(e): call_on_modcharts("on_note_miss", [e]))
-	Signals.on_resync_tracks.connect(func(e): call_on_modcharts("on_resync_tracks", [e]))
-	Signals.on_update_score_text.connect(func(e): call_on_modcharts("on_update_score_text", [e]))
-	
 	# Song specific and global
 	for script_path in [
 		"res://assets/songs/%s/modcharts/" % CHART.song_name,
@@ -103,7 +97,7 @@ func is_track_synced(track:AudioStreamPlayer):
 
 func update_score_text():
 	var event := CancellableEvent.new()
-	Signals.on_update_score_text.emit(event)
+	call_on_modcharts("on_update_score_text", [event])
 	
 	if event.cancelled: return
 	
@@ -117,7 +111,7 @@ func update_score_text():
 
 func _ready():
 	var old:float = Time.get_ticks_msec()
-	CHART = Chart.load_chart("bushwhack", "hard")
+	CHART = Chart.load_chart("amusia", "hard")
 	print("Chart parse time: %s ms" % str(Time.get_ticks_msec() - old))
 	
 	# prepare song
@@ -228,11 +222,6 @@ func do_splash(receptor:Receptor, note:Note):
 		splash.position = receptor.position
 		splash.frame = 0
 		splash.play(anim)
-		
-		splash.animation_finished.connect(func():
-			splash.visible = false
-			splash.process_mode = Node.PROCESS_MODE_DISABLED
-		)
 		
 func note_miss(direction:int, note:Note = null, event:NoteMissEvent = null):
 	combo = 0

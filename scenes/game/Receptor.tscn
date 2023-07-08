@@ -1,11 +1,11 @@
 [gd_scene load_steps=4 format=3 uid="uid://c426qihljlikb"]
 
-[ext_resource type="Script" path="res://scenes/game/Receptor.gd" id="1_1yak0"]
 [ext_resource type="SpriteFrames" path="res://assets/images/game/notes/default/receptors.res" id="1_korvs"]
+[ext_resource type="Script" path="res://scripts/game/Receptor.gd" id="1_tmdfp"]
 [ext_resource type="SpriteFrames" uid="uid://cijieo4tmo8us" path="res://assets/images/game/notes/default/splashes.res" id="2_ne51a"]
 
 [node name="Receptor" type="Node2D"]
-script = ExtResource("1_1yak0")
+script = ExtResource("1_tmdfp")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.7, 0.7)

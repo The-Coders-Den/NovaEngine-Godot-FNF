@@ -21,6 +21,8 @@ func _ready():
 	for i in receptors.get_child_count():
 		var receptor:Receptor = receptors.get_child(i)
 		receptor.remove_child(receptor.splash)
+		receptor.name = "splash_%s" % str(i)
+		receptor.direction = i
 		add_child(receptor.splash)
 		play_anim(i, "static")
 		
@@ -58,7 +60,7 @@ func handle_note_input(dir:int):
 		
 		var note:Note = possible_notes[0]
 		var event := NoteHitEvent.new(note, note.direction, 0.023)
-		Signals.on_note_hit.emit(event)
+		game.call_on_modcharts("on_note_hit", [event])
 		
 		if not event.cancelled:
 			game.good_note_hit(note, event)

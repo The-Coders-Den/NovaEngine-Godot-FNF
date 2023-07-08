@@ -66,7 +66,7 @@ func _process(delta:float):
 			note.hit_allowed = false
 			
 			var event := NoteHitEvent.new(note, note.direction, 0.023)
-			Signals.on_note_hit.emit(event)
+			game.call_on_modcharts("on_note_hit", [event])
 			
 			if not event.cancelled:
 				strum_line.play_anim(note.direction, "confirm")
@@ -79,7 +79,7 @@ func _process(delta:float):
 		
 		if note.hit_time < Conductor.position - (500 / note_speed) and not note.was_already_hit and not note.missed:
 			var event := NoteMissEvent.new(note, note.direction, 0.0475)
-			Signals.on_note_miss.emit(event)
+			game.call_on_modcharts("on_note_miss", [event])
 			
 			# Cancelling the event won't matter here
 			note.missed = true
