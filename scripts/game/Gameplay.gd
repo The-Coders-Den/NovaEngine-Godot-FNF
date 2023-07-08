@@ -21,23 +21,41 @@ static var GAME_MODE:GameMode = GameMode.FREEPLAY
 @onready var character_icons:Node2D = $HUDContainer/HUD/HealthBar/Icons
 @onready var score_text:Label = $HUDContainer/HUD/HealthBar/ScoreText
 
+## A list of every note type able to spawn.
 var template_notes:Dictionary = {
 	"default": preload("res://scenes/game/notes/Default.tscn").instantiate()
 }
 
+## The audio files for this song.
 var tracks:Array[AudioStreamPlayer] = []
+
+## Keeps track of what tracks are finished.
 var finished_tracks:Array[bool] = []
 
+## The list of notes that haven't been spawned yet.
 var notes_to_spawn:Array[Chart.ChartNote] = []
 
+## The scroll speed of the notes.
+## Can also be modified per strumline.
 var scroll_speed:float = -INF
+
+## Whether or not the song is starting.
 var starting_song:bool = true
+
+## Whether or not the song is ending.
 var ending_song:bool = false
 
+## The currently loaded stage.
+var stage:Stage
+
+## The list of every modchart loaded.
+## Includes song specific & global modcharts.
 var modcharts:Array[Modchart] = []
 
 var score:int = 0
 var misses:int = 0
+var combo:int = 0
+
 var accuracy:float:
 	get:
 		if accuracy_total_hit != 0.0 and accuracy_hit_notes != 0:
@@ -52,15 +70,22 @@ var health:float:
 	set(v):
 		health_bar.value = v
 		
+## Whether or not the camera can zoom out
+## after bumping.
 var cam_zooming:bool = true
+
+## How often the camera bumps.
+## Default is the song's beats per measure (usually 4).
 var cam_zooming_interval:int = 4
+
+## Controls how much the camera zooms out
+## to after bumping.
+var default_cam_zoom:float = 1.05
 
 var accuracy_total_hit:float = 0.0
 var accuracy_hit_notes:int = 0
 
 var consecutive_misses:float = 0.0
-
-var combo:int = 0
 
 func load_tracks():
 	var base_path:String = "res://assets/songs/%s/music" % CHART.song_name
@@ -131,6 +156,27 @@ func _ready():
 	Conductor.setup_song(CHART)
 	Conductor.position = Conductor.crochet * -5
 	cam_zooming_interval = Conductor.beats_per_measure
+	
+	# load stage and characters
+	var stage_path:String = "res://scenes/game/stages/%s.tscn" % CHART.stage
+	var default_stage:String = "res://scenes/game/stages/stage.tscn"
+	
+	# error handling!!! now where's that codename
+	if ResourceLoader.exists(stage_path):
+		stage = load(stage_path).instantiate()
+	elif ResourceLoader.exists(default_stage):
+		printerr("Stage called \"%s\" doesn't exist! Loading default." % CHART.stage)
+		stage = load(default_stage).instantiate()
+	else:
+		printerr("Failed to load default stage!")
+		stage = Stage.new()
+		
+	add_child(stage)
+	default_cam_zoom = stage.default_cam_zoom
+	camera.zoom = Vector2(default_cam_zoom, default_cam_zoom)
+	
+	# chcartcesrs
+	# TODO: make these work
 	
 	# load chart notes & music
 	for note in CHART.notes:
@@ -320,7 +366,7 @@ func _process(delta:float):
 		end_song()
 		
 	if cam_zooming:
-		camera.zoom = camera.zoom.lerp(Vector2.ONE, delta * 3.0)
+		camera.zoom = camera.zoom.lerp(Vector2(default_cam_zoom, default_cam_zoom), delta * 3.0)
 		hud.scale = hud.scale.lerp(Vector2.ONE, delta * 3.0)
 		
 	var cube_out:Callable = func(t:float): 

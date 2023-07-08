@@ -17,6 +17,8 @@ bg_color = Color(0.435294, 1, 0.180392, 1)
 script = ExtResource("1_6nmb5")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+ignore_rotation = false
 
 [node name="HUDContainer" type="CanvasLayer" parent="."]
 

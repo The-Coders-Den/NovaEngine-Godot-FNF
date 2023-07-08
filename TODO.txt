@@ -6,4 +6,4 @@ nova to do list!!! woohoo!!!
 - story menu
 - freeplay menu
 - options menu
-- characters and stages
+- characters (via character groups)

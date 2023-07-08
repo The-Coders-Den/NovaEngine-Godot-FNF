@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://cln31cxx5ilpa"]
+
+[ext_resource type="Script" path="res://scripts/game/stages/stage.gd" id="1_mtd05"]
+[ext_resource type="Script" path="res://addons/parallax_node/parallax_node.gd" id="2_km3c7"]
+[ext_resource type="Script" path="res://scripts/ReadMeNode.gd" id="3_a3jjg"]
+[ext_resource type="Texture2D" uid="uid://dyt16jeyjxu0i" path="res://assets/images/game/stages/stage/stageback.png" id="3_e6v16"]
+[ext_resource type="Texture2D" uid="uid://b364v3wp2p1x6" path="res://assets/images/game/stages/stage/stagefront.png" id="4_uml2j"]
+[ext_resource type="Texture2D" uid="uid://cq2w0hsu5poq5" path="res://assets/images/game/stages/stage/stagecurtains.png" id="5_785d5"]
+
+[node name="stage" type="Node2D"]
+script = ExtResource("1_mtd05")
+default_cam_zoom = 0.9
+
+[node name="CLICK & READ ME" type="Node" parent="."]
+script = ExtResource("3_a3jjg")
+read_me = "In order to do parallax layers correctly, Use the \"ParallaxNode\" node.
+
+Why? ParallaxLayer has an issue where if the camera zooms to anything that isn't the default, 
+The position messes up. ParallaxNode fixes this issue and makes camera zooming look better."
+
+[node name="Layer1" type="Node2D" parent="."]
+script = ExtResource("2_km3c7")
+parallax_factor = Vector2(0.9, 0.9)
+metadata/_edit_lock_ = true
+
+[node name="Stageback" type="Sprite2D" parent="Layer1"]
+position = Vector2(-600, -200)
+texture = ExtResource("3_e6v16")
+centered = false
+
+[node name="Stagefront" type="Sprite2D" parent="Layer1"]
+position = Vector2(-600, 600)
+texture = ExtResource("4_uml2j")
+centered = false
+
+[node name="Layer2" type="Node2D" parent="."]
+script = ExtResource("2_km3c7")
+parallax_factor = Vector2(1.3, 1.3)
+metadata/_edit_lock_ = true
+
+[node name="Stagecurtains" type="Sprite2D" parent="Layer2"]
+position = Vector2(-500, -300)
+texture = ExtResource("5_785d5")
+centered = false
+
+[node name="Character Positions" type="Node" parent="."]
+
+[node name="Opponent" type="Node2D" parent="Character Positions"]
+position = Vector2(156, 771)
+
+[node name="Spectator" type="Node2D" parent="Character Positions"]
+position = Vector2(564, 725)
+
+[node name="Player" type="Node2D" parent="Character Positions"]
+position = Vector2(1020, 771)

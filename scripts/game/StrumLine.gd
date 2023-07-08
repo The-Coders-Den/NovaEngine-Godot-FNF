@@ -5,9 +5,16 @@ class_name StrumLine extends Node2D
 @onready var receptors:Node2D = $Receptors
 @onready var notes:Node2D = $Notes
 
+## Whether or not the notes on this strumline
+## are automatically hit. Useful for botplay.
 @export var autoplay:bool = false
+
+## Whether or not the notes on this strumline
+## scroll up or down.
 @export var downscroll:bool = false
 
+## The scroll speed of the notes.
+## Can also be modified for every note (game.scroll_speed).
 @export var scroll_speed:float = -INF
 
 enum NoteDirection {

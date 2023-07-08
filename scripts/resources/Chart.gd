@@ -13,6 +13,7 @@ var song_name:String
 @export var notes:Array[ChartNote] = []
 @export var events:Array[ChartEventGroup] = []
 @export var characters:Array[ChartCharacter] = []
+@export var stage:String = "stage"
 
 @export var strum_lines:int = 2
 @export var scroll_speed:float = 1.0
@@ -126,9 +127,12 @@ static func load_chart(song:String, difficulty:String):
 	if "display" in json: final.display_name = json.display
 	if "name" in json: final.display_name = json.name
 	if "song" in json: final.display_name = json.song
+	
 	if "scrollSpeed" in json: final.scroll_speed = json.scrollSpeed
 	if "scroll_speed" in json: final.scroll_speed = json.scroll_speed
 	if "speed" in json: final.scroll_speed = json.speed
+	
+	if "stage" in json: final.stage = json.stage
 		
 	return final
 	
