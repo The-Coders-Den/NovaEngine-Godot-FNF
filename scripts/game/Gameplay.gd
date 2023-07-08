@@ -1,7 +1,13 @@
 class_name Gameplay extends Node2D
 
+enum GameMode {
+	STORY,
+	FREEPLAY
+}
+
 #-- statics --#
 static var CHART:Chart
+static var GAME_MODE:GameMode = GameMode.FREEPLAY
 
 #-- normals --#
 @onready var camera:Camera2D = $Camera2D
@@ -20,6 +26,8 @@ var template_notes:Dictionary = {
 }
 
 var tracks:Array[AudioStreamPlayer] = []
+var finished_tracks:Array[bool] = []
+
 var notes_to_spawn:Array[Chart.ChartNote] = []
 
 var scroll_speed:float = -INF
@@ -56,6 +64,7 @@ var combo:int = 0
 
 func load_tracks():
 	var base_path:String = "res://assets/songs/%s/music" % CHART.song_name
+	var i:int = 0
 	for shit in DirAccess.open(base_path).get_files():
 		if not shit.ends_with(".import"):
 			continue
@@ -64,7 +73,11 @@ func load_tracks():
 		track.stream = load("%s/%s" % [base_path, shit.replace(".import", "")])
 		track.pitch_scale = Conductor.rate
 		tracks.append(track)
+		finished_tracks.append(false)
+		track.finished.connect(func(): finished_tracks[i] = true)
 		add_child(track)
+		
+		i += 1
 		
 func call_on_modcharts(method:String, args:Array[Variant]):
 	for modchart in modcharts:
@@ -123,6 +136,14 @@ func _ready():
 	for note in CHART.notes:
 		var new_note:Chart.ChartNote = note.duplicate(true)
 		notes_to_spawn.append(new_note)
+		
+		if not note.type in template_notes:
+			var path:String = "res://scenes/game/notes/%s.tscn" % note.type
+			if not ResourceLoader.exists(path):
+				printerr("Note type of \"%s\" doesn't exist! Loading default instead." % note.type)
+				path = "res://scenes/game/notes/Default.tscn"
+			
+			template_notes[note.type] = load(path).instantiate()
 		
 	notes_to_spawn.sort_custom(func(a:Chart.ChartNote, b:Chart.ChartNote): return a.hit_time < b.hit_time)
 	load_tracks()
@@ -265,10 +286,27 @@ func good_note_hit(note:Note, event:NoteHitEvent = null):
 	update_score_text()
 	
 func start_song():
+	var event := CancellableEvent.new()
+	call_on_modcharts("on_start_song", [event])
+	
 	starting_song = false
 	
 	for track in tracks:
 		track.play()
+		
+	call_on_modcharts("on_start_song_post", [event])
+	
+func end_song():
+	var event := CancellableEvent.new()
+	call_on_modcharts("on_end_song", [event])
+	
+	if not event.cancelled:
+		ending_song = false
+		match GAME_MODE:
+			GameMode.STORY: Global.switch_scene("res://scenes/menus/StoryMenu.tscn")
+			GameMode.FREEPLAY: Global.switch_scene("res://scenes/menus/FreeplayMenu.tscn")
+	
+	call_on_modcharts("on_end_song_post", [event])
 		
 func _physics_process(delta:float):
 	do_note_spawning()
@@ -277,9 +315,13 @@ func _process(delta:float):
 	Conductor.position += delta * 1000.0
 	if Conductor.position >= 0.0 and starting_song:
 		start_song()
+	
+	if not finished_tracks.has(false):
+		end_song()
 		
-	camera.zoom = camera.zoom.lerp(Vector2.ONE, delta * 3.0)
-	hud.scale = hud.scale.lerp(Vector2.ONE, delta * 3.0)
+	if cam_zooming:
+		camera.zoom = camera.zoom.lerp(Vector2.ONE, delta * 3.0)
+		hud.scale = hud.scale.lerp(Vector2.ONE, delta * 3.0)
 		
 	var cube_out:Callable = func(t:float): 
 		t -= 1.0
@@ -302,19 +344,19 @@ func _unhandled_key_input(event):
 				get_tree().change_scene_to_file("res://scenes/menus/FreeplayMenu.tscn")
 
 func _beat_hit(beat:int):
-	if not starting_song and beat > 0 and cam_zooming and cam_zooming_interval > 0 and beat % cam_zooming_interval == 0:
+	if not starting_song and beat > 0 and cam_zooming_interval > 0 and beat % cam_zooming_interval == 0:
 		camera.zoom += Vector2(0.015, 0.015)
 		hud.scale += Vector2(0.03, 0.03)
 		
 	call_on_modcharts("_beat_hit", [beat])
 		
 func _step_hit(step:int):
-	if starting_song: return
-	for track in tracks:
-		if not is_track_synced(track):
-			resync_tracks()
-			break
-			
+	if not starting_song and not ending_song:
+		for track in tracks:
+			if not is_track_synced(track):
+				resync_tracks()
+				break
+	
 	call_on_modcharts("_step_hit", [step])
 			
 func _measure_hit(measure:int):
@@ -322,6 +364,14 @@ func _measure_hit(measure:int):
 	call_on_modcharts("_section_hit", [measure])
 
 func resync_tracks():
+	var event := CancellableEvent.new()
+	call_on_modcharts("on_resync_tracks", [event])
+	call_on_modcharts("on_resync_music", [event])
+	call_on_modcharts("on_resync_song", [event])
+	call_on_modcharts("on_resync_vocals", [event])
+	
+	if event.cancelled: return
+	
 	for _track in tracks:
 		_track.seek(Conductor.position * 0.001)
 		

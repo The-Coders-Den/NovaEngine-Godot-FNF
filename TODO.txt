@@ -2,4 +2,8 @@ nova to do list!!! woohoo!!!
 
 - note and ui styles
 - the hud
+- visually show ratings and combo
+- story menu
+- freeplay menu
+- options menu
 - characters and stages

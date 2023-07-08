@@ -1,3 +1,10 @@
-[gd_scene format=3 uid="uid://c5cyvpoh1y7m3"]
+[gd_scene load_steps=2 format=3 uid="uid://c5cyvpoh1y7m3"]
+
+[ext_resource type="Texture2D" uid="uid://d2eynec1yyets" path="res://assets/images/menus/menuBGDesat.png" id="1_e238o"]
 
 [node name="FreeplayMenu" type="Node2D"]
+
+[node name="BG" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+texture = ExtResource("1_e238o")
+metadata/_edit_lock_ = true

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="credits.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="idle0000" x="1" y="526" width="489" height="116"/>
+	<SubTexture name="idle0001" x="1" y="526" width="489" height="116"/>
+	<SubTexture name="idle0002" x="1" y="526" width="489" height="116"/>
+	<SubTexture name="idle0003" x="1" y="643" width="489" height="116"/>
+	<SubTexture name="idle0004" x="1" y="643" width="489" height="116"/>
+	<SubTexture name="idle0005" x="1" y="643" width="489" height="116"/>
+	<SubTexture name="idle0006" x="1" y="760" width="489" height="116"/>
+	<SubTexture name="idle0007" x="1" y="760" width="489" height="116"/>
+	<SubTexture name="selected0000" x="1" y="1" width="649" height="174"/>
+	<SubTexture name="selected0001" x="1" y="176" width="649" height="174"/>
+	<SubTexture name="selected0002" x="1" y="351" width="649" height="174"/>
+</TextureAtlas>
