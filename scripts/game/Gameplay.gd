@@ -123,7 +123,6 @@ func _ready():
 	# prepare song
 	Conductor.setup_song(CHART)
 	Conductor.position = Conductor.crochet * -5
-	Conductor.rate = 1.25
 	cam_zooming_interval = Conductor.beats_per_measure
 	
 	# load chart notes & music
@@ -154,18 +153,9 @@ func _ready():
 	update_score_text()
 	load_modcharts()
 	
-var _note_spawn_timer:float = 0.0
-	
 func do_note_spawning():
-	_note_spawn_timer += get_process_delta_time()
-	
-	var radius:float = (Conductor.crochet / 1000.0) / (CHART.beats_per_measure * CHART.steps_per_beat)
-	if _note_spawn_timer < radius:
-		return
-		
-	_note_spawn_timer = 0.0
 	for note in notes_to_spawn:
-		if note.hit_time > Conductor.position + (2500 / _get_note_speed(note)):
+		if note.hit_time > Conductor.position + (1500 / _get_note_speed(note)):
 			break
 			
 		var new_note:Note = template_notes[note.type].duplicate()
