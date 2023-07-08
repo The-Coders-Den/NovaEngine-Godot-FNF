@@ -213,6 +213,7 @@ func _ready():
 	# misc
 	update_score_text()
 	load_modcharts()
+	call_on_modcharts("_ready_post", [])
 	
 func do_note_spawning():
 	for note in notes_to_spawn:
@@ -376,6 +377,8 @@ func _process(delta:float):
 	var zoom:float = lerpf(1.2, 1.0, cube_out.call(fmod(Conductor.cur_dec_beat, 1.0)))
 	character_icons.scale = Vector2.ONE if starting_song else Vector2(zoom, zoom)
 	character_icons.position.x = health_bar.size.x * (1.0 - (health_bar.value / health_bar.max_value))
+	
+	call_on_modcharts("_process_post", [delta])
 	
 func _unhandled_key_input(event):
 	event = event as InputEventKey
