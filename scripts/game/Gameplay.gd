@@ -77,7 +77,8 @@ func load_modcharts():
 	# Setup signals
 	Signals.on_note_hit.connect(func(e): call_on_modcharts("on_note_hit", [e]))
 	Signals.on_note_miss.connect(func(e): call_on_modcharts("on_note_miss", [e]))
-	Signals.on_resync_tracks.connect(func(): call_on_modcharts("on_resync_tracks", []))
+	Signals.on_resync_tracks.connect(func(e): call_on_modcharts("on_resync_tracks", [e]))
+	Signals.on_update_score_text.connect(func(e): call_on_modcharts("on_update_score_text", [e]))
 	
 	# Song specific and global
 	for script_path in [
@@ -101,11 +102,18 @@ func is_track_synced(track:AudioStreamPlayer):
 	return !(absf(track_time - Conductor.position) > ms_allowed)
 
 func update_score_text():
-	var sep:String = " // "
-	score_text.text = "Score: %s" % str(score)
+	var event := CancellableEvent.new()
+	Signals.on_update_score_text.emit(event)
+	
+	if event.cancelled: return
+	
+	var sep:String = " • "
+	score_text.text = "< "
+	score_text.text += "Score: %s" % str(score)
 	score_text.text += "%sAccuracy: %.2f%s" % [sep, accuracy * 100.0, "%"]
 	score_text.text += "%sCombo Breaks: %s" % [sep, str(misses)]
 	score_text.text += "%sRank: %s" % [sep, Timings.get_rank(accuracy * 100.0).name]
+	score_text.text += " >"
 
 func _ready():
 	var old:float = Time.get_ticks_msec()

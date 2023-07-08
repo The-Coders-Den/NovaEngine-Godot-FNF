@@ -1,4 +1,4 @@
-class_name Timings
+class_name Timings extends Node
 
 static var judgements:Array[Judgement] = [
 	Judgement.new("sick", "sick", 45.0,  350, 1.0, 1.0,  true),

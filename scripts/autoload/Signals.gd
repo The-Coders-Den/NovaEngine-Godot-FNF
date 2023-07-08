@@ -5,7 +5,8 @@ signal on_scene_switch(node:Node)
 signal on_note_hit(event:NoteHitEvent)
 signal on_note_miss(event:NoteMissEvent)
 
-signal on_resync_tracks()
+signal on_resync_tracks(event:CancellableEvent)
+signal on_update_score_text(event:CancellableEvent)
 
 #-- DON'T WORRY ABOUT THESE --#
 var scene_path:String
