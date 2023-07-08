@@ -22,9 +22,11 @@ func on_note_hit(e:NoteHitEvent):
 func _physics_process(delta:float):
 	if shaking:
 		game.opponent_strums.receptors.position = Vector2(randf_range(-shake_intensity, shake_intensity), randf_range(-shake_intensity, shake_intensity))
+		game.opponent_strums.notes.position = game.opponent_strums.receptors.position
 		shake_timer += delta
 		if shake_timer >= shake_duration:
 			shaking = false
 			shake_timer = 0.0
 	else:
 		game.opponent_strums.receptors.position = Vector2.ZERO
+		game.opponent_strums.notes.position = game.opponent_strums.receptors.position

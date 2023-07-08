@@ -28,14 +28,9 @@ position = Vector2(640, 360)
 [node name="OpponentStrums" parent="HUDContainer/HUD/StrumLines" instance=ExtResource("2_prky5")]
 position = Vector2(-328, -256)
 autoplay = true
-downscroll = false
-scroll_speed = inf_neg
 
 [node name="PlayerStrums" parent="HUDContainer/HUD/StrumLines" instance=ExtResource("2_prky5")]
 position = Vector2(328, -256)
-autoplay = false
-downscroll = false
-scroll_speed = inf_neg
 
 [node name="HealthBar" type="ProgressBar" parent="HUDContainer/HUD"]
 offset_left = -297.0

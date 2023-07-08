@@ -8,17 +8,17 @@ class_name Receptor extends Node2D
 var direction:int = -1
 var pressed:bool = false
 
-func _ready():
+func unfuck():
 	if has_node("Splash"):
 		splash = get_node("Splash")
 	else:
 		splash = strum_line.get_node("splash_%s" % str(direction))
-		
+	
 	splash.animation_finished.connect(func():
 		splash.visible = false
 		splash.process_mode = Node.PROCESS_MODE_DISABLED
 	)
-		
+	
 	if not sprite is AnimatedSprite2D or not strum_line.autoplay:
 		return
 		
@@ -28,3 +28,7 @@ func _ready():
 			sprite.frame = 0
 			sprite.play(sprite.animation.replace("confirm", "static"))
 	)
+
+func _ready():
+	unfuck()
+	script_changed.connect(unfuck)

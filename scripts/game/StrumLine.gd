@@ -21,7 +21,7 @@ func _ready():
 	for i in receptors.get_child_count():
 		var receptor:Receptor = receptors.get_child(i)
 		receptor.remove_child(receptor.splash)
-		receptor.name = "splash_%s" % str(i)
+		receptor.splash.name = "splash_%s" % str(i)
 		receptor.direction = i
 		add_child(receptor.splash)
 		play_anim(i, "static")
