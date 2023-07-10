@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="NoteStyle" load_steps=5 format=3 uid="uid://colyst0woix0k"]
+
+[ext_resource type="SpriteFrames" path="res://assets/images/game/notes/default/notes.res" id="1_khdw6"]
+[ext_resource type="SpriteFrames" path="res://assets/images/game/notes/default/receptors.res" id="2_c6kck"]
+[ext_resource type="Script" path="res://scripts/resources/NoteStyle.gd" id="3_a5w0c"]
+[ext_resource type="SpriteFrames" uid="uid://cijieo4tmo8us" path="res://assets/images/game/notes/default/splashes.res" id="4_j3ksv"]
+
+[resource]
+script = ExtResource("3_a5w0c")
+receptors = ExtResource("2_c6kck")
+notes = ExtResource("1_khdw6")
+splashes = ExtResource("4_j3ksv")
+receptor_scale = 0.7
+note_scale = 0.7
+splash_scale = 1.0

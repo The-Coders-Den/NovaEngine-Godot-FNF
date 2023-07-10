@@ -9,6 +9,9 @@ const shake_duration:float = 0.01
 func _ready():
 	game.opponent_strums.receptors.modulate.a = 0.6
 
+func on_countdown_tick(e:CountdownEvent):
+	e.cancel()
+
 func on_note_hit(e:NoteHitEvent):
 	if e.note.strum_line != game.opponent_strums:
 		return

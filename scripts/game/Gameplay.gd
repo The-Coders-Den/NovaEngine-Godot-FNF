@@ -21,6 +21,12 @@ static var GAME_MODE:GameMode = GameMode.FREEPLAY
 @onready var character_icons:Node2D = $HUDContainer/HUD/HealthBar/Icons
 @onready var score_text:Label = $HUDContainer/HUD/HealthBar/ScoreText
 
+@onready var ratings:Node2D = $Ratings
+@onready var judgement_template:Sprite2D = $Ratings/JudgementTemplate
+@onready var combo_template:Sprite2D = $Ratings/ComboTemplate
+
+@onready var countdown_sprite:Sprite2D = $ParallaxNode/CountdownSprite
+
 ## A list of every note type able to spawn.
 var template_notes:Dictionary = {
 	"default": preload("res://scenes/game/notes/Default.tscn").instantiate()
@@ -87,6 +93,9 @@ var accuracy_hit_notes:int = 0
 
 var consecutive_misses:float = 0.0
 
+var note_style:NoteStyle
+var ui_style:UIStyle
+
 func load_notes(delete_before_time:float = -INF):
 	notes_to_spawn = []
 	
@@ -95,6 +104,7 @@ func load_notes(delete_before_time:float = -INF):
 			continue
 				
 		var new_note:Chart.ChartNote = note.duplicate(true)
+		new_note.hit_time += Options.note_offset
 		notes_to_spawn.append(new_note)
 		
 		if not note.type in template_notes:
@@ -157,24 +167,35 @@ func update_score_text():
 	var event := CancellableEvent.new()
 	call_on_modcharts("on_update_score_text", [event])
 	
-	if event.cancelled: return
+	if not event.cancelled:
+		var sep:String = " • "
+		score_text.text = "< "
+		score_text.text += "Score: %s" % str(score)
+		score_text.text += "%sAccuracy: %.2f%s" % [sep, accuracy * 100.0, "%"]
+		score_text.text += "%sCombo Breaks: %s" % [sep, str(misses)]
+		score_text.text += "%sRank: %s" % [sep, Timings.get_rank(accuracy * 100.0).name]
+		score_text.text += " >"
 	
-	var sep:String = " • "
-	score_text.text = "< "
-	score_text.text += "Score: %s" % str(score)
-	score_text.text += "%sAccuracy: %.2f%s" % [sep, accuracy * 100.0, "%"]
-	score_text.text += "%sCombo Breaks: %s" % [sep, str(misses)]
-	score_text.text += "%sRank: %s" % [sep, Timings.get_rank(accuracy * 100.0).name]
-	score_text.text += " >"
+	event.unreference()
 
 func _ready():
 	var old:float = Time.get_ticks_msec()
 	CHART = Chart.load_chart("amusia", "hard")
 	print("Chart parse time: %s ms" % str(Time.get_ticks_msec() - old))
 	
+	# load note & ui styles
+	for shit in [".res", ".tres"]:
+		var np:String = "res://assets/data/notestyles/%s%s" % [CHART.note_style, shit]
+		if ResourceLoader.exists(np):
+			note_style = load(np)
+			
+		var up:String = "res://assets/data/uistyles/%s%s" % [CHART.ui_style, shit]
+		if ResourceLoader.exists(up):
+			ui_style = load(up)
+	
 	# prepare song
 	Conductor.setup_song(CHART)
-	Conductor.position = Conductor.crochet * -5
+	Conductor.position = Conductor.crochet * -4
 	cam_zooming_interval = Conductor.beats_per_measure
 	
 	# load stage and characters
@@ -192,11 +213,14 @@ func _ready():
 		stage = Stage.new()
 		
 	add_child(stage)
+	
 	default_cam_zoom = stage.default_cam_zoom
 	camera.zoom = Vector2(default_cam_zoom, default_cam_zoom)
 	
 	# chcartcesrs
 	# TODO: make these work
+	
+	ratings.move_to_front()
 	
 	# load chart notes & music
 	load_notes()
@@ -313,6 +337,96 @@ func note_miss(direction:int, note:Note = null, event:NoteMissEvent = null):
 		note.queue_free()
 		
 	update_score_text()
+	
+func display_judgement(judgement:Timings.Judgement, event:JudgementEvent) -> VelocitySprite:
+	call_on_modcharts("on_display_judgement", [event])
+	
+	var sprite:VelocitySprite = null
+	if not event.cancelled:
+		sprite = judgement_template.duplicate() as VelocitySprite
+			
+		sprite.texture = ui_style.rating_texture
+		sprite.scale = Vector2(ui_style.rating_scale, ui_style.rating_scale)
+		sprite.hframes = 2
+		sprite.vframes = 6
+		
+		if accuracy == 1:
+			sprite.frame = 0
+		else:
+			sprite.frame = (Timings.judgements.find(judgement) * 2) + (1 if event.late else 0) + 2
+		
+		sprite.position = judgement_template.position
+		sprite.acceleration.y = 550
+		sprite.velocity.y = -randi_range(140, 175)
+		sprite.velocity.x = -randi_range(0, 10)
+		sprite.visible = true
+		sprite.moving = true
+		sprite.modulate.a = 1.0
+		
+		var tween := create_tween()
+		var penis := tween.tween_property(sprite, "modulate:a", 0.0, 0.2).set_delay(Conductor.crochet * 0.001)
+		penis.finished.connect(sprite.queue_free)
+	
+	event.judgement_sprite = sprite
+	call_on_modcharts("on_display_judgement_post", [event])
+	return event.judgement_sprite
+	
+func display_combo(combo:int, event:JudgementEvent) -> Array[VelocitySprite]:
+	call_on_modcharts("on_display_combo", [event])
+	
+	var numbers:PackedStringArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+	var sprites:Array[VelocitySprite] = []
+	
+	if not event.cancelled:
+		var i:int = 0
+		var split_combo:PackedStringArray = str(combo).split()
+		
+		for num in split_combo:
+			var sprite:VelocitySprite = combo_template.duplicate() as VelocitySprite
+				
+			sprite.texture = ui_style.combo_texture
+			sprite.scale = Vector2(ui_style.combo_scale, ui_style.combo_scale)
+			sprite.hframes = 11
+			sprite.vframes = 2
+				
+			sprite.frame = int(num) + 1
+			if accuracy == 1: sprite.frame += 11
+			
+			sprite.acceleration.y = randi_range(200, 300)
+			sprite.velocity.y = -randi_range(140, 160)
+			sprite.velocity.x = -randf_range(-5.0, 5.0)
+			sprite.position = combo_template.position
+			sprite.position.x += i * 43
+			sprite.visible = true
+			sprite.moving = true
+			sprite.modulate.a = 1.0
+			sprites.append(sprite)
+			
+			var tween := create_tween()
+			var penis := tween.tween_property(sprite, "modulate:a", 0.0, 0.2).set_delay(Conductor.crochet * 0.002)
+			penis.finished.connect(sprite.queue_free)
+			
+			i += 1
+	
+	event.combo_sprites = sprites
+	call_on_modcharts("on_display_combo_post", [event])
+	return event.combo_sprites
+	
+func pop_up_score(judgement:Timings.Judgement, combo:int, late:bool):
+	var event := JudgementEvent.new(judgement, combo, late, null, [])
+	call_on_modcharts("on_pop_up_score", [event])
+	
+	if not event.cancelled:
+		var rating_spr := display_judgement(judgement, event)
+		if rating_spr != null:
+			ratings.add_child(rating_spr)
+		
+		var combo_sprs := display_combo(combo, event)
+		for spr in combo_sprs:
+			ratings.add_child(spr)
+	
+	call_on_modcharts("on_pop_up_score_post", [event])
+	event.unreference()
 		
 func good_note_hit(note:Note, event:NoteHitEvent = null):
 	combo += 1
@@ -338,6 +452,8 @@ func good_note_hit(note:Note, event:NoteHitEvent = null):
 	score += judgement.score
 	accuracy_total_hit += judgement.accuracy_mult
 	accuracy_hit_notes += 1
+	
+	pop_up_score(judgement, combo, note_diff < 0.0)
 	update_score_text()
 	
 func start_song():
@@ -423,9 +539,48 @@ func skip_time(new_time:float):
 		load_notes(new_time + 500.0)
 		
 	resync_tracks()
+	
+var countdown_tween:Tween
+var cur_countdown_tick:int = 0
+
+func countdown_tick(tick:int = 0):
+	var textures:Array[CompressedTexture2D] = [ui_style.prepare_texture, ui_style.ready_texture, ui_style.set_texture, ui_style.go_texture]
+	var sounds:Array[AudioStream] = [ui_style.prepare_sound, ui_style.ready_sound, ui_style.set_sound, ui_style.go_sound]
+
+	if countdown_tween != null:
+		countdown_tween.kill()
+		countdown_tween.unreference()
+		
+	countdown_tween = create_tween()
+	countdown_tween.pause()
+	
+	var sound := AudioStreamPlayer.new()
+	sound.stream = sounds[tick]
+		
+	var event := CountdownEvent.new(tick, countdown_sprite, sound, countdown_tween)
+	call_on_modcharts("on_countdown_tick", [event])
+	
+	if not event.cancelled:
+		if not event.tween.is_running():
+			event.tween.play()
+		
+		event.sprite.texture = textures[tick]
+		event.sprite.modulate.a = 1.0
+		event.tween.set_ease(Tween.EASE_IN_OUT)
+		event.tween.set_trans(Tween.TRANS_CUBIC)
+		event.tween.tween_property(event.sprite, "modulate:a", 0.0, Conductor.crochet / 1000.0)
+		
+		add_child(event.sound)
+		event.sound.play()
+		
+	call_on_modcharts("on_countdown_tick_post", [event])
+	event.unreference()
 
 func _beat_hit(beat:int):
-	if not starting_song and beat > 0 and cam_zooming_interval > 0 and beat % cam_zooming_interval == 0:
+	if starting_song:
+		countdown_tick(cur_countdown_tick)
+		cur_countdown_tick += 1
+	elif beat > 0 and cam_zooming_interval > 0 and beat % cam_zooming_interval == 0:
 		camera.zoom += Vector2(0.015, 0.015)
 		hud.scale += Vector2(0.03, 0.03)
 		

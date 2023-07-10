@@ -1,10 +1,10 @@
 class_name Timings extends Node
 
 static var judgements:Array[Judgement] = [
-	Judgement.new("sick", "sick", 45.0,  350, 1.0, 1.0,  true),
-	Judgement.new("good", "good", 90.0,  200, 0.7, 0.75, false),
-	Judgement.new("bad",  "bad",  135.0, 100, 0.3, 0.5,  false),
-	Judgement.new("shit", "shit", 180.0, 50,  1.0, -2.7, false)
+	Judgement.new("sick", 45.0,  350, 1.0, 1.0,  true),
+	Judgement.new("good", 90.0,  200, 0.7, 0.75, false),
+	Judgement.new("bad",  135.0, 100, 0.3, 0.5,  false),
+	Judgement.new("shit", 180.0, 50,  1.0, -2.7, false)
 ]
 static var ranks:Array[Rank] = [
 	Rank.new("S+", 100.0, 0xFF00CCFF),
@@ -29,7 +29,7 @@ static func init():
 		
 static func get_judgement(ms_time:float):
 	for judge in judgements:
-		if judge.timing >= ms_time:
+		if judge.timing >= absf(ms_time):
 			return judge
 		
 	return judgements[judgements.size() - 1]
@@ -43,16 +43,14 @@ static func get_rank(accuracy:float):
 
 class Judgement extends Resource:
 	var name:String
-	var image:String
 	var timing:float
 	var score:int
 	var accuracy_mult:float
 	var health_mult:float
 	var do_splash:bool
 	
-	func _init(name:String, image:String, timing:float, score:int, accuracy_mult:float, health_mult:float, do_splash:bool):
+	func _init(name:String, timing:float, score:int, accuracy_mult:float, health_mult:float, do_splash:bool):
 		self.name = name
-		self.image = image
 		self.timing = timing
 		self.score = score
 		self.accuracy_mult = accuracy_mult

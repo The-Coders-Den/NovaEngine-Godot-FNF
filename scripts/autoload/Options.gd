@@ -20,6 +20,7 @@ var note_offset:float = 0.0
 var sustain_layer:SustainLayer = SustainLayer.BEHIND
 var splash_opacity:int = 60
 var judgement_camera:JudgementCamera = JudgementCamera.WORLD
+var simply_judgements:bool = false
 var anti_aliasing:bool = true
 var flashing_lights:bool = true
 var reduce_motion:bool = false

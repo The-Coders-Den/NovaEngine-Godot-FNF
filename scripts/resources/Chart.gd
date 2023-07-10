@@ -15,6 +15,9 @@ var song_name:String
 @export var characters:Array[ChartCharacter] = []
 @export var stage:String = "stage"
 
+@export var note_style:String = "default"
+@export var ui_style:String = "default"
+
 @export var strum_lines:int = 2
 @export var scroll_speed:float = 1.0
 
@@ -49,9 +52,9 @@ static func load_chart(song:String, difficulty:String):
 	
 	# Parse characters
 	final.characters = [
-		ChartCharacter.new(json.gfVersion, ChartCharacterType.SPECTATOR),
-		ChartCharacter.new(json.player2, ChartCharacterType.OPPONENT),
-		ChartCharacter.new(json.player1, ChartCharacterType.PLAYER)
+		ChartCharacter.new(json.gfVersion, 2),
+		ChartCharacter.new(json.player2, 0),
+		ChartCharacter.new(json.player1, 1)
 	]
 	
 	# Parse timescale
@@ -132,17 +135,23 @@ static func load_chart(song:String, difficulty:String):
 	if "scroll_speed" in json: final.scroll_speed = json.scroll_speed
 	if "speed" in json: final.scroll_speed = json.speed
 	
+	if "noteStyle" in json: final.note_style = json.noteStyle
+	if "note_style" in json: final.note_style = json.note_style
+	
+	if "uiStyle" in json: final.ui_style = json.uiStyle
+	if "ui_style" in json: final.ui_style = json.ui_style
+	
 	if "stage" in json: final.stage = json.stage
 		
 	return final
 	
 class ChartCharacter extends Resource:
 	var name:String
-	var type:ChartCharacterType
+	var strum_index:int
 	
-	func _init(name:String = "bf", type:ChartCharacterType = ChartCharacterType.PLAYER):
+	func _init(name:String = "bf", strum_index:int = 0):
 		self.name = name
-		self.type = type
+		self.strum_index = strum_index
 
 class ChartNote extends Resource:
 	@export var hit_time:float = 0.0

@@ -1,11 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://qmjl34d6gjj6"]
+[gd_scene load_steps=14 format=3 uid="uid://qmjl34d6gjj6"]
 
 [ext_resource type="Script" path="res://scripts/game/Gameplay.gd" id="1_6nmb5"]
+[ext_resource type="Texture2D" uid="uid://d15ve02ugcrw7" path="res://assets/images/game/score/default/judgements.png" id="2_5dxwi"]
 [ext_resource type="PackedScene" uid="uid://b2r08h1gwe3vq" path="res://scenes/game/StrumLine.tscn" id="2_prky5"]
 [ext_resource type="Texture2D" uid="uid://c6irt8s3dbhus" path="res://assets/images/game/healthBar.png" id="3_jdcjn"]
+[ext_resource type="Texture2D" uid="uid://cubunlko63jjf" path="res://assets/images/game/score/default/combo.png" id="3_kmtaq"]
+[ext_resource type="Script" path="res://scripts/game/VelocitySprite.gd" id="3_we4w4"]
 [ext_resource type="Texture2D" uid="uid://cb4g78s0nksa0" path="res://assets/images/game/icons/icon-dad.png" id="4_jf0br"]
 [ext_resource type="Texture2D" uid="uid://bvafd1dvo4ke4" path="res://assets/images/game/icons/icon-bf.png" id="5_u0bgj"]
 [ext_resource type="FontFile" uid="uid://be6k5dn2hsmt5" path="res://assets/fonts/vcr.ttf" id="6_to543"]
+[ext_resource type="Script" path="res://addons/parallax_node/parallax_node.gd" id="10_jcomb"]
+[ext_resource type="Texture2D" uid="uid://rcduql1tnt3d" path="res://assets/images/game/countdown/default/prepare.png" id="10_spyxg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3s3m0"]
 bg_color = Color(1, 0, 0, 1)
@@ -19,6 +24,31 @@ script = ExtResource("1_6nmb5")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(640, 360)
 ignore_rotation = false
+
+[node name="Ratings" type="Node2D" parent="."]
+position = Vector2(740, 295)
+
+[node name="JudgementTemplate" type="Sprite2D" parent="Ratings"]
+visible = false
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_5dxwi")
+hframes = 2
+vframes = 6
+script = ExtResource("3_we4w4")
+moving = false
+metadata/_edit_lock_ = true
+
+[node name="ComboTemplate" type="Sprite2D" parent="Ratings"]
+visible = false
+position = Vector2(-185, 80)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_kmtaq")
+hframes = 11
+vframes = 2
+frame = 12
+script = ExtResource("3_we4w4")
+moving = false
+metadata/_edit_lock_ = true
 
 [node name="HUDContainer" type="CanvasLayer" parent="."]
 
@@ -78,3 +108,13 @@ theme_override_font_sizes/font_size = 18
 text = "< Score: 0 • Accuracy: 0% • Combo Breaks: 0 • Rank: huh? >"
 horizontal_alignment = 1
 autowrap_mode = 3
+
+[node name="ParallaxNode" type="Node2D" parent="."]
+script = ExtResource("10_jcomb")
+parallax_factor = Vector2(0, 0)
+
+[node name="CountdownSprite" type="Sprite2D" parent="ParallaxNode"]
+modulate = Color(1, 1, 1, 0)
+z_index = 1
+position = Vector2(640, 360)
+texture = ExtResource("10_spyxg")
