@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="FreeplayList" load_steps=5 format=3 uid="uid://c5681qsrwyw5p"]
+
+[ext_resource type="Script" path="res://scripts/resources/FreeplayList.gd" id="1_2suxv"]
+[ext_resource type="Texture2D" uid="uid://bgk48t11fpyuf" path="res://assets/images/game/icons/icon-face.png" id="2_1jd3g"]
+[ext_resource type="Script" path="res://scripts/resources/FreeplaySong.gd" id="3_avrve"]
+
+[sub_resource type="Resource" id="Resource_l472d"]
+script = ExtResource("3_avrve")
+song_name = "test"
+display_name = ""
+color = Color(1, 1, 1, 1)
+icon = ExtResource("2_1jd3g")
+icon_frames = 2
+bpm = 150.0
+
+[resource]
+script = ExtResource("1_2suxv")
+songs = Array[ExtResource("3_avrve")]([SubResource("Resource_l472d")])

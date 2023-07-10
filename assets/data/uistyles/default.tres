@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="UIStyle" load_steps=10 format=3 uid="uid://ban3lms02n5dl"]
+[gd_resource type="Resource" script_class="UIStyle" load_steps=12 format=3 uid="uid://ban3lms02n5dl"]
 
+[ext_resource type="Texture2D" uid="uid://cubunlko63jjf" path="res://assets/images/game/score/default/combo.png" id="1_mwu38"]
 [ext_resource type="AudioStream" uid="uid://db1sbj0vd1r05" path="res://assets/sounds/countdown/default/introGo.ogg" id="1_wvxkt"]
 [ext_resource type="Texture2D" uid="uid://tr5yjhhlv6os" path="res://assets/images/game/countdown/default/go.png" id="2_qgw2l"]
 [ext_resource type="AudioStream" uid="uid://bvmmovn4e5hvx" path="res://assets/sounds/countdown/default/intro3.ogg" id="3_qy15f"]
 [ext_resource type="Texture2D" uid="uid://rcduql1tnt3d" path="res://assets/images/game/countdown/default/prepare.png" id="4_8jtcp"]
 [ext_resource type="AudioStream" uid="uid://s4abogvw0via" path="res://assets/sounds/countdown/default/intro2.ogg" id="5_lxaxy"]
+[ext_resource type="Texture2D" uid="uid://d15ve02ugcrw7" path="res://assets/images/game/score/default/judgements.png" id="6_3ujtn"]
 [ext_resource type="Texture2D" uid="uid://ynphvpvwcgs4" path="res://assets/images/game/countdown/default/ready.png" id="6_w11pq"]
 [ext_resource type="Script" path="res://scripts/resources/UIStyle.gd" id="7_ltd32"]
 [ext_resource type="AudioStream" uid="uid://c16apge5o2sv7" path="res://assets/sounds/countdown/default/intro1.ogg" id="8_oi2uf"]
@@ -12,8 +14,8 @@
 
 [resource]
 script = ExtResource("7_ltd32")
-rating_texture_folder = "res://assets/images/game/gui/score/default"
-combo_texture_folder = "res://assets/images/game/gui/score/default"
+rating_texture = ExtResource("6_3ujtn")
+combo_texture = ExtResource("1_mwu38")
 rating_scale = 0.7
 combo_scale = 0.5
 prepare_texture = ExtResource("4_8jtcp")
