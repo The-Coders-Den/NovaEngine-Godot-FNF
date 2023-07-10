@@ -1,4 +1,4 @@
-extends Node2D
+class_name NoteGroup extends Node2D
 
 @onready var strum_line:StrumLine = $"../"
 @onready var receptors:Node2D = $"../Receptors"

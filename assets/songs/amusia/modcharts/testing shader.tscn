@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqfkfr6diiv3x"]
+
+[ext_resource type="Script" path="res://assets/songs/amusia/modcharts/testing shader.gd" id="1_fual4"]
+[ext_resource type="Shader" path="res://assets/shaders/grayscale.gdshader" id="2_t5n5h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kp6n6"]
+shader = ExtResource("2_t5n5h")
+shader_parameter/multiplier = 0.0
+
+[node name="testing shader" type="Node"]
+script = ExtResource("1_fual4")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_kp6n6")
+offset_right = 1290.0
+offset_bottom = 727.0
+color = Color(1, 0, 0, 1)

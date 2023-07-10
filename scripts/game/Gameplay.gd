@@ -87,6 +87,26 @@ var accuracy_hit_notes:int = 0
 
 var consecutive_misses:float = 0.0
 
+func load_notes(delete_before_time:float = -INF):
+	notes_to_spawn = []
+	
+	for note in CHART.notes:
+		if note.hit_time <= delete_before_time:
+			continue
+				
+		var new_note:Chart.ChartNote = note.duplicate(true)
+		notes_to_spawn.append(new_note)
+		
+		if not note.type in template_notes:
+			var path:String = "res://scenes/game/notes/%s.tscn" % note.type
+			if not ResourceLoader.exists(path):
+				printerr("Note type of \"%s\" doesn't exist! Loading default instead." % note.type)
+				path = "res://scenes/game/notes/Default.tscn"
+			
+			template_notes[note.type] = load(path).instantiate()
+		
+	notes_to_spawn.sort_custom(func(a:Chart.ChartNote, b:Chart.ChartNote): return a.hit_time < b.hit_time)
+
 func load_tracks():
 	var base_path:String = "res://assets/songs/%s/music" % CHART.song_name
 	var i:int = 0
@@ -179,19 +199,7 @@ func _ready():
 	# TODO: make these work
 	
 	# load chart notes & music
-	for note in CHART.notes:
-		var new_note:Chart.ChartNote = note.duplicate(true)
-		notes_to_spawn.append(new_note)
-		
-		if not note.type in template_notes:
-			var path:String = "res://scenes/game/notes/%s.tscn" % note.type
-			if not ResourceLoader.exists(path):
-				printerr("Note type of \"%s\" doesn't exist! Loading default instead." % note.type)
-				path = "res://scenes/game/notes/Default.tscn"
-			
-			template_notes[note.type] = load(path).instantiate()
-		
-	notes_to_spawn.sort_custom(func(a:Chart.ChartNote, b:Chart.ChartNote): return a.hit_time < b.hit_time)
+	load_notes()
 	load_tracks()
 	
 	# position strums
@@ -385,12 +393,36 @@ func _unhandled_key_input(event):
 	
 	if OS.is_debug_build():
 		match event.keycode:
+			KEY_F2:
+				skip_time(Conductor.position - 5000.0)
+				
 			KEY_F3:
-				Conductor.position += 5000.0
-				resync_tracks()
+				skip_time(Conductor.position + 5000.0)
 				
 			KEY_F9:
-				get_tree().change_scene_to_file("res://scenes/menus/FreeplayMenu.tscn")
+				Global.switch_scene("res://scenes/menus/FreeplayMenu.tscn")
+
+func skip_time(new_time:float):
+	var old_time:float = Conductor.position
+	Conductor.position = new_time
+	
+	if new_time > old_time:
+		while notes_to_spawn.size() > 0:
+			if notes_to_spawn[0].hit_time >= new_time + 500.0:
+				break
+			
+			notes_to_spawn.pop_front()
+				
+			for strum_line in strum_lines.get_children():
+				var note_group:NoteGroup = strum_line.notes
+				if note_group.get_child_count() > 0:
+					var c:Note = note_group.get_child(0)
+					c.queue_free()
+					note_group.remove_child(c)	
+	else:
+		load_notes(new_time + 500.0)
+		
+	resync_tracks()
 
 func _beat_hit(beat:int):
 	if not starting_song and beat > 0 and cam_zooming_interval > 0 and beat % cam_zooming_interval == 0:

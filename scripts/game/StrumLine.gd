@@ -3,7 +3,7 @@ class_name StrumLine extends Node2D
 @onready var game:Gameplay = $"../../../../"
 
 @onready var receptors:Node2D = $Receptors
-@onready var notes:Node2D = $Notes
+@onready var notes:NoteGroup = $Notes
 
 ## Whether or not the notes on this strumline
 ## are automatically hit. Useful for botplay.
