@@ -1,4 +1,5 @@
 extends Node2D
+
 @export var freeplay_data:FreeplayList
 
 # Called when the node enters the scene tree for the first time.

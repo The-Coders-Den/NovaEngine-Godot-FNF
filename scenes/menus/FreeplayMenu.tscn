@@ -1,12 +1,12 @@
 [gd_scene load_steps=5 format=3 uid="uid://c5cyvpoh1y7m3"]
 
 [ext_resource type="Texture2D" uid="uid://d2eynec1yyets" path="res://assets/images/menus/menuBGDesat.png" id="1_e238o"]
-[ext_resource type="Script" path="res://scenes/menus/FreeplayMenu.gd" id="1_qqx51"]
+[ext_resource type="Script" path="res://scripts/menus/FreeplayMenu.gd" id="1_r4vkr"]
 [ext_resource type="Resource" uid="uid://c5681qsrwyw5p" path="res://assets/data/freeplaylist.tres" id="2_6151h"]
-[ext_resource type="Script" path="res://assets/fonts/alphabet.gd" id="2_kpa6u"]
+[ext_resource type="Script" path="res://scripts/Alphabet.gd" id="2_kpa6u"]
 
 [node name="FreeplayMenu" type="Node2D"]
-script = ExtResource("1_qqx51")
+script = ExtResource("1_r4vkr")
 freeplay_data = ExtResource("2_6151h")
 
 [node name="BG" type="Sprite2D" parent="."]
@@ -17,7 +17,7 @@ metadata/_edit_lock_ = true
 [node name="Alphabet" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 512.5
-offset_bottom = 71.0
+offset_right = 643.0
+offset_bottom = 65.0
 script = ExtResource("2_kpa6u")
-text = "DAD BATTLE"
+text = "this is a penis"
