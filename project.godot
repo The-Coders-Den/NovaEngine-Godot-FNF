@@ -11,8 +11,9 @@ config_version=5
 [application]
 
 config/name="Nova Engine"
+config/tags=PackedStringArray("rhythm", "2d", "funkin")
 run/main_scene="res://Init.tscn"
-config/features=PackedStringArray("4.0", "GL Compatibility")
+config/features=PackedStringArray("4.1", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]

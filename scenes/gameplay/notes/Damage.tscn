@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/gameplay/notes/Damage.gd" id="1_oqty4"]
 [ext_resource type="Texture2D" uid="uid://2iywwtpufmt4" path="res://assets/images/gameplay/notes/default/sustains/left hold piece.png" id="2_l31f6"]
 [ext_resource type="Texture2D" uid="uid://dcu1auf2cj0ob" path="res://assets/images/gameplay/notes/default/sustains/left hold end.png" id="3_cwsen"]
-[ext_resource type="SpriteFrames" path="res://assets/images/gameplay/notes/default/assets.res" id="4_56jph"]
+[ext_resource type="SpriteFrames" uid="uid://cmrrdlnfn8rek" path="res://assets/images/gameplay/notes/default/assets.res" id="4_56jph"]
 [ext_resource type="Script" path="res://classes/AnimatedSprite.gd" id="5_4wvnq"]
 
 [node name="Damage" type="Node2D"]
@@ -11,6 +11,8 @@ scale = Vector2(0.7, 0.7)
 script = ExtResource("1_oqty4")
 health_gain_mult = 0.0
 should_hit = false
+note_type = "Damage"
+skinable = false
 
 [node name="ColorRect" type="ColorRect" parent="."]
 clip_contents = true

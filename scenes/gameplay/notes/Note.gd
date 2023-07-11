@@ -13,6 +13,8 @@ class_name Note
 
 @export var in_editor:bool = false
 @export var alt_anim:bool = false
+var note_type:String = "default"
+@export var skinable:bool = true
 
 var og_length:float = 0.0
 
@@ -63,7 +65,6 @@ func _ready() -> void:
 		note_skin = game.ui_skin
 	else:
 		note_skin = load("res://scenes/gameplay/ui_skins/default.tscn").instantiate()
-		
 	if length < 50: length = 0
 	if length <= 0:
 		sustain.visible = false
@@ -71,7 +72,7 @@ func _ready() -> void:
 	step_crochet = Conductor.step_crochet
 	og_length = length
 	
-	if "Default" in name:
+	if skinable:
 		anim_sprite.sprite_frames = load(note_skin.note_texture_path + "assets.res")
 		
 		sustain.texture = load(note_skin.sustain_texture_path + Global.note_directions[direction] + " hold piece.png")

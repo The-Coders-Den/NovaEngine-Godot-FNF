@@ -896,6 +896,7 @@ func _physics_process(delta: float) -> void:
 		new_note.length = note.length * 0.85
 		new_note.must_press = is_player_note
 		new_note.note_skin = ui_skin
+		new_note.note_type = instance_type
 		
 		if not new_note.alt_anim:
 			new_note.alt_anim = note.alt_anim or (note.type == "Alt Animation")
