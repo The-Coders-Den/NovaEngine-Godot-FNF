@@ -6,10 +6,10 @@ extends Control
 @onready var strum_line = $StrumLine
 
 @onready var container = $GridContainer
-@onready var player_lane = $"GridContainer/PlayerLane"
-@onready var player_strum = $"GridContainer/PlayerLane/PlayerStrum"
-@onready var opponent_lane = $"GridContainer/OpponentLane"
-@onready var opponent_strum = $"GridContainer/OpponentLane/OpponentStrum"
+@onready var player_lane = $GridContainer/PlayerLane
+@onready var player_strum = $StrumLine/PlayerStrum
+@onready var opponent_lane = $GridContainer/OpponentLane
+@onready var opponent_strum = $StrumLine/OpponentStrum
 
 @onready var notes_group = $NotesGroup
 
@@ -17,6 +17,10 @@ extends Control
 @onready var hover_size = hover_arrow.texture.get_size()
 
 @onready var window = get_window()
+
+@onready var char_dialog:FileDialog = $CharDialog
+@onready var stage_dialog:FileDialog = $StageDialog
+@onready var ui_skin_dialog:FileDialog = $UISkinDialog
 
 @onready var pos_info = $PosInfo
 
@@ -256,69 +260,3 @@ func _process(delta):
 # thanks @BeastlyGabi for letting me use these lol.
 func float_to_minute(value:float): return int(value / 60)
 func float_to_seconds(value:float): return fmod(value, 60)
-
-@onready var char_dialog:FileDialog = $CharDialog
-@onready var stage_dialog:FileDialog = $StageDialog
-@onready var ui_skin_dialog:FileDialog = $UISkinDialog
-@onready var switch_buttons = [
-	$assets/Panel/ScrollContainer/VBoxContainer/Player/SwitchButton,
-	$assets/Panel/ScrollContainer/VBoxContainer/Opponent/SwitchButton,
-	$assets/Panel/ScrollContainer/VBoxContainer/Spectator/SwitchButton,
-	$assets/Panel/ScrollContainer/VBoxContainer/Stage/SwitchButton,
-	$assets/Panel/ScrollContainer/VBoxContainer/UISKin/SwitchButton
-]
-var cur_button:String = "bf" # For Char Switching.
-
-func enable_switches():
-	for button in switch_buttons:
-		button.disabled = false
-
-func disable_switches():
-	for button in switch_buttons:
-		button.disabled = true
-
-func select_char(path:String):
-	match cur_button:
-		"bf":
-			chart_data.player = path.get_file().get_basename()
-			$assets/Panel/ScrollContainer/VBoxContainer/Player.text = "Player: " + chart_data.player
-		"gf":
-			chart_data.spectator = path.get_file().get_basename()
-			$assets/Panel/ScrollContainer/VBoxContainer/Spectator.text = "Spectator: " + chart_data.spectator
-		"dad":
-			chart_data.opponent = path.get_file().get_basename()
-			$assets/Panel/ScrollContainer/VBoxContainer/Opponent.text = "Opponent: " + chart_data.opponent
-	enable_switches()
-
-func select_stage(path:String):
-	chart_data.stage = path.get_file().get_basename()
-	$assets/Panel/ScrollContainer/VBoxContainer/Stage.text = "Stage: " + chart_data.stage
-	enable_switches()
-	
-func select_ui_skin(path:String):
-	chart_data.ui_skin = path.get_file().get_basename()
-	$assets/Panel/ScrollContainer/VBoxContainer/UISKin.text = "UI Skin: " + chart_data.ui_skin
-	enable_switches()
-
-func _switch_player():
-	cur_button = "bf"
-	char_dialog.popup_centered()
-	disable_switches()
-	
-func _switch_spectator():
-	cur_button = "gf"
-	char_dialog.popup_centered()
-	disable_switches()
-	
-func _switch_opponent():
-	cur_button = "dad"
-	char_dialog.popup_centered()
-	disable_switches()
-
-func _switch_stage():
-	stage_dialog.popup_centered()
-	disable_switches()
-	
-func _switch_ui_skin():
-	ui_skin_dialog.popup_centered()
-	disable_switches()

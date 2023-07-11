@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d82jsypulsbw"]
+[gd_scene load_steps=14 format=3 uid="uid://d82jsypulsbw"]
 
 [ext_resource type="Theme" uid="uid://br6hapg0jupnv" path="res://assets/styles/nova_purple_panel.tres" id="1_coqmp"]
 [ext_resource type="Script" path="res://scenes/editors/ChartEditor.gd" id="1_f5f6h"]
@@ -6,6 +6,10 @@
 [ext_resource type="AudioStream" uid="uid://bydbrgy3513au" path="res://assets/sounds/hitsound.ogg" id="5_m47hh"]
 [ext_resource type="Shader" path="res://assets/shaders/ChartLine.gdshader" id="7_ccjci"]
 [ext_resource type="PackedScene" uid="uid://w5olx2s2jovt" path="res://scenes/gameplay/strumlines/4K.tscn" id="7_h418h"]
+[ext_resource type="Theme" uid="uid://bwwcx6e50tbwu" path="res://assets/styles/nova_purple_charter.tres" id="8_87ymt"]
+[ext_resource type="Script" path="res://scripts/charter/SongWindow.gd" id="8_txt3a"]
+[ext_resource type="Script" path="res://scripts/charter/AssetsWindow.gd" id="8_uqes3"]
+[ext_resource type="Theme" uid="uid://blt3c0a5po0yj" path="res://assets/styles/nova_purple_button.tres" id="9_2fcki"]
 [ext_resource type="FontFile" uid="uid://coqcg7h14duny" path="res://assets/fonts/vcr.ttf" id="9_4xp5r"]
 [ext_resource type="Texture2D" uid="uid://cvnq5kqghy3tp" path="res://assets/images/menus/charteditor/note.png" id="10_1xrm3"]
 
@@ -62,22 +66,12 @@ layout_mode = 2
 mouse_filter = 2
 theme = ExtResource("1_coqmp")
 
-[node name="OpponentStrum" parent="GridContainer/OpponentLane" instance=ExtResource("7_h418h")]
-position = Vector2(100, 654)
-scale = Vector2(0.45, 0.45)
-handle_input = false
-
 [node name="PlayerLane" type="Panel" parent="GridContainer"]
 material = SubResource("ShaderMaterial_7uhct")
 custom_minimum_size = Vector2(200, 680)
 layout_mode = 2
 mouse_filter = 2
 theme = ExtResource("1_coqmp")
-
-[node name="PlayerStrum" parent="GridContainer/PlayerLane" instance=ExtResource("7_h418h")]
-position = Vector2(98, 654)
-scale = Vector2(0.45, 0.45)
-handle_input = false
 
 [node name="NotesGroup" type="CanvasGroup" parent="."]
 
@@ -88,6 +82,40 @@ points = PackedVector2Array(0, 0, 410, 0)
 width = 5.0
 begin_cap_mode = 2
 end_cap_mode = 2
+
+[node name="OpponentStrum" parent="StrumLine" instance=ExtResource("7_h418h")]
+position = Vector2(99, 21)
+scale = Vector2(0.395, 0.395)
+handle_input = false
+
+[node name="1" parent="StrumLine/OpponentStrum" index="0"]
+position = Vector2(-190, 0)
+
+[node name="2" parent="StrumLine/OpponentStrum" index="1"]
+position = Vector2(-62, 0)
+
+[node name="3" parent="StrumLine/OpponentStrum" index="2"]
+position = Vector2(65, 0)
+
+[node name="4" parent="StrumLine/OpponentStrum" index="3"]
+position = Vector2(190, 0)
+
+[node name="PlayerStrum" parent="StrumLine" instance=ExtResource("7_h418h")]
+position = Vector2(309, 21)
+scale = Vector2(0.395, 0.395)
+handle_input = false
+
+[node name="1" parent="StrumLine/PlayerStrum" index="0"]
+position = Vector2(-190, 0)
+
+[node name="2" parent="StrumLine/PlayerStrum" index="1"]
+position = Vector2(-62, 0)
+
+[node name="3" parent="StrumLine/PlayerStrum" index="2"]
+position = Vector2(65, 0)
+
+[node name="4" parent="StrumLine/PlayerStrum" index="3"]
+position = Vector2(190, 0)
 
 [node name="HoverArrow" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.490196)
@@ -105,6 +133,7 @@ transparent = true
 content_scale_size = Vector2i(150, 150)
 content_scale_mode = 2
 content_scale_aspect = 1
+script = ExtResource("8_txt3a")
 
 [node name="Panel" type="Panel" parent="song"]
 anchors_preset = 15
@@ -113,43 +142,69 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SongLabel" type="Label" parent="song/Panel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="song/Panel"]
+clip_contents = false
+custom_minimum_size = Vector2(145, 145)
 layout_mode = 0
 offset_left = 3.0
-offset_top = 5.0
-offset_right = 92.0
-offset_bottom = 31.0
-theme_override_font_sizes/font_size = 14
+offset_right = 150.0
+offset_bottom = 150.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="song/Panel/ScrollContainer"]
+custom_minimum_size = Vector2(139, 250)
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="SongLabel" type="Label" parent="song/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_87ymt")
 text = "Song Name"
 
-[node name="SongName" type="LineEdit" parent="song/Panel"]
-layout_mode = 0
-offset_top = 25.0
-offset_right = 150.0
-offset_bottom = 56.0
+[node name="SongName" type="LineEdit" parent="song/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_87ymt")
 text = "Bopeebo"
 
-[node name="BPM" type="SpinBox" parent="song/Panel"]
-layout_mode = 0
-offset_top = 80.0
-offset_right = 150.0
-offset_bottom = 111.0
+[node name="HSeparator" type="HSeparator" parent="song/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BPM" type="SpinBox" parent="song/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 1
+theme = ExtResource("8_87ymt")
 min_value = 60.0
 max_value = 500.0
 value = 60.0
 suffix = "BPM"
 
-[node name="ScrollSpeed" type="SpinBox" parent="song/Panel"]
-layout_mode = 0
-offset_top = 115.0
-offset_right = 150.0
-offset_bottom = 146.0
+[node name="ScrollSpeed" type="SpinBox" parent="song/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 1
+theme = ExtResource("8_87ymt")
 min_value = 1.0
 max_value = 10.0
 step = 0.1
 value = 2.5
 prefix = "Scroll Speed:"
 custom_arrow_step = 0.1
+
+[node name="HSeparator2" type="HSeparator" parent="song/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SaveSong" type="Button" parent="song/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_87ymt")
+text = "Save Song"
+
+[node name="ReloadAudio" type="Button" parent="song/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_87ymt")
+text = "Reload Audio"
+
+[node name="LoadJSON" type="Button" parent="song/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_87ymt")
+text = "Load Different JSON"
 
 [node name="assets" type="Window" parent="."]
 title = "Song Assets"
@@ -160,6 +215,7 @@ transparent = true
 content_scale_size = Vector2i(150, 150)
 content_scale_mode = 2
 content_scale_aspect = 1
+script = ExtResource("8_uqes3")
 
 [node name="Panel" type="Panel" parent="assets"]
 anchors_preset = 15
@@ -169,79 +225,86 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="assets/Panel"]
-custom_minimum_size = Vector2(150, 150)
+clip_contents = false
+custom_minimum_size = Vector2(145, 145)
 layout_mode = 0
+offset_left = 3.0
 offset_right = 150.0
 offset_bottom = 150.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="assets/Panel/ScrollContainer"]
-custom_minimum_size = Vector2(150, 280)
+custom_minimum_size = Vector2(147, 280)
 layout_mode = 2
 theme_override_constants/separation = 30
 
 [node name="Player" type="Label" parent="assets/Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+theme = ExtResource("8_87ymt")
 text = "Player: bf"
 
 [node name="SwitchButton" type="Button" parent="assets/Panel/ScrollContainer/VBoxContainer/Player"]
 layout_mode = 2
 offset_top = 20.0
-offset_right = 150.0
+offset_right = 135.0
 offset_bottom = 45.0
-theme_override_font_sizes/font_size = 12
+mouse_default_cursor_shape = 2
+theme = ExtResource("8_87ymt")
 text = "Change"
 
 [node name="Opponent" type="Label" parent="assets/Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+theme = ExtResource("8_87ymt")
 text = "Opponent: dad"
 
 [node name="SwitchButton" type="Button" parent="assets/Panel/ScrollContainer/VBoxContainer/Opponent"]
 layout_mode = 2
 offset_top = 20.0
-offset_right = 150.0
+offset_right = 135.0
 offset_bottom = 45.0
-theme_override_font_sizes/font_size = 12
+mouse_default_cursor_shape = 2
+theme = ExtResource("8_87ymt")
 text = "Change"
 
 [node name="Spectator" type="Label" parent="assets/Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+theme = ExtResource("8_87ymt")
 text = "Spectator: gf"
 
 [node name="SwitchButton" type="Button" parent="assets/Panel/ScrollContainer/VBoxContainer/Spectator"]
 layout_mode = 2
 offset_top = 20.0
-offset_right = 150.0
+offset_right = 135.0
 offset_bottom = 45.0
-theme_override_font_sizes/font_size = 12
+mouse_default_cursor_shape = 2
+theme = ExtResource("8_87ymt")
 text = "Change"
 
 [node name="Stage" type="Label" parent="assets/Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+theme = ExtResource("8_87ymt")
 text = "Stage: stage"
 
 [node name="SwitchButton" type="Button" parent="assets/Panel/ScrollContainer/VBoxContainer/Stage"]
 layout_mode = 2
 offset_top = 20.0
-offset_right = 150.0
+offset_right = 135.0
 offset_bottom = 45.0
-theme_override_font_sizes/font_size = 12
+mouse_default_cursor_shape = 2
+theme = ExtResource("8_87ymt")
 text = "Change"
 
 [node name="UISKin" type="Label" parent="assets/Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+theme = ExtResource("8_87ymt")
 text = "UI Skin: default"
 
 [node name="SwitchButton" type="Button" parent="assets/Panel/ScrollContainer/VBoxContainer/UISKin"]
 layout_mode = 2
 offset_top = 20.0
-offset_right = 150.0
+offset_right = 135.0
 offset_bottom = 45.0
-theme_override_font_sizes/font_size = 12
+mouse_default_cursor_shape = 2
+theme = ExtResource("8_87ymt")
 text = "Change"
 
 [node name="section" type="Window" parent="."]
@@ -260,6 +323,97 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="section/Panel"]
+clip_contents = false
+custom_minimum_size = Vector2(145, 145)
+offset_left = 3.0
+offset_right = 150.0
+offset_bottom = 150.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="section/Panel/ScrollContainer"]
+custom_minimum_size = Vector2(139, 350)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="PlayerCam" type="CheckBox" parent="section/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_87ymt")
+theme_override_font_sizes/font_size = 12
+text = "Camera on Player"
+
+[node name="HSeparator3" type="HSeparator" parent="section/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BpmCheck" type="CheckBox" parent="section/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_87ymt")
+theme_override_font_sizes/font_size = 12
+text = "Change BPM"
+
+[node name="BPMSpin" type="SpinBox" parent="section/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+mouse_default_cursor_shape = 1
+theme = ExtResource("8_87ymt")
+min_value = 60.0
+max_value = 500.0
+value = 60.0
+prefix = "Change to"
+suffix = "BPM"
+
+[node name="HSeparator4" type="HSeparator" parent="section/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+
+[node name="Swap" type="Button" parent="section/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_87ymt")
+text = "Swap Section"
+
+[node name="Clear" type="Button" parent="section/Panel/ScrollContainer/VBoxContainer"]
+modulate = Color(1, 0, 0.298039, 1)
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+theme = ExtResource("9_2fcki")
+theme_override_colors/font_color = Color(1, 0, 0.282353, 1)
+theme_override_colors/font_pressed_color = Color(1, 0, 0.282353, 1)
+theme_override_colors/font_hover_color = Color(1, 0, 0.282353, 1)
+theme_override_colors/font_focus_color = Color(1, 0, 0.282353, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 0, 0.282353, 1)
+theme_override_font_sizes/font_size = 12
+text = "Clear Section"
+
+[node name="HSeparator5" type="HSeparator" parent="section/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+
+[node name="Copy" type="Button" parent="section/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_87ymt")
+text = "Copy Section"
+
+[node name="Paste" type="Button" parent="section/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_87ymt")
+text = "Paste Section"
+
+[node name="HSeparator6" type="HSeparator" parent="section/Panel/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+
+[node name="CopyLast" type="Button" parent="section/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_87ymt")
+theme_override_font_sizes/font_size = 12
+text = "Copy Last Section"
+
+[node name="LastSpin" type="SpinBox" parent="section/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_87ymt")
+min_value = 1.0
+value = 1.0
+suffix = "sections back"
 
 [node name="note" type="Window" parent="."]
 title = "Note Data"
@@ -283,7 +437,7 @@ initial_position = 2
 title = "Select a Character"
 size = Vector2i(500, 500)
 always_on_top = true
-ok_button_text = "Switch"
+ok_button_text = "Open"
 mode_overrides_title = false
 file_mode = 0
 root_subfolder = "res://scenes/gameplay/characters"
@@ -291,7 +445,7 @@ filters = PackedStringArray("*.tscn")
 
 [node name="StageDialog" type="FileDialog" parent="."]
 initial_position = 2
-title = "Select a Character"
+title = "Select a Stage"
 size = Vector2i(500, 500)
 always_on_top = true
 ok_button_text = "Open"
@@ -302,13 +456,23 @@ filters = PackedStringArray("*.tscn")
 
 [node name="UISkinDialog" type="FileDialog" parent="."]
 initial_position = 2
-title = "Select a Character"
+title = "Select a UI Skin"
 size = Vector2i(500, 500)
 always_on_top = true
 ok_button_text = "Open"
 mode_overrides_title = false
 file_mode = 0
 root_subfolder = "res://scenes/gameplay/ui_skins"
+filters = PackedStringArray("*.tscn")
+
+[node name="SaveDialog" type="FileDialog" parent="."]
+initial_position = 2
+title = "Save Song JSON"
+size = Vector2i(500, 500)
+always_on_top = true
+ok_button_text = "Save"
+mode_overrides_title = false
+root_subfolder = "res://assets/songs/"
 filters = PackedStringArray("*.tscn")
 
 [node name="PosInfo" type="Label" parent="."]
@@ -329,17 +493,23 @@ Step: 0
 Beat: 0
 Section: 0"
 
-[connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/Player/SwitchButton" to="." method="_switch_player"]
-[connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/Opponent/SwitchButton" to="." method="_switch_opponent"]
-[connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/Spectator/SwitchButton" to="." method="_switch_spectator"]
-[connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/Stage/SwitchButton" to="." method="_switch_stage"]
-[connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/UISKin/SwitchButton" to="." method="_switch_ui_skin"]
-[connection signal="canceled" from="CharDialog" to="." method="enable_switches"]
-[connection signal="confirmed" from="CharDialog" to="." method="enable_switches"]
-[connection signal="file_selected" from="CharDialog" to="." method="select_char"]
-[connection signal="canceled" from="StageDialog" to="." method="enable_switches"]
-[connection signal="confirmed" from="StageDialog" to="." method="enable_switches"]
-[connection signal="file_selected" from="StageDialog" to="." method="select_stage"]
-[connection signal="canceled" from="UISkinDialog" to="." method="enable_switches"]
-[connection signal="confirmed" from="UISkinDialog" to="." method="enable_switches"]
-[connection signal="file_selected" from="UISkinDialog" to="." method="select_ui_skin"]
+[connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/Player/SwitchButton" to="assets" method="_switch_player"]
+[connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/Opponent/SwitchButton" to="assets" method="_switch_opponent"]
+[connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/Spectator/SwitchButton" to="assets" method="_switch_spectator"]
+[connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/Stage/SwitchButton" to="assets" method="_switch_stage"]
+[connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/UISKin/SwitchButton" to="assets" method="_switch_ui_skin"]
+[connection signal="canceled" from="CharDialog" to="assets" method="enable_switches"]
+[connection signal="confirmed" from="CharDialog" to="assets" method="enable_switches"]
+[connection signal="file_selected" from="CharDialog" to="assets" method="select_char"]
+[connection signal="canceled" from="StageDialog" to="assets" method="enable_switches"]
+[connection signal="confirmed" from="StageDialog" to="assets" method="enable_switches"]
+[connection signal="file_selected" from="StageDialog" to="assets" method="select_stage"]
+[connection signal="canceled" from="UISkinDialog" to="assets" method="enable_switches"]
+[connection signal="confirmed" from="UISkinDialog" to="assets" method="enable_switches"]
+[connection signal="file_selected" from="UISkinDialog" to="assets" method="select_ui_skin"]
+[connection signal="canceled" from="SaveDialog" to="song" method="enable_switches"]
+[connection signal="confirmed" from="SaveDialog" to="song" method="enable_switches"]
+[connection signal="file_selected" from="SaveDialog" to="song" method="enable_switches"]
+
+[editable path="StrumLine/OpponentStrum"]
+[editable path="StrumLine/PlayerStrum"]
