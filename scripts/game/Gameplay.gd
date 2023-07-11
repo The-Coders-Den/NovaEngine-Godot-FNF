@@ -180,7 +180,7 @@ func update_score_text():
 
 func _ready():
 	var old:float = Time.get_ticks_msec()
-	CHART = Chart.load_chart("no more deals", "hard")
+	CHART = Chart.load_chart("amusia", "hard")
 	print("Chart parse time: %s ms" % str(Time.get_ticks_msec() - old))
 	
 	# load note & ui styles
@@ -366,6 +366,7 @@ func display_judgement(judgement:Timings.Judgement, event:JudgementEvent) -> Vel
 		var tween := create_tween()
 		var penis := tween.tween_property(sprite, "modulate:a", 0.0, 0.2).set_delay(Conductor.crochet * 0.001)
 		penis.finished.connect(sprite.queue_free)
+		event.judgement_tween = tween
 	
 	event.judgement_sprite = sprite
 	call_on_modcharts("on_display_judgement_post", [event])
@@ -405,6 +406,7 @@ func display_combo(combo:int, event:JudgementEvent) -> Array[VelocitySprite]:
 			var tween := create_tween()
 			var penis := tween.tween_property(sprite, "modulate:a", 0.0, 0.2).set_delay(Conductor.crochet * 0.002)
 			penis.finished.connect(sprite.queue_free)
+			event.combo_tweens.append(tween)
 			
 			i += 1
 	
@@ -413,7 +415,7 @@ func display_combo(combo:int, event:JudgementEvent) -> Array[VelocitySprite]:
 	return event.combo_sprites
 	
 func pop_up_score(judgement:Timings.Judgement, combo:int, late:bool):
-	var event := JudgementEvent.new(judgement, combo, late, null, [])
+	var event := JudgementEvent.new(judgement, combo, late, null, [], [], [])
 	call_on_modcharts("on_pop_up_score", [event])
 	
 	if not event.cancelled:
