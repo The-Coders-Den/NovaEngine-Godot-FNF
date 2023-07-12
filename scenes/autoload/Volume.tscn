@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://cj7qpvprgjn0q"]
+
+[ext_resource type="SpriteFrames" uid="uid://bhpxfw7oc0yl7" path="res://assets/images/engine/volume_sheet.tres" id="1_0lhbs"]
+[ext_resource type="Script" path="res://scripts/autoload/Volume.gd" id="1_060rm"]
+[ext_resource type="StyleBox" uid="uid://cqjcscs2y8kes" path="res://styles/progress_bar/BG.tres" id="2_xg0pl"]
+[ext_resource type="StyleBox" uid="uid://jf6fq4xu65vc" path="res://styles/progress_bar/Fill.tres" id="3_gabpp"]
+
+[node name="VolumeContainer" type="CanvasLayer"]
+layer = 128
+
+[node name="Slider" type="ColorRect" parent="."]
+offset_left = 490.0
+offset_top = 35.0
+offset_right = 790.0
+offset_bottom = 73.0
+color = Color(0, 0, 0, 0.6)
+script = ExtResource("1_060rm")
+
+[node name="Icon" type="AnimatedSprite2D" parent="Slider"]
+position = Vector2(20, 19)
+scale = Vector2(0.2, 0.2)
+sprite_frames = ExtResource("1_0lhbs")
+animation = &"full"
+
+[node name="ProgressBar" type="ProgressBar" parent="Slider"]
+layout_mode = 2
+offset_left = 42.0
+offset_top = 15.0
+offset_right = 287.0
+offset_bottom = 23.0
+theme_override_styles/background = ExtResource("2_xg0pl")
+theme_override_styles/fill = ExtResource("3_gabpp")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+
+[node name="FadeTimer" type="Timer" parent="Slider"]

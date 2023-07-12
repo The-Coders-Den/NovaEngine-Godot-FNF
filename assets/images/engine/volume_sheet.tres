@@ -1,0 +1,42 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://bhpxfw7oc0yl7"]
+
+[ext_resource type="Texture2D" uid="uid://csl5iatvnefdh" path="res://assets/images/engine/volume_sheet.png" id="1_5eevq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gfbdr"]
+atlas = ExtResource("1_5eevq")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a4j8k"]
+atlas = ExtResource("1_5eevq")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdmkm"]
+atlas = ExtResource("1_5eevq")
+region = Rect2(0, 0, 96, 96)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gfbdr")
+}],
+"loop": true,
+"name": &"full",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a4j8k")
+}],
+"loop": true,
+"name": &"mid",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mdmkm")
+}],
+"loop": true,
+"name": &"mute",
+"speed": 5.0
+}]

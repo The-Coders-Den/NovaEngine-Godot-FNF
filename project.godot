@@ -22,6 +22,7 @@ Options="*res://scripts/autoload/Options.gd"
 Conductor="*res://scripts/autoload/Conductor.gd"
 Overlay="*res://scenes/autoload/Overlay.tscn"
 Signals="*res://scripts/autoload/Signals.gd"
+Volume="*res://scenes/autoload/Volume.tscn"
 
 [display]
 

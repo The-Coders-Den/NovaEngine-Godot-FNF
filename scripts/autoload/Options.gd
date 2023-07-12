@@ -105,7 +105,7 @@ func flush():
 	properties.remove_at(0)
 	
 	for property in properties:
-		if property.name.starts_with("__"):
+		if property.name.begins_with("__"):
 			continue
 		__config.set_value("Settings", property.name, get(property.name))
 		
