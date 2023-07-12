@@ -180,8 +180,8 @@ func update_score_text():
 
 func _ready():
 	var old:float = Time.get_ticks_msec()
-	CHART = Chart.load_chart("no more deals", "hard")
-	print("Chart parse time: %s ms" % str(Time.get_ticks_msec() - old))
+#	CHART = Chart.load_chart("no more deals", "hard")
+#	print("Chart parse time: %s ms" % str(Time.get_ticks_msec() - old))
 	
 	# load note & ui styles
 	for shit in [".res", ".tres"]:
@@ -405,7 +405,6 @@ func display_combo(combo:int, event:JudgementEvent) -> Array[VelocitySprite]:
 			var tween := create_tween()
 			var penis := tween.tween_property(sprite, "modulate:a", 0.0, 0.2).set_delay(Conductor.crochet * 0.002)
 			penis.finished.connect(sprite.queue_free)
-			
 			i += 1
 	
 	event.combo_sprites = sprites

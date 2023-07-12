@@ -6,11 +6,11 @@ var frames:SpriteFrames = preload("res://assets/fonts/alphabet/bold.res")
 var letters:Array[AnimatedSprite2D] = []
 
 var fart_size:Vector2 = Vector2.ZERO
-
+var last_text:String = ""
 @export_multiline var text:String = "":
 	set(v):
 		text = v
-		for i in letters:
+		for i in get_children():
 			i.queue_free()
 		letters = []
 		var letter_pos:Vector2 = Vector2.ZERO
@@ -46,6 +46,8 @@ var fart_size:Vector2 = Vector2.ZERO
 		
 		fart_size.y += 5.0
 		size = fart_size
+		print(letters)
 		
 func _process(delta):
+	last_text = text
 	size = fart_size

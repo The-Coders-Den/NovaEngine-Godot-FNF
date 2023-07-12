@@ -6,3 +6,4 @@ class_name FreeplaySong extends Resource
 @export var icon:Texture2D = preload("res://assets/images/game/icons/icon-face.png")
 @export var icon_frames:int = 2
 @export var bpm:float = 150.0
+@export var difficulties:PackedStringArray = ["easy","normal","hard"]
