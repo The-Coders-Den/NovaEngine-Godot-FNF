@@ -1,11 +1,5 @@
 class_name Chart extends Resource
 
-enum ChartCharacterType {
-	OPPONENT,
-	SPECTATOR,
-	PLAYER
-}
-
 var song_name:String
 @export var bpm:float
 @export var display_name:String
@@ -42,7 +36,9 @@ static func load_chart(song:String, difficulty:String):
 		
 	# Otherwise, parse it (parses vanilla FNF)
 	base_path += ".json"
-	
+	if not FileAccess.file_exists(base_path):
+		printerr("FILE NOT FOUND CANT PARSE CHART") 
+		return null
 	var json:Dictionary = JSON.parse_string(FileAccess.open(base_path, FileAccess.READ).get_as_text())
 	if "song" in json: json = json.song
 

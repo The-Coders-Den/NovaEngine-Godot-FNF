@@ -180,8 +180,9 @@ func update_score_text():
 
 func _ready():
 	var old:float = Time.get_ticks_msec()
-#	CHART = Chart.load_chart("no more deals", "hard")
-#	print("Chart parse time: %s ms" % str(Time.get_ticks_msec() - old))
+	if CHART == null:
+		CHART = Chart.load_chart("no more deals", "hard")
+		printerr("CHART NOT FOUND FALL BACK")
 	
 	# load note & ui styles
 	for shit in [".res", ".tres"]:
