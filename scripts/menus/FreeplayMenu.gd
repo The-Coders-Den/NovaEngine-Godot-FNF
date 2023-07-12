@@ -79,4 +79,4 @@ func change_diff(i:int):
 func select_song():
 	var _song = freeplay_data.songs[current_song]
 	Gameplay.CHART = Chart.load_chart(_song.song_name.to_lower(),diff)
-	get_tree().change_scene_to_file("res://scenes/game/Gameplay.tscn")
+	Global.switch_scene("res://scenes/game/Gameplay.tscn")

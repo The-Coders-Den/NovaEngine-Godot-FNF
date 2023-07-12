@@ -40,7 +40,6 @@ var finished_tracks:Array[bool] = []
 
 ## The list of notes that haven't been spawned yet.
 var notes_to_spawn:Array[Chart.ChartNote] = []
-
 ## The scroll speed of the notes.
 ## Can also be modified per strumline.
 var scroll_speed:float = -INF
@@ -250,6 +249,7 @@ func _ready():
 	
 func do_note_spawning():
 	for note in notes_to_spawn:
+
 		if note.hit_time > Conductor.position + (1500 / _get_note_speed(note)):
 			break
 			
@@ -282,6 +282,7 @@ func do_note_spawning():
 					new_note.sustain_clip_rect.scale.y *= -1.0
 			
 			spr.play(dir_str)
+
 			
 		# thank you godot for making this the simplest shit ever
 		if Options.sustain_layer == Options.SustainLayer.BEHIND:
@@ -482,7 +483,7 @@ func end_song():
 	call_on_modcharts("on_end_song_post", [event])
 		
 func _physics_process(delta:float):
-	do_note_spawning()
+	call_deferred_thread_group("do_note_spawning")
 	
 func _process(delta:float):
 	Conductor.position += delta * 1000.0
