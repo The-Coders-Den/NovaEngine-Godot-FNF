@@ -46,7 +46,6 @@ var last_text:String = ""
 		
 		fart_size.y += 5.0
 		size = fart_size
-		print(letters)
 		
 func _process(delta):
 	last_text = text

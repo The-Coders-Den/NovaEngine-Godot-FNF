@@ -114,8 +114,11 @@ static func load_chart(song:String, difficulty:String):
 					var da_note_type:String = section_note[3] if section_note[3] != null and section_note[3] is String else "Default"
 					if (section_note[3] is bool and section_note[3] == true) or ("altAnim" in section and section.altAnim):
 						da_note_type = "Alt Animation"
+						
+					note.type = da_note_type # how the fuck i forget this shit bro
 					
 				note.strum_index = 1 if gotta_hit else 0
+				
 				final.notes.append(note)
 	else:
 		printerr("Your chart somehow has no sections in it!")

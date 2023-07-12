@@ -42,7 +42,7 @@ color = Color(0.686275, 0.4, 0.807843, 1)
 icon = ExtResource("2_1a8vl")
 icon_frames = 2
 bpm = 170.0
-difficulties = ["hard"]
+difficulties = ["hard", "unedited"]
 
 [resource]
 script = ExtResource("1_2suxv")

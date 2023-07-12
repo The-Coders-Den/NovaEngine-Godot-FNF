@@ -180,8 +180,8 @@ func update_score_text():
 func _ready():
 	var old:float = Time.get_ticks_msec()
 	if CHART == null:
-		CHART = Chart.load_chart("no more deals", "hard")
-		printerr("CHART NOT FOUND FALL BACK")
+		CHART = Chart.load_chart("end of abuse", "hard")
+		printerr("Chart unable to be found! Loading fallback...")
 	
 	# load note & ui styles
 	for shit in [".res", ".tres"]:
@@ -249,7 +249,6 @@ func _ready():
 	
 func do_note_spawning():
 	for note in notes_to_spawn:
-
 		if note.hit_time > Conductor.position + (1500 / _get_note_speed(note)):
 			break
 			
@@ -432,7 +431,11 @@ func pop_up_score(judgement:Timings.Judgement, combo:int, late:bool):
 	event.unreference()
 		
 func good_note_hit(note:Note, event:NoteHitEvent = null):
-	combo += 1
+	if note.reset_combo_on_hit:
+		combo = 0
+	else:
+		combo += 1
+	
 	consecutive_misses = 0
 	
 	var note_diff:float = (note.hit_time - Conductor.position) / Conductor.rate
@@ -451,12 +454,17 @@ func good_note_hit(note:Note, event:NoteHitEvent = null):
 	else:
 		note.length += note_diff * Conductor.rate
 	
-	health += (event.health_gain if event != null else 0.023) * judgement.health_mult
+	var pain:float = judgement.health_mult
+	pain *= note.health_gain_mult * (-1 if judgement.health_mult < 0 else 1)
+	health += (event.health_gain if event != null else 0.023) * pain
+	
 	score += judgement.score
 	accuracy_total_hit += judgement.accuracy_mult
 	accuracy_hit_notes += 1
 	
-	pop_up_score(judgement, combo, note_diff < 0.0)
+	if note.display_combo_on_hit:
+		pop_up_score(judgement, combo, note_diff < 0.0)
+	
 	update_score_text()
 	
 func start_song():

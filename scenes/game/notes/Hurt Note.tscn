@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://dfqae0sfa2c0o"]
+
+[ext_resource type="Script" path="res://scripts/game/Note.gd" id="1_e6ula"]
+[ext_resource type="SpriteFrames" uid="uid://diknt4inu1n7v" path="res://assets/images/game/notes/hurt/notes.res" id="2_aa2ak"]
+[ext_resource type="SpriteFrames" uid="uid://bqa4jrimery2f" path="res://assets/images/game/notes/hurt/splashes.res" id="3_d8dwu"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_u38dj"]
+
+[node name="Hurt Note" type="Node2D"]
+script = ExtResource("1_e6ula")
+should_hit = false
+display_combo_on_hit = false
+increase_combo = false
+reset_combo_on_hit = true
+play_sing_anim = false
+health_gain_mult = -4.75
+
+[node name="SustainClipRect" type="ReferenceRect" parent="."]
+visible = false
+clip_contents = true
+offset_left = -56.0
+offset_right = 56.0
+offset_bottom = 1080.0
+border_width = 10.0
+
+[node name="Sustain" type="TextureRect" parent="SustainClipRect"]
+modulate = Color(1, 1, 1, 0.6)
+layout_mode = 0
+offset_right = 1.0
+offset_bottom = 1.0
+scale = Vector2(0.7, 0.7)
+texture = SubResource("PlaceholderTexture2D_u38dj")
+stretch_mode = 1
+
+[node name="End" type="AnimatedSprite2D" parent="SustainClipRect/Sustain"]
+sprite_frames = ExtResource("2_aa2ak")
+animation = &"left hold end"
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
+sprite_frames = ExtResource("2_aa2ak")
+animation = &"left"
+
+[node name="Splash" type="AnimatedSprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.6)
+sprite_frames = ExtResource("3_d8dwu")
+animation = &"down1"
+offset = Vector2(-4, -31)

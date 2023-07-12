@@ -1,7 +1,9 @@
 class_name Note extends Node2D
 
 @export var should_hit:bool = true
+@export var display_combo_on_hit:bool = true
 @export var increase_combo:bool = true
+@export var reset_combo_on_hit:bool = false
 @export var play_sing_anim:bool = true
 @export var health_gain_mult:float = 1.0
 
