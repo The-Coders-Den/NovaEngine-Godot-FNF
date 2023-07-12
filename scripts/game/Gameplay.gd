@@ -481,6 +481,7 @@ func end_song():
 			GameMode.FREEPLAY: Global.switch_scene("res://scenes/menus/FreeplayMenu.tscn")
 	
 	call_on_modcharts("on_end_song_post", [event])
+	event.unreference()
 		
 func _physics_process(delta:float):
 	call_deferred_thread_group("do_note_spawning")
@@ -609,10 +610,11 @@ func resync_tracks():
 	call_on_modcharts("on_resync_song", [event])
 	call_on_modcharts("on_resync_vocals", [event])
 	
-	if event.cancelled: return
-	
-	for _track in tracks:
-		_track.seek(Conductor.position * 0.001)
+	if not event.cancelled:
+		for _track in tracks:
+			_track.seek(Conductor.position * 0.001)
+			
+	event.unreference()
 		
 func _get_note_speed(note:Chart.ChartNote):
 	var strum_line:StrumLine = strum_lines.get_child(note.strum_index)

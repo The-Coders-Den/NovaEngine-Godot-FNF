@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bf6i6b3g7qn30"
+path="res://.godot/imported/Inst.ogg-8bedf3d52bb1e3fc7494aacb91b0eff9.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/songs/end of abuse/music/Inst.ogg"
+dest_files=["res://.godot/imported/Inst.ogg-8bedf3d52bb1e3fc7494aacb91b0eff9.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
