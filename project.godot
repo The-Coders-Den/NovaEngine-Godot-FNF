@@ -12,7 +12,7 @@ config_version=5
 
 config/name="FNF: Nova Engine"
 config/tags=PackedStringArray("rhythm", "2d", "funkin")
-run/main_scene="res://scenes/menus/FreeplayMenu.tscn"
+run/main_scene="res://scenes/menus/MainMenu.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
 config/icon="res://icon.png"
 

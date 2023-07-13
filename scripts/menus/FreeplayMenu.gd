@@ -72,6 +72,9 @@ func _unhandled_key_input(event):
 		
 	if Input.is_action_just_pressed("ui_accept"):
 		select_song()
+		
+	if Input.is_action_just_pressed("ui_cancel"):
+		Global.switch_scene("res://scenes/menus/MainMenu.tscn")
 	
 func change_song(i:int = 0):
 	songs.get_child(current_song).modulate.a = 0.6

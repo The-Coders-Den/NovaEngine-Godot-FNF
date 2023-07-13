@@ -1,0 +1,229 @@
+[gd_scene load_steps=24 format=3 uid="uid://7jvg4krar7qx"]
+
+[ext_resource type="Script" path="res://scripts/menus/MainMenu.gd" id="1_12gfj"]
+[ext_resource type="Script" path="res://addons/parallax_node/parallax_node.gd" id="1_d2832"]
+[ext_resource type="Texture2D" uid="uid://ccet1bsclwuhv" path="res://assets/images/menus/menuBG.png" id="2_c1a08"]
+[ext_resource type="AudioStream" uid="uid://dms4jc66h84w4" path="res://assets/sounds/menus/confirmMenu.ogg" id="3_c0whn"]
+[ext_resource type="SpriteFrames" path="res://assets/images/menus/main/story mode.res" id="3_dbvnh"]
+[ext_resource type="AudioStream" uid="uid://mdgsrud6rwa0" path="res://assets/sounds/menus/cancelMenu.ogg" id="4_a86w6"]
+[ext_resource type="SpriteFrames" path="res://assets/images/menus/main/freeplay.res" id="4_dl7ps"]
+[ext_resource type="AudioStream" uid="uid://c1vc1seepfii5" path="res://assets/music/freakyMenu.ogg" id="5_d2pwv"]
+[ext_resource type="SpriteFrames" path="res://assets/images/menus/main/credits.res" id="5_esr0r"]
+[ext_resource type="SpriteFrames" path="res://assets/images/menus/main/options.res" id="6_ss06n"]
+[ext_resource type="Texture2D" uid="uid://d2eynec1yyets" path="res://assets/images/menus/menuBGDesat.png" id="7_q2qo8"]
+[ext_resource type="FontFile" uid="uid://be6k5dn2hsmt5" path="res://assets/fonts/vcr.ttf" id="7_t2jpo"]
+[ext_resource type="AudioStream" uid="uid://n42ha0ifsni4" path="res://assets/sounds/menus/scrollMenu.ogg" id="10_uchex"]
+
+[sub_resource type="Animation" id="Animation_6edm7"]
+resource_name = "flicker"
+length = 1.1
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1.05),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ic05t"]
+_data = {
+"flicker": SubResource("Animation_6edm7")
+}
+
+[sub_resource type="Animation" id="Animation_v4757"]
+resource_name = "flicker"
+step = 0.06
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Buttons/Story:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24, 0.3, 0.36, 0.42, 0.48, 0.54, 0.6, 0.66, 0.72, 0.78, 0.84, 0.9, 0.96, 1.02),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rfe2j"]
+_data = {
+"flicker": SubResource("Animation_v4757")
+}
+
+[sub_resource type="Animation" id="Animation_w3m1e"]
+resource_name = "flicker"
+step = 0.06
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24, 0.3, 0.36, 0.42, 0.48, 0.54, 0.6, 0.66, 0.72, 0.78, 0.84, 0.9, 0.96, 1.02),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2gx2h"]
+_data = {
+"flicker": SubResource("Animation_w3m1e")
+}
+
+[sub_resource type="Animation" id="Animation_5k042"]
+resource_name = "flicker"
+step = 0.06
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24, 0.3, 0.36, 0.42, 0.48, 0.54, 0.6, 0.66, 0.72, 0.78, 0.84, 0.9, 0.96, 1.02),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gjc2v"]
+_data = {
+"flicker": SubResource("Animation_5k042")
+}
+
+[sub_resource type="Animation" id="Animation_r6skk"]
+resource_name = "flicker"
+step = 0.06
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.06, 0.12, 0.18, 0.24, 0.3, 0.36, 0.42, 0.48, 0.54, 0.6, 0.66, 0.72, 0.78, 0.84, 0.9, 0.96, 1.02),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q08ql"]
+_data = {
+"flicker": SubResource("Animation_r6skk")
+}
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_12gfj")
+
+[node name="MenuSounds" type="Node" parent="."]
+
+[node name="Scroll" type="AudioStreamPlayer" parent="MenuSounds"]
+stream = ExtResource("10_uchex")
+
+[node name="Confirm" type="AudioStreamPlayer" parent="MenuSounds"]
+stream = ExtResource("3_c0whn")
+
+[node name="Cancel" type="AudioStreamPlayer" parent="MenuSounds"]
+stream = ExtResource("4_a86w6")
+
+[node name="Music" type="AudioStreamPlayer" parent="MenuSounds"]
+stream = ExtResource("5_d2pwv")
+autoplay = true
+
+[node name="ParallaxNode" type="Node2D" parent="."]
+script = ExtResource("1_d2832")
+parallax_factor = Vector2(0, 0.17)
+
+[node name="BG" type="Sprite2D" parent="ParallaxNode"]
+position = Vector2(640, 360)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_c1a08")
+
+[node name="Magenta" type="Sprite2D" parent="ParallaxNode"]
+visible = false
+modulate = Color(0.992157, 0.443137, 0.607843, 1)
+position = Vector2(640, 360)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("7_q2qo8")
+
+[node name="FlickerAnimation" type="AnimationPlayer" parent="ParallaxNode/Magenta"]
+libraries = {
+"": SubResource("AnimationLibrary_ic05t")
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Buttons" type="Node2D" parent="CanvasLayer"]
+position = Vector2(640, 360)
+
+[node name="Story" type="AnimatedSprite2D" parent="CanvasLayer/Buttons"]
+position = Vector2(0, -225)
+sprite_frames = ExtResource("3_dbvnh")
+animation = &"idle"
+frame_progress = 0.480086
+
+[node name="FlickerAnimation" type="AnimationPlayer" parent="CanvasLayer/Buttons/Story"]
+root_node = NodePath("../../../..")
+libraries = {
+"": SubResource("AnimationLibrary_rfe2j")
+}
+
+[node name="Freeplay" type="AnimatedSprite2D" parent="CanvasLayer/Buttons"]
+position = Vector2(0, -75)
+sprite_frames = ExtResource("4_dl7ps")
+animation = &"idle"
+frame_progress = 0.352842
+
+[node name="FlickerAnimation" type="AnimationPlayer" parent="CanvasLayer/Buttons/Freeplay"]
+libraries = {
+"": SubResource("AnimationLibrary_2gx2h")
+}
+
+[node name="Credits" type="AnimatedSprite2D" parent="CanvasLayer/Buttons"]
+position = Vector2(0, 75)
+sprite_frames = ExtResource("5_esr0r")
+animation = &"idle"
+frame_progress = 0.480086
+
+[node name="FlickerAnimation" type="AnimationPlayer" parent="CanvasLayer/Buttons/Credits"]
+libraries = {
+"": SubResource("AnimationLibrary_gjc2v")
+}
+
+[node name="Options" type="AnimatedSprite2D" parent="CanvasLayer/Buttons"]
+position = Vector2(0, 225)
+sprite_frames = ExtResource("6_ss06n")
+animation = &"idle"
+frame_progress = 0.480086
+
+[node name="FlickerAnimation" type="AnimationPlayer" parent="CanvasLayer/Buttons/Options"]
+libraries = {
+"": SubResource("AnimationLibrary_q08ql")
+}
+
+[node name="Watermark" type="Label" parent="CanvasLayer"]
+offset_left = 5.0
+offset_top = 700.0
+offset_right = 249.0
+offset_bottom = 723.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("7_t2jpo")
+theme_override_font_sizes/font_size = 16
+text = "Nova Engine Godot - v?
+
+
+hi iss me the object oriented lua guy! :D - Srt"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0

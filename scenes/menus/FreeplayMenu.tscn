@@ -68,3 +68,4 @@ offset_right = 239.0
 offset_bottom = 53.0
 text = "< hard >"
 label_settings = SubResource("LabelSettings_hwfu4")
+uppercase = true
