@@ -245,6 +245,10 @@ func _ready():
 	# misc
 	update_score_text()
 	load_modcharts()
+	
+	opponent_strums.prepare_anims()
+	player_strums.prepare_anims()
+	
 	call_on_modcharts("_ready_post", [])
 	
 func do_note_spawning():
@@ -281,7 +285,6 @@ func do_note_spawning():
 					new_note.sustain_clip_rect.scale.y *= -1.0
 			
 			spr.play(dir_str)
-
 			
 		# thank you godot for making this the simplest shit ever
 		if Options.sustain_layer == Options.SustainLayer.BEHIND:
@@ -414,7 +417,7 @@ func display_combo(combo:int, event:JudgementEvent) -> Array[VelocitySprite]:
 	call_on_modcharts("on_display_combo_post", [event])
 	return event.combo_sprites
 	
-func pop_up_score(judgement:Timings.Judgement, combo:int, late:bool):
+func pop_up_score(judgement:Timings.Judgement, combo:int, late:bool) -> JudgementEvent:
 	var event := JudgementEvent.new(judgement, combo, late, null, [], [], [])
 	call_on_modcharts("on_pop_up_score", [event])
 	
@@ -428,7 +431,7 @@ func pop_up_score(judgement:Timings.Judgement, combo:int, late:bool):
 			ratings.add_child(spr)
 	
 	call_on_modcharts("on_pop_up_score_post", [event])
-	event.unreference()
+	return event
 		
 func good_note_hit(note:Note, event:NoteHitEvent = null):
 	if note.reset_combo_on_hit:
@@ -498,6 +501,10 @@ func _process(delta:float):
 	Conductor.position += delta * 1000.0
 	if Conductor.position >= 0.0 and starting_song:
 		start_song()
+		
+	# makes sure each track is up to date with conductor rate
+	for track in tracks:
+		track.pitch_scale = Conductor.rate
 	
 	if not finished_tracks.has(false):
 		end_song()
@@ -565,6 +572,9 @@ func countdown_tick(tick:int = 0):
 		
 	countdown_tween = create_tween()
 	countdown_tween.pause()
+	
+	# prevent errors
+	if tick > sounds.size() - 1: return
 	
 	var sound := AudioStreamPlayer.new()
 	sound.stream = sounds[tick]

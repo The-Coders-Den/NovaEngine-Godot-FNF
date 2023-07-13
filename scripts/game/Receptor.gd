@@ -30,5 +30,4 @@ func unfuck():
 	)
 
 func _ready():
-	unfuck()
 	script_changed.connect(unfuck)

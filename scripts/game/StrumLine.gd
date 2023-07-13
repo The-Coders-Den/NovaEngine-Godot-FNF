@@ -24,9 +24,10 @@ enum NoteDirection {
 	RIGHT
 }
 
-func _ready():
+func prepare_anims():
 	for i in receptors.get_child_count():
 		var receptor:Receptor = receptors.get_child(i)
+		receptor.unfuck()
 		receptor.remove_child(receptor.splash)
 		receptor.splash.name = "splash_%s" % str(i)
 		receptor.direction = i
