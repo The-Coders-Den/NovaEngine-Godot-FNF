@@ -11,6 +11,7 @@ extends Node2D
 @onready var cancel_audio := $MenuSounds/Cancel
 
 var cur_item:int = 0
+var exiting:bool = false
 
 func _ready():
 	for i in buttons.get_child_count():
@@ -27,7 +28,7 @@ func _ready():
 
 func _unhandled_key_input(event):
 	event = event as InputEventKey
-	if not event.is_pressed(): return
+	if not event.is_pressed() or exiting: return
 	
 	var scroll_axis:int = Input.get_axis("ui_up","ui_down")
 	
@@ -59,9 +60,9 @@ func select_item():
 				cancel_audio.play()
 				return
 			
-			confirm_audio.play()
-			
 			magenta_flicker.play("flicker")
+			confirm_audio.play()
+			exiting = true
 			
 			var flicker:AnimationPlayer = buttons.get_child(cur_item).get_node("FlickerAnimation")
 			flicker.play("flicker")
