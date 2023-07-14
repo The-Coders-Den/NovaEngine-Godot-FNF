@@ -1,6 +1,16 @@
-class_name Global extends Node
+extends Node
 
-static var VERSION:VersionScheme = VersionScheme.new(2, 0, 0, VersionScheme.VersionType.DEV)
+var VERSION:VersionScheme = VersionScheme.new(2, 0, 0, VersionScheme.VersionType.DEV)
 
-static func switch_scene(path:String):
-	Options.get_tree().change_scene_to_file(path)
+func switch_scene(path:String):
+	get_tree().change_scene_to_file(path)
+	
+	
+func _unhandled_key_input(event)-> void:
+	# fullscreen shit
+	if Input.is_action_just_pressed("fullscreen"):
+		var win:Window = get_window()
+		if win.mode == Window.MODE_FULLSCREEN:
+			win.mode = Window.MODE_WINDOWED
+			return
+		win.mode = Window.MODE_FULLSCREEN
