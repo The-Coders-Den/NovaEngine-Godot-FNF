@@ -7,7 +7,7 @@ class_name Note extends Node2D
 @export var play_sing_anim:bool = true
 @export var health_gain_mult:float = 1.0
 
-@onready var sustain_clip_rect:ReferenceRect = $SustainClipRect
+@onready var sustain_clip_rect:Control = $SustainClipRect
 @onready var sustain:TextureRect = $SustainClipRect/Sustain
 @onready var sustain_end = $SustainClipRect/Sustain/End
 @onready var sprite = $Sprite

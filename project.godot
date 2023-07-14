@@ -14,6 +14,7 @@ config/name="FNF: Nova Engine"
 config/tags=PackedStringArray("rhythm", "2d", "funkin")
 run/main_scene="res://scenes/menus/MainMenu.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
+run/delta_smoothing=false
 config/icon="res://icon.png"
 
 [autoload]
