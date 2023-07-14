@@ -496,8 +496,10 @@ func end_song():
 		
 func _physics_process(delta:float):
 	call_deferred_thread_group("do_note_spawning")
-	
+
 func _process(delta:float):
+	delta = minf(delta, 0.1)
+	
 	Conductor.position += delta * 1000.0
 	if Conductor.position >= 0.0 and starting_song:
 		start_song()

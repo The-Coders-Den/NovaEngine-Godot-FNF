@@ -88,7 +88,8 @@ func _process(delta:float):
 			
 			event.unreference()
 			
-		if note.hit_time < Conductor.position - ((500 + (note.length * 4.3)) / note_speed) and not note.was_already_hit and note.missed:
+		var off_screen:bool = note.hit_time < Conductor.position - ((500 + (note.length * 4.3)) / note_speed)
+		if off_screen and not note.was_already_hit and note.missed:
 			note.queue_free()
 			
 	if anim_timer >= Conductor.step_crochet:
