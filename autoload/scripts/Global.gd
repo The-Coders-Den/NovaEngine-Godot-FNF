@@ -139,10 +139,6 @@ func list_files_in_dir(path:String):
 		
 	return files
 
-func position_overlaps_area(position:Vector2, top_left:Vector2, bottom_right:Vector2):
-	return (position.x >= top_left.x and position.x <= bottom_right.x \
-		and position.y >= top_left.y and position.y <= bottom_right.y)
-
 func add_zeros(str:String, num:int) -> String:
 	return str.pad_zeros(num)
 

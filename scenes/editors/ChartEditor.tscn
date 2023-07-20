@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://d82jsypulsbw"]
+[gd_scene load_steps=15 format=3 uid="uid://d82jsypulsbw"]
 
 [ext_resource type="Theme" uid="uid://br6hapg0jupnv" path="res://assets/styles/nova_purple_panel.tres" id="1_coqmp"]
 [ext_resource type="Script" path="res://scenes/editors/ChartEditor.gd" id="1_f5f6h"]
@@ -12,10 +12,11 @@
 [ext_resource type="Theme" uid="uid://blt3c0a5po0yj" path="res://assets/styles/nova_purple_button.tres" id="9_2fcki"]
 [ext_resource type="FontFile" uid="uid://coqcg7h14duny" path="res://assets/fonts/vcr.ttf" id="9_4xp5r"]
 [ext_resource type="Texture2D" uid="uid://cvnq5kqghy3tp" path="res://assets/images/menus/charteditor/note.png" id="10_1xrm3"]
+[ext_resource type="Script" path="res://scripts/charter/SectionWindow.gd" id="11_v6ax2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7uhct"]
 shader = ExtResource("7_ccjci")
-shader_parameter/bg_color = Quaternion(0.16, 0.13, 0.19, 1)
+shader_parameter/bg_color = Vector4(0.16, 0.13, 0.19, 1)
 
 [node name="ChartEditor" type="Control"]
 layout_mode = 3
@@ -128,11 +129,11 @@ texture = ExtResource("10_1xrm3")
 title = "Song Data"
 position = Vector2i(50, 100)
 size = Vector2i(200, 200)
-unresizable = true
 transparent = true
+min_size = Vector2i(65, 65)
 content_scale_size = Vector2i(150, 150)
 content_scale_mode = 2
-content_scale_aspect = 1
+content_scale_aspect = 4
 script = ExtResource("8_txt3a")
 
 [node name="Panel" type="Panel" parent="song"]
@@ -151,7 +152,7 @@ offset_right = 150.0
 offset_bottom = 150.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="song/Panel/ScrollContainer"]
-custom_minimum_size = Vector2(139, 250)
+custom_minimum_size = Vector2(136, 250)
 layout_mode = 2
 theme_override_constants/separation = 2
 
@@ -208,13 +209,13 @@ text = "Load Different JSON"
 
 [node name="assets" type="Window" parent="."]
 title = "Song Assets"
-position = Vector2i(50, 350)
+position = Vector2i(50, 341)
 size = Vector2i(200, 200)
-unresizable = true
 transparent = true
+min_size = Vector2i(65, 65)
 content_scale_size = Vector2i(150, 150)
 content_scale_mode = 2
-content_scale_aspect = 1
+content_scale_aspect = 4
 script = ExtResource("8_uqes3")
 
 [node name="Panel" type="Panel" parent="assets"]
@@ -293,12 +294,12 @@ mouse_default_cursor_shape = 2
 theme = ExtResource("8_87ymt")
 text = "Change"
 
-[node name="UISKin" type="Label" parent="assets/Panel/ScrollContainer/VBoxContainer"]
+[node name="UISkin" type="Label" parent="assets/Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("8_87ymt")
 text = "UI Skin: default"
 
-[node name="SwitchButton" type="Button" parent="assets/Panel/ScrollContainer/VBoxContainer/UISKin"]
+[node name="SwitchButton" type="Button" parent="assets/Panel/ScrollContainer/VBoxContainer/UISkin"]
 layout_mode = 2
 offset_top = 20.0
 offset_right = 135.0
@@ -311,11 +312,12 @@ text = "Change"
 title = "Section Data"
 position = Vector2i(1040, 100)
 size = Vector2i(200, 200)
-unresizable = true
 transparent = true
+min_size = Vector2i(65, 65)
 content_scale_size = Vector2i(150, 150)
 content_scale_mode = 2
-content_scale_aspect = 1
+content_scale_aspect = 4
+script = ExtResource("11_v6ax2")
 
 [node name="Panel" type="Panel" parent="section"]
 anchors_preset = 15
@@ -327,12 +329,13 @@ grow_vertical = 2
 [node name="ScrollContainer" type="ScrollContainer" parent="section/Panel"]
 clip_contents = false
 custom_minimum_size = Vector2(145, 145)
+layout_mode = 0
 offset_left = 3.0
 offset_right = 150.0
 offset_bottom = 150.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="section/Panel/ScrollContainer"]
-custom_minimum_size = Vector2(139, 350)
+custom_minimum_size = Vector2(136, 350)
 layout_mode = 2
 theme_override_constants/separation = 4
 
@@ -353,7 +356,6 @@ text = "Change BPM"
 
 [node name="BPMSpin" type="SpinBox" parent="section/Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-mouse_filter = 2
 mouse_default_cursor_shape = 1
 theme = ExtResource("8_87ymt")
 min_value = 60.0
@@ -388,6 +390,28 @@ text = "Clear Section"
 custom_minimum_size = Vector2(0, 12)
 layout_mode = 2
 
+[node name="DymLabel" type="Label" parent="section/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_87ymt")
+text = "Dynamic Pasting"
+
+[node name="CamDynamic" type="OptionButton" parent="section/Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Whether to swap the section when
+the copied camera target is different
+from the current camera target."
+theme = ExtResource("8_87ymt")
+item_count = 4
+selected = 1
+popup/item_0/text = "None"
+popup/item_0/id = 0
+popup/item_1/text = "Only Copy/Paste"
+popup/item_1/id = 1
+popup/item_2/text = "Only Copy Last"
+popup/item_2/id = 2
+popup/item_3/text = "Both"
+popup/item_3/id = 3
+
 [node name="Copy" type="Button" parent="section/Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("8_87ymt")
@@ -412,18 +436,19 @@ text = "Copy Last Section"
 layout_mode = 2
 theme = ExtResource("8_87ymt")
 min_value = 1.0
+max_value = 99999.0
 value = 1.0
 suffix = "sections back"
 
 [node name="note" type="Window" parent="."]
 title = "Note Data"
-position = Vector2i(1040, 350)
+position = Vector2i(1040, 341)
 size = Vector2i(200, 200)
-unresizable = true
 transparent = true
+min_size = Vector2i(65, 65)
 content_scale_size = Vector2i(150, 150)
 content_scale_mode = 2
-content_scale_aspect = 1
+content_scale_aspect = 4
 
 [node name="Panel" type="Panel" parent="note"]
 anchors_preset = 15
@@ -433,10 +458,9 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="CharDialog" type="FileDialog" parent="."]
-initial_position = 2
 title = "Select a Character"
+initial_position = 2
 size = Vector2i(500, 500)
-always_on_top = true
 ok_button_text = "Open"
 mode_overrides_title = false
 file_mode = 0
@@ -444,10 +468,9 @@ root_subfolder = "res://scenes/gameplay/characters"
 filters = PackedStringArray("*.tscn")
 
 [node name="StageDialog" type="FileDialog" parent="."]
-initial_position = 2
 title = "Select a Stage"
+initial_position = 2
 size = Vector2i(500, 500)
-always_on_top = true
 ok_button_text = "Open"
 mode_overrides_title = false
 file_mode = 0
@@ -455,25 +478,33 @@ root_subfolder = "res://scenes/gameplay/stages"
 filters = PackedStringArray("*.tscn")
 
 [node name="UISkinDialog" type="FileDialog" parent="."]
-initial_position = 2
 title = "Select a UI Skin"
+initial_position = 2
 size = Vector2i(500, 500)
-always_on_top = true
 ok_button_text = "Open"
 mode_overrides_title = false
 file_mode = 0
-root_subfolder = "res://scenes/gameplay/ui_skins"
+root_subfolder = "res://scenes/gameplay/ui_skins/"
 filters = PackedStringArray("*.tscn")
 
 [node name="SaveDialog" type="FileDialog" parent="."]
-initial_position = 2
 title = "Save Song JSON"
+initial_position = 2
 size = Vector2i(500, 500)
-always_on_top = true
 ok_button_text = "Save"
 mode_overrides_title = false
 root_subfolder = "res://assets/songs/"
-filters = PackedStringArray("*.tscn")
+filters = PackedStringArray("*.json")
+
+[node name="LoadDialog" type="FileDialog" parent="."]
+title = "Load Song JSON"
+initial_position = 2
+size = Vector2i(500, 500)
+ok_button_text = "Open"
+mode_overrides_title = false
+file_mode = 0
+root_subfolder = "res://assets/songs/"
+filters = PackedStringArray("*.json")
 
 [node name="PosInfo" type="Label" parent="."]
 layout_mode = 1
@@ -493,23 +524,40 @@ Step: 0
 Beat: 0
 Section: 0"
 
+[connection signal="text_changed" from="song/Panel/ScrollContainer/VBoxContainer/SongName" to="song" method="_song_name_changed"]
+[connection signal="value_changed" from="song/Panel/ScrollContainer/VBoxContainer/BPM" to="song" method="_bpm_changed"]
+[connection signal="value_changed" from="song/Panel/ScrollContainer/VBoxContainer/ScrollSpeed" to="song" method="_speed_changed"]
+[connection signal="button_up" from="song/Panel/ScrollContainer/VBoxContainer/SaveSong" to="song" method="_open_save"]
+[connection signal="button_up" from="song/Panel/ScrollContainer/VBoxContainer/ReloadAudio" to="song" method="_reload_audio"]
+[connection signal="button_up" from="song/Panel/ScrollContainer/VBoxContainer/LoadJSON" to="song" method="_open_load"]
 [connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/Player/SwitchButton" to="assets" method="_switch_player"]
 [connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/Opponent/SwitchButton" to="assets" method="_switch_opponent"]
 [connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/Spectator/SwitchButton" to="assets" method="_switch_spectator"]
 [connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/Stage/SwitchButton" to="assets" method="_switch_stage"]
-[connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/UISKin/SwitchButton" to="assets" method="_switch_ui_skin"]
+[connection signal="button_up" from="assets/Panel/ScrollContainer/VBoxContainer/UISkin/SwitchButton" to="assets" method="_switch_ui_skin"]
+[connection signal="toggled" from="section/Panel/ScrollContainer/VBoxContainer/PlayerCam" to="section" method="_set_cam_target"]
+[connection signal="toggled" from="section/Panel/ScrollContainer/VBoxContainer/BpmCheck" to="section" method="_set_change_bpm"]
+[connection signal="value_changed" from="section/Panel/ScrollContainer/VBoxContainer/BPMSpin" to="section" method="_set_bpm"]
+[connection signal="button_up" from="section/Panel/ScrollContainer/VBoxContainer/Swap" to="section" method="_swap_section"]
+[connection signal="button_up" from="section/Panel/ScrollContainer/VBoxContainer/Clear" to="section" method="_clear_section"]
+[connection signal="button_up" from="section/Panel/ScrollContainer/VBoxContainer/Copy" to="section" method="_copy_section"]
+[connection signal="button_up" from="section/Panel/ScrollContainer/VBoxContainer/Paste" to="section" method="_paste_section"]
+[connection signal="button_up" from="section/Panel/ScrollContainer/VBoxContainer/CopyLast" to="section" method="_copy_last_section"]
 [connection signal="canceled" from="CharDialog" to="assets" method="enable_switches"]
 [connection signal="confirmed" from="CharDialog" to="assets" method="enable_switches"]
 [connection signal="file_selected" from="CharDialog" to="assets" method="select_char"]
 [connection signal="canceled" from="StageDialog" to="assets" method="enable_switches"]
 [connection signal="confirmed" from="StageDialog" to="assets" method="enable_switches"]
 [connection signal="file_selected" from="StageDialog" to="assets" method="select_stage"]
-[connection signal="canceled" from="UISkinDialog" to="assets" method="enable_switches"]
+[connection signal="canceled" from="UISkinDialog" to="song" method="enable_switches"]
 [connection signal="confirmed" from="UISkinDialog" to="assets" method="enable_switches"]
 [connection signal="file_selected" from="UISkinDialog" to="assets" method="select_ui_skin"]
 [connection signal="canceled" from="SaveDialog" to="song" method="enable_switches"]
 [connection signal="confirmed" from="SaveDialog" to="song" method="enable_switches"]
-[connection signal="file_selected" from="SaveDialog" to="song" method="enable_switches"]
+[connection signal="file_selected" from="SaveDialog" to="song" method="_save_song"]
+[connection signal="canceled" from="LoadDialog" to="song" method="enable_switches"]
+[connection signal="confirmed" from="LoadDialog" to="song" method="enable_switches"]
+[connection signal="file_selected" from="LoadDialog" to="song" method="_load_song"]
 
 [editable path="StrumLine/OpponentStrum"]
 [editable path="StrumLine/PlayerStrum"]
