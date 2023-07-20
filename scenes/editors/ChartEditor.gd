@@ -39,7 +39,7 @@ var lane_id:int = 0
 var selected_note:Sprite2D
 var selected_data:SectionNote 
 
-var cur_section:int = 0 # i would of loved to used section_hit.connect but for some reason it doesnt work going backwards!
+var cur_section:int = -1 # i would of loved to used section_hit.connect but for some reason it doesnt work going backwards!
 var section_start:float = 0.0
 var cur_snap:float = 1
 
@@ -98,7 +98,7 @@ func _ready():
 	Conductor.position = 0
 	Conductor.cur_section = 0
 	Conductor.map_bpm_changes(chart_data)
-	regen_notes()
+	# regen_notes() not calling it on ready because PlayerLane's x is not set yet.
 	
 	bloom_mat = ShaderMaterial.new()
 	bloom_mat.shader = load("res://assets/shaders/NoteBloom.gdshader")
@@ -117,6 +117,11 @@ func regen_notes():
 	selected_note = null
 	selected_data = null
 	
+	while chart_data.sections.size() <= cur_section: # If you go too far, it will add sections to prevent a null error.
+		var new_section = Section.new()
+		new_section.bpm = Conductor.bpm
+		chart_data.sections.append(new_section)
+		
 	var cur_bpm = chart_data.bpm;
 	section_start = 0.0;
 	for i in cur_section:
@@ -135,7 +140,8 @@ func regen_notes():
 		notes_group.add_child(note)
 		note.texture = hover_arrow.texture
 		note.scale = Vector2(0.275, 0.275)
-		var lane_to_place = opponent_lane if (note_data.direction % 8 < 4) != chart_data.sections[cur_section].is_player else player_lane
+		var use_opp = (note_data.direction % 8 < 4) != chart_data.sections[cur_section].is_player
+		var lane_to_place = opponent_lane if use_opp else player_lane
 		note.rotation_degrees = arrow_rotations[note_data.direction % 4]
 				
 		note.modulate = get_quant_color(note_data.time)
