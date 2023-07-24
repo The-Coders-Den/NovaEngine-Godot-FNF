@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/week2.png-6af3b188e57e6a5986d3184587e8e4a6.ct
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

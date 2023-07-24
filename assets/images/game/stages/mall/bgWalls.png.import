@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/bgWalls.png-931b9f7b2506e913bd9e522f5285e53c.
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

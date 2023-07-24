@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/receptors.png-47cd61c7c3dcb84f22f5fe665b5411c
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

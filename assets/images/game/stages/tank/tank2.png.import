@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/tank2.png-cc1227499eccd3b0a67311d19c984e16.ct
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/volume_sheet.png-baa9b80cc445600ce8e6e19bbafd
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

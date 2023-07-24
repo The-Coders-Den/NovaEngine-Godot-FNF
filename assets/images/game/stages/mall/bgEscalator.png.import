@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/bgEscalator.png-28bffd7ed8754b4c5467eb9996967
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

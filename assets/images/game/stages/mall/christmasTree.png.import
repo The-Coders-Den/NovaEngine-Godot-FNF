@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/christmasTree.png-3b28c64a38e5b2b5dedf43f1eb0
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

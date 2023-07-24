@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/limoDrive.png-5efb5e53d2424ed6e13c95dc53e9e47
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

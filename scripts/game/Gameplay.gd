@@ -573,7 +573,7 @@ func good_note_hit(note:Note, event:NoteHitEvent = null):
 			continue
 		
 		character.hold_timer = 0.0
-		character.play_anim("sing%s" % StrumLine.NoteDirection.keys()[note.direction])
+		character.play_anim("sing%s" % StrumLine.NoteDirection.keys()[note.direction],true)
 	
 	if judgement.do_splash:
 		do_splash(receptor, note)

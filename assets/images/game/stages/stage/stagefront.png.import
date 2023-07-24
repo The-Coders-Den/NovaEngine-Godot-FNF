@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/stagefront.png-76d69780e8ab916269075a104966d5
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

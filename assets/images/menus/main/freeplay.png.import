@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/freeplay.png-1122ab098b498f40d9be5c57951db4a2
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/evilBG.png-a59555fe98a15285f5fdf479975c7514.c
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/santa.png-925b3ec43375d6f26dbdf68fc7e2636d.ct
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/menuBGBlue.png-bfed4300b74be7b467283ac0a01cc9
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

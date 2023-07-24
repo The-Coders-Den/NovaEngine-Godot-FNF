@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/checkmark.png-486438402b5e0c91df311b72de3eddf
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

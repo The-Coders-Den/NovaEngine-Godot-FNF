@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/train.png-982f88c4fd4b4601728f058abb7a71ea.ct
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

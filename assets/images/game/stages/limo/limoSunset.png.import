@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/limoSunset.png-bc368526aa4b546e2e3968536c77d5
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

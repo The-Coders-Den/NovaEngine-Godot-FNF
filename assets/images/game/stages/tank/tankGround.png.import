@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/tankGround.png-e78f2c33f61cd1ef2c64ad8f107346
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

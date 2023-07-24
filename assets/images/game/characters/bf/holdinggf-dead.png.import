@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/holdinggf-dead.png-9d999ee6f289de6dd3db95a953
 
 [params]
 
-compress/mode=0
+compress/mode=4
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
