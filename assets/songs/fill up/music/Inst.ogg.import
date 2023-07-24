@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d11boc6gv8pls"
+path="res://.godot/imported/Inst.ogg-f6af858102b6a0d2d0a294da81913eef.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/songs/fill up/music/Inst.ogg"
+dest_files=["res://.godot/imported/Inst.ogg-f6af858102b6a0d2d0a294da81913eef.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

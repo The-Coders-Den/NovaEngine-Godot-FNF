@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dkruukjy607hy"]
-
-[ext_resource type="Script" path="res://assets/songs/reactor/modcharts/botplay.gd" id="1_rklxc"]
-
-[node name="botplay" type="Node"]
-script = ExtResource("1_rklxc")

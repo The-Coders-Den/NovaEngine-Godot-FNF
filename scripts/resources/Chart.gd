@@ -1,5 +1,11 @@
 class_name Chart extends Resource
 
+enum CharacterPosition {
+	OPPONENT,
+	PLAYER,
+	SPECTATOR
+}
+
 var song_name:String
 @export var bpm:float
 @export var display_name:String
@@ -45,12 +51,19 @@ static func load_chart(song:String, difficulty:String):
 	var final:Chart = new()
 	final.song_name = song
 	final.bpm = float(json.bpm)
+	_load_psych_events(final, json)
 	
 	# Parse characters
+	var gfVersion:String = "gf"
+	
+	if "player3" in json and json.player3 != null: gfVersion = json.player3
+	if "gfVersion" in json and json.gfVersion != null: gfVersion = json.gfVersion
+	if "gf" in json and json.gf != null: gfVersion = json.gf
+	
 	final.characters = [
-		ChartCharacter.new(json.gfVersion, 2),
-		ChartCharacter.new(json.player2, 0),
-		ChartCharacter.new(json.player1, 1)
+		ChartCharacter.new(gfVersion,    2, CharacterPosition.SPECTATOR),
+		ChartCharacter.new(json.player2, 0, CharacterPosition.OPPONENT),
+		ChartCharacter.new(json.player1, 1, CharacterPosition.PLAYER)
 	]
 	
 	# Parse timescale
@@ -85,7 +98,7 @@ static func load_chart(song:String, difficulty:String):
 			if last_camera_switch != section.mustHitSection:
 				last_camera_switch = section.mustHitSection
 				
-				var event_group := ChartEventGroup.new(-INF if cur_time <= 0.05 else cur_time, [ChartEvent.new("Camera Pan", [last_camera_switch])])
+				var event_group := ChartEventGroup.new(-INF if cur_time <= 0.05 else cur_time, [ChartEvent.new("Camera Pan", [str(last_camera_switch)])])
 				final.events.append(event_group)
 			
 			# parse notes
@@ -146,13 +159,58 @@ static func load_chart(song:String, difficulty:String):
 		
 	return final
 	
+static func _load_psych_event_array(event_array:Array[Variant]) -> Array[ChartEventGroup]:
+	var return_events:Array[ChartEventGroup] = []
+	
+	# newer multi-event style
+	if event_array[1] is Array:
+		for inner_event in event_array[1]:
+			var song_event:ChartEventGroup = ChartEventGroup.new(event_array[0], [])
+			song_event.events.append(ChartEvent.new(inner_event[0], [inner_event[1], inner_event[2]]))
+			return_events.append(song_event)
+	# older one-event style
+	else:
+		var song_event:ChartEventGroup = ChartEventGroup.new(event_array[0], [])
+		song_event.events.append(ChartEvent.new(event_array[2], [event_array[3], event_array[4]]))
+		return_events.append(song_event)
+	
+	return return_events
+	
+static func _load_psych_events(CHART:Chart, raw:Dictionary):
+	var event_path:String = "res://assets/songs/%s/events.json" % CHART.song_name.to_lower()
+	var event_data:Dictionary = {}
+	
+	if ResourceLoader.exists(event_path):
+		event_data = JSON.parse_string(FileAccess.open(event_path, FileAccess.READ).get_as_text())
+		if event_data.has('song'):
+			event_data = event_data.song
+	else:
+		event_data = raw
+	
+	if not event_data.has('events'):
+		event_data['events'] = []
+	if not event_data.has('notes'):
+		event_data['notes'] = []
+		
+	for event in event_data.events:
+		for song_event in _load_psych_event_array(event):
+			CHART.events.append(song_event)
+			
+	for section in event_data.notes:
+		for note in section.sectionNotes:
+			if note[1] is Array or note[1] < 0:
+				for song_event in _load_psych_event_array(note):
+					CHART.events.append(song_event)
+	
 class ChartCharacter extends Resource:
 	var name:String
 	var strum_index:int
+	var position:Chart.CharacterPosition
 	
-	func _init(name:String = "bf", strum_index:int = 0):
+	func _init(name:String = "bf", strum_index:int = 0, position:Chart.CharacterPosition = 0):
 		self.name = name
 		self.strum_index = strum_index
+		self.position = position
 
 class ChartNote extends Resource:
 	@export var hit_time:float = 0.0

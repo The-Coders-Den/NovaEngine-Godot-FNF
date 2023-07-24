@@ -17,6 +17,22 @@ static var GAME_MODE:GameMode = GameMode.FREEPLAY
 @onready var opponent_strums:StrumLine = $HUDContainer/HUD/StrumLines/OpponentStrums
 @onready var player_strums:StrumLine = $HUDContainer/HUD/StrumLines/PlayerStrums
 
+@onready var opponent_list:Array[Character] = []
+@onready var spectator_list:Array[Character] = []
+@onready var player_list:Array[Character] = []
+
+@onready var opponent:Character:
+	get:
+		return opponent_list[0]
+		
+@onready var spectator:Character:
+	get:
+		return spectator_list[0]
+		
+@onready var player:Character:
+	get:
+		return player_list[0]
+
 @onready var health_bar:ProgressBar = $HUDContainer/HUD/HealthBar
 @onready var character_icons:Node2D = $HUDContainer/HUD/HealthBar/Icons
 @onready var score_text:Label = $HUDContainer/HUD/HealthBar/ScoreText
@@ -40,6 +56,7 @@ var finished_tracks:Array[bool] = []
 
 ## The list of notes that haven't been spawned yet.
 var notes_to_spawn:Array[Chart.ChartNote] = []
+
 ## The scroll speed of the notes.
 ## Can also be modified per strumline.
 var scroll_speed:float = -INF
@@ -86,6 +103,10 @@ var cam_zooming_interval:int = 4
 ## Controls how much the camera zooms out
 ## to after bumping.
 var default_cam_zoom:float = 1.05
+
+## The characters of a specified strumline
+## to focus on.
+var cur_camera_target:int = 0
 
 var accuracy_total_hit:float = 0.0
 var accuracy_hit_notes:int = 0
@@ -135,10 +156,50 @@ func load_tracks():
 		
 func call_on_modcharts(method:String, args:Array[Variant]):
 	for modchart in modcharts:
-		if not is_instance_valid(modchart):
+		if not is_instance_valid(modchart) or modchart.is_event:
 			continue
 			
 		modchart.call_method(method, args)
+		
+var _loaded_events:Dictionary = {}
+		
+func load_events():
+	for group in CHART.events:
+		for event in group.events:
+			if event.name in _loaded_events:
+				continue
+				
+			var modchart:Modchart = null
+			var event_path:String = "res://assets/data/events/%s.tscn" % event.name
+			var event_gdpath:String = "res://assets/data/events/%s.gd" % event.name
+			
+			if ResourceLoader.exists(event_path):
+				modchart = load(event_path).instantiate()
+			elif FileAccess.file_exists(event_gdpath) or FileAccess.file_exists(event_gdpath+"c"):
+				modchart = Modchart.new()
+				modchart.set_script(load(event_gdpath))
+			else:
+				printerr("Event doesn't exist (or is hardcoded): %s" % event.name)
+				
+			if is_instance_valid(modchart):
+				print("Loaded event: %s" % event.name)
+				modchart.game = self
+				modchart.is_event = true
+				modcharts.append(modchart)
+				add_child(modchart)
+			
+			_loaded_events[event.name] = modchart
+	
+func load_modchart_from_path(path:String):
+	var modchart:Modchart = load(path).instantiate()
+	modchart.game = self
+	return modchart
+	
+func load_modchart_from_gdpath(path:String):
+	var modchart:Modchart = Modchart.new()
+	modchart.set_script(load(path))
+	modchart.game = self
+	return modchart
 		
 func load_modcharts():
 	# Song specific and global
@@ -151,14 +212,20 @@ func load_modcharts():
 		
 		for item in DirAccess.open(script_path).get_files():
 			if item.ends_with(".tscn") or item.ends_with(".tscn.remap"):
-				var modchart:Modchart = load(script_path+item.replace(".remap", "")).instantiate()
-				modchart.game = self
+				var modchart:Modchart = load_modchart_from_path(script_path+item.replace(".remap", ""))
 				modcharts.append(modchart)
 				add_child(modchart)
+				continue
+				
+			if (item.ends_with(".gd") or item.ends_with(".gdc")) and not ResourceLoader.exists(script_path+item.replace(".gdc", "").replace(".gd", "")+".tscn"):
+				var modchart:Modchart = load_modchart_from_gdpath(script_path+item.replace(".gdc", ".gd"))
+				modcharts.append(modchart)
+				add_child(modchart)
+				continue
 		
 func is_track_synced(track:AudioStreamPlayer):
 	# i love windows
-	var ms_allowed:float = (30 if OS.get_name() == "Windows" else 20) * track.pitch_scale
+	var ms_allowed:float = (25 if OS.get_name() == "Windows" else 15) * track.pitch_scale
 	var track_time:float = track.get_playback_position() * 1000.0
 	return !(absf(track_time - Conductor.position) > ms_allowed)
 
@@ -176,11 +243,50 @@ func update_score_text():
 		score_text.text += " >"
 	
 	event.unreference()
+	
+func load_character(data:Chart.ChartCharacter):
+	if data.strum_index >= strum_lines.get_child_count():
+		return
+		
+	var character:Character = null
+	
+	var char_path:String = "res://scenes/game/characters/%s.tscn" % data.name
+	if ResourceLoader.exists(char_path):
+		character = load(char_path).instantiate()
+	else:
+		character = load("res://scenes/game/characters/bf.tscn").instantiate()
+		
+	var positions:Array[Node2D] = [
+		stage.character_positions.get_node("Opponent"),
+		stage.character_positions.get_node("Player"),
+		stage.character_positions.get_node("Spectator"),
+	]
+	
+	var strum_line:StrumLine = strum_lines.get_child(data.strum_index) as StrumLine
+	
+	character.position = positions[data.position].position
+		
+	match data.position:
+		Chart.CharacterPosition.SPECTATOR:
+			spectator_list.append(character)
+			
+		Chart.CharacterPosition.OPPONENT:
+			opponent_list.append(character)
+			
+		Chart.CharacterPosition.PLAYER:
+			character._is_true_player = true
+			player_list.append(character)
+	
+	var size:int = strum_line.characters.size()
+	character.position += Vector2(size * 40, size * -10)
+	
+	strum_line.characters.append(character)
+	add_child(character)
 
 func _ready():
 	var old:float = Time.get_ticks_msec()
 	if CHART == null:
-		CHART = Chart.load_chart("end of abuse", "hard")
+		CHART = Chart.load_chart("fill up", "hard")
 		printerr("Chart unable to be found! Loading fallback...")
 	
 	# load note & ui styles
@@ -214,6 +320,11 @@ func _ready():
 		
 	add_child(stage)
 	
+	for char in CHART.characters:
+		load_character(char)
+		
+	update_health_bar()
+	
 	default_cam_zoom = stage.default_cam_zoom
 	camera.zoom = Vector2(default_cam_zoom, default_cam_zoom)
 	
@@ -222,8 +333,9 @@ func _ready():
 	
 	ratings.move_to_front()
 	
-	# load chart notes & music
+	# load chart notes, events & music
 	load_notes()
+	load_events()
 	load_tracks()
 	
 	# position strums
@@ -337,6 +449,15 @@ func note_miss(direction:int, note:Note = null, event:NoteMissEvent = null):
 	health -= (event.health_loss if event != null else 0.0475) * consecutive_misses
 	consecutive_misses += 0.175
 	
+	var strum_line:StrumLine = (note.strum_line if note != null else player_strums) as StrumLine
+	for character in strum_line.characters:
+		character = character as Character
+		if not character.is_animated:
+			continue
+		
+		character.hold_timer = 0.0
+		character.play_anim("sing%smiss" % StrumLine.NoteDirection.keys()[direction], true)
+	
 	if note != null:
 		note.queue_free()
 		
@@ -446,6 +567,14 @@ func good_note_hit(note:Note, event:NoteHitEvent = null):
 	
 	var receptor:Receptor = note.strum_line.receptors.get_child(note.direction)
 	
+	for character in note.strum_line.characters:
+		character = character as Character
+		if not character.is_animated or not character.can_sing:
+			continue
+		
+		character.hold_timer = 0.0
+		character.play_anim("sing%s" % StrumLine.NoteDirection.keys()[note.direction])
+	
 	if judgement.do_splash:
 		do_splash(receptor, note)
 	
@@ -470,6 +599,21 @@ func good_note_hit(note:Note, event:NoteHitEvent = null):
 	
 	update_score_text()
 	
+func update_health_bar():
+	var opponent_icon:Sprite2D = character_icons.get_child(0) as Sprite2D
+	var player_icon:Sprite2D = character_icons.get_child(1) as Sprite2D
+	
+	opponent_icon.texture = opponent.health_icon
+	opponent_icon.hframes = opponent.health_icon_frames
+	
+	var o:StyleBoxFlat = health_bar.get_theme_stylebox("background") as StyleBoxFlat
+	o.bg_color = opponent.health_color
+	health_bar.add_theme_stylebox_override("background", o)
+	
+	var p:StyleBoxFlat = health_bar.get_theme_stylebox("fill") as StyleBoxFlat
+	p.bg_color = player.health_color
+	health_bar.add_theme_stylebox_override("fill", o)
+	
 func start_song():
 	var event := CancellableEvent.new()
 	call_on_modcharts("on_start_song", [event])
@@ -493,9 +637,64 @@ func end_song():
 	
 	call_on_modcharts("on_end_song_post", [event])
 	event.unreference()
+	
+func _process_event(name:String, parameters:PackedStringArray, time:float = -INF):
+	match name:
+		"Camera Pan": 
+			cur_camera_target = 1 if parameters[0].to_lower() == "true" else 0
+			
+			# lord save my soul for what i have done
+			var focused_strum_line:StrumLine = strum_lines.get_child(cur_camera_target) as StrumLine
+			var final_cam_pos:Vector2 = Vector2(0, 0)
+			var cameramatical_pain:int = 0
+			
+			for character in focused_strum_line.characters:
+				character = character as Character
+				final_cam_pos += character.get_camera_pos()
+				cameramatical_pain += 1
+				
+			final_cam_pos /= cameramatical_pain
+			camera.position = final_cam_pos
+			
+		"BPM Change": 
+			pass # handled by conductor
+			
+		_:
+			if not name in _loaded_events:
+				printerr("Tried to run non-existent event: %s" % name)
+				return
+			
+			var event:Modchart = _loaded_events[name]
+			if not is_instance_valid(event):
+				return
+			
+			event.call_method("on_event", parameters)
+			call_on_modcharts("on_event", parameters)
+			
+			event.queue_free()
 		
 func _physics_process(delta:float):
 	call_deferred_thread_group("do_note_spawning")
+	
+	for group in CHART.events:
+		if group.time > Conductor.position:
+			break
+			
+		for event in group.events:
+			_process_event(event.name, event.parameters, group.time)
+			
+		CHART.events.erase(group)
+	
+	for strum_line in strum_lines.get_children():
+		for character in strum_line.characters:
+			character = character as Character
+			if not character._is_true_player or character.hold_timer < Conductor.step_crochet * character.sing_duration * 0.0011 or strum_line.keys_pressed.has(true):
+				continue
+			
+			character.hold_timer = 0.0
+			character.dance()
+			
+	call_on_modcharts("_physics_process_post", [delta])
 
 func _process(delta:float):
 	delta = minf(delta, 0.1)
@@ -607,6 +806,14 @@ func _beat_hit(beat:int):
 	elif beat > 0 and cam_zooming_interval > 0 and beat % cam_zooming_interval == 0:
 		camera.zoom += Vector2(0.015, 0.015)
 		hud.scale += Vector2(0.03, 0.03)
+		
+	for strum_line in strum_lines.get_children():
+		for character in strum_line.characters:
+			character = character as Character
+			if character.last_anim.begins_with("sing"):
+				continue
+				
+			character.dance()
 		
 	call_on_modcharts("_beat_hit", [beat])
 		

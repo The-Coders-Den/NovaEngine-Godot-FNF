@@ -1,6 +1,6 @@
 nova to do list!!! woohoo!!!
 
+- base game
 - story menu
-- freeplay menu
+- rework main menu
 - options menu
-- characters (via character groups)

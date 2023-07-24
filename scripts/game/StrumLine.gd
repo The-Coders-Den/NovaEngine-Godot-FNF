@@ -17,12 +17,19 @@ class_name StrumLine extends Node2D
 ## Can also be modified for every note (game.scroll_speed).
 @export var scroll_speed:float = -INF
 
+var keys_pressed:Array[bool] = []
+var characters:Array[Character] = []
+
 enum NoteDirection {
 	LEFT,
 	DOWN,
 	UP,
 	RIGHT
 }
+
+func _ready():
+	for i in receptors.get_child_count():
+		keys_pressed.append(false)
 
 func prepare_anims():
 	for i in receptors.get_child_count():
@@ -53,8 +60,10 @@ func _unhandled_key_input(event):
 	receptor.pressed = event.is_pressed()
 	
 	if event.is_pressed():
+		keys_pressed[dir] = true
 		handle_note_input(dir)
 	else:
+		keys_pressed[dir] = false
 		play_anim(dir, "static")
 		
 func handle_note_input(dir:int):

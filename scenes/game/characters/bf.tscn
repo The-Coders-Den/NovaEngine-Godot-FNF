@@ -497,4 +497,4 @@ libraries = {
 }
 
 [node name="CameraPos" type="Node2D" parent="."]
-position = Vector2(-213, -257)
+position = Vector2(-191, -335)

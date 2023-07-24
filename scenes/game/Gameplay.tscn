@@ -24,6 +24,8 @@ script = ExtResource("1_6nmb5")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(640, 360)
 ignore_rotation = false
+position_smoothing_enabled = true
+position_smoothing_speed = 4.0
 
 [node name="Ratings" type="Node2D" parent="."]
 position = Vector2(740, 295)
@@ -63,6 +65,10 @@ autoplay = true
 
 [node name="PlayerStrums" parent="HUDContainer/HUD/StrumLines" instance=ExtResource("2_prky5")]
 position = Vector2(328, -256)
+
+[node name="SpectatorStrums" parent="HUDContainer/HUD/StrumLines" instance=ExtResource("2_prky5")]
+visible = false
+position = Vector2(0, -256)
 
 [node name="HealthBar" type="ProgressBar" parent="HUDContainer/HUD"]
 offset_left = -297.0

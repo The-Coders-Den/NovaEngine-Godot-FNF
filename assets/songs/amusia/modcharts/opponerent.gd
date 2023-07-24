@@ -19,6 +19,14 @@ func on_note_hit(e:NoteHitEvent):
 	shaking = true
 	shake_timer = 0.0
 	
+	if e.note.hit_time > Conductor.position - 50 or e.note.length > 0:
+		for c in e.note.strum_line.characters:
+			if not c.can_sing:
+				continue
+				
+			c.hold_timer = 0.0
+			c.play_anim("sing%s" % StrumLine.NoteDirection.keys()[e.direction], true)
+		
 	e.note.hit_allowed = true
 	e.cancel()
 	

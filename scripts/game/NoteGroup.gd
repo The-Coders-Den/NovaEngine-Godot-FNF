@@ -55,6 +55,14 @@ func _process(delta:float):
 			if not strum_line.autoplay:
 				game.health += 0.0115
 				
+			for character in strum_line.characters:
+				character = character as Character
+				if not character.is_animated or not character.can_sing:
+					continue
+				
+				character.hold_timer = 0.0
+				character.play_anim("sing%s" % StrumLine.NoteDirection.keys()[note.direction], true)
+				
 			strum_line.play_anim(note.direction, "confirm")
 			
 		if note.missed:
@@ -69,6 +77,14 @@ func _process(delta:float):
 			game.call_on_modcharts("on_note_hit", [event])
 			
 			if not event.cancelled:
+				for character in strum_line.characters:
+					character = character as Character
+					if not character.is_animated or not character.can_sing:
+						continue
+					
+					character.hold_timer = 0.0
+					character.play_anim("sing%s" % StrumLine.NoteDirection.keys()[note.direction], true)
+				
 				strum_line.play_anim(note.direction, "confirm")
 				note.was_already_hit = true
 				note.sprite.visible = false

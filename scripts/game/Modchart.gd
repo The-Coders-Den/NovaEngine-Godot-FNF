@@ -6,6 +6,7 @@
 class_name Modchart extends Node
 
 var game:Gameplay
+var is_event:bool = false
 
 func call_method(method:String, args:Array[Variant]):
 	# Method doesn't exist, don't call it
