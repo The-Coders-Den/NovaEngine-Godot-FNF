@@ -120,6 +120,8 @@ static func load_chart(song:String, difficulty:String):
 				note.strum_index = 1 if gotta_hit else 0
 				
 				final.notes.append(note)
+			
+			cur_time += cur_crochet * beats_per_measure
 	else:
 		printerr("Your chart somehow has no sections in it!")
 	
