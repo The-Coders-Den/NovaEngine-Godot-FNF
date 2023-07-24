@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="FreeplayList" load_steps=10 format=3 uid="uid://c5681qsrwyw5p"]
+[gd_resource type="Resource" script_class="FreeplayList" load_steps=12 format=3 uid="uid://c5681qsrwyw5p"]
 
 [ext_resource type="Script" path="res://scripts/resources/FreeplayList.gd" id="1_2suxv"]
 [ext_resource type="Texture2D" uid="uid://cb4g78s0nksa0" path="res://assets/images/game/icons/icon-dad.png" id="2_1a8vl"]
 [ext_resource type="Script" path="res://scripts/resources/FreeplaySong.gd" id="3_avrve"]
+[ext_resource type="Texture2D" uid="uid://bgk48t11fpyuf" path="res://assets/images/game/icons/icon-face.png" id="4_ptnyb"]
 
 [sub_resource type="Resource" id="Resource_l472d"]
 script = ExtResource("3_avrve")
@@ -64,6 +65,16 @@ icon_frames = 2
 bpm = 170.0
 difficulties = ["hard"]
 
+[sub_resource type="Resource" id="Resource_22ttb"]
+script = ExtResource("3_avrve")
+song_name = "monochrome"
+display_name = ""
+color = Color(1, 1, 1, 1)
+icon = ExtResource("4_ptnyb")
+icon_frames = 2
+bpm = 150.0
+difficulties = ["hard"]
+
 [resource]
 script = ExtResource("1_2suxv")
-songs = Array[ExtResource("3_avrve")]([SubResource("Resource_l472d"), SubResource("Resource_rsa3g"), SubResource("Resource_yg784"), SubResource("Resource_tqmju"), SubResource("Resource_m4ovy"), SubResource("Resource_ny3s3")])
+songs = Array[ExtResource("3_avrve")]([SubResource("Resource_l472d"), SubResource("Resource_rsa3g"), SubResource("Resource_yg784"), SubResource("Resource_tqmju"), SubResource("Resource_m4ovy"), SubResource("Resource_ny3s3"), SubResource("Resource_22ttb")])
