@@ -52,7 +52,7 @@ func map_bpm_changes(song:Chart):
 	
 	for group in song.events:
 		for event in group.events:
-			if event.name != "BPM Change" or event.parameters != null or event.parameters.size() < 1:
+			if event.name != "BPM Change" or event.parameters == null or event.parameters.size() < 1:
 				continue
 				
 			if float(event.parameters[0]) == cur_bpm:
