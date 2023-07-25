@@ -640,8 +640,7 @@ func end_song():
 	
 func _process_event(name:String, parameters:PackedStringArray, time:float = -INF):
 	match name:
-		"Camera Pan": 
-			print(time)
+		"Camera Pan":
 			cur_camera_target = 1 if parameters[0].to_lower() == "true" else 0
 			
 			# lord save my soul for what i have done
@@ -679,7 +678,6 @@ func _physics_process(delta:float):
 	CHART.events.sort_custom(func(a,b): return b.time > a.time)
 	for group in CHART.events:
 		if group.time >= Conductor.position:
-			print(group.time - Conductor.position)
 			break
 			
 		for event in group.events:
