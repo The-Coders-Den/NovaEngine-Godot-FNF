@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://dn3nbeli6ykl2"]
+
+[ext_resource type="Script" path="res://scenes/editors/testing/ChartTester.gd" id="1_55bua"]
+[ext_resource type="PackedScene" uid="uid://w5olx2s2jovt" path="res://scenes/gameplay/strumlines/4K.tscn" id="2_1tymy"]
+[ext_resource type="FontFile" uid="uid://coqcg7h14duny" path="res://assets/fonts/vcr.ttf" id="3_xi52y"]
+
+[node name="ChartTester" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_55bua")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 0.501961)
+
+[node name="Cpu" parent="." instance=ExtResource("2_1tymy")]
+position = Vector2(312, 104)
+handle_input = false
+
+[node name="Plr" parent="." instance=ExtResource("2_1tymy")]
+position = Vector2(968, 104)
+handle_input = false
+
+[node name="Notes" type="Node2D" parent="."]
+
+[node name="InfoTxt" type="Label" parent="."]
+offset_top = 600.0
+offset_right = 1280.0
+offset_bottom = 693.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_xi52y")
+theme_override_font_sizes/font_size = 20
+text = "Time: 0:00 / 0:00
+Step: 0 | Beat: 0 | Section: 0
+Hits: 0 | Misses: 0
+[ESC] - Stop Testing"
+horizontal_alignment = 1

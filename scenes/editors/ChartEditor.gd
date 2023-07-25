@@ -26,6 +26,11 @@ extends Control
 @onready var save_dialog:FileDialog = $SaveDialog
 @onready var load_dialog:FileDialog = $LoadDialog
 
+@onready var test_song:MenuButton = $TestSong
+@onready var window_toggle:MenuButton = $WindowToggle
+@onready var settings:MenuButton = $Settings
+@onready var track_mute:PopupMenu = $Settings/TrackMute
+
 @onready var pos_info = $PosInfo
 
 var hold_tex:Texture2D = preload("res://assets/images/menus/charteditor/hold.png")
@@ -60,14 +65,19 @@ var quant_colors:Array[Color] = [
 	Color8(96, 103, 137)
 ]
 
+var hit_notes:Array[SectionNote] = []
+
 var arrow_rotations:Array[float] = [0, 270, 90, 180]
 
-var tracks:Array[AudioPlayer] = []
+var tracks:Array[AudioStreamPlayer] = []
 
 var chart_data:Chart = Global.SONG
-var track_length:float = 100000;
+var track_length:float = 100000
+
+var take_input:bool = true
 
 func load_song():
+	track_mute.clear()
 	var music_path:String = "res://assets/songs/%s/audio/" % chart_data.name.to_lower()
 	
 	if DirAccess.dir_exists_absolute(music_path):
@@ -81,6 +91,9 @@ func load_song():
 					music.pitch_scale = Conductor.rate
 					tracks.append(music)
 					sound_group.add_child(music)
+					
+					var file_label = file.get_file().get_basename()
+					track_mute.add_check_item(file_label)
 	
 	if tracks.is_empty():
 		printerr("The tracks list of this song is empty! Did you specify the right folder?")
@@ -102,6 +115,22 @@ func _ready():
 	
 	bloom_mat = ShaderMaterial.new()
 	bloom_mat.shader = load("res://assets/shaders/NoteBloom.gdshader")
+	
+	test_song.get_popup().id_pressed.connect(_test_chart)
+	window_toggle.get_popup().id_pressed.connect(_toggle_window)
+	
+	var settings_popup = settings.get_popup()
+	settings_popup.id_pressed.connect(_setting_set)
+	
+	settings_popup.add_item("Waveform", 1)
+	settings_popup.set_item_disabled(1, true) # Its just to let people know its coming soon.
+	
+	settings_popup.add_submenu_item("Muted Tracks", "TrackMute", 2)
+	settings.remove_child(track_mute)
+	settings_popup.add_child(track_mute)
+	#                                               s
+	settings_popup.add_item("Decrease Snap", 3, KEY_R)
+	settings_popup.add_item("Increase Snap", 4, KEY_T)
 
 func get_quant_color(hit_time:float):
 	var measure_time:float = 60 / Conductor.bpm * 1000 * 4
@@ -113,6 +142,8 @@ func get_quant_color(hit_time:float):
 			return quant_colors[quant]
 
 func regen_notes():
+	hit_notes.clear()
+	
 	cur_section = Conductor.cur_section
 	selected_note = null
 	selected_data = null
@@ -202,19 +233,7 @@ func check_note():
 	return false
 
 func _input(event):
-	if char_dialog.visible or stage_dialog.visible or ui_skin_dialog.visible or save_dialog.visible or load_dialog.visible: return
-	
-	var hold_axis = Input.get_axis("chart_hold_down", "chart_hold_up")
-	if event is InputEventKey and (event.is_action_pressed("chart_hold_down") or event.is_action_pressed("chart_hold_up")) and selected_note != null:
-		var hold_inc:float = Conductor.step_crochet * hold_axis * cur_snap
-		selected_data.length = clampf(selected_data.length + hold_inc, 0, 999999)
-		
-		var hold:Line2D = selected_note.get_child(0)
-		hold.visible = selected_data.length > 0.0
-		if hold.visible:
-			hold.points[1].y = ((selected_data.length / Conductor.step_crochet * container.size.y / 16) - container.size.y / 16) / 0.275
-			var tail = hold.get_child(0)
-			tail.position.y = hold.points[1].y + tail_tex.get_height() * 0.5
+	if char_dialog.visible or stage_dialog.visible or ui_skin_dialog.visible or save_dialog.visible or load_dialog.visible or not take_input: return
 	
 	if event is InputEventMouseButton \
 	and event.button_index == MOUSE_BUTTON_LEFT and event.pressed \
@@ -235,25 +254,46 @@ func _input(event):
 		selected_data = note_data
 		new_note.material = bloom_mat
 
+func _unhandled_key_input(event):
+	if char_dialog.visible or stage_dialog.visible or ui_skin_dialog.visible or save_dialog.visible or load_dialog.visible or not take_input or not event.is_pressed():
+		take_input = true
+		return
+	
+	if event.is_action_pressed("chart_test") and not ((not tracks.is_empty()) and tracks[0].playing):
+		test_song.show_popup()
+		
+	if event.is_action_pressed("space_bar"):
+		play_song()
+	
+	var hold_axis = Input.get_axis("chart_hold_down", "chart_hold_up")
+	if hold_axis != 0 and selected_note != null:
+		var hold_inc:float = Conductor.step_crochet * hold_axis * cur_snap
+		selected_data.length = clampf(selected_data.length + hold_inc, 0, 999999)
+		
+		var hold:Line2D = selected_note.get_child(0)
+		hold.visible = selected_data.length > 0.0
+		if hold.visible:
+			hold.points[1].y = ((selected_data.length / Conductor.step_crochet * container.size.y / 16) - container.size.y / 16) / 0.275
+			var tail = hold.get_child(0)
+			tail.position.y = hold.points[1].y + tail_tex.get_height() * 0.5
+
 func play_song():
 	if tracks.is_empty() or Conductor.position >= track_length: return
 	
 	if !tracks[0].playing:
 		for track in tracks:
 			track.play(Conductor.position / 1000)
+			
+		hit_notes.clear()
+		for note in chart_data.sections[cur_section].notes:
+			if note.time < Conductor.position:
+				hit_notes.append(note)
 	else:
 		for track in tracks:
 			track.stop()
 
 func _process(delta):
-	if char_dialog.visible or stage_dialog.visible or ui_skin_dialog.visible or save_dialog.visible or load_dialog.visible: return
-	
-	if Input.is_key_label_pressed(KEY_ESCAPE) or Input.is_key_label_pressed(KEY_ENTER):
-		Global.switch_scene("res://scenes/gameplay/Gameplay.tscn")
-		return
-	
-	if Input.is_action_just_pressed("space_bar"):
-		play_song()
+	if char_dialog.visible or stage_dialog.visible or ui_skin_dialog.visible or save_dialog.visible or load_dialog.visible or not take_input: return
 	
 	strum_line.position.y = container.position.y + (Conductor.position - section_start) / (Conductor.step_crochet) * (container.size.y / 16)
 	
@@ -284,6 +324,11 @@ func _process(delta):
 	
 	if (not tracks.is_empty()) and tracks[0].playing:
 		Conductor.position = tracks[0].time
+		
+		for note in chart_data.sections[cur_section].notes:
+			if (not note in hit_notes) and note.time <= Conductor.position:
+				hitsound.play()
+				hit_notes.append(note)
 	elif vert_axis != 0:
 		Conductor.position += delta * 500 * mult * vert_axis
 	elif Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_right"):
@@ -300,11 +345,52 @@ func _process(delta):
 		float_to_seconds(track_length * 0.001),
 		Conductor.cur_step,
 		Conductor.cur_beat,
-		Conductor.cur_section
+		Conductor.cur_section,
+		16 / cur_snap
 	]
 		
-	pos_info.text = "%02d:%02d / %02d:%02d\n\nStep: %01d\nBeat: %01d\nSection: %01d" % format_array
+	pos_info.text = "%02d:%02d / %02d:%02d\n\nStep: %01d\nBeat: %01d\nSection: %01d\nSnap: 1/%01d" % format_array
 
 # thanks @BeastlyGabi for letting me use these lol.
 func float_to_minute(value:float): return int(value / 60)
 func float_to_seconds(value:float): return fmod(value, 60)
+
+@onready var windows = [$song, $assets, $section, $note]
+var window_vis = [true, true, true, true]
+func pause(paused:bool):
+	get_tree().paused = paused
+	for i in windows.size():
+		windows[i].visible = window_vis[i] and not paused
+
+
+func _test_chart(id:int):
+	match test_song.get_popup().get_item_text(id):
+		"Play Song":
+			Global.switch_scene("res://scenes/gameplay/Gameplay.tscn")
+		"Play Here": # (UNSUPPORTED CURRENTLY)
+			Global.switch_scene("res://scenes/gameplay/Gameplay.tscn")
+		"Test Chart":
+			pause(true)
+			add_child(load("res://scenes/editors/testing/ChartTester.tscn").instantiate())
+
+func _toggle_window(id:int):
+	windows[id].visible = not windows[id].visible
+	window_vis[id] = windows[id].visible
+	window_toggle.get_popup().set_item_checked(id, windows[id].visible)
+
+func _setting_set(id):
+	var settings_popup = settings.get_popup()
+	match settings_popup.get_item_text(id):
+		"Hitsounds":
+			var is_muted = settings_popup.is_item_checked(id)
+			hitsound.volume_db = linear_to_db(0) if is_muted else 10
+			settings_popup.set_item_checked(id, not is_muted)
+		"Increase Snap":
+			cur_snap = clampf(cur_snap * 0.5, 0.125, 4)
+		"Decrease Snap":
+			cur_snap = clampf(cur_snap * 2, 0.125, 4)
+
+func _mute_track(id):
+	var is_muted = track_mute.is_item_checked(id)
+	tracks[id].volume_db = linear_to_db(float(is_muted))
+	track_mute.set_item_checked(id, not is_muted)
