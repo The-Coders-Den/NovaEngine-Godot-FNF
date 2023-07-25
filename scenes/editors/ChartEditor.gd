@@ -310,7 +310,7 @@ func _process(delta):
 		var cur_lane:Panel = opponent_lane if over_left else player_lane
 		var x_pos = cur_lane.position.x + container.position.x
 		lane_id = floor((mouse_pos.x - x_pos) / (cur_lane.size.x / 4))
-		selected_dir = lane_id + 4 * int(over_right != chart_data.sections[Conductor.cur_section].is_player)
+		selected_dir = lane_id + 4 * int(over_right != chart_data.sections[cur_section].is_player)
 
 		hover_arrow.rotation_degrees = arrow_rotations[lane_id]
 		hover_arrow.position.x = x_pos + lane_id * (cur_lane.size.x / 4) + (cur_lane.size.x / 64) + hover_size.x * 0.275 * 0.5
