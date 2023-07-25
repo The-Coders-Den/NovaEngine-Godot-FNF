@@ -211,10 +211,11 @@ func add_sustain(note:Sprite2D):
 	line.add_child(tail)
 
 func check_note():
+	var time_check = roundf(selected_time * 10) * 0.1 # Rounding for a higher chance to grab the note.
 	for i in chart_data.sections[Conductor.cur_section].notes.size():
 		var note_data = chart_data.sections[Conductor.cur_section].notes[i]
 		
-		if note_data.time == selected_time and note_data.direction == selected_dir:
+		if roundf(note_data.time * 10) * 0.1 == time_check and note_data.direction == selected_dir:
 			var note = notes_group.get_child(i)
 			if Input.is_key_label_pressed(KEY_CTRL):
 				if selected_note != null:
