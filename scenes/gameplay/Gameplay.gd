@@ -565,7 +565,7 @@ func _unhandled_key_input(key_event:InputEvent) -> void:
 	if data > -1:
 		pressed[data] = key_event.is_pressed()
 	
-	if data == -1 and key_event.is_action_pressed("chart_open"):
+	if data == -1 and OS.is_debug_build() and key_event.is_action_pressed("chart_open"):
 		Global.switch_scene("res://scenes/editors/ChartEditor.tscn")
 		return
 	

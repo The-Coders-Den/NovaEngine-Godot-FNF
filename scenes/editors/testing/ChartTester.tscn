@@ -14,18 +14,19 @@ offset_bottom = 720.0
 color = Color(0, 0, 0, 0.501961)
 
 [node name="Cpu" parent="." instance=ExtResource("2_1tymy")]
-position = Vector2(312, 104)
+position = Vector2(307, 100)
 handle_input = false
 
 [node name="Plr" parent="." instance=ExtResource("2_1tymy")]
-position = Vector2(968, 104)
+position = Vector2(968, 100)
 handle_input = false
 
 [node name="Notes" type="Node2D" parent="."]
 
 [node name="InfoTxt" type="Label" parent="."]
+offset_left = 7.0
 offset_top = 600.0
-offset_right = 1280.0
+offset_right = 1287.0
 offset_bottom = 693.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5

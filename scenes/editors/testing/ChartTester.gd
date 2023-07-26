@@ -54,6 +54,11 @@ func _ready():
 			new_note.player_section = section.is_player
 			queued_notes.append(new_note)
 			
+	if SettingsAPI.get_setting("downscroll"):
+		cpu_strums.position.y = 620
+		plr_strums.position.y = 620
+		info_txt.position.y = 40
+			
 	queued_notes.sort_custom(func(a, b): return a.time < b.time)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
