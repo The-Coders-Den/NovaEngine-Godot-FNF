@@ -20,15 +20,16 @@ func _process(delta:float):
 		
 		if note.was_already_hit:
 			note.position.y = receptor.position.y
-			
 			note.length -= delta * 1000.0
-			if note.length <= -Conductor.step_crochet:
-				note.queue_free()
-				
+			
 			if not strum_line.autoplay and note.length >= 80.0 and not Input.is_action_pressed("note_%s" % StrumLine.NoteDirection.keys()[note.direction].to_lower()) and not note.missed:
 				note.was_already_hit = false
 				note.missed = true
 				game.note_miss(note.direction)
+			
+			if note.length <= -Conductor.step_crochet:
+				remove_child(note)
+				note.queue_free()
 		else:
 			note.position.y = receptor.position.y - ((0.45 * downscroll_mult) * (Conductor.position - note.hit_time) * note_speed)
 		
@@ -88,7 +89,9 @@ func _process(delta:float):
 				strum_line.play_anim(note.direction, "confirm")
 				note.was_already_hit = true
 				note.sprite.visible = false
+				
 				if note.length <= 0:
+					remove_child(note)
 					note.queue_free()
 				
 			event.unreference()
@@ -101,11 +104,15 @@ func _process(delta:float):
 			note.missed = true
 			if not strum_line.autoplay and note.should_hit:
 				game.note_miss(note.direction, null, event)
+				remove_child(note)
+				note.queue_free()
 			
 			event.unreference()
 			
 		var off_screen:bool = note.hit_time < Conductor.position - ((500 + (note.length * 4.3)) / note_speed)
+		
 		if off_screen and not note.was_already_hit and note.missed:
+			remove_child(note)
 			note.queue_free()
 			
 	if anim_timer >= Conductor.step_crochet:

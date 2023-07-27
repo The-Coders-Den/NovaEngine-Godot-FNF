@@ -30,7 +30,8 @@ func _unhandled_key_input(event):
 	event = event as InputEventKey
 	if not event.is_pressed() or exiting: return
 	
-	var scroll_axis:int = Input.get_axis("ui_up","ui_down")
+	var scroll_axis:int = int(event.is_action_pressed("ui_down")) - \
+			int(event.is_action_pressed("ui_up"))
 	
 	if scroll_axis != 0:
 		change_item(scroll_axis)
