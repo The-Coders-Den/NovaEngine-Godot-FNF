@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dlp8s18yv544"
+path="res://.godot/imported/Inst.ogg-fef139d37e66e440e3f830ae39562bae.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/songs/dad battle/music/Inst.ogg"
+dest_files=["res://.godot/imported/Inst.ogg-fef139d37e66e440e3f830ae39562bae.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

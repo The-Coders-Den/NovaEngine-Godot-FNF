@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://x603hep1yoc7"]
+
+[ext_resource type="Script" path="res://assets/songs/bopeebo/modchart.gd" id="1_o1vki"]
+
+[node name="modchart" type="Node"]
+script = ExtResource("1_o1vki")

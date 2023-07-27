@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/healthBar.png-77f73c39a4fc19c26ecb9782bb451ba
 
 [params]
 
-compress/mode=4
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

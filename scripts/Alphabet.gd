@@ -31,7 +31,19 @@ var last_text:String = ""
 				var new_sprite:AnimatedSprite2D = AnimatedSprite2D.new()
 				new_sprite.centered = false
 				new_sprite.sprite_frames = frames
+
 				new_sprite.play(letter.to_upper())
+				match letter.to_upper():
+					"_":
+						new_sprite.offset.y = 40
+						
+					"-":
+						new_sprite.play("-dash-")
+						new_sprite.offset.y = 20
+						
+					".":
+						new_sprite.offset.y = 40
+	
 				letters.append(new_sprite)
 				add_child(new_sprite)
 				

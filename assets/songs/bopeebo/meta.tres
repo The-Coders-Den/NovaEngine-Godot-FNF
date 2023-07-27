@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SongMetaData" load_steps=2 format=3 uid="uid://bbyrevmiahmqa"]
+
+[ext_resource type="Script" path="res://resources/SongMetaData.gd" id="1_fmapi"]
+
+[resource]
+script = ExtResource("1_fmapi")
+start_offset = 0.0
+end_offset = 0.0
