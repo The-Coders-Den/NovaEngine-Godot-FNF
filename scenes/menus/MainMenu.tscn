@@ -136,7 +136,6 @@ stream = ExtResource("4_a86w6")
 
 [node name="Music" type="AudioStreamPlayer" parent="MenuSounds"]
 stream = ExtResource("5_d2pwv")
-autoplay = true
 
 [node name="ParallaxNode" type="Node2D" parent="."]
 script = ExtResource("1_d2832")

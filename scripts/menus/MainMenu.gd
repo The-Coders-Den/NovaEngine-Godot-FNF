@@ -6,14 +6,11 @@ extends Node2D
 
 @onready var camera := $Camera2D
 
-@onready var scroll_audio := $MenuSounds/Scroll
-@onready var confirm_audio := $MenuSounds/Confirm
-@onready var cancel_audio := $MenuSounds/Cancel
-
 var cur_item:int = 0
 var exiting:bool = false
 
 func _ready():
+	Audio.play_music("freakyMenu")
 	for i in buttons.get_child_count():
 		var button = buttons.get_child(i)
 		
@@ -41,7 +38,7 @@ func _unhandled_key_input(event):
 func change_item(inc:int):
 	cur_item = wrapi(cur_item + inc, 0, buttons.get_child_count())
 	
-	scroll_audio.play()
+	Audio.play_sound(Audio.MENU_SOUNDS.SCROLL)
 	
 	for i in buttons.get_child_count():
 		buttons.get_child(i).play("idle" if i != cur_item else "selected")
@@ -57,11 +54,11 @@ func select_item():
 			
 			if not ResourceLoader.exists(scene_name):
 				printerr("Scene \"" + scene_name + "\" doesn't exist! Cancelling the select function.")
-				cancel_audio.play()
+				Audio.play_sound(Audio.MENU_SOUNDS.CANCEL)
 				return
 			
 			magenta_flicker.play("flicker")
-			confirm_audio.play()
+			Audio.play_sound(Audio.MENU_SOUNDS.CONFIRM)
 			exiting = true
 			
 			var flicker:AnimationPlayer = buttons.get_child(cur_item).get_node("FlickerAnimation")

@@ -28,6 +28,7 @@ var current_song:int = 0:
 const song_spacing:float = 160.0
 
 func _ready():
+	Audio.play_music("freakyMenu")
 	camera.rotation_smoothing_enabled = false
 	for song in freeplay_data.songs:
 		if song == null:
@@ -106,4 +107,5 @@ func change_diff(i:int):
 func select_song():
 	var _song = freeplay_data.songs[current_song]
 	Gameplay.CHART = Chart.load_chart(_song.song_name.to_lower(),diff)
+	Audio.music.stop()
 	Global.switch_scene("res://scenes/game/Gameplay.tscn")
