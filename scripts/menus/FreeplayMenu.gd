@@ -61,8 +61,8 @@ func _unhandled_key_input(event):
 	event = event as InputEventKey
 	if not event.is_pressed(): return
 	
-	var scroll_axis:int = Input.get_axis("ui_up","ui_down")
-	var diff_axis:int = Input.get_axis("ui_left","ui_right")
+	var scroll_axis:int= -int(event.is_action_pressed("ui_up")) + int(event.is_action_pressed("ui_down"))
+	var diff_axis:int = -int(event.is_action_pressed("ui_right")) + int(event.is_action_pressed("ui_left"))
 	
 	if scroll_axis != 0:
 		change_song(scroll_axis)
@@ -70,10 +70,10 @@ func _unhandled_key_input(event):
 	if diff_axis != 0:
 		change_diff(diff_axis)
 		
-	if Input.is_action_just_pressed("ui_accept"):
+	if event.is_action_pressed("ui_accept"):
 		select_song()
 		
-	if Input.is_action_just_pressed("ui_cancel"):
+	if event.is_action_pressed("ui_cancel"):
 		Global.switch_scene("res://scenes/menus/MainMenu.tscn")
 	
 func change_song(i:int = 0):
