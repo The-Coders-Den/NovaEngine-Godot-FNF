@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/icon-senpai.png-7aff6938552e58a8c80330477853f
 
 [params]
 
-compress/mode=4
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

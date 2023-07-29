@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/icon-pico.png-01eb4ec372ae35c643fc52c925011e9
 
 [params]
 
-compress/mode=4
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

@@ -25,6 +25,7 @@ Overlay="*res://scenes/autoload/Overlay.tscn"
 Signals="*res://scripts/autoload/Signals.gd"
 Volume="*res://scenes/autoload/Volume.tscn"
 Global="*res://scripts/autoload/Global.gd"
+Audio="*res://scenes/autoload/audio.tscn"
 
 [display]
 

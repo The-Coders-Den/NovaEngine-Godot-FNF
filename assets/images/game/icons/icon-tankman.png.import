@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/icon-tankman.png-b85f4f5ec7554b579895864b74d3
 
 [params]
 
-compress/mode=4
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
