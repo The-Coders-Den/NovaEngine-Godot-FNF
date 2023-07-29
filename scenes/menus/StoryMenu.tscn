@@ -1,3 +1,23 @@
-[gd_scene format=3 uid="uid://do11sgelj3x5c"]
+[gd_scene load_steps=2 format=3 uid="uid://do11sgelj3x5c"]
+
+[ext_resource type="Script" path="res://scripts/menus/StoryMenu.gd" id="1_q66lx"]
 
 [node name="StoryMenu" type="Node2D"]
+script = ExtResource("1_q66lx")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 501.0
+offset_top = 321.0
+offset_right = 779.0
+offset_bottom = 399.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Story Menu is currently unavailable.
+
+leave."
+horizontal_alignment = 1
