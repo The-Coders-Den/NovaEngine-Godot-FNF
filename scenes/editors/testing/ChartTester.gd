@@ -20,6 +20,12 @@ var chart_data:Chart
 var queued_notes:Array[SectionNote] = []
 
 func _ready():
+	var default_path:String = "res://scenes/gameplay/notes/Default.tscn"
+	note_nodes["default"] = load(default_path).instantiate()
+	note_nodes["default"].in_editor = true
+	note_nodes["default"].position.y = -9999
+	note_nodes["default"].process_mode = PROCESS_MODE_DISABLED
+	
 	chart_data = chart_editor.chart_data
 	start_time = Conductor.position
 	Conductor.position -= Conductor.crochet * 2
