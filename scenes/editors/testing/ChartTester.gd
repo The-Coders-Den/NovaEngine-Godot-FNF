@@ -25,6 +25,7 @@ func _ready():
 	note_nodes["default"].in_editor = true
 	note_nodes["default"].position.y = -9999
 	note_nodes["default"].process_mode = PROCESS_MODE_DISABLED
+	note_nodes["Alt Animation"] = note_nodes["default"]
 	
 	chart_data = chart_editor.chart_data
 	start_time = Conductor.position
