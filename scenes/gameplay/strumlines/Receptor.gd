@@ -1,6 +1,5 @@
 extends AnimatedSprite
 class_name Receptor
-
 @export_enum("left", "down", "up", "right")
 var direction:String = "left"
 

@@ -28,6 +28,7 @@ Transition="*res://autoload/scenes/Transition.tscn"
 VolumeSlider="*res://autoload/scenes/VolumeSlider.tscn"
 FPS="*res://autoload/scenes/FPS.tscn"
 HighScore="*res://autoload/scripts/HighScore.gd"
+DiscordSDKLoader="*res://addons/discord-sdk-gd/nodes/core_updater.gd"
 
 [display]
 
@@ -35,6 +36,10 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/discord-sdk-gd/plugin.cfg", "res://addons/parallax_node/plugin.cfg")
 
 [input]
 
@@ -153,5 +158,4 @@ chart_test={
 
 [rendering]
 
-renderer/rendering_method="mobile"
-renderer/rendering_method.mobile="gl_compatibility"
+renderer/rendering_method="gl_compatibility"
