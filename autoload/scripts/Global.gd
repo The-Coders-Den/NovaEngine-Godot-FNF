@@ -1,9 +1,6 @@
 extends Node
 
 var SONG:Chart
-const DISCORD_APP_ID:int = 1140382362211995678
-
-
 
 const note_directions:Array[String] = [
 	"left", "down", "up", "right",
@@ -40,19 +37,10 @@ var is_story_mode:bool = false
 var queued_songs:PackedStringArray = []
 
 func _ready() -> void:
-	discord_sdk.app_id = DISCORD_APP_ID
-	discord_sdk.large_image = "cheese"
 	last_scene_path = get_tree().current_scene.scene_file_path
 	ModManager.switch_mod(SettingsAPI.get_setting("current mod"))
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	
-	
-var discord_rpc_timer:float = 0.0
-func _physics_process(delta):
-	discord_rpc_timer += delta
-	if discord_rpc_timer >= 1.0:
-		discord_sdk.refresh()
 
 func set_vsync(value:bool):
 	if value:

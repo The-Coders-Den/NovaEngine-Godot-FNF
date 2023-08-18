@@ -91,8 +91,6 @@ var ui_skin:UISkin
 @onready var ms_display:Label = $HUD/MSDisplay
 @onready var script_group:ScriptGroup = $ScriptGroup
 
-@onready var song_info = $"HUD/Song Info"
-
 var countdown_ticks:int = 3
 
 const ICON_DELTA_MULTIPLIER:float = 60 * 0.25
@@ -448,7 +446,7 @@ func start_song():
 	for track in tracks:
 		add_child(track)
 		track.play((Conductor.position + meta.start_offset) / 1000.0)
-	song_info.intro()
+	
 	starting_song = false
 	
 	stage.callv("on_start_song", [])
@@ -497,19 +495,11 @@ func beat_hit(beat:int):
 	script_group.call_func("on_beat_hit_post", [beat])
 	
 func step_hit(step:int):
-	var song_length:float = tracks[0].stream.get_length() if tracks[0] else 0.0
-	if (Conductor.position/1000.0 >= tracks[0].stream.get_length()):
-		end_song()
 	script_group.call_func("on_step_hit", [step])
 	script_group.call_func("on_step_hit_post", [step])
 
 func do_event(name:String,parameters:Array[String]):
-	var ev:Event
-	if template_events.has(name):
-		ev = template_events.get(name)
-	else:
-		ev = load("res://scenes/events/" + name + ".tscn").instantiate()
-	assert(!ev)
+	var ev:Event = load("res://scenes/events/" + name + ".tscn").instantiate()
 	ev.parameters = parameters
 	add_child(ev)
 	
@@ -518,6 +508,9 @@ func section_hit(section:int):
 	for track in tracks:
 		if abs((track.get_playback_position() * 1000.0 - meta.start_offset) - (Conductor.position)) >= 20:
 			resync_tracks()
+	
+	if note_data_array.size() == 0 and note_group.get_children().size() == 0:
+		get_tree().create_timer((meta.end_offset/1000) / Conductor.rate).timeout.connect(end_song)
 	
 	if not range(SONG.sections.size()).has(section): return
 	
@@ -785,13 +778,12 @@ func get_sing_anim(note:Note):
 	return sing_anim
 
 func position_icons():
-	var icon_offset:int = 27
+	var icon_offset:int = 26
 	var percent:float = (health_bar.value / health_bar.max_value) * 100
 	
-	var cpu_icon_width:float = ((cpu_icon.texture.get_width() / cpu_icon.hframes) * cpu_icon.scale.x)
-	var player_icon_width:float = ((player_icon.texture.get_width() / player_icon.hframes) * player_icon.scale.x)
+	var cpu_icon_width:float = (cpu_icon.texture.get_width() / cpu_icon.hframes) * cpu_icon.scale.x
 
-	player_icon.position.x = (health_bar.size.x * ((100 - percent) * 0.01)) - (icon_offset)
+	player_icon.position.x = (health_bar.size.x * ((100 - percent) * 0.01)) - icon_offset
 	cpu_icon.position.x = (health_bar.size.x * ((100 - percent) * 0.01)) - (cpu_icon_width - icon_offset)
 	script_group.call_func("on_position_icons", [])
 
@@ -867,8 +859,22 @@ func _process(delta:float) -> void:
 	stage.callv("_process_post", [delta])
 	script_group.call_func("_process_post", [delta])
 
-
-func spawn_notes():
+func _physics_process(delta: float) -> void:
+	while (not event_data_array.is_empty()) and Conductor.position >= event_data_array[0].time:
+		print('running %s at %.3f ms with %s.' % [event_data_array[0].name,
+				event_data_array[0].time,
+				event_data_array[0].parameters])
+		
+		if template_events.has(event_data_array[0].name):
+			var event:Event = template_events[event_data_array[0].name].duplicate()
+			event.parameters = event_data_array[0].parameters
+			add_child(event)
+			
+		stage.callv("on_event", [event_data_array[0].name, event_data_array[0].parameters])
+		script_group.call_func("on_event", [event_data_array[0].name, event_data_array[0].parameters])
+		
+		event_data_array.pop_front()
+		
 	for note in note_data_array:
 		if note.time > Conductor.position + (2500 / (scroll_speed / Conductor.rate)): break
 		if note.direction < 0:
@@ -903,26 +909,6 @@ func spawn_notes():
 		script_group.call_func("on_note_spawn", [new_note])
 		
 		note_data_array.erase(note)
-
-func _physics_process(delta: float) -> void:
-	call_deferred_thread_group("spawn_notes")
-	while (not event_data_array.is_empty()) and Conductor.position >= event_data_array[0].time:
-		print('running %s at %.3f ms with %s.' % [event_data_array[0].name,
-				event_data_array[0].time,
-				event_data_array[0].parameters])
-		
-		if template_events.has(event_data_array[0].name):
-			var event:Event = template_events[event_data_array[0].name].duplicate()
-			event.parameters = event_data_array[0].parameters
-			add_child(event)
-			
-		stage.callv("on_event", [event_data_array[0].name, event_data_array[0].parameters])
-		script_group.call_func("on_event", [event_data_array[0].name, event_data_array[0].parameters])
-		
-		event_data_array.pop_front()
-		
-
-
 
 var can_skip_intro: bool = true
 

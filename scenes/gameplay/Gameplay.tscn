@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cd8qnbjwrowm3"]
+[gd_scene load_steps=13 format=3 uid="uid://cd8qnbjwrowm3"]
 
 [ext_resource type="Script" path="res://scenes/gameplay/Gameplay.gd" id="1_8k5hd"]
 [ext_resource type="Script" path="res://classes/ScriptGroup.gd" id="2_5pmok"]
@@ -12,20 +12,6 @@
 [ext_resource type="FontFile" uid="uid://coqcg7h14duny" path="res://assets/fonts/vcr.ttf" id="7_jpakc"]
 [ext_resource type="StyleBox" uid="uid://ccmycpgoa47g0" path="res://assets/styles/healthbar/player.tres" id="7_xkyo6"]
 [ext_resource type="Script" path="res://scripts/HealthIcon.gd" id="9_42oq6"]
-[ext_resource type="Script" path="res://scenes/gameplay/Song Info.gd" id="9_mrweu"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_181wl"]
-font = ExtResource("7_jpakc")
-font_size = 22
-outline_size = 10
-outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="Gradient" id="Gradient_fxt8u"]
-colors = PackedColorArray(0.501961, 0.501961, 0.501961, 1, 0.782243, 0.552123, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_hinig"]
-gradient = SubResource("Gradient_fxt8u")
-fill_to = Vector2(1, 1)
 
 [node name="Gameplay" type="Node2D"]
 script = ExtResource("1_8k5hd")
@@ -77,16 +63,6 @@ theme_override_font_sizes/font_size = 48
 text = "160ms"
 horizontal_alignment = 1
 
-[node name="Song Info" type="Label" parent="HUD"]
-offset_top = 8.0
-offset_right = 1280.0
-offset_bottom = 31.0
-text = "SONGNAME - SONG_POSITION/SONG_LENGTH"
-label_settings = SubResource("LabelSettings_181wl")
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("9_mrweu")
-
 [node name="HealthBar" type="ColorRect" parent="HUD"]
 offset_left = 340.0
 offset_top = 636.0
@@ -126,10 +102,10 @@ react_to_health = true
 
 [node name="ScoreText" type="Label" parent="HUD/HealthBar"]
 layout_mode = 0
-offset_left = -340.0
+offset_left = -331.0
 offset_top = 47.0
-offset_right = 940.0
-offset_bottom = 67.0
+offset_right = 929.0
+offset_bottom = 66.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = ExtResource("7_jpakc")
@@ -150,10 +126,3 @@ position = Vector2(640, 360)
 [node name="Set" type="AudioStreamPlayer" parent="CountdownSounds"]
 
 [node name="Go" type="AudioStreamPlayer" parent="CountdownSounds"]
-
-[node name="TextureRect" type="TextureRect" parent="."]
-offset_left = 442.0
-offset_top = 178.0
-offset_right = 482.0
-offset_bottom = 218.0
-texture = SubResource("GradientTexture2D_hinig")
