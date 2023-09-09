@@ -1,4 +1,4 @@
-<img src="https://media.discordapp.net/attachments/1095501933327962183/1148675553298235513/nova_logo.png" width="500" height="320"/>
+<img src="https://raw.githubusercontent.com/The-Coders-Den/NovaEngine-Godot-FNF/dev/art/nova%20logo.png" width="500" height="320"/>
 
 # 🎮 Friday Night Funkin: Nova Engine
 
