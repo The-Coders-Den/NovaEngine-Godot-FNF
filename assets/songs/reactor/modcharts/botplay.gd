@@ -1,6 +1,6 @@
 extends Modchart
 
-#"""
+"""
 func _ready():
 	game.player_strums.autoplay = true
 	
@@ -14,4 +14,4 @@ func on_note_hit(e:NoteHitEvent):
 	if event.judgement.do_splash:
 		var receptor:Receptor = game.player_strums.receptors.get_child(e.note.direction)
 		game.do_splash(receptor, e.note)
-#"""
+"""

@@ -22,6 +22,7 @@ func _ready():
 		button.play("idle" if i != 0 else "selected")
 	
 	watermark.text = "Nova Engine Godot - %s [%s]" % [str(Global.VERSION), Global.VERSION.type_to_string()]
+	change_item()
 
 func _unhandled_key_input(event):
 	event = event as InputEventKey
@@ -35,7 +36,7 @@ func _unhandled_key_input(event):
 	if event.is_action_pressed("ui_accept"):
 		select_item()
 		
-func change_item(inc:int):
+func change_item(inc:int = 0):
 	cur_item = wrapi(cur_item + inc, 0, buttons.get_child_count())
 	
 	Audio.play_sound(Audio.MENU_SOUNDS.SCROLL)
@@ -61,6 +62,14 @@ func select_item():
 			Audio.play_sound(Audio.MENU_SOUNDS.CONFIRM)
 			exiting = true
 			
+			for i in buttons.get_child_count():
+				if i == cur_item: continue
+				var tween := create_tween()
+				tween.tween_property(buttons.get_child(i), "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+			
 			var flicker:AnimationPlayer = buttons.get_child(cur_item).get_node("FlickerAnimation")
 			flicker.play("flicker")
-			flicker.animation_finished.connect(func(anim): Global.switch_scene(scene_name))
+			flicker.animation_finished.connect(func(anim):
+				await get_tree().create_timer(0.1).timeout
+				Global.switch_scene(scene_name)
+			)
