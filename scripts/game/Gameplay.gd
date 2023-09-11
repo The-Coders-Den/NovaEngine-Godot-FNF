@@ -777,8 +777,18 @@ var countdown_tween:Tween
 var cur_countdown_tick:int = 0
 
 func countdown_tick(tick:int = 0):
-	var textures:Array[CompressedTexture2D] = [ui_style.prepare_texture, ui_style.ready_texture, ui_style.set_texture, ui_style.go_texture]
-	var sounds:Array[AudioStream] = [ui_style.prepare_sound, ui_style.ready_sound, ui_style.set_sound, ui_style.go_sound]
+	var textures:Array[CompressedTexture2D] = [
+		ui_style.prepare_texture, 
+		ui_style.prepare_texture, 
+		ui_style.prepare_texture, 
+		ui_style.prepare_texture
+	]
+	var sounds:Array[AudioStream] = [
+		ui_style.prepare_sound,
+		ui_style.prepare_sound,
+		ui_style.prepare_sound,
+		ui_style.prepare_sound
+	]
 
 	if countdown_tween != null:
 		countdown_tween.kill()
@@ -866,3 +876,6 @@ func _get_note_speed(note:Chart.ChartNote):
 		return scroll_speed / Conductor.rate
 			
 	return CHART.scroll_speed / Conductor.rate
+	
+func _exit_tree():
+	Conductor.rate = 1.0
