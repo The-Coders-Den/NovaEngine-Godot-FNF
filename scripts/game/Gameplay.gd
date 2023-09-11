@@ -23,15 +23,15 @@ static var GAME_MODE:GameMode = GameMode.FREEPLAY
 
 @onready var opponent:Character:
 	get:
-		return opponent_list[0]
+		return opponent_list.front()
 		
 @onready var spectator:Character:
 	get:
-		return spectator_list[0]
+		return spectator_list.front()
 		
 @onready var player:Character:
 	get:
-		return player_list[0]
+		return player_list.front()
 
 @onready var health_bar:ProgressBar = $HUDContainer/HUD/HealthBar
 @onready var character_icons:Node2D = $HUDContainer/HUD/HealthBar/Icons
@@ -56,6 +56,9 @@ var finished_tracks:Array[bool] = []
 
 ## The list of notes that haven't been spawned yet.
 var notes_to_spawn:Array[Chart.ChartNote] = []
+
+## The list of events that haven't been executed yet.
+var events_to_execute:Array[Chart.ChartEventGroup] = []
 
 ## The scroll speed of the notes.
 ## Can also be modified per strumline.
@@ -165,6 +168,9 @@ var _loaded_events:Dictionary = {}
 		
 func load_events():
 	for group in CHART.events:
+		events_to_execute.append(group.duplicate(true))
+	
+	for group in events_to_execute:
 		for event in group.events:
 			if event.name in _loaded_events:
 				continue
@@ -364,16 +370,15 @@ func _ready():
 	call_on_modcharts("_ready_post", [])
 	
 func do_note_spawning():
-	for note in notes_to_spawn:
+	while _cur_chart_note < notes_to_spawn.size():
+		var note:Chart.ChartNote = notes_to_spawn[_cur_chart_note]
 		if note.hit_time > Conductor.position + (1500 / _get_note_speed(note)):
 			break
 			
 		var new_note:Note = template_notes[note.type].duplicate()
-		new_note.hit_time = note.hit_time
-		new_note.direction = note.direction
-		new_note.og_length = note.length * 0.7
-		new_note.length = new_note.og_length
-		new_note.type = note.type
+		note.length *= 0.7
+		new_note.og_length = note.length
+		new_note.data = note
 		new_note.strum_line = strum_lines.get_child(note.strum_index)
 		new_note.position = Vector2(-9999, -9999)
 		new_note.strum_line.notes.add_child(new_note)
@@ -406,16 +411,16 @@ func do_note_spawning():
 		for fart_note in new_note.strum_line.notes.get_children():
 			fart_note = fart_note as Note
 			
-			if last_note != null and absf(fart_note.hit_time - last_note.hit_time) <= 5 and last_note.direction == fart_note.direction:
+			if last_note != null and absf(fart_note.data.hit_time - last_note.data.hit_time) <= 5 and last_note.data.direction == fart_note.data.direction:
 				print("you have been BANNED from the mickey clubhouse for inappropate behavor")
 				fart_note.queue_free()
 			
 			last_note = fart_note
 			
-		notes_to_spawn.erase(note)
+		_cur_chart_note += 1
 		
 func do_splash(receptor:Receptor, note:Note):
-	var anim:String = "%s%s" % [StrumLine.NoteDirection.keys()[note.direction].to_lower(), str(randi_range(1,2))]
+	var anim:String = "%s%s" % [StrumLine.NoteDirection.keys()[note.data.direction].to_lower(), str(randi_range(1,2))]
 	
 	if note.has_splash:
 		var splash:AnimatedSprite2D = note.splash
@@ -562,10 +567,10 @@ func good_note_hit(note:Note, event:NoteHitEvent = null):
 	
 	consecutive_misses = 0
 	
-	var note_diff:float = (note.hit_time - Conductor.position) / Conductor.rate
+	var note_diff:float = (note.data.hit_time - Conductor.position) / Conductor.rate
 	var judgement:Timings.Judgement = Timings.get_judgement(note_diff)
 	
-	var receptor:Receptor = note.strum_line.receptors.get_child(note.direction)
+	var receptor:Receptor = note.strum_line.receptors.get_child(note.data.direction)
 	
 	for character in note.strum_line.characters:
 		character = character as Character
@@ -573,7 +578,7 @@ func good_note_hit(note:Note, event:NoteHitEvent = null):
 			continue
 		
 		character.hold_timer = 0.0
-		character.play_anim("sing%s" % StrumLine.NoteDirection.keys()[note.direction],true)
+		character.play_anim("sing%s" % StrumLine.NoteDirection.keys()[note.data.direction],true)
 	
 	if judgement.do_splash:
 		do_splash(receptor, note)
@@ -581,10 +586,10 @@ func good_note_hit(note:Note, event:NoteHitEvent = null):
 	note.was_already_hit = true
 	note.sprite.visible = false
 	
-	if note.length <= 0:
+	if note.data.length <= 0:
 		note.queue_free()
 	else:
-		note.length += note_diff * Conductor.rate
+		note.data.length += note_diff * Conductor.rate
 	
 	var pain:float = judgement.health_mult
 	pain *= note.health_gain_mult * (-1 if judgement.health_mult < 0 else 1)
@@ -618,12 +623,14 @@ func start_song():
 	var event := CancellableEvent.new()
 	call_on_modcharts("on_start_song", [event])
 	
-	starting_song = false
-	
-	for track in tracks:
-		track.play()
+	if not event.cancelled:
+		starting_song = false
+		
+		for track in tracks:
+			track.play()
 		
 	call_on_modcharts("on_start_song_post", [event])
+	event.unreference()
 	
 func end_song():
 	var event := CancellableEvent.new()
@@ -672,18 +679,22 @@ func _process_event(name:String, parameters:PackedStringArray, time:float = -INF
 			call_on_modcharts("on_event", parameters)
 			
 			event.queue_free()
+			
+var _cur_chart_note:int = 0
+var _cur_chart_event:int = 0
 		
 func _physics_process(delta:float):
 	call_deferred_thread_group("do_note_spawning")
-	CHART.events.sort_custom(func(a,b): return b.time > a.time)
-	for group in CHART.events:
+	
+	while _cur_chart_event < events_to_execute.size():
+		var group:Chart.ChartEventGroup = events_to_execute[_cur_chart_event]
 		if group.time >= Conductor.position:
 			break
 			
 		for event in group.events:
 			_process_event(event.name, event.parameters, group.time)
 			
-		CHART.events.erase(group)
+		_cur_chart_event += 1
 	
 	for strum_line in strum_lines.get_children():
 		for character in strum_line.characters:
@@ -739,12 +750,14 @@ func _unhandled_key_input(event):
 				Global.switch_scene("res://scenes/menus/FreeplayMenu.tscn")
 
 func skip_time(new_time:float):
+	_cur_chart_note = 0
+	
 	var old_time:float = Conductor.position
 	Conductor.position = new_time
 	
 	if new_time > old_time:
 		while notes_to_spawn.size() > 0:
-			if notes_to_spawn[0].hit_time >= new_time + 500.0:
+			if notes_to_spawn.front().hit_time >= new_time + 500.0:
 				break
 			
 			notes_to_spawn.pop_front()
@@ -842,7 +855,7 @@ func resync_tracks():
 			_track.seek(Conductor.position * 0.001)
 			
 	event.unreference()
-		
+	
 func _get_note_speed(note:Chart.ChartNote):
 	var strum_line:StrumLine = strum_lines.get_child(note.strum_index)
 	

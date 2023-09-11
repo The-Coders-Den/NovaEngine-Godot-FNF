@@ -201,6 +201,8 @@ static func _load_psych_events(CHART:Chart, raw:Dictionary):
 			if note[1] is Array or note[1] < 0:
 				for song_event in _load_psych_event_array(note):
 					CHART.events.append(song_event)
+					
+	CHART.events.sort_custom(func(a,b): return b.time > a.time)
 	
 class ChartCharacter extends Resource:
 	var name:String

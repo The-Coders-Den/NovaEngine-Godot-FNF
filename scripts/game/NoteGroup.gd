@@ -13,30 +13,30 @@ func _process(delta:float):
 		note = note as Note
 		
 		var downscroll_mult:int = -1 if strum_line.downscroll else 1
-		var receptor:Receptor = receptors.get_child(note.direction)
+		var receptor:Receptor = receptors.get_child(note.data.direction)
 		var note_speed:float = _get_note_speed(note)
 		
 		note.position.x = receptor.position.x
 		
 		if note.was_already_hit:
 			note.position.y = receptor.position.y
-			note.length -= delta * 1000.0
+			note.data.length -= delta * 1000.0
 			
-			if not strum_line.autoplay and note.length >= 80.0 and not Input.is_action_pressed("note_%s" % StrumLine.NoteDirection.keys()[note.direction].to_lower()) and not note.missed:
+			if not strum_line.autoplay and note.data.length >= 80.0 and not Input.is_action_pressed("note_%s" % StrumLine.NoteDirection.keys()[note.direction].to_lower()) and not note.missed:
 				note.was_already_hit = false
 				note.missed = true
-				game.note_miss(note.direction)
+				game.note_miss(note.data.direction)
 			
-			if note.length <= -Conductor.step_crochet:
+			if note.data.length <= -Conductor.step_crochet:
 				remove_child(note)
 				note.queue_free()
 		else:
-			note.position.y = receptor.position.y - ((0.45 * downscroll_mult) * (Conductor.position - note.hit_time) * note_speed)
+			note.position.y = receptor.position.y - ((0.45 * downscroll_mult) * (Conductor.position - note.data.hit_time) * note_speed)
 		
 		if note.sustain.visible:
 			note.sustain.position.x = (note.sustain.size.x * absf(note.sustain.scale.x))
 			
-			var calculated_height:float = ((note.length * 0.5) * note_speed) / absf(note.sustain.scale.y)
+			var calculated_height:float = ((note.data.length * 0.5) * note_speed) / absf(note.sustain.scale.y)
 			if calculated_height < 15:
 				note.sustain.self_modulate.a = 0.0
 			
@@ -62,19 +62,19 @@ func _process(delta:float):
 					continue
 				
 				character.hold_timer = 0.0
-				character.play_anim("sing%s" % StrumLine.NoteDirection.keys()[note.direction], true)
+				character.play_anim("sing%s" % StrumLine.NoteDirection.keys()[note.data.direction], true)
 				
-			strum_line.play_anim(note.direction, "confirm")
+			strum_line.play_anim(note.data.direction, "confirm")
 			
 		if note.missed:
-			note.length = note.og_length
+			note.data.length = note.og_length
 			note.sustain_clip_rect.clip_contents = false
 			note.modulate.a = 0.3
 		
-		if strum_line.autoplay and note.hit_time < Conductor.position and note.should_hit and note.hit_allowed and not note.was_already_hit:
+		if strum_line.autoplay and note.data.hit_time < Conductor.position and note.should_hit and note.hit_allowed and not note.was_already_hit:
 			note.hit_allowed = false
 			
-			var event := NoteHitEvent.new(note, note.direction, 0.023)
+			var event := NoteHitEvent.new(note, note.data.direction, 0.023)
 			game.call_on_modcharts("on_note_hit", [event])
 			
 			if not event.cancelled:
@@ -84,32 +84,32 @@ func _process(delta:float):
 						continue
 					
 					character.hold_timer = 0.0
-					character.play_anim("sing%s" % StrumLine.NoteDirection.keys()[note.direction], true)
+					character.play_anim("sing%s" % StrumLine.NoteDirection.keys()[note.data.direction], true)
 				
-				strum_line.play_anim(note.direction, "confirm")
+				strum_line.play_anim(note.data.direction, "confirm")
 				note.was_already_hit = true
 				note.sprite.visible = false
 				
-				if note.length <= 0:
+				if note.data.length <= 0:
 					remove_child(note)
 					note.queue_free()
 				
 			event.unreference()
 		
-		if note.hit_time < Conductor.position - (500 / note_speed) and not note.was_already_hit and not note.missed:
-			var event := NoteMissEvent.new(note, note.direction, 0.0475)
+		if note.data.hit_time < Conductor.position - (500 / note_speed) and not note.was_already_hit and not note.missed:
+			var event := NoteMissEvent.new(note, note.data.direction, 0.0475)
 			game.call_on_modcharts("on_note_miss", [event])
 			
 			# Cancelling the event won't matter here
 			note.missed = true
 			if not strum_line.autoplay and note.should_hit:
-				game.note_miss(note.direction, null, event)
+				game.note_miss(note.data.direction, null, event)
 				remove_child(note)
 				note.queue_free()
 			
 			event.unreference()
 			
-		var off_screen:bool = note.hit_time < Conductor.position - ((500 + (note.length * 4.3)) / note_speed)
+		var off_screen:bool = note.data.hit_time < Conductor.position - ((500 + (note.data.length * 4.3)) / note_speed)
 		
 		if off_screen and not note.was_already_hit and note.missed:
 			remove_child(note)

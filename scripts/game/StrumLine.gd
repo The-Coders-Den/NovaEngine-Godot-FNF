@@ -68,15 +68,15 @@ func _unhandled_key_input(event):
 		
 func handle_note_input(dir:int):
 	var possible_notes:Array[Node] = notes.get_children().filter(func(note:Note):
-		var can_be_hit:bool = (note.hit_time > Conductor.position - (Conductor.safe_zone_offset * Conductor.rate) and note.hit_time < Conductor.position + (Conductor.safe_zone_offset * 1.5 * Conductor.rate))
-		var too_late:bool = (note.hit_time < Conductor.position - (Conductor.safe_zone_offset * Conductor.rate) and not note.was_already_hit)
-		return note.direction == dir and can_be_hit and not too_late and not note.missed
+		var can_be_hit:bool = (note.data.hit_time > Conductor.position - (Conductor.safe_zone_offset * Conductor.rate) and note.data.hit_time < Conductor.position + (Conductor.safe_zone_offset * 1.5 * Conductor.rate))
+		var too_late:bool = (note.data.hit_time < Conductor.position - (Conductor.safe_zone_offset * Conductor.rate) and not note.was_already_hit)
+		return note.data.direction == dir and can_be_hit and not too_late and not note.missed
 	)
 	if possible_notes.size() > 0:
 		possible_notes.sort_custom(sort_hit_notes)
 		
 		var note:Note = possible_notes[0]
-		var event := NoteHitEvent.new(note, note.direction, 0.023)
+		var event := NoteHitEvent.new(note, note.data.direction, 0.023)
 		game.call_on_modcharts("on_note_hit", [event])
 		
 		if not event.cancelled:
@@ -97,4 +97,4 @@ func play_anim(dir:int, anim:String):
 func sort_hit_notes(a:Note, b:Note):
 	if not a.should_hit and b.should_hit: return false
 	elif a.should_hit and not b.should_hit: return true
-	return a.hit_time < b.hit_time
+	return a.data.hit_time < b.data.hit_time

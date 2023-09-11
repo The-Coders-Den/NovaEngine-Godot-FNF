@@ -25,16 +25,10 @@ class_name Note extends Node2D
 @onready var sprite = $Sprite
 
 #-- internal --#
-## time to hit the note in milliseconds
-var hit_time:float
-## direction 0 = left and 3 = right
-var direction:int
+## the data from the chart
+var data:Chart.ChartNote
 ## original length of sustain
 var og_length:float
-## current length of sustain
-var length:float
-## note type name
-var type:String
 ## strum that the note is on
 var strum_line:StrumLine
 ## scroll speed of the note

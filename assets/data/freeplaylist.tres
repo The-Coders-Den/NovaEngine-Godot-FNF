@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="FreeplayList" load_steps=15 format=3 uid="uid://c5681qsrwyw5p"]
+[gd_resource type="Resource" script_class="FreeplayList" load_steps=18 format=3 uid="uid://c5681qsrwyw5p"]
 
 [ext_resource type="Script" path="res://scripts/resources/FreeplayList.gd" id="1_2suxv"]
 [ext_resource type="Texture2D" uid="uid://cb4g78s0nksa0" path="res://assets/images/game/icons/icon-dad.png" id="2_1a8vl"]
@@ -105,6 +105,36 @@ icon_frames = 2
 bpm = 150.0
 difficulties = ["hard"]
 
+[sub_resource type="Resource" id="Resource_i6s1p"]
+script = ExtResource("3_avrve")
+song_name = "overdue"
+display_name = ""
+color = Color(1, 1, 1, 1)
+icon = ExtResource("4_ptnyb")
+icon_frames = 2
+bpm = 183.0
+difficulties = ["hard"]
+
+[sub_resource type="Resource" id="Resource_p4k85"]
+script = ExtResource("3_avrve")
+song_name = "powerchrome"
+display_name = ""
+color = Color(1, 1, 1, 1)
+icon = ExtResource("4_ptnyb")
+icon_frames = 2
+bpm = 160.0
+difficulties = ["hard"]
+
+[sub_resource type="Resource" id="Resource_18jg6"]
+script = ExtResource("3_avrve")
+song_name = "phonophobia"
+display_name = ""
+color = Color(1, 1, 1, 1)
+icon = ExtResource("4_ptnyb")
+icon_frames = 2
+bpm = 150.0
+difficulties = ["easy", "normal", "hard"]
+
 [resource]
 script = ExtResource("1_2suxv")
-songs = Array[ExtResource("3_avrve")]([SubResource("Resource_sv4jv"), SubResource("Resource_j2b4i"), SubResource("Resource_aoy77"), SubResource("Resource_l472d"), SubResource("Resource_rsa3g"), SubResource("Resource_yg784"), SubResource("Resource_tqmju"), SubResource("Resource_m4ovy"), SubResource("Resource_ny3s3"), SubResource("Resource_22ttb")])
+songs = Array[ExtResource("3_avrve")]([SubResource("Resource_sv4jv"), SubResource("Resource_j2b4i"), SubResource("Resource_aoy77"), SubResource("Resource_l472d"), SubResource("Resource_rsa3g"), SubResource("Resource_yg784"), SubResource("Resource_tqmju"), SubResource("Resource_m4ovy"), SubResource("Resource_ny3s3"), SubResource("Resource_22ttb"), SubResource("Resource_i6s1p"), SubResource("Resource_p4k85"), SubResource("Resource_18jg6")])
