@@ -22,7 +22,7 @@ func _process(delta:float):
 			note.position.y = receptor.position.y
 			note.data.length -= delta * 1000.0
 			
-			if not strum_line.autoplay and note.data.length >= 80.0 and not Input.is_action_pressed("note_%s" % StrumLine.NoteDirection.keys()[note.direction].to_lower()) and not note.missed:
+			if not strum_line.autoplay and note.data.length >= 80.0 and not Input.is_action_pressed("note_%s" % StrumLine.NoteDirection.keys()[note.data.direction].to_lower()) and not note.missed:
 				note.was_already_hit = false
 				note.missed = true
 				game.note_miss(note.data.direction)
