@@ -22,7 +22,9 @@ var notetypes:PackedStringArray = []
 
 static func load_chart(song:String, difficulty:String = "normal"):
 	var json = JSON.parse_string(FileAccess.open("res://assets/songs/"+song.to_lower()+"/"+difficulty+".json", FileAccess.READ).get_as_text()).song
-	
+	return load_from_json(song, json)
+
+static func load_from_json(song:String, json):
 	var chart = new()
 	chart.name = json.song
 	chart.raw_name = song.to_lower()

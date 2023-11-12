@@ -131,6 +131,17 @@ func _ready():
 	#                                               s
 	settings_popup.add_item("Decrease Snap", 3, KEY_R)
 	settings_popup.add_item("Increase Snap", 4, KEY_T)
+	
+func _notification(what):
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT or what == NOTIFICATION_WM_CLOSE_REQUEST:
+		if not DirAccess.dir_exists_absolute("user://chart_autosaves"):
+			DirAccess.make_dir_absolute("user://chart_autosaves")
+		windows[0]._save_song("user://chart_autosaves/" + chart_data.raw_name + ".json")
+
+func _exit_tree():
+	if not DirAccess.dir_exists_absolute("user://chart_autosaves"):
+		DirAccess.make_dir_absolute("user://chart_autosaves")
+	windows[0]._save_song("user://chart_autosaves/" + chart_data.raw_name + ".json")
 
 func get_quant_color(hit_time:float):
 	var measure_time:float = 60 / Conductor.bpm * 1000 * 4
@@ -236,24 +247,28 @@ func check_note():
 func _input(event):
 	if char_dialog.visible or stage_dialog.visible or ui_skin_dialog.visible or save_dialog.visible or load_dialog.visible or not take_input: return
 	
-	if event is InputEventMouseButton \
-	and event.button_index == MOUSE_BUTTON_LEFT and event.pressed \
-	and hover_arrow.visible and not check_note():
-		var new_note = hover_arrow.duplicate()
-		new_note.modulate.a = 1
-		notes_group.add_child(new_note)
-		add_sustain(new_note)
-		
-		var note_data = SectionNote.new()
-		note_data.time = selected_time
-		note_data.direction = selected_dir
-		chart_data.sections[Conductor.cur_section].notes.append(note_data)
-		
-		if selected_note != null:
-			selected_note.material = null
-		selected_note = new_note
-		selected_data = note_data
-		new_note.material = bloom_mat
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed \
+		and hover_arrow.visible and not check_note():
+			var new_note = hover_arrow.duplicate()
+			new_note.modulate.a = 1
+			notes_group.add_child(new_note)
+			add_sustain(new_note)
+			
+			var note_data = SectionNote.new()
+			note_data.time = selected_time
+			note_data.direction = selected_dir
+			chart_data.sections[Conductor.cur_section].notes.append(note_data)
+			
+			if selected_note != null:
+				selected_note.material = null
+			selected_note = new_note
+			selected_data = note_data
+			new_note.material = bloom_mat
+		elif event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			Conductor.position -= Conductor.step_crochet * 0.4
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			Conductor.position += Conductor.step_crochet * 0.4
 
 func _unhandled_key_input(event):
 	if char_dialog.visible or stage_dialog.visible or ui_skin_dialog.visible or save_dialog.visible or load_dialog.visible or not take_input or not event.is_pressed():
@@ -322,7 +337,7 @@ func _process(delta):
 	
 	var vert_axis = Input.get_axis("ui_up", "ui_down");
 	var hori_axis = Input.get_axis("ui_left", "ui_right");
-	
+
 	if (not tracks.is_empty()) and tracks[0].playing:
 		Conductor.position = tracks[0].time
 		

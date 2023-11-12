@@ -6,6 +6,8 @@ extends Window
 
 @onready var save_dialog = $"../SaveDialog"
 @onready var load_dialog = $"../LoadDialog"
+@onready var autosave_dialog = $"../AutosaveDialog"
+var autosave_tree:Tree
 
 @onready var switch_buttons = [
 	$"../assets/Panel/ScrollContainer/VBoxContainer/Player/SwitchButton",
@@ -95,6 +97,38 @@ func _load_song(path:String):
 
 func _open_load():
 	load_dialog.popup_centered()
+	disable_switches()
+
+func _select_autosave():
+	var item = autosave_tree.get_selected()
+	if item == null: return
+	
+	var file = item.get_text(0)
+	var json = JSON.parse_string(FileAccess.open("user://chart_autosaves/" + file, FileAccess.READ).get_as_text()).song
+	Global.SONG = Chart.load_from_json(file.get_basename(), json)
+	Global.switch_scene("res://scenes/editors/ChartEditor.tscn")
+
+func _open_autosave():
+	if not DirAccess.dir_exists_absolute("user://chart_autosaves"):
+		DirAccess.make_dir_absolute("user://chart_autosaves")
+	if autosave_tree != null:
+		autosave_tree.queue_free()
+
+	var file_icon = ThemeDB.get_default_theme().get_icon("file", "FileDialog")
+
+	autosave_tree = Tree.new()
+	autosave_tree.item_activated.connect(_select_autosave)
+	var parent = autosave_tree.create_item()
+	autosave_tree.hide_root = true
+	for file in DirAccess.get_files_at("user://chart_autosaves"):
+		if file.get_extension() != "json": continue
+
+		var item = autosave_tree.create_item(parent)
+		item.set_text(0, file)
+		item.set_icon(0, file_icon)
+	
+	autosave_dialog.add_child(autosave_tree)
+	autosave_dialog.popup_centered()
 	disable_switches()
 
 func _song_name_changed(new_text:String):
