@@ -24,13 +24,14 @@ func _ready():
 	note_nodes["default"] = load(default_path).instantiate()
 	note_nodes["default"].in_editor = true
 	note_nodes["default"].position.y = -9999
-	note_nodes["default"].process_mode = PROCESS_MODE_DISABLED
+	note_nodes["default"].process_mode = PROCESS_MODE_DISABLED	
 	note_nodes["Alt Animation"] = note_nodes["default"]
 	
 	chart_data = chart_editor.chart_data
 	start_time = Conductor.position
 	Conductor.position -= Conductor.crochet * 2
 	
+	Global.default_ui_skin = chart_data.ui_skin
 	ui_skin = load("res://scenes/gameplay/ui_skins/" + chart_data.ui_skin + ".tscn").instantiate()
 	cpu_strums.note_skin = ui_skin
 	plr_strums.note_skin = ui_skin
@@ -67,6 +68,9 @@ func _ready():
 		info_txt.position.y = 40
 			
 	queued_notes.sort_custom(func(a, b): return a.time < b.time)
+	
+func _exit_tree():
+	Global.default_ui_skin = "default"
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):

@@ -64,7 +64,7 @@ func _ready() -> void:
 		game = $"../../../"
 		note_skin = game.ui_skin
 	else:
-		note_skin = load("res://scenes/gameplay/ui_skins/default.tscn").instantiate()
+		note_skin = load("res://scenes/gameplay/ui_skins/" + Global.default_ui_skin + ".tscn").instantiate()
 	if length < 50: length = 0
 	if length <= 0:
 		sustain.visible = false

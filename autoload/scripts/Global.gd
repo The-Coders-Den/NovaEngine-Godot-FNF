@@ -5,6 +5,7 @@ var SONG:Chart
 const note_directions:Array[String] = [
 	"left", "down", "up", "right",
 ]
+var default_ui_skin:String = "default"
 
 const audio_formats:PackedStringArray = [".ogg", ".mp3", ".wav"]
 
