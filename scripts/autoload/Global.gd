@@ -6,7 +6,7 @@ func switch_scene(path:String):
 	get_tree().change_scene_to_file(path)
 	
 func _unhandled_key_input(event:InputEvent):
-	if Input.is_action_just_pressed("fullscreen"):
+	if event.is_action_pressed("fullscreen"):
 		var win:Window = get_window()
 		if win.mode == Window.MODE_FULLSCREEN:
 			win.mode = Window.MODE_WINDOWED

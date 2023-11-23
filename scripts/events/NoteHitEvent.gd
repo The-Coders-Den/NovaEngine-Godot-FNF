@@ -11,7 +11,7 @@ var direction:int
 var health_gain:float
 
 #-- DON'T TOUCH --#
-func _init(note:Note, direction:int, health_gain:float):
-	self.note = note
-	self.direction = direction
-	self.health_gain = health_gain
+func _init(_note:Note, _direction:int, _health_gain:float):
+	self.note = _note
+	self.direction = _direction
+	self.health_gain = _health_gain

@@ -12,8 +12,8 @@ var sound:AudioStreamPlayer
 ## The tween attached to the sprite.
 var tween:Tween
 
-func _init(tick:int, sprite:Sprite2D, sound:AudioStreamPlayer, tween:Tween):
-	self.tick = tick
-	self.sprite = sprite
-	self.sound = sound
-	self.tween = tween
+func _init(_tick:int, _sprite:Sprite2D, _sound:AudioStreamPlayer, _tween:Tween):
+	self.tick = _tick
+	self.sprite = _sprite
+	self.sound = _sound
+	self.tween = _tween

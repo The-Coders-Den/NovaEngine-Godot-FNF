@@ -12,11 +12,11 @@ var minor:int
 var patch:int
 var type:VersionType
 
-func _init(major:int = 0, minor:int = 0, patch:int = 1, type:VersionType = VersionType.DEV):
-	self.major = major
-	self.minor = minor
-	self.patch = patch
-	self.type = type
+func _init(_major:int = 0, _minor:int = 0, _patch:int = 1, _type:VersionType = VersionType.DEV):
+	self.major = _major
+	self.minor = _minor
+	self.patch = _patch
+	self.type = _type
 
 # allows you to do str(Global.VERSION)
 func _to_string() -> String:

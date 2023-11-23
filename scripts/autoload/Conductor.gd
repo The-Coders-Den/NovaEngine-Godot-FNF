@@ -5,10 +5,10 @@ class BPMChangeEvent extends Resource:
 	var time:float = 0.0
 	var bpm:float = 100.0
 
-	func _init(step:float = 0, time:float = 0, bpm:float = 0):
-		self.step = step
-		self.time = time
-		self.bpm = bpm
+	func _init(_step:float = 0, _time:float = 0, _bpm:float = 0):
+		self.step = _step
+		self.time = _time
+		self.bpm = _bpm
 
 var rate:float = 1:
 	set(v):
@@ -65,19 +65,19 @@ func map_bpm_changes(song:Chart):
 			
 			bpm_change_map.append(BPMChangeEvent.new(step, time, cur_bpm))
 
-func change_bpm(new:float, beats_per_measure:float = 4, steps_per_beat:float = 4):
+func change_bpm(new:float, _beats_per_measure:float = 4, _steps_per_beat:float = 4):
 	bpm = new
 	crochet = ((60.0 / new) * 1000.0)
 	step_crochet = crochet / 4.0
 	
-	Conductor.beats_per_measure = beats_per_measure
-	Conductor.steps_per_beat = steps_per_beat
+	Conductor.beats_per_measure = _beats_per_measure
+	Conductor.steps_per_beat = _steps_per_beat
 	
 func setup_song(chart:Chart):
 	change_bpm(chart.bpm, chart.beats_per_measure, chart.steps_per_beat)
 	map_bpm_changes(chart)
 
-func _process(delta):
+func _process(_delta):
 	var bpm_change:BPMChangeEvent = BPMChangeEvent.new(0, 0, 0)
 	for event in Conductor.bpm_change_map:
 		if position >= event.time:

@@ -1,14 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://b6fjhsl0as6ie"]
+[gd_scene load_steps=15 format=3 uid="uid://b6fjhsl0as6ie"]
 
 [ext_resource type="Script" path="res://scripts/game/Character.gd" id="1_8c8qu"]
 [ext_resource type="SpriteFrames" path="res://assets/images/game/characters/bf/normal.res" id="1_jvwte"]
 [ext_resource type="Script" path="res://scripts/AnimatedSprite.gd" id="2_7555y"]
 [ext_resource type="Texture2D" uid="uid://bvafd1dvo4ke4" path="res://assets/images/game/icons/icon-bf.png" id="2_bf7cv"]
-[ext_resource type="Shader" path="res://scenes/game/characters/bf.gdshader" id="3_xl6mc"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e8tbm"]
-shader = ExtResource("3_xl6mc")
-shader_parameter/color = Color(0.34902, 0.34902, 0.34902, 1)
 
 [sub_resource type="Animation" id="Animation_tor5p"]
 resource_name = "idle"
@@ -489,7 +484,6 @@ health_icon = ExtResource("2_bf7cv")
 health_color = Color(0.192157, 0.690196, 0.819608, 1)
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_e8tbm")
 position = Vector2(0, -206)
 sprite_frames = ExtResource("1_jvwte")
 animation = &"BF idle dance"

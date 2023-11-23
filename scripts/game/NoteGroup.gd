@@ -111,7 +111,7 @@ func _process(delta:float):
 			
 		var off_screen:bool = note.data.hit_time < Conductor.position - ((500 + (note.data.length * 4.3)) / note_speed)
 		
-		if off_screen and not note.was_already_hit and note.missed:
+		if off_screen and not note.was_already_hit and not note.missed:
 			remove_child(note)
 			note.queue_free()
 			

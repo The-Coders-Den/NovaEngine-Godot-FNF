@@ -75,8 +75,8 @@ func apply(setting:String):
 			ProjectSettings.set_setting("rendering/textures/canvas_textures/default_texture_filter", filter)
 	
 		"vsync":
-			var vsync:int = DisplayServer.VSYNC_ENABLED if vsync else DisplayServer.VSYNC_DISABLED
-			DisplayServer.window_set_vsync_mode(vsync)
+			var mode:int = DisplayServer.VSYNC_ENABLED if vsync else DisplayServer.VSYNC_DISABLED
+			DisplayServer.window_set_vsync_mode(mode)
 
 func setup():
 	__config = ConfigFile.new()

@@ -69,7 +69,7 @@ func select_item():
 			
 			var flicker:AnimationPlayer = buttons.get_child(cur_item).get_node("FlickerAnimation")
 			flicker.play("flicker")
-			flicker.animation_finished.connect(func(anim):
+			flicker.animation_finished.connect(func(_anim):
 				await get_tree().create_timer(0.1).timeout
 				Global.switch_scene(scene_name)
 			)

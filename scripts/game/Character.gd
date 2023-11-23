@@ -43,7 +43,7 @@ var initial_size:Vector2 = Vector2.ZERO
 func unfuck():
 	anim_sprite.playing = false
 	
-	anim_player.connect("animation_finished", func(name): anim_finished = true)
+	anim_player.connect("animation_finished", func(_name): anim_finished = true)
 	dance(true)
 	
 	if anim_sprite.sprite_frames:

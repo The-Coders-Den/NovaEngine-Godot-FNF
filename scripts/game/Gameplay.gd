@@ -57,9 +57,6 @@ var finished_tracks:Array[bool] = []
 ## The list of notes that haven't been spawned yet.
 var notes_to_spawn:Array[Chart.ChartNote] = []
 
-## The list of events that haven't been executed yet.
-var events_to_execute:Array[Chart.ChartEventGroup] = []
-
 ## The scroll speed of the notes.
 ## Can also be modified per strumline.
 var scroll_speed:float = -INF
@@ -167,10 +164,10 @@ func call_on_modcharts(method:String, args:Array[Variant]):
 var _loaded_events:Dictionary = {}
 		
 func load_events():
-	for group in CHART.events:
-		events_to_execute.append(group.duplicate(true))
+#	for group in CHART.events:
+#		events_to_execute.append(group.duplicate(true))
 	
-	for group in events_to_execute:
+	for group in CHART.events:
 		for event in group.events:
 			if event.name in _loaded_events:
 				continue
@@ -290,7 +287,7 @@ func load_character(data:Chart.ChartCharacter):
 	add_child(character)
 
 func _ready():
-	var old:float = Time.get_ticks_msec()
+#	var old:float = Time.get_ticks_msec()
 	if CHART == null:
 		CHART = Chart.load_chart("fill up", "hard")
 		printerr("Chart unable to be found! Loading fallback...")
@@ -326,8 +323,8 @@ func _ready():
 		
 	add_child(stage)
 	
-	for char in CHART.characters:
-		load_character(char)
+	for character in CHART.characters:
+		load_character(character)
 		
 	update_health_bar()
 	
@@ -502,15 +499,15 @@ func display_judgement(judgement:Timings.Judgement, event:JudgementEvent) -> Vel
 	call_on_modcharts("on_display_judgement_post", [event])
 	return event.judgement_sprite
 	
-func display_combo(combo:int, event:JudgementEvent) -> Array[VelocitySprite]:
+func display_combo(cur_combo:int, event:JudgementEvent) -> Array[VelocitySprite]:
 	call_on_modcharts("on_display_combo", [event])
 	
-	var numbers:PackedStringArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+#	var numbers:PackedStringArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 	var sprites:Array[VelocitySprite] = []
 	
 	if not event.cancelled:
 		var i:int = 0
-		var split_combo:PackedStringArray = str(combo).split()
+		var split_combo:PackedStringArray = str(cur_combo).split()
 		
 		for num in split_combo:
 			var sprite:VelocitySprite = combo_template.duplicate() as VelocitySprite
@@ -543,8 +540,8 @@ func display_combo(combo:int, event:JudgementEvent) -> Array[VelocitySprite]:
 	call_on_modcharts("on_display_combo_post", [event])
 	return event.combo_sprites
 	
-func pop_up_score(judgement:Timings.Judgement, combo:int, late:bool) -> JudgementEvent:
-	var event := JudgementEvent.new(judgement, combo, late, null, [], [], [])
+func pop_up_score(judgement:Timings.Judgement, cur_combo:int, late:bool) -> JudgementEvent:
+	var event := JudgementEvent.new(judgement, cur_combo, late)
 	call_on_modcharts("on_pop_up_score", [event])
 	
 	if not event.cancelled:
@@ -552,7 +549,7 @@ func pop_up_score(judgement:Timings.Judgement, combo:int, late:bool) -> Judgemen
 		if rating_spr != null:
 			ratings.add_child(rating_spr)
 		
-		var combo_sprs := display_combo(combo, event)
+		var combo_sprs := display_combo(cur_combo, event)
 		for spr in combo_sprs:
 			ratings.add_child(spr)
 	
@@ -611,6 +608,9 @@ func update_health_bar():
 	opponent_icon.texture = opponent.health_icon
 	opponent_icon.hframes = opponent.health_icon_frames
 	
+	player_icon.texture = player.health_icon
+	player_icon.hframes = player.health_icon_frames
+	
 	var o:StyleBoxFlat = health_bar.get_theme_stylebox("background") as StyleBoxFlat
 	o.bg_color = opponent.health_color
 	health_bar.add_theme_stylebox_override("background", o)
@@ -645,8 +645,8 @@ func end_song():
 	call_on_modcharts("on_end_song_post", [event])
 	event.unreference()
 	
-func _process_event(name:String, parameters:PackedStringArray, time:float = -INF):
-	match name:
+func _process_event(event_name:String, parameters:PackedStringArray, _time:float = -INF):
+	match event_name:
 		"Camera Pan":
 			cur_camera_target = 1 if parameters[0].to_lower() == "true" else 0
 			
@@ -686,8 +686,8 @@ var _cur_chart_event:int = 0
 func _physics_process(delta:float):
 	call_deferred_thread_group("do_note_spawning")
 	
-	while _cur_chart_event < events_to_execute.size():
-		var group:Chart.ChartEventGroup = events_to_execute[_cur_chart_event]
+	while _cur_chart_event < CHART.events.size():
+		var group:Chart.ChartEventGroup = CHART.events[_cur_chart_event]
 		if group.time >= Conductor.position:
 			break
 			

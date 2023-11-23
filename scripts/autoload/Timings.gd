@@ -49,20 +49,20 @@ class Judgement extends Resource:
 	var health_mult:float
 	var do_splash:bool
 	
-	func _init(name:String, timing:float, score:int, accuracy_mult:float, health_mult:float, do_splash:bool):
-		self.name = name
-		self.timing = timing
-		self.score = score
-		self.accuracy_mult = accuracy_mult
-		self.health_mult = health_mult
-		self.do_splash = do_splash
+	func _init(_name:String, _timing:float, _score:int, _accuracy_mult:float, _health_mult:float, _do_splash:bool):
+		self.name = _name
+		self.timing = _timing
+		self.score = _score
+		self.accuracy_mult = _accuracy_mult
+		self.health_mult = _health_mult
+		self.do_splash = _do_splash
 		
 class Rank extends Resource:
 	var name:String
 	var accuracy:float
 	var color:Color
 	
-	func _init(name:String, accuracy:float, color:Color):
-		self.name = name
-		self.accuracy = accuracy
-		self.color = color
+	func _init(_name:String, _accuracy:float, _color:Color):
+		self.name = _name
+		self.accuracy = _accuracy
+		self.color = _color

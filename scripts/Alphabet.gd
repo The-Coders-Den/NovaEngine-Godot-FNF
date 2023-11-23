@@ -18,11 +18,11 @@ var last_text:String = ""
 		fart_size = Vector2.ZERO
 		var lines:PackedStringArray = text.split("\n")
 		
-		var i:int = 0
-		for text in lines:
+#		var i:int = 0
+		for txt in lines:
 			letter_pos.x = 0.0
 			
-			for letter in text:
+			for letter in txt:
 				if letter == " ":
 					letter_pos.x += 30.0
 					fart_size.x += 30.0
@@ -54,11 +54,11 @@ var last_text:String = ""
 				
 			letter_pos.y += 60.0
 			fart_size.y += 60.0
-			i += 1
+#			i += 1
 		
 		fart_size.y += 5.0
 		size = fart_size
 		
-func _process(delta):
+func _process(_delta):
 	last_text = text
 	size = fart_size

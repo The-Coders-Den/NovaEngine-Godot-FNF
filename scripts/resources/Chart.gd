@@ -21,8 +21,8 @@ var song_name:String
 @export var strum_lines:int = 2
 @export var scroll_speed:float = 1.0
 
-@export var beats_per_measure:int = 4
-@export var steps_per_beat:int = 4
+@export var beats_per_measure:float = 4
+@export var steps_per_beat:float = 4
 
 static func load_chart(song:String, difficulty:String):
 	var base_path:String = "res://assets/songs/%s/%s" % [song.to_lower(), difficulty.to_lower()]
@@ -77,7 +77,7 @@ static func load_chart(song:String, difficulty:String):
 	var cur_bpm:float = final.bpm
 	var cur_time:float = 0.0
 	var cur_crochet:float = (60.0 / final.bpm) * 1000.0
-	var beats_per_measure:float = final.beats_per_measure
+	var crochet_mult:float = final.beats_per_measure
 	
 	var last_camera_switch:bool = not json.notes[0].mustHitSection if json.notes.size() > 0 else false
 	
@@ -134,7 +134,7 @@ static func load_chart(song:String, difficulty:String):
 				
 				final.notes.append(note)
 			
-			cur_time += cur_crochet * beats_per_measure
+			cur_time += cur_crochet * crochet_mult
 	else:
 		printerr("Your chart somehow has no sections in it!")
 	
@@ -209,10 +209,10 @@ class ChartCharacter extends Resource:
 	var strum_index:int
 	var position:Chart.CharacterPosition
 	
-	func _init(name:String = "bf", strum_index:int = 0, position:Chart.CharacterPosition = 0):
-		self.name = name
-		self.strum_index = strum_index
-		self.position = position
+	func _init(_name:String = "bf", _strum_index:int = 0, _position:Chart.CharacterPosition = CharacterPosition.OPPONENT):
+		self.name = _name
+		self.strum_index = _strum_index
+		self.position = _position
 
 class ChartNote extends Resource:
 	@export var hit_time:float = 0.0
@@ -225,14 +225,14 @@ class ChartEvent extends Resource:
 	var name:String = "???"
 	var parameters:Array[Variant] = []
 
-	func _init(name:String, parameters:Array[Variant]):
-		self.name = name
-		self.parameters = parameters
+	func _init(_name:String, _parameters:Array[Variant]):
+		self.name = _name
+		self.parameters = _parameters
 		
 class ChartEventGroup extends Resource:
 	var time:float = 0.0
 	var events:Array[ChartEvent] = []
 
-	func _init(time:float, events:Array[ChartEvent]):
-		self.time = time
-		self.events = events
+	func _init(_time:float, _events:Array[ChartEvent]):
+		self.time = _time
+		self.events = _events
