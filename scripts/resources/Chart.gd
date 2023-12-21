@@ -202,7 +202,7 @@ static func _load_psych_events(CHART:Chart, raw:Dictionary):
 				for song_event in _load_psych_event_array(note):
 					CHART.events.append(song_event)
 					
-	CHART.events.sort_custom(func(a,b): return b.time > a.time)
+	CHART.events.sort_custom(func(a,b): return a.time < b.time)
 	
 class ChartCharacter extends Resource:
 	var name:String

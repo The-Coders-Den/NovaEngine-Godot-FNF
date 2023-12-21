@@ -116,6 +116,11 @@ var consecutive_misses:float = 0.0
 var note_style:NoteStyle
 var ui_style:UIStyle
 
+var hardcoded_events:PackedStringArray = [
+	"Camera Pan",
+	"BPM Change"
+]
+
 func load_notes(delete_before_time:float = -INF):
 	notes_to_spawn = []
 	
@@ -181,8 +186,8 @@ func load_events():
 			elif FileAccess.file_exists(event_gdpath) or FileAccess.file_exists(event_gdpath+"c"):
 				modchart = Modchart.new()
 				modchart.set_script(load(event_gdpath))
-			else:
-				printerr("Event doesn't exist (or is hardcoded): %s" % event.name)
+			elif not hardcoded_events.has(event.name):
+				printerr("Event doesn't exist: %s" % event.name)
 				
 			if is_instance_valid(modchart):
 				print("Loaded event: %s" % event.name)
@@ -408,8 +413,7 @@ func do_note_spawning():
 		for fart_note in new_note.strum_line.notes.get_children():
 			fart_note = fart_note as Note
 			
-			if last_note != null and absf(fart_note.data.hit_time - last_note.data.hit_time) <= 5 and last_note.data.direction == fart_note.data.direction:
-				print("you have been BANNED from the mickey clubhouse for inappropate behavor")
+			if last_note != null and absf(fart_note.data.hit_time - last_note.data.hit_time) <= 2 and last_note.data.direction == fart_note.data.direction:
 				fart_note.queue_free()
 			
 			last_note = fart_note
@@ -667,11 +671,11 @@ func _process_event(event_name:String, parameters:PackedStringArray, _time:float
 			pass # handled by conductor
 			
 		_:
-			if not name in _loaded_events:
-				printerr("Tried to run non-existent event: %s" % name)
+			if not event_name in _loaded_events:
+				printerr("Tried to run non-existent event: %s" % event_name)
 				return
 			
-			var event:Modchart = _loaded_events[name]
+			var event:Modchart = _loaded_events[event_name]
 			if not is_instance_valid(event):
 				return
 			

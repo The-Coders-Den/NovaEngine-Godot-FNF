@@ -1,4 +1,4 @@
-extends FunkinScript
+extends Modchart
 func on_beat_hit(curbeat:int):
 	if curbeat % 8 == 7: 
 		game.player.play_anim("hey",true)
