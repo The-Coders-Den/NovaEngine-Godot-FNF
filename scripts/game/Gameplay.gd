@@ -621,7 +621,7 @@ func update_health_bar():
 	
 	var p:StyleBoxFlat = health_bar.get_theme_stylebox("fill") as StyleBoxFlat
 	p.bg_color = player.health_color
-	health_bar.add_theme_stylebox_override("fill", o)
+	health_bar.add_theme_stylebox_override("fill", p)
 	
 func start_song():
 	var event := CancellableEvent.new()
